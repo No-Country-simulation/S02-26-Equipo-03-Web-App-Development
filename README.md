@@ -1,40 +1,155 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Plataforma de Ecommerce
 
-## Getting Started
+# Descripción de la problemática
+Somos una all in one solution de incorporation, tax y bookkeeping en USA. Queremos mejorar nuestro ecommerce para dirigir tráfico con ads y mejorar la conversión. Es importante lograr que tanto google como meta puedan mediante el pixel hacer el conteo de los pagos que ingresan al pagar vía Stripe.
 
-Install dependencies and run the development server:
+# Tecnologías
+## Frontent
+- Next.js
+- React
+- Typescript
+- Zod
 
+## Backend
+- Node.js
+- SQLite (Turso)
+- Stripe
+- Drizzle
+
+# Instalación
+#### Clonar el repositorio
+```bash
+git clone https://github.com/No-Country/c17-37-m-java.git
+```
+
+#### Instalar dependencias
 ```bash
 pnpm install
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-## Scripts
-
+#### Iniciar el proyecto
 ```bash
-pnpm dev
-pnpm build
-pnpm start
+pnpm run dev
 ```
 
+#### Entrar al sitio
+````
+[http://localhost:3000](http://localhost:3000)
+````
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+## Equipo S02-26-E03
 
-To learn more about Next.js, take a look at the following resources:
+<table align="center">
+  <tr>
+    <th>Nombre</th>
+    <th>Rol</th>
+    <th>GitHub</th>
+    <th>LinkedIn</th>
+  </tr>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  <tr align="center">
+    <td>Brahian Pereyra</td>
+    <td>Arquitecto de Software</td>
+    <td>https://github.com/brahianpdev</td>
+    <td>https://www.linkedin.com/in/brahianpdev/</td>
+  </tr>
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+  <tr align="center">
+    <td>Enmanuel Rodriguez</td>
+    <td>Fullstack</td>
+    <td>https://github.com/</td>
+    <td>https://www.linkedin.com/in/</td>
+  </tr>
 
-## Deploy on Vercel
+  <tr align="center">
+    <td>Favian Medina</td>
+    <td>Backend</td>
+    <td>https://github.com/fabinnerself</td>
+    <td>https://www.linkedin.com/in/favian-medina-gemio/</td>
+  </tr>
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+  <tr align="center">
+    <td>Gianni Pasquinelli</td>
+    <td>Frontend</td>
+    <td>https://github.com/gianni03</td>
+    <td>https://www.linkedin.com/in/gianni-pasquinelli</td>
+  </tr>
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details
+  <tr align="center">
+    <td>Hernan Cassasola</td>
+    <td>Teach Lead</td>
+    <td>https://github.com/GuidoMaxier</td>
+    <td>https://www.linkedin.com/in/hernan-casasola/</td>
+  </tr>
+
+  <tr align="center">
+    <td>Ivan Rovner</td>
+    <td>Project Manager</td>
+    <td>https://github.com/rovnerivan</td>
+    <td>https://www.linkedin.com/in/ivanjoelrovner/</td>
+  </tr>
+
+  <tr align="center">
+    <td>Mauro Laime</td>
+    <td>-</td>
+    <td>https://github.com/</td>
+    <td>https://www.linkedin.com/in/</td>
+  </tr>
+
+  <tr align="center">
+    <td>Scarlet Vargas</td>
+    <td>-</td>
+    <td>https://github.com/</td>
+    <td>https://www.linkedin.com/in/</td>
+  </tr>
+
+  <tr align="center">
+    <td>Sebastian Castro</td>
+    <td>QA</td>
+    <td>https://github.com/</td>
+    <td>https://www.linkedin.com/in/</td>
+  </tr>
+
+  <tr align="center">
+    <td>Me Torres</td>
+    <td>-</td>
+    <td>https://github.com/</td>
+    <td>https://www.linkedin.com/in/</td>
+  </tr>
+
+  <tr align="center">
+    <td>Ivan Andrade</td>
+    <td>Diseñador UX UI</td>
+    <td>https://github.com/</td>
+    <td>https://www.linkedin.com/in/</td>
+  </tr>
+
+  <tr align="center">
+    <td>Lautaro Durán</td>
+    <td>Frontend</td>
+    <td>https://github.com/LautaroLD</td>
+    <td>https://www.linkedin.com/in/lautaro-duran/</td>
+  </tr>
+
+  <tr align="center">
+    <td>Rocio Dietz</td>
+    <td>DevOps</td>
+    <td>https://github.com/DietzRocio</td>
+    <td>https://www.linkedin.com/in/</td>
+  </tr>
+
+  <tr align="center">
+    <td>Cristian Tortoza</td>
+    <td>-</td>
+    <td>https://github.com/</td>
+    <td>https://www.linkedin.com/in/</td>
+  </tr>
+
+  <tr align="center">
+    <td>Bruno Sosa</td>
+    <td>Backend</td>
+    <td>https://github.com/Bruno1084</td>
+    <td>https://www.linkedin.com/in/brunos0sa/</td>
+  </tr>
+</table>
