@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@libsql/client": "^0.17.0",
+    "drizzle-orm": "^0.45.1",
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3",
@@ -17,11 +18,11 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "husky": "^9.1.7",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "husky": "^9.1.7",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
