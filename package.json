@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prepare": "husky",
     "build": "next build",
     "start": "next start"
   },
@@ -16,6 +17,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "husky": "^9.1.7",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
