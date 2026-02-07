@@ -56,27 +56,6 @@ pnpm run dev
   </tr>
 
   <tr align="center">
-    <td>Enmanuel Rodriguez</td>
-    <td>Fullstack</td>
-    <td>https://github.com/</td>
-    <td>https://www.linkedin.com/in/</td>
-  </tr>
-
-  <tr align="center">
-    <td>Favian Medina</td>
-    <td>Backend</td>
-    <td>https://github.com/fabinnerself</td>
-    <td>https://www.linkedin.com/in/favian-medina-gemio/</td>
-  </tr>
-
-  <tr align="center">
-    <td>Gianni Pasquinelli</td>
-    <td>Frontend</td>
-    <td>https://github.com/gianni03</td>
-    <td>https://www.linkedin.com/in/gianni-pasquinelli</td>
-  </tr>
-
-  <tr align="center">
     <td>Hernan Cassasola</td>
     <td>Teach Lead</td>
     <td>https://github.com/GuidoMaxier</td>
@@ -91,29 +70,15 @@ pnpm run dev
   </tr>
 
   <tr align="center">
-    <td>Mauro Laime</td>
-    <td>-</td>
-    <td>https://github.com/</td>
-    <td>https://www.linkedin.com/in/</td>
-  </tr>
-
-  <tr align="center">
-    <td>Scarlet Vargas</td>
-    <td>-</td>
-    <td>https://github.com/</td>
+    <td>Rocio Dietz</td>
+    <td>DevOps</td>
+    <td>https://github.com/DietzRocio</td>
     <td>https://www.linkedin.com/in/</td>
   </tr>
 
   <tr align="center">
     <td>Sebastian Castro</td>
     <td>QA</td>
-    <td>https://github.com/</td>
-    <td>https://www.linkedin.com/in/</td>
-  </tr>
-
-  <tr align="center">
-    <td>Me Torres</td>
-    <td>-</td>
     <td>https://github.com/</td>
     <td>https://www.linkedin.com/in/</td>
   </tr>
@@ -126,6 +91,41 @@ pnpm run dev
   </tr>
 
   <tr align="center">
+    <td>Enmanuel Rodriguez</td>
+    <td>Fullstack</td>
+    <td>https://github.com/</td>
+    <td>https://www.linkedin.com/in/</td>
+  </tr>
+
+  <tr align="center">
+    <td>Mauro Laime</td>
+    <td>Fullstack</td>
+    <td>https://github.com/</td>
+    <td>https://www.linkedin.com/in/</td>
+  </tr>
+
+  <tr align="center">
+    <td>Cristian Tortoza</td>
+    <td>Fullstack</td>
+    <td>https://github.com/</td>
+    <td>https://www.linkedin.com/in/</td>
+  </tr>
+
+  <tr align="center">
+    <td>Gianni Pasquinelli</td>
+    <td>Frontend</td>
+    <td>https://github.com/gianni03</td>
+    <td>https://www.linkedin.com/in/gianni-pasquinelli</td>
+  </tr>
+
+  <tr align="center">
+    <td>Scarlet Vargas</td>
+    <td>Frontend</td>
+    <td>https://github.com/</td>
+    <td>https://www.linkedin.com/in/</td>
+  </tr>
+
+  <tr align="center">
     <td>Lautaro Durán</td>
     <td>Frontend</td>
     <td>https://github.com/LautaroLD</td>
@@ -133,23 +133,30 @@ pnpm run dev
   </tr>
 
   <tr align="center">
-    <td>Rocio Dietz</td>
-    <td>DevOps</td>
-    <td>https://github.com/DietzRocio</td>
+    <td>Mariana Torres</td>
+    <td>Backend</td>
+    <td>https://github.com/</td>
     <td>https://www.linkedin.com/in/</td>
   </tr>
 
   <tr align="center">
-    <td>Cristian Tortoza</td>
-    <td>-</td>
-    <td>https://github.com/</td>
-    <td>https://www.linkedin.com/in/</td>
+    <td>Favian Medina</td>
+    <td>Backend</td>
+    <td>https://github.com/fabinnerself</td>
+    <td>https://www.linkedin.com/in/favian-medina-gemio/</td>
+  </tr>
+
+  <tr align="center">
+    <td>Isabel Predencio</td>
+    <td>Backend</td>
+    <td>https://github.com/DietzRocio</td>
+    <td>https://www.linkedin.com/in/isabel-prudencio-nina-18615181/</td>
   </tr>
 
   <tr align="center">
     <td>Bruno Sosa</td>
     <td>Backend</td>
     <td>https://github.com/Bruno1084</td>
-    <td>https://www.linkedin.com/in/brunos0sa/</td>
+  <td>https://www.linkedin.com/in/brunos0sa/</td>
   </tr>
 </table>
