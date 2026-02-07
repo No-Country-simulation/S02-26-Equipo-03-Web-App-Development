@@ -1,0 +1,57 @@
+---
+description: Reglas de desarrollo para Next.js (seguridad, rendimiento, robustez y operación)
+globs:
+  - "app/**/*.ts"
+  - "app/**/*.tsx"
+  - "src/**/*.ts"
+  - "src/**/*.tsx"
+alwaysApply: true
+---
+
+# Regla Next.js
+
+Aplica estas reglas cuando trabajes en código Next.js/React TypeScript de este repositorio.
+
+## Seguridad (obligatorio)
+
+- Prioriza seguridad para prevenir XSS, CSRF y exposición de secretos.
+- En áreas de alto riesgo (entrada de usuario, auth, pagos, webhooks), incluye `<REVISIÓN_DE_SEGURIDAD>` con:
+  - vulnerabilidad potencial,
+  - mitigación aplicada,
+  - referencia de OWASP/Next.js,
+  - prueba de verificación.
+- Valida entradas con Zod y evita prácticas inseguras (`eval`, secretos en cliente, trust de input sin validar).
+
+## Rendimiento y Robustez
+
+- Minimiza re-renderizados, bundle size y carga de servidor.
+- Prefiere Server Components y reduce uso de `use client`, `useEffect`, `useState` cuando no sean necesarios.
+- Maneja errores con `try/catch`, mensajes comprensibles y logging.
+- Cubre casos borde: estados vacíos, latencia alta, timeout, fallo de red.
+- Usa `next/dynamic` en componentes no críticos y `next/image` para imágenes.
+
+## Operación (producción)
+
+- Mantén compatibilidad de despliegue con Vercel.
+- Configuración por entorno en variables seguras (`.env.local` para local).
+- Incluye observabilidad básica (errores, latencia, fallos de webhook).
+- Si cambias comportamiento operativo, documenta en `status.md`.
+
+## Estándares de Código
+
+- TypeScript funcional/declarativo. Evita clases salvo necesidad justificada.
+- Usa tipos/interfaces explícitos.
+- Nombres descriptivos (`isLoading`, `hasError`) y handlers con prefijo `handle`.
+- Usa retornos tempranos y evita complejidad innecesaria.
+- Tailwind mobile-first; evita estilos inline salvo justificación.
+
+## Calidad mínima antes de merge
+
+- El código debe pasar lint, typecheck, tests y build.
+- No mezclar feature incompleta sin flag o sin fallback seguro.
+
+## Manejo de incertidumbre
+
+- Si no hay respuesta clara: `No hay una solución definitiva disponible.`
+- Si falta contexto: `No tengo suficiente información. Proporciona detalles (p. ej., @app/page.tsx).`
+
