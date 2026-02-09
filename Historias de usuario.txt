@@ -72,6 +72,163 @@ HU-16 Comparación temporal	Dashboard de performance	MVP Base
 HU-17 Integración multi-ecommerce	Integración multi-ecommerce	MVP Base
 HU-18 ROI real por campaña	ROI real (ads + costos internos)	⭐ Super MVP
 
+
+
+🧩 EPIC 1 — Adquisición del Producto (Landing & Venta del Backoffice)
+HU-01 — Propuesta de valor clara
+
+Como Founder / EM
+Quiero entender rápidamente qué problema resuelve el backoffice
+Para decidir si vale la pena evaluarlo.
+
+HU-02 — Explicación del problema de medición
+
+Como usuario potencial
+Quiero entender por qué mis conversiones no coinciden con mis pagos
+Para justificar la necesidad de una herramienta de atribución.
+
+HU-03 — Cómo funciona el producto
+
+Como usuario no técnico
+Quiero ver cómo se integra el backoffice sin complejidad
+Para confiar en que no romperá mi ecommerce.
+
+HU-04 — Beneficios por rol
+
+Como Founder / EM / Analista
+Quiero ver beneficios específicos según mi rol
+Para entender cómo me ayuda en mi trabajo diario.
+
+HU-05 — Prueba social y credibilidad
+
+Como usuario evaluador
+Quiero ver señales de confianza (casos, métricas, referencias)
+Para reducir el riesgo de adopción.
+
+HU-06 — Call to action y contacto
+
+Como usuario interesado
+Quiero poder iniciar una demo o contacto fácilmente
+Para avanzar en la evaluación del producto.
+
+🧩 EPIC 2 — Onboarding & Configuración Inicial
+HU-07 — Creación de cuenta y acceso
+
+Como ADM
+Quiero acceder al backoffice
+Para comenzar la configuración.
+
+HU-08 — Conexión de ecommerce
+
+Como ADM / DEV
+Quiero integrar uno o más ecommerce
+Para centralizar los datos de conversión.
+
+HU-09 — Conexión de proveedores de pago
+
+Como ADM / EM
+Quiero integrar proveedores de pago (Stripe, PayPal, otros)
+Para capturar conversiones reales independientemente del medio de cobro.
+
+HU-10 — Conexión de plataformas de ads
+
+Como EM
+Quiero conectar Meta y Google Ads
+Para atribuir conversiones a campañas.
+
+🧩 EPIC 3 — Eventos & Atribución
+HU-11 — Recepción y normalización de eventos
+
+Como sistema
+Quiero recibir eventos desde múltiples fuentes y normalizarlos
+Para tener una base confiable de medición.
+
+HU-12 — Validación y deduplicación de eventos
+
+Como Analista
+Quiero que el sistema detecte eventos duplicados o inválidos
+Para evitar métricas infladas o incorrectas.
+
+HU-13 — Atribución de eventos a campañas
+
+Como EM
+Quiero que los eventos de conversión se asocien a campañas
+Para medir efectividad real.
+
+🧩 EPIC 4 — Reporting & Decisión
+HU-14 — Costos de uso del backoffice (consumo interno)
+
+Como ADM / EM
+Quiero ver el costo operativo del uso del backoffice (APIs, IA, etc.)
+Para entender el impacto del consumo interno.
+
+HU-15 — Dashboard de performance por campaña
+
+Como EM
+Quiero ver el desempeño de campañas
+Para decidir qué escalar o detener.
+
+HU-16 — Comparación temporal y entre campañas
+
+Como EM
+Quiero comparar campañas y periodos
+Para evaluar mejoras o deterioros.
+
+HU-17 — Integración con múltiples ecommerce
+
+Como EM / DEV
+Quiero integrar distintos ecommerce en un mismo backoffice
+Para centralizar datos de múltiples fuentes.
+
+HU-18 — ROI real por campaña
+
+Como Founder / EM
+Quiero ver ingresos, gastos y costos operativos por campaña
+Para calcular ROI real.
+
+🧩 EPIC 5 — Salud del Tracking (Tracking Health)
+HU-19 — Panel de salud del tracking
+
+Como EM / Analista
+Quiero ver el estado general del tracking
+Para saber si mis métricas son confiables.
+
+HU-20 — Alertas de fallos de tracking
+
+Como EM
+Quiero recibir alertas cuando se detecten problemas de tracking
+Para corregirlos antes de que afecten decisiones.
+
+HU-21 — Comparación de eventos por fuente
+
+Como Analista
+Quiero comparar eventos por fuente (Stripe, PayPal, Pixel, etc.)
+Para detectar pérdidas o inconsistencias.
+
+HU-22 — Detección de eventos duplicados o anómalos
+
+Como EM
+Quiero identificar eventos duplicados o anómalos
+Para evitar decisiones basadas en datos incorrectos.
+
+HU-23 — Historial y tendencias de salud
+
+Como Analista
+Quiero ver la evolución de la salud del tracking en el tiempo
+Para identificar patrones y riesgos.
+
+🧩 EPIC 6 — Gobernanza, Seguridad y Confianza
+HU-24 — Gestión de roles y permisos
+
+Como ADM
+Quiero gestionar roles y permisos
+Para controlar accesos y responsabilidades.
+
+HU-25 — Privacidad y cumplimiento
+
+Como Founder
+Quiero asegurar cumplimiento legal (GDPR / CCPA)
+Para proteger datos y reducir riesgos.
 📌 Clave:
 – HU-15/16 = “¿Cómo rinden mis campañas?”
 – HU-18 = “¿Gano plata realmente?”
@@ -91,4 +248,5 @@ El Super MVP previene malas decisiones.
 🧩 EPIC 6 — Gobernanza, Seguridad y Confianza
 HU	Funcionalidad	MVP
 HU-24 Gestión de roles y permisos	Gobernanza y control de accesos	⭐ Super MVP
+
 HU-25 Privacidad y cumplimiento	Compliance & privacidad	⭐ Super MVP
