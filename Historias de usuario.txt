@@ -1,0 +1,94 @@
+📦 Clasificación de Funcionalidades (referencia)
+✅ MVP BASE (lo mínimo que el mercado espera)
+
+Landing comercial del backoffice
+
+Onboarding y configuración inicial
+
+Integración con ecommerce
+
+Integración con proveedores de pago (Stripe + otros)
+
+Integración con plataformas de Ads (Meta / Google)
+
+Recepción y normalización de eventos
+
+Validación, deduplicación y atribución
+
+Dashboard básico de performance
+
+Integración multi-ecommerce
+
+Salud básica del tracking
+
+⭐ SUPER MVP (diferencial competitivo)
+
+Salud avanzada del tracking (alertas, tendencias, anomalías)
+
+Costos operativos del backoffice (APIs / IA)
+
+ROI real (ingresos + ads + costos operativos)
+
+Benchmarking / comparativos avanzados
+
+Gobernanza, roles y compliance avanzados
+
+Ahora sí, HU por HU 👇
+
+🧩 EPIC 1 — Adquisición del Producto (Landing & Venta del Backoffice)
+HU	Funcionalidad	MVP
+HU-01 Propuesta de valor clara	Landing comercial del backoffice	MVP Base
+HU-02 Explicación del problema de medición	Landing comercial del backoffice	MVP Base
+HU-03 Cómo funciona el producto	Landing comercial del backoffice	MVP Base
+HU-04 Beneficios por rol	Landing comercial del backoffice	MVP Base
+HU-05 Prueba social y credibilidad	Landing comercial del backoffice	MVP Base
+HU-06 Call to action y contacto	Landing comercial del backoffice	MVP Base
+
+📌 Nota: aunque no “mide”, sin esto no hay producto. Está bien que sea MVP Base.
+
+🧩 EPIC 2 — Onboarding & Configuración Inicial
+HU	Funcionalidad	MVP
+HU-07 Creación de cuenta y acceso	Onboarding y configuración inicial	MVP Base
+HU-08 Conexión de ecommerce	Integración con ecommerce	MVP Base
+HU-09 Conexión de proveedores de pago	Integración con proveedores de pago	MVP Base
+HU-10 Conexión de plataformas de ads	Integración con plataformas de Ads	MVP Base
+
+📌 Esto define el “time to value”. Si esto es lento o frágil, el producto falla.
+
+🧩 EPIC 3 — Eventos & Atribución
+HU	Funcionalidad	MVP
+HU-11 Recepción y normalización de eventos	Recepción y normalización de eventos	MVP Base
+HU-12 Validación y deduplicación	Validación y deduplicación de eventos	MVP Base
+HU-13 Atribución de eventos a campañas	Atribución de conversiones	MVP Base
+
+📌 Este es el corazón técnico del producto.
+Sin esto, no hay verdad de negocio.
+
+🧩 EPIC 4 — Reporting & Decisión
+HU	Funcionalidad	MVP
+HU-14 Costos de uso del backoffice	Costos operativos internos (API / IA)	⭐ Super MVP
+HU-15 Dashboard por campaña	Dashboard de performance	MVP Base
+HU-16 Comparación temporal	Dashboard de performance	MVP Base
+HU-17 Integración multi-ecommerce	Integración multi-ecommerce	MVP Base
+HU-18 ROI real por campaña	ROI real (ads + costos internos)	⭐ Super MVP
+
+📌 Clave:
+– HU-15/16 = “¿Cómo rinden mis campañas?”
+– HU-18 = “¿Gano plata realmente?”
+
+🧩 EPIC 5 — Salud del Tracking (Tracking Health)
+HU	Funcionalidad	MVP
+HU-19 Panel de salud del tracking	Salud básica del tracking	MVP Base
+HU-20 Alertas de fallos	Salud avanzada del tracking	⭐ Super MVP
+HU-21 Comparación de eventos por fuente	Salud avanzada del tracking	⭐ Super MVP
+HU-22 Detección de anomalías	Salud avanzada del tracking	⭐ Super MVP
+HU-23 Historial y tendencias	Salud avanzada del tracking	⭐ Super MVP
+
+📌 Aquí está el diferencial fuerte.
+El MVP Base muestra estado.
+El Super MVP previene malas decisiones.
+
+🧩 EPIC 6 — Gobernanza, Seguridad y Confianza
+HU	Funcionalidad	MVP
+HU-24 Gestión de roles y permisos	Gobernanza y control de accesos	⭐ Super MVP
+HU-25 Privacidad y cumplimiento	Compliance & privacidad	⭐ Super MVP
