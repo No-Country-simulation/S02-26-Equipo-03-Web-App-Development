@@ -1,0 +1,36 @@
+import { NextResponse } from 'next/server';
+import { db } from '@/src/lib/db';
+import { analyticsTable } from '@/src/lib/db/schema';
+import { desc } from 'drizzle-orm';
+
+/**
+ * Analytics GET Endpoint
+ *
+ * Fetches the latest 5 records from the analytics table.
+ *
+ * @route GET /api/analytics
+ * @returns {object} Latest analytics records
+ */
+export async function GET() {
+  try {
+    const records = await db
+      .select()
+      .from(analyticsTable)
+      .orderBy(desc(analyticsTable.periodStart));
+
+    return NextResponse.json({
+      status: 'success',
+      data: records,
+      count: records.length,
+    });
+  } catch (error) {
+    console.error('Failed to fetch analytics:', error);
+    return NextResponse.json(
+      {
+        status: 'error',
+        message: 'Internal Server Error',
+      },
+      { status: 500 },
+    );
+  }
+}

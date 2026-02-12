@@ -1,25 +1,25 @@
-# Plataforma de Ecommerce
+# 🛒 Plataforma de Ecommerce
 
-# Descripción de la problemática
+# 📝 Descripción de la problemática
 Somos una all in one solution de incorporation, tax y bookkeeping en USA. Queremos mejorar nuestro ecommerce para dirigir tráfico con ads y mejorar la conversión. Es importante lograr que tanto google como meta puedan mediante el pixel hacer el conteo de los pagos que ingresan al pagar vía Stripe.
 
-# Tecnologías
-## Frontent
+# 🚀 Tecnologías
+## 🎨 Frontent
 - Next.js
 - React
 - Typescript
 - Zod
 
-## Backend
+## ⚙️ Backend
 - Node.js
 - SQLite (Turso)
 - Stripe
 - Drizzle
 
-# Instalación
+# 🛠️ Instalación
 #### Clonar el repositorio
 ```bash
-git clone https://github.com/No-Country/c17-37-m-java.git
+git clone  https://github.com/No-Country-simulation/S02-26-Equipo-03-Web-App-Development.git
 ```
 
 #### Instalar dependencias
@@ -32,13 +32,12 @@ pnpm install
 pnpm run dev
 ```
 
-#### Entrar al sitio
-````
+#### 🌐 Entrar al sitio
+
 [http://localhost:3000](http://localhost:3000)
-````
 
 
-## Equipo S02-26-E03
+## 👥 Equipo S02-26-E03
 
 <table align="center">
   <tr>
@@ -51,112 +50,112 @@ pnpm run dev
   <tr align="center">
     <td>Brahian Pereyra</td>
     <td>Arquitecto de Software</td>
-    <td>https://github.com/brahianpdev</td>
-    <td>https://www.linkedin.com/in/brahianpdev/</td>
+    <td><a href="https://github.com/brahianpdev">GitHub</a></td>
+    <td><a href="https://www.linkedin.com/in/brahianpdev/">LinkedIn</a></td>
   </tr>
 
   <tr align="center">
     <td>Hernan Cassasola</td>
     <td>Teach Lead</td>
-    <td>https://github.com/GuidoMaxier</td>
-    <td>https://www.linkedin.com/in/hernan-casasola/</td>
+    <td><a href="https://github.com/GuidoMaxier">GitHub</a></td>
+    <td><a href="https://www.linkedin.com/in/hernan-casasola/">LinkedIn</a></td>
   </tr>
 
   <tr align="center">
     <td>Ivan Rovner</td>
     <td>Project Manager</td>
-    <td>https://github.com/rovnerivan</td>
-    <td>https://www.linkedin.com/in/ivanjoelrovner/</td>
+    <td><a href="https://github.com/rovnerivan">GitHub</a></td>
+    <td><a href="https://www.linkedin.com/in/ivanjoelrovner/">LinkedIn</a></td>
   </tr>
 
   <tr align="center">
     <td>Rocio Dietz</td>
     <td>DevOps</td>
-    <td>https://github.com/DietzRocio</td>
-    <td>https://www.linkedin.com/in/</td>
+    <td><a href="https://github.com/DietzRocio">GitHub</a></td>
+    <td><a href="https://www.linkedin.com/in/">LinkedIn</a></td>
   </tr>
 
   <tr align="center">
     <td>Sebastian Castro</td>
     <td>QA</td>
-    <td>https://github.com/</td>
-    <td>https://www.linkedin.com/in/</td>
+    <td>-</td>
+    <td>-</td>
   </tr>
 
   <tr align="center">
     <td>Ivan Andrade</td>
     <td>Diseñador UX UI</td>
-    <td>https://github.com/</td>
-    <td>https://www.linkedin.com/in/</td>
+    <td>-</td>
+    <td>-</td>
   </tr>
 
   <tr align="center">
     <td>Enmanuel Rodriguez</td>
     <td>Fullstack</td>
-    <td>https://github.com/</td>
-    <td>https://www.linkedin.com/in/</td>
+    <td>-</td>
+    <td>-</td>
   </tr>
 
   <tr align="center">
     <td>Mauro Laime</td>
     <td>Fullstack</td>
-    <td>https://github.com/</td>
-    <td>https://www.linkedin.com/in/</td>
+    <td>-</td>
+    <td>-</td>
   </tr>
 
   <tr align="center">
     <td>Cristian Tortoza</td>
     <td>Fullstack</td>
-    <td>https://github.com/</td>
-    <td>https://www.linkedin.com/in/</td>
+    <td>-</td>
+    <td>-</td>
   </tr>
 
   <tr align="center">
     <td>Gianni Pasquinelli</td>
     <td>Frontend</td>
-    <td>https://github.com/gianni03</td>
-    <td>https://www.linkedin.com/in/gianni-pasquinelli</td>
+    <td><a href="https://github.com/gianni03">GitHub</a></td>
+    <td><a href="https://www.linkedin.com/in/gianni-pasquinelli">LinkedIn</a></td>
   </tr>
 
   <tr align="center">
     <td>Scarlet Vargas</td>
     <td>Frontend</td>
-    <td>https://github.com/</td>
-    <td>https://www.linkedin.com/in/</td>
+    <td>-</td>
+    <td>-</td>
   </tr>
 
   <tr align="center">
     <td>Lautaro Durán</td>
     <td>Frontend</td>
-    <td>https://github.com/LautaroLD</td>
-    <td>https://www.linkedin.com/in/lautaro-duran/</td>
+    <td><a href="https://github.com/LautaroLD">GitHub</a></td>
+    <td><a href="https://www.linkedin.com/in/lautaro-duran/">LinkedIn</a></td>
   </tr>
 
   <tr align="center">
     <td>Mariana Torres</td>
     <td>Backend</td>
-    <td>https://github.com/</td>
-    <td>https://www.linkedin.com/in/</td>
+    <td>-</td>
+    <td>-</td>
   </tr>
 
   <tr align="center">
     <td>Favian Medina</td>
     <td>Backend</td>
-    <td>https://github.com/fabinnerself</td>
-    <td>https://www.linkedin.com/in/favian-medina-gemio/</td>
+    <td><a href="https://github.com/fabinnerself">GitHub</a></td>
+    <td><a href="https://www.linkedin.com/in/favian-medina-gemio/">LinkedIn</a></td>
   </tr>
 
   <tr align="center">
     <td>Isabel Predencio</td>
     <td>Backend</td>
-    <td>https://github.com/DietzRocio</td>
-    <td>https://www.linkedin.com/in/isabel-prudencio-nina-18615181/</td>
+    <td><a href="https://github.com/DietzRocio">GitHub</a></td>
+    <td><a href="https://www.linkedin.com/in/isabel-prudencio-nina-18615181/">LinkedIn</a></td>
   </tr>
 
   <tr align="center">
     <td>Bruno Sosa</td>
     <td>Backend</td>
-    <td>https://github.com/Bruno1084</td>
-  <td>https://www.linkedin.com/in/brunos0sa/</td>
+    <td><a href="https://github.com/Bruno1084">GitHub</a></td>
+    <td><a href="https://www.linkedin.com/in/brunos0sa/">LinkedIn</a></td>
   </tr>
 </table>
