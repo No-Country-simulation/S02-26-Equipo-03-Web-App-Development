@@ -1,16 +1,44 @@
-import nextConfig from "eslint-config-next";
+import js from "@eslint/js";
+import nextPlugin from "@next/eslint-plugin-next";
+import tsParser from "@typescript-eslint/parser";
 
-const eslintConfig = [
-  ...nextConfig,
+const nextCoreWebVitals = nextPlugin.configs?.["core-web-vitals"] ?? {};
+
+export default [
   {
-    rules: {
-      // Enforce the use of double quotes
-      "quotes": ["error", "double"],
+    ignores: [".next/**", "node_modules/**"],
+  },
 
-      // Enforce the use of semicolons at the end of statements
-      "semi": ["error", "always"],
+  js.configs.recommended,
+
+  {
+    files: ["**/*.{js,jsx,mjs,cjs,ts,tsx}"],
+    languageOptions: {
+      ecmaVersion: "latest",
+      sourceType: "module",
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
+    },
+    plugins: {
+      "@next/next": nextPlugin,
+    },
+    rules: {
+      ...(nextCoreWebVitals.rules ?? {}),
+      quotes: ["error", "double"],
+      semi: ["error", "always"],
+    },
+  },
+
+  {
+    files: ["**/*.{ts,tsx}"],
+    languageOptions: {
+      parser: tsParser,
+    },
+    rules: {
+      "no-undef": "off",
     },
   },
 ];
-
-export default eslintConfig;
