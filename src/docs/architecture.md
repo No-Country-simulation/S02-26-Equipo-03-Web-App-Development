@@ -1,26 +1,24 @@
 ## Repository Structure
 
-- app/        → Pages and API routes
+- app/ → Pages and API routes
 - components/ → Reusable UI components
-- lib/        → Shared business logic
-- schemas/    → Zod validation schemas
-- docs/       → Internal documentation
-- bruno/      → Endpoint collection
- 
+- lib/ → Shared business logic
+- schemas/ → Zod validation schemas
+- docs/ → Internal documentation
+- bruno/ → Endpoint collection
 
 ## Tech Stack
 
-| Area        | Technology            |
-|-------------|-----------------------|
-| Frontend    | React, Next.js        |
-| Backend     | Next.js API routes    |
-| Language    | TypeScript            |
-| Validation  | Zod                   |
-| Payments    | Stripe                |
-| Database    | SQLite (Turso)        |
-| Analytics   | Meta Pixel            |
-| Endpoints   | Bruno                 |
-
+| Area       | Technology         |
+| ---------- | ------------------ |
+| Frontend   | React, Next.js     |
+| Backend    | Next.js API routes |
+| Language   | TypeScript         |
+| Validation | Zod                |
+| Payments   | Stripe             |
+| Database   | SQLite (Turso)     |
+| Analytics  | Meta Pixel         |
+| Endpoints  | Bruno              |
 
 ## Tech Versions
 
