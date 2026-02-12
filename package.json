@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "prepare": "husky",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "build": "next build",
     "start": "next start"
   },
@@ -22,6 +24,10 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@next/eslint-plugin-next": "^16.1.6",
+    "@typescript-eslint/parser": "^8.55.0",
+    "@eslint/js": "^9.39.2",
+    "eslint": "^9.39.2",
     "husky": "^9.1.7",
     "tailwindcss": "^4",
     "typescript": "^5"
