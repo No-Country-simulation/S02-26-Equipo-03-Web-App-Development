@@ -1,42 +1,50 @@
 # Plataforma de Ecommerce
 
 # Descripción de la problemática
+
 Somos una all in one solution de incorporation, tax y bookkeeping en USA. Queremos mejorar nuestro ecommerce para dirigir tráfico con ads y mejorar la conversión. Es importante lograr que tanto google como meta puedan mediante el pixel hacer el conteo de los pagos que ingresan al pagar vía Stripe.
 
 # Tecnologías
+
 ## Frontent
+
 - Next.js
 - React
 - Typescript
 - Zod
 
 ## Backend
+
 - Node.js
 - SQLite (Turso)
 - Stripe
 - Drizzle
 
 # Instalación
+
 #### Clonar el repositorio
+
 ```bash
 git clone https://github.com/No-Country/c17-37-m-java.git
 ```
 
 #### Instalar dependencias
+
 ```bash
 pnpm install
 ```
 
 #### Iniciar el proyecto
+
 ```bash
 pnpm run dev
 ```
 
 #### Entrar al sitio
-````
-[http://localhost:3000](http://localhost:3000)
-````
 
+```
+[http://localhost:3000](http://localhost:3000)
+```
 
 ## Equipo S02-26-E03
 
