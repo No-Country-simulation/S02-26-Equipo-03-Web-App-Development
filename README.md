@@ -149,7 +149,7 @@ pnpm run dev
   <tr align="center">
     <td>Isabel Predencio</td>
     <td>Backend</td>
-    <td>https://github.com/DietzRocio</td>
+    <td>https://github.com/belisabel</td>
     <td>https://www.linkedin.com/in/isabel-prudencio-nina-18615181/</td>
   </tr>
 

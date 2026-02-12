@@ -1,3 +1,5 @@
+.PHONY: install dev build start docker-dev
+
 install:
 	pnpm install --frozen-lockfile
 
