@@ -1,17 +1,7 @@
-import nextVitals from "eslint-config-next/core-web-vitals";
+import nextConfig from "eslint-config-next";
 
 const eslintConfig = [
-  ...nextVitals,
-  // Override default ignores of eslint-config-next.
-  {
-    ignores: [
-      // Default ignores of eslint-config-next:
-      ".next/**",
-      "out/**",
-      "build/**",
-      "next-env.d.ts",
-    ],
-  },
+  ...nextConfig,
   {
     rules: {
       // Obliga el uso de comillas dobles
