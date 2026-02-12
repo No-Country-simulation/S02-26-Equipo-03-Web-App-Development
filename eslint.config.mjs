@@ -4,10 +4,10 @@ const eslintConfig = [
   ...nextConfig,
   {
     rules: {
-      // Obliga el uso de comillas dobles
+      // Enforce the use of double quotes
       "quotes": ["error", "double"],
 
-      // Obliga el uso de punto y coma al final de las sentencias
+      // Enforce the use of semicolons at the end of statements
       "semi": ["error", "always"],
     },
   },
