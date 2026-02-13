@@ -42,6 +42,3 @@ next-env.d.ts
 
 # drizzle local database
 local.db
-
-# seed script
-src/lib/db/seed.ts
