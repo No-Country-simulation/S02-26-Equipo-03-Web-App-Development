@@ -81,7 +81,7 @@ pnpm run dev
     <td>Rocio Dietz</td>
     <td>DevOps</td>
     <td>https://github.com/DietzRocio</td>
-    <td>https://www.linkedin.com/in/</td>
+    <td>https://www.linkedin.com/in/dietz-rocio/</td>
   </tr>
 
   <tr align="center">
