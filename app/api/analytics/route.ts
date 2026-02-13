@@ -6,12 +6,12 @@ import { desc } from 'drizzle-orm';
 /**
  * Analytics GET Endpoint
  *
- * Fetches the latest 5 records from the analytics table.
+ * Fetches the latest records from the analytics table.
  *
  * @route GET /api/analytics
  * @returns {object} Latest analytics records
  */
-export async function GET() {
+async function getAnalytics() {
   try {
     const records = await db
       .select()
@@ -34,3 +34,5 @@ export async function GET() {
     );
   }
 }
+
+export { getAnalytics as GET };

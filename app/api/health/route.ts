@@ -8,7 +8,7 @@ import { analyticsTable } from '@/src/lib/db/schema';
  * @route GET /api/health
  * @returns {object} Health status with database connectivity and timestamp
  */
-export async function GET() {
+async function getDatabaseHealth() {
   try {
     // Basic connectivity check using the analyticsTable
     await db.select().from(analyticsTable).limit(1);
@@ -33,3 +33,5 @@ export async function GET() {
     );
   }
 }
+
+export { getDatabaseHealth as GET };
