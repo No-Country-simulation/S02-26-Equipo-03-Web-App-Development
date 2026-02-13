@@ -1,13 +1,18 @@
+
 import type { Config } from "drizzle-kit";
 import { defineConfig } from "drizzle-kit";
 import 'dotenv/config';
 
+// Combinamos la lógica de fallback de tu rama con la estructura moderna
+const databaseUrl = process.env.TURSO_DB_URL || process.env.DATABASE_URL || 'file:./local.db';
+
 export default defineConfig({
-  schema: "./src/schemas/schema.ts",
-  out: "./drizzle",
+  // Mantenemos tus rutas locales ya que son las que están operativas
+  schema: "./src/lib/db/schema.ts",
+  out: "./src/lib/db/migrations",
   dialect: "turso",
   dbCredentials: {
-    url: process.env.DATABASE_URL!,
+    url: databaseUrl,
     authToken: process.env.DATABASE_AUTH_TOKEN!,
   },
 }) satisfies Config;
