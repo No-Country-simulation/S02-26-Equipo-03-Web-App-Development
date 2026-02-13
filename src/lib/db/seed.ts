@@ -5,48 +5,47 @@ import {
   usersTable,
   campaignsTable,
 } from './schema';
-import { createId } from '@paralleldrive/cuid2';
 
 async function seed() {
   console.log('🌱 Seeding database...');
 
-  // 1. Create a demo user if it doesn't exist
-  const userId = createId();
-  await db
+  // 1. Create a demo user
+  const [user] = await db
     .insert(usersTable)
     .values({
-      id: userId,
       email: 'demo@example.com',
       name: 'Demo User',
       passwordHash: 'dummy_hash',
     })
-    .onConflictDoNothing();
+    .onConflictDoNothing()
+    .returning({ id: usersTable.id });
+
+  const userId = user?.id || 1; // Fallback if user already exists and returning is empty
 
   // 2. Create a demo project
-  const projectId = createId();
-  await db.insert(projectsTable).values({
-    id: projectId,
+  const [project] = await db.insert(projectsTable).values({
     ownerId: userId,
     name: 'E-commerce Demo Project',
     status: 'active',
-  });
+  }).returning({ id: projectsTable.id });
+
+  const projectId = project?.id || 1;
 
   // 3. Create a demo campaign
-  const campaignId = createId();
-  await db.insert(campaignsTable).values({
-    id: campaignId,
+  const [campaign] = await db.insert(campaignsTable).values({
     projectId: projectId,
     name: 'Summer Sale 2026',
     status: 'active',
     budget: 5000,
     spent: 1200,
-  });
+  }).returning({ id: campaignsTable.id });
+
+  const campaignId = campaign?.id || 1;
 
   // 4. Insert 5 analytics records
   const now = new Date();
   const records = [
     {
-      id: createId(),
       projectId,
       campaignId,
       periodStart: new Date(now.getTime() - 5 * 24 * 60 * 60 * 1000),
@@ -59,7 +58,6 @@ async function seed() {
       roi: 6.33,
     },
     {
-      id: createId(),
       projectId,
       campaignId,
       periodStart: new Date(now.getTime() - 4 * 24 * 60 * 60 * 1000),
@@ -72,7 +70,6 @@ async function seed() {
       roi: 7.0,
     },
     {
-      id: createId(),
       projectId,
       campaignId,
       periodStart: new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000),
@@ -85,7 +82,6 @@ async function seed() {
       roi: 7.75,
     },
     {
-      id: createId(),
       projectId,
       campaignId,
       periodStart: new Date(now.getTime() - 2 * 24 * 60 * 60 * 1000),
@@ -98,7 +94,6 @@ async function seed() {
       roi: 6.81,
     },
     {
-      id: createId(),
       projectId,
       campaignId,
       periodStart: new Date(now.getTime() - 1 * 24 * 60 * 60 * 1000),

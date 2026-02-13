@@ -1,13 +1,10 @@
 import { sqliteTable, text, integer, real } from 'drizzle-orm/sqlite-core';
 import { relations } from 'drizzle-orm';
-import { createId } from '@paralleldrive/cuid2';
 
 // ==================== USUARIOS Y AUTENTICACIÓN ====================
 
 export const usersTable = sqliteTable('users', {
-  id: text('id')
-    .primaryKey()
-    .$defaultFn(() => createId()),
+  id: integer('id').primaryKey({ autoIncrement: true }),
   email: text('email').notNull().unique(),
   passwordHash: text('password_hash').notNull(),
   name: text('name').notNull(),
@@ -21,27 +18,21 @@ export const usersTable = sqliteTable('users', {
 });
 
 export const rolesTable = sqliteTable('roles', {
-  id: text('id')
-    .primaryKey()
-    .$defaultFn(() => createId()),
+  id: integer('id').primaryKey({ autoIncrement: true }),
   name: text('name').notNull().unique(),
   description: text('description'),
 });
 
 export const permissionsTable = sqliteTable('permissions', {
-  id: text('id')
-    .primaryKey()
-    .$defaultFn(() => createId()),
+  id: integer('id').primaryKey({ autoIncrement: true }),
   name: text('name').notNull(),
   resource: text('resource').notNull(),
   action: text('action').notNull(),
 });
 
 export const sessionsTable = sqliteTable('sessions', {
-  id: text('id')
-    .primaryKey()
-    .$defaultFn(() => createId()),
-  userId: text('user_id')
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  userId: integer('user_id')
     .notNull()
     .references(() => usersTable.id, { onDelete: 'cascade' }),
   token: text('token').notNull().unique(),
@@ -54,10 +45,8 @@ export const sessionsTable = sqliteTable('sessions', {
 // ==================== PROYECTOS ====================
 
 export const projectsTable = sqliteTable('projects', {
-  id: text('id')
-    .primaryKey()
-    .$defaultFn(() => createId()),
-  ownerId: text('owner_id')
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  ownerId: integer('owner_id')
     .notNull()
     .references(() => usersTable.id, { onDelete: 'cascade' }),
   name: text('name').notNull(),
@@ -74,16 +63,14 @@ export const projectsTable = sqliteTable('projects', {
 });
 
 export const projectMembersTable = sqliteTable('project_members', {
-  id: text('id')
-    .primaryKey()
-    .$defaultFn(() => createId()),
-  projectId: text('project_id')
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  projectId: integer('project_id')
     .notNull()
     .references(() => projectsTable.id, { onDelete: 'cascade' }),
-  userId: text('user_id')
+  userId: integer('user_id')
     .notNull()
     .references(() => usersTable.id, { onDelete: 'cascade' }),
-  roleId: text('role_id')
+  roleId: integer('role_id')
     .notNull()
     .references(() => rolesTable.id),
   joinedAt: integer('joined_at', { mode: 'timestamp' }).$defaultFn(
@@ -94,10 +81,8 @@ export const projectMembersTable = sqliteTable('project_members', {
 // ==================== INTEGRACIONES ====================
 
 export const integrationsTable = sqliteTable('integrations', {
-  id: text('id')
-    .primaryKey()
-    .$defaultFn(() => createId()),
-  projectId: text('project_id')
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  projectId: integer('project_id')
     .notNull()
     .references(() => projectsTable.id, { onDelete: 'cascade' }),
   name: text('name').notNull(),
@@ -120,13 +105,11 @@ export const integrationsTable = sqliteTable('integrations', {
 // ==================== CAMPAÑAS ====================
 
 export const campaignsTable = sqliteTable('campaigns', {
-  id: text('id')
-    .primaryKey()
-    .$defaultFn(() => createId()),
-  projectId: text('project_id')
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  projectId: integer('project_id')
     .notNull()
     .references(() => projectsTable.id, { onDelete: 'cascade' }),
-  adsIntegrationId: text('ads_integration_id').references(
+  adsIntegrationId: integer('ads_integration_id').references(
     () => integrationsTable.id,
   ),
   externalId: text('external_id'), // ID de la campaña en Meta/Google
@@ -143,10 +126,8 @@ export const campaignsTable = sqliteTable('campaigns', {
 // ==================== EVENTOS Y TRACKING ====================
 
 export const eventsTable = sqliteTable('events', {
-  id: text('id')
-    .primaryKey()
-    .$defaultFn(() => createId()),
-  projectId: text('project_id')
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  projectId: integer('project_id')
     .notNull()
     .references(() => projectsTable.id, { onDelete: 'cascade' }),
   eventType: text('event_type').notNull(), // 'page_view', 'click', 'purchase', etc.
@@ -174,10 +155,8 @@ export const eventsTable = sqliteTable('events', {
 });
 
 export const eventValidationsTable = sqliteTable('event_validations', {
-  id: text('id')
-    .primaryKey()
-    .$defaultFn(() => createId()),
-  eventId: text('event_id')
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  eventId: integer('event_id')
     .notNull()
     .references(() => eventsTable.id, { onDelete: 'cascade' }),
   isValid: integer('is_valid', { mode: 'boolean' }).notNull(),
@@ -190,13 +169,11 @@ export const eventValidationsTable = sqliteTable('event_validations', {
 });
 
 export const attributionsTable = sqliteTable('attributions', {
-  id: text('id')
-    .primaryKey()
-    .$defaultFn(() => createId()),
-  eventId: text('event_id')
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  eventId: integer('event_id')
     .notNull()
     .references(() => eventsTable.id, { onDelete: 'cascade' }),
-  campaignId: text('campaign_id')
+  campaignId: integer('campaign_id')
     .notNull()
     .references(() => campaignsTable.id, { onDelete: 'cascade' }),
   model: text('model').notNull(), // 'last_click', 'first_click', 'linear'
@@ -209,13 +186,11 @@ export const attributionsTable = sqliteTable('attributions', {
 // ==================== TRANSACCIONES Y PAGOS ====================
 
 export const transactionsTable = sqliteTable('transactions', {
-  id: text('id')
-    .primaryKey()
-    .$defaultFn(() => createId()),
-  projectId: text('project_id')
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  projectId: integer('project_id')
     .notNull()
     .references(() => projectsTable.id, { onDelete: 'cascade' }),
-  paymentIntegrationId: text('payment_integration_id').references(
+  paymentIntegrationId: integer('payment_integration_id').references(
     () => integrationsTable.id,
   ),
   externalId: text('external_id').unique(), // ID de Stripe
@@ -231,13 +206,11 @@ export const transactionsTable = sqliteTable('transactions', {
 });
 
 export const ordersTable = sqliteTable('orders', {
-  id: text('id')
-    .primaryKey()
-    .$defaultFn(() => createId()),
-  projectId: text('project_id')
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  projectId: integer('project_id')
     .notNull()
     .references(() => projectsTable.id, { onDelete: 'cascade' }),
-  ecommerceIntegrationId: text('ecommerce_integration_id').references(
+  ecommerceIntegrationId: integer('ecommerce_integration_id').references(
     () => integrationsTable.id,
   ),
   externalOrderId: text('external_order_id').unique(),
@@ -254,13 +227,11 @@ export const ordersTable = sqliteTable('orders', {
 // ==================== ANALYTICS ====================
 
 export const analyticsTable = sqliteTable('analytics', {
-  id: text('id')
-    .primaryKey()
-    .$defaultFn(() => createId()),
-  projectId: text('project_id')
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  projectId: integer('project_id')
     .notNull()
     .references(() => projectsTable.id, { onDelete: 'cascade' }),
-  campaignId: text('campaign_id').references(() => campaignsTable.id, {
+  campaignId: integer('campaign_id').references(() => campaignsTable.id, {
     onDelete: 'cascade',
   }),
   periodStart: integer('period_start', { mode: 'timestamp' }).notNull(),
@@ -276,10 +247,8 @@ export const analyticsTable = sqliteTable('analytics', {
 });
 
 export const analyticsSnapshotsTable = sqliteTable('analytics_snapshots', {
-  id: text('id')
-    .primaryKey()
-    .$defaultFn(() => createId()),
-  analyticsId: text('analytics_id')
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  analyticsId: integer('analytics_id')
     .notNull()
     .references(() => analyticsTable.id, { onDelete: 'cascade' }),
   snapshotDate: integer('snapshot_date', { mode: 'timestamp' }).$defaultFn(
@@ -291,13 +260,11 @@ export const analyticsSnapshotsTable = sqliteTable('analytics_snapshots', {
 // ==================== MONITOREO Y SALUD ====================
 
 export const trackingHealthTable = sqliteTable('tracking_health', {
-  id: text('id')
-    .primaryKey()
-    .$defaultFn(() => createId()),
-  projectId: text('project_id')
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  projectId: integer('project_id')
     .notNull()
     .references(() => projectsTable.id, { onDelete: 'cascade' }),
-  integrationId: text('integration_id').references(() => integrationsTable.id),
+  integrationId: integer('integration_id').references(() => integrationsTable.id),
   status: text('status', {
     enum: ['healthy', 'degraded', 'unhealthy'],
   }).notNull(),
@@ -311,10 +278,8 @@ export const trackingHealthTable = sqliteTable('tracking_health', {
 });
 
 export const alertsTable = sqliteTable('alerts', {
-  id: text('id')
-    .primaryKey()
-    .$defaultFn(() => createId()),
-  projectId: text('project_id')
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  projectId: integer('project_id')
     .notNull()
     .references(() => projectsTable.id, { onDelete: 'cascade' }),
   type: text('type', {
@@ -341,10 +306,8 @@ export const alertsTable = sqliteTable('alerts', {
 });
 
 export const healthHistoryTable = sqliteTable('health_history', {
-  id: text('id')
-    .primaryKey()
-    .$defaultFn(() => createId()),
-  projectId: text('project_id')
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  projectId: integer('project_id')
     .notNull()
     .references(() => projectsTable.id, { onDelete: 'cascade' }),
   recordedAt: integer('recorded_at', { mode: 'timestamp' }).$defaultFn(
@@ -356,10 +319,8 @@ export const healthHistoryTable = sqliteTable('health_history', {
 // ==================== COSTOS Y BILLING ====================
 
 export const usageCostsTable = sqliteTable('usage_costs', {
-  id: text('id')
-    .primaryKey()
-    .$defaultFn(() => createId()),
-  projectId: text('project_id')
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  projectId: integer('project_id')
     .notNull()
     .references(() => projectsTable.id, { onDelete: 'cascade' }),
   periodStart: integer('period_start', { mode: 'timestamp' }).notNull(),
@@ -372,10 +333,8 @@ export const usageCostsTable = sqliteTable('usage_costs', {
 // ==================== PRIVACIDAD ====================
 
 export const privacySettingsTable = sqliteTable('privacy_settings', {
-  id: text('id')
-    .primaryKey()
-    .$defaultFn(() => createId()),
-  projectId: text('project_id')
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  projectId: integer('project_id')
     .notNull()
     .references(() => projectsTable.id, { onDelete: 'cascade' }),
   gdprCompliant: integer('gdpr_compliant', { mode: 'boolean' })
@@ -392,10 +351,8 @@ export const privacySettingsTable = sqliteTable('privacy_settings', {
 });
 
 export const consentRecordsTable = sqliteTable('consent_records', {
-  id: text('id')
-    .primaryKey()
-    .$defaultFn(() => createId()),
-  projectId: text('project_id')
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  projectId: integer('project_id')
     .notNull()
     .references(() => projectsTable.id, { onDelete: 'cascade' }),
   visitorId: text('visitor_id').notNull(),

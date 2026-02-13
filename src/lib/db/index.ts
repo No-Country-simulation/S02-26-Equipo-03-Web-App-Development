@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { drizzle } from 'drizzle-orm/libsql';
 import { createClient } from '@libsql/client';
 
@@ -9,15 +10,15 @@ import { createClient } from '@libsql/client';
  * - Turso: DATABASE_URL=libsql://your-db.turso.io + DATABASE_AUTH_TOKEN
  */
 
-const databaseUrl = process.env.DATABASE_URL;
+const databaseUrl = process.env.TURSO_DB_URL || process.env.DATABASE_URL;
 
 if (!databaseUrl) {
-  throw new Error('DATABASE_URL environment variable is not set');
+  throw new Error('Neither TURSO_DB_URL nor DATABASE_URL environment variable is set');
 }
 
 // Determine if using Turso (remote) or local SQLite
 const isLocalSQLite = databaseUrl.startsWith('file:');
-const isTurso = databaseUrl.startsWith('libsql://');
+const isTurso = !!process.env.TURSO_DB_URL || databaseUrl.startsWith('libsql://');
 
 // Create client based on database type
 const client = createClient({
