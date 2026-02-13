@@ -1,6 +1,7 @@
 import js from "@eslint/js";
 import nextPlugin from "@next/eslint-plugin-next";
 import tsParser from "@typescript-eslint/parser";
+import eslintConfigPrettier from "eslint-config-prettier";
 
 const nextCoreWebVitals = nextPlugin.configs?.["core-web-vitals"] ?? {};
 
@@ -41,4 +42,5 @@ export default [
       "no-undef": "off",
     },
   },
+     eslintConfigPrettier,
 ];
