@@ -3,7 +3,9 @@ name: CI
 on:
   pull_request:
   push:
-    branches: [master]
+    branches:
+      - master
+      - devops/**
 
 jobs:
   build:
@@ -21,5 +23,17 @@ jobs:
           node-version: 20
           cache: "pnpm"
 
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm build
+      - name: Instalar dependencias
+        run: pnpm install --frozen-lockfile
+
+      - name: Build (CI con variables dummy)
+        run: pnpm build
+        env:
+          TURSO_DATABASE_URL: "file:./ci.db"
+          TURSO_AUTH_TOKEN: "dummy"
+          BETTER_AUTH_SECRET: "ci-secret"
+          BETTER_AUTH_BASE_URL: "http://localhost:3000"
+
+
+
+
