@@ -13,10 +13,13 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
+    "@auth/drizzle-adapter": "^1.11.1",
     "@libsql/client": "^0.17.0",
     "@react-icons/all-files": "^4.1.0",
+    "better-auth": "^1.4.10",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "dotenv": "^17.3.0",
     "drizzle-orm": "^0.45.1",
     "lucide-react": "^0.563.0",
     "next": "16.1.6",
@@ -35,6 +38,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@typescript-eslint/parser": "^8.55.0",
+    "drizzle-kit": "^0.31.8",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
     "husky": "^9.1.7",
