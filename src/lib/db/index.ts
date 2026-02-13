@@ -10,31 +10,21 @@ import { createClient } from '@libsql/client';
  * - Turso: DATABASE_URL=libsql://your-db.turso.io + DATABASE_AUTH_TOKEN
  */
 
-const databaseUrl = process.env.TURSO_DB_URL || process.env.DATABASE_URL;
+const databaseUrl = process.env.TURSO_DB_URL;
+const authToken = process.env.DATABASE_AUTH_TOKEN;
 
-if (!databaseUrl) {
-  throw new Error('Neither TURSO_DB_URL nor DATABASE_URL environment variable is set');
+if (!databaseUrl || !authToken) {
+  throw new Error('TURSO_DB_URL and DATABASE_AUTH_TOKEN environment variables must be set');
 }
 
-// Determine if using Turso (remote) or local SQLite
-const isLocalSQLite = databaseUrl.startsWith('file:');
-const isTurso = !!process.env.TURSO_DB_URL || databaseUrl.startsWith('libsql://');
-
-// Create client based on database type
+// Create Turso client
 const client = createClient({
   url: databaseUrl,
-  // Only include authToken for Turso connections
-  ...(isTurso && process.env.DATABASE_AUTH_TOKEN
-    ? { authToken: process.env.DATABASE_AUTH_TOKEN }
-    : {}),
+  authToken: authToken,
 });
 
 // Create Drizzle instance
 export const db = drizzle(client);
 
 // Export database type for logging
-export const dbType = isLocalSQLite
-  ? 'SQLite (Local)'
-  : isTurso
-    ? 'Turso (Cloud)'
-    : 'Unknown';
+export const dbType = 'Turso (Cloud)';
