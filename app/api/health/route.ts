@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/src/lib/db';
-import { analyticsTable } from '@/src/lib/db/schema';
+import { sql } from 'drizzle-orm';
 
 /**
  * Health Check Endpoint
@@ -10,8 +10,8 @@ import { analyticsTable } from '@/src/lib/db/schema';
  */
 async function getDatabaseHealth() {
   try {
-    // Basic connectivity check using the analyticsTable
-    await db.select().from(analyticsTable).limit(1);
+    // Optimized connectivity check using a simple value select
+    await db.select({ val: sql`1` });
 
     return NextResponse.json({
       status: 'ok',
