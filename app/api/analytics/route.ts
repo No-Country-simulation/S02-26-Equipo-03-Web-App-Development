@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { db } from "@/infrastructure/database/db";
-import { analyticsTable } from "@/infrastructure/database/schemas/schema_total";
+import { analyticsTable } from "@/infrastructure/database/schemas/schema";
 import { desc } from "drizzle-orm";
 
 /**
