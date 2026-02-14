@@ -4,7 +4,7 @@ import {
   projectsTable,
   usersTable,
   campaignsTable,
-} from './schema';
+} from './schemas/schema_total';
 
 /**
  * Helper to get a date in the past

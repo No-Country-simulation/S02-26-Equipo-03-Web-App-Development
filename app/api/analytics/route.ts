@@ -1,7 +1,7 @@
-import { NextResponse } from 'next/server';
-import { db } from '@/src/lib/db';
-import { analyticsTable } from '@/src/lib/db/schema';
-import { desc } from 'drizzle-orm';
+import { NextResponse } from "next/server";
+import { db } from "@/infrastructure/database/db";
+import { analyticsTable } from "@/infrastructure/database/schemas/schema_total";
+import { desc } from "drizzle-orm";
 
 /**
  * Analytics GET Endpoint
@@ -19,18 +19,18 @@ async function getAnalytics() {
       .orderBy(desc(analyticsTable.periodStart));
 
     return NextResponse.json({
-      status: 'success',
+      status: "success",
       data: records,
       count: records.length,
     });
   } catch (error) {
-    console.error('Failed to fetch analytics:', error);
+    console.error("Failed to fetch analytics:", error);
     return NextResponse.json(
       {
-        status: 'error',
-        message: 'Internal Server Error',
+        status: "error",
+        message: "Internal Server Error",
       },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
