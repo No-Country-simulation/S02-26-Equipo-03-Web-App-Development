@@ -6,6 +6,9 @@
 ### 0. Verificar Salud de la API
 GET {{appUrl}}/health
 
+### 0.1 Probar Analíticas (Protegido - Debería dar 401 si no hay login)
+GET {{appUrl}}/analytics
+
 ### 1. Probar Registro (Sign Up)
 POST {{baseUrl}}/sign-up/email
 Content-Type: application/json
