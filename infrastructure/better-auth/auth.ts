@@ -7,7 +7,12 @@ import "dotenv/config";
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
     provider: "sqlite",
-    schema: schema,
+    schema: {
+      user: schema.usersTable,
+      session: schema.sessionsTable,
+      account: schema.accountsTable,
+      verification: schema.verificationsTable,
+    },
   }),
 
   secret: process.env.BETTER_AUTH_SECRET,
@@ -17,4 +22,5 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
+  trustedOrigins: process.env.NODE_ENV === "development" ? ["http://localhost:3000"] : [],
 });

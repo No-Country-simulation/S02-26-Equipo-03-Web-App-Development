@@ -1,0 +1,41 @@
+### Variables
+@baseUrl = http://localhost:3000/api/auth
+@appUrl = http://localhost:3000/api
+@origin = http://localhost:3000
+
+### 0. Verificar Salud de la API
+GET {{appUrl}}/health
+
+### 1. Probar Registro (Sign Up)
+POST {{baseUrl}}/sign-up/email
+Content-Type: application/json
+Origin: http://localhost:3000
+Referer: http://localhost:3000/
+
+{
+    "email": "test@example.com",
+    "password": "password123",
+    "name": "Prueba Usuario"
+}
+
+### 2. Probar Login
+POST {{baseUrl}}/sign-in/email
+Content-Type: application/json
+Origin: http://localhost:3000
+Referer: http://localhost:3000/
+
+{
+    "email": "test@example.com",
+    "password": "password123"
+}
+
+### 3. Verificar Sesión Actual
+GET {{baseUrl}}/get-session
+
+### 4. Cerrar Sesión (Sign Out)
+POST {{baseUrl}}/sign-out
+Content-Type: application/json
+Origin: http://localhost:3000
+Referer: http://localhost:3000/
+
+{}

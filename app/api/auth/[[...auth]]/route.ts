@@ -1,11 +1,4 @@
-export const dynamic = "force-dynamic";
+import { auth } from "@/infrastructure/better-auth/auth";
 
-export async function GET(request: Request) {
-  const { auth } = await import("@/infrastructure/better-auth/auth");
-  return auth.handler(request);
-}
-
-export async function POST(request: Request) {
-  const { auth } = await import("@/infrastructure/better-auth/auth");
-  return auth.handler(request);
-}
+export const GET = auth.handler;
+export const POST = auth.handler;
