@@ -3,14 +3,14 @@ import { GET } from "./route";
 import { db } from "@/infrastructure/database/db";
 
 // Mockeamos el módulo de base de datos
-vi.mock("@/src/lib/db", () => ({
+vi.mock("@/infrastructure/database/db", () => ({
   db: {
     select: vi.fn(),
   },
 }));
 
 // Mockeamos la tabla y operadores para evitar errores de importación en el test
-vi.mock("@/src/lib/db/schema", () => ({
+vi.mock("@/infrastructure/database/schemas/schema", () => ({
   analyticsTable: {},
 }));
 

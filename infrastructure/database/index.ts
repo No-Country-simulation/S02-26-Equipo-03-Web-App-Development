@@ -1,30 +1,26 @@
-import 'dotenv/config';
-import { drizzle } from 'drizzle-orm/libsql';
-import { createClient } from '@libsql/client';
+import "dotenv/config";
+import { drizzle } from "drizzle-orm/libsql";
+import { createClient } from "@libsql/client";
+import * as schema from "@infrastructure/database/schemas/schema";
 
-/**
- * Database Client Configuration
- *
- * Supports both local SQLite and Turso cloud database:
- * - Local: DATABASE_URL=file:./local.db (no authToken needed)
- * - Turso: DATABASE_URL=libsql://your-db.turso.io + DATABASE_AUTH_TOKEN
- */
-
-const databaseUrl = process.env.TURSO_DB_URL;
+const databaseUrl = process.env.DATABASE_URL;
 const authToken = process.env.DATABASE_AUTH_TOKEN;
 
-if (!databaseUrl || !authToken) {
-  throw new Error('TURSO_DB_URL and DATABASE_AUTH_TOKEN environment variables must be set');
+if (!databaseUrl) {
+  throw new Error("DATABASE_URL must be set");
 }
 
-// Create Turso client
+const isLocal = databaseUrl.startsWith("file:");
+
+if (!isLocal && !authToken) {
+  throw new Error("DATABASE_AUTH_TOKEN must be set for remote databases");
+}
+
 const client = createClient({
   url: databaseUrl,
-  authToken: authToken,
+  authToken: isLocal ? undefined : authToken,
 });
 
-// Create Drizzle instance
-export const db = drizzle(client);
+export const db = drizzle(client, { schema });
 
-// Export database type for logging
-export const dbType = 'Turso (Cloud)';
+export const dbType = isLocal ? "SQLite (Local)" : "Turso (Cloud)";

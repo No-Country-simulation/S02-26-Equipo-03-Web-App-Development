@@ -199,7 +199,7 @@ export const integrationsTable = sqliteTable("integrations", {
     .notNull()
     .default("pending"),
   credentials: text("credentials", { mode: "json" }), // Encrypted JSON
-  connectedAt: integer("connected_at", { mode: "timestamp" }),
+  connectedAt: integer("connected_at", { mode: "timestamp_ms" }),
   // Specific fields by type
   platform: text("platform"), // e.g., 'stripe', 'meta', 'google'
   storeUrl: text("store_url"),
@@ -221,8 +221,8 @@ export const campaignsTable = sqliteTable("campaigns", {
   name: text("name").notNull(),
   budget: real("budget"),
   spent: real("spent").default(0),
-  startDate: integer("start_date", { mode: "timestamp" }),
-  endDate: integer("end_date", { mode: "timestamp" }),
+  startDate: integer("start_date", { mode: "timestamp_ms" }),
+  endDate: integer("end_date", { mode: "timestamp_ms" }),
   status: text("status", { enum: ["active", "paused", "completed", "draft"] })
     .notNull()
     .default("draft"),
@@ -241,8 +241,8 @@ export const eventsTable = sqliteTable("events", {
   payload: text("payload", { mode: "json" }).notNull(),
   visitorId: text("visitor_id"),
   sessionId: text("session_id"),
-  timestamp: integer("timestamp", { mode: "timestamp" }).notNull(),
-  receivedAt: integer("received_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+  timestamp: integer("timestamp_ms", { mode: "timestamp_ms" }).notNull(),
+  receivedAt: integer("received_at", { mode: "timestamp_ms" }).$defaultFn(() => new Date()),
   status: text("status", {
     enum: ["received", "validated", "processed", "attributed", "failed", "duplicate"],
   })
@@ -264,7 +264,7 @@ export const eventValidationsTable = sqliteTable("event_validations", {
   isDuplicate: integer("is_duplicate", { mode: "boolean" }).notNull(),
   isAnomaly: integer("is_anomaly", { mode: "boolean" }).notNull(),
   validationErrors: text("validation_errors", { mode: "json" }),
-  validatedAt: integer("validated_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+  validatedAt: integer("validated_at", { mode: "timestamp_ms" }).$defaultFn(() => new Date()),
 });
 
 /* ========================= 
@@ -280,7 +280,7 @@ export const attributionsTable = sqliteTable("attributions", {
     .references(() => campaignsTable.id, { onDelete: "cascade" }),
   model: text("model").notNull(), // 'last_click', 'first_click', 'linear'
   weight: real("weight").notNull().default(1.0),
-  attributedAt: integer("attributed_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+  attributedAt: integer("attributed_at", { mode: "timestamp_ms" }).$defaultFn(() => new Date()),
 });
 
 /* ========================= 
@@ -300,7 +300,7 @@ export const transactionsTable = sqliteTable("transactions", {
   })
     .notNull()
     .default("pending"),
-  transactionDate: integer("transaction_date", { mode: "timestamp" }).notNull(),
+  transactionDate: integer("transaction_date", { mode: "timestamp_ms" }).notNull(),
   metadata: text("metadata", { mode: "json" }),
 });
 
@@ -322,7 +322,7 @@ export const ordersTable = sqliteTable("orders", {
   })
     .notNull()
     .default("pending"),
-  orderDate: integer("order_date", { mode: "timestamp" }).notNull(),
+  orderDate: integer("order_date", { mode: "timestamp_ms" }).notNull(),
 });
 
 /* ========================= 
@@ -336,8 +336,8 @@ export const analyticsTable = sqliteTable("analytics", {
   campaignId: text("campaign_id").references(() => campaignsTable.id, {
     onDelete: "cascade",
   }),
-  periodStart: integer("period_start", { mode: "timestamp" }).notNull(),
-  periodEnd: integer("period_end", { mode: "timestamp" }).notNull(),
+  periodStart: integer("period_start", { mode: "timestamp_ms" }).notNull(),
+  periodEnd: integer("period_end", { mode: "timestamp_ms" }).notNull(),
   impressions: integer("impressions").default(0),
   clicks: integer("clicks").default(0),
   conversions: integer("conversions").default(0),
@@ -356,7 +356,7 @@ export const analyticsSnapshotsTable = sqliteTable("analytics_snapshots", {
   analyticsId: text("analytics_id")
     .notNull()
     .references(() => analyticsTable.id, { onDelete: "cascade" }),
-  snapshotDate: integer("snapshot_date", { mode: "timestamp" }).$defaultFn(() => new Date()),
+  snapshotDate: integer("snapshot_date", { mode: "timestamp_ms" }).$defaultFn(() => new Date()),
   metrics: text("metrics", { mode: "json" }).notNull(),
 });
 
@@ -376,7 +376,7 @@ export const trackingHealthTable = sqliteTable("tracking_health", {
   eventsProcessed: integer("events_processed").default(0),
   eventsFailed: integer("events_failed").default(0),
   matchRate: real("match_rate"),
-  checkedAt: integer("checked_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+  checkedAt: integer("checked_at", { mode: "timestamp_ms" }).$defaultFn(() => new Date()),
 });
 
 /* ========================= 
@@ -402,8 +402,8 @@ export const alertsTable = sqliteTable("alerts", {
   message: text("message").notNull(),
   context: text("context", { mode: "json" }),
   isResolved: integer("is_resolved", { mode: "boolean" }).notNull().default(false),
-  triggeredAt: integer("triggered_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
-  resolvedAt: integer("resolved_at", { mode: "timestamp" }),
+  triggeredAt: integer("triggered_at", { mode: "timestamp_ms" }).$defaultFn(() => new Date()),
+  resolvedAt: integer("resolved_at", { mode: "timestamp_ms" }),
 });
 
 /* ========================= 
@@ -414,7 +414,7 @@ export const healthHistoryTable = sqliteTable("health_history", {
   projectId: text("project_id")
     .notNull()
     .references(() => projectsTable.id, { onDelete: "cascade" }),
-  recordedAt: integer("recorded_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+  recordedAt: integer("recorded_at", { mode: "timestamp_ms" }).$defaultFn(() => new Date()),
   metrics: text("metrics", { mode: "json" }).notNull(),
 });
 
@@ -426,8 +426,8 @@ export const usageCostsTable = sqliteTable("usage_costs", {
   projectId: text("project_id")
     .notNull()
     .references(() => projectsTable.id, { onDelete: "cascade" }),
-  periodStart: integer("period_start", { mode: "timestamp" }).notNull(),
-  periodEnd: integer("period_end", { mode: "timestamp" }).notNull(),
+  periodStart: integer("period_start", { mode: "timestamp_ms" }).notNull(),
+  periodEnd: integer("period_end", { mode: "timestamp_ms" }).notNull(),
   eventsProcessed: integer("events_processed").default(0),
   apiCalls: integer("api_calls").default(0),
   totalCost: real("total_cost").default(0),
@@ -446,7 +446,7 @@ export const privacySettingsTable = sqliteTable("privacy_settings", {
   ccpaCompliant: integer("ccpa_compliant", { mode: "boolean" }).notNull().default(false),
   dataRetentionDays: integer("data_retention_days").notNull().default(90),
   allowedDataTypes: text("allowed_data_types", { mode: "json" }),
-  updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+  updatedAt: integer("updated_at", { mode: "timestamp_ms" }).$defaultFn(() => new Date()),
 });
 
 /* ========================= 
@@ -459,8 +459,8 @@ export const consentRecordsTable = sqliteTable("consent_records", {
     .references(() => projectsTable.id, { onDelete: "cascade" }),
   visitorId: text("visitor_id").notNull(),
   consents: text("consents", { mode: "json" }).notNull(),
-  givenAt: integer("given_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
-  revokedAt: integer("revoked_at", { mode: "timestamp" }),
+  givenAt: integer("given_at", { mode: "timestamp_ms" }).$defaultFn(() => new Date()),
+  revokedAt: integer("revoked_at", { mode: "timestamp_ms" }),
 });
 
 // ==================== RELATIONS ====================
