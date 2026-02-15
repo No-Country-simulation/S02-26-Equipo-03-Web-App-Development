@@ -10,7 +10,11 @@
     "build": "next build",
     "start": "next start",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "db:generate": "pnpm drizzle-kit generate",
+    "db:push": "pnpm drizzle-kit push",
+    "db:studio": "pnpm drizzle-kit studio --port 4983",
+    "db:migrate": "pnpm drizzle-kit migrate"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.11.1",
