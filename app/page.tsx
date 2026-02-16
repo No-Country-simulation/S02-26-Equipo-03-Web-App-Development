@@ -1,4 +1,3 @@
-import Image from "next/image";
 import CardsSections from "@/shared/components/LandingPage/CardsSections";
 import DataSafety from "@/shared/components/LandingPage/DataSafety";
 import SocialProof from "@/shared/components/LandingPage/SocialProof";
