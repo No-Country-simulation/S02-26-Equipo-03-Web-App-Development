@@ -83,7 +83,13 @@ export default function SocialProof() {
             <TabsContent key={platform} value={platform} className="w-full">
               <Card className="mx-auto w-full max-w-3xl rounded-3xl border-[#E3E8EE] bg-[#F7F9FA] py-8 shadow-none">
                 <CardContent className="flex flex-col items-center gap-4 px-10 text-center">
-                  <p className="text-lg tracking-[0.2em] text-[#FFA726]">★★★★★</p>
+                  <p
+                    className="text-lg tracking-[0.2em] text-[#FFA726]"
+                    role="img"
+                    aria-label="5 out of 5 stars"
+                  >
+                    <span aria-hidden="true">★★★★★</span>
+                  </p>
                   <blockquote className="max-w-2xl text-2xl leading-relaxed text-black italic">
                     “{testimonial.quote}”
                   </blockquote>
