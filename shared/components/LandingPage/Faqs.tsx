@@ -43,7 +43,7 @@ export default function Faqs() {
 
         <Accordion type="single" collapsible className="w-full">
           {faqItems.map((item, index) => (
-            <AccordionItem key={item.question} value={`faq-${index}`}>
+            <AccordionItem key={`faq-${index}`} value={`faq-${index}`}>
               <AccordionTrigger className="py-6 text-base font-semibold text-black hover:no-underline">
                 {item.question}
               </AccordionTrigger>
