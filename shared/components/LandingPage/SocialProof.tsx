@@ -45,35 +45,35 @@ export default function SocialProof() {
         <Tabs defaultValue="meta" className="w-full items-center gap-8">
           <TabsList
             variant="line"
-            className="h-auto w-full justify-center gap-8  md:gap-10 overflow-x-auto overflow-y-hidden"
+            className="h-auto w-full justify-center gap-8 md:gap-10 overflow-x-auto overflow-y-hidden"
           >
             <TabsTrigger
               value="meta"
-              className="px-0 text-2xl font-semibold  text-[#1A1F36] data-[state=active]:text-[#1A1F36] hover:text-gray-500"
+              className="px-0 text-2xl font-semibold text-[#1A1F36] data-[state=active]:text-[#1A1F36] hover:text-gray-500"
             >
               Meta
             </TabsTrigger>
             <TabsTrigger
               value="google"
-              className="px-0 text-2xl font-semibold  text-[#1A1F36] data-[state=active]:text-[#1A1F36] hover:text-gray-500"
+              className="px-0 text-2xl font-semibold text-[#1A1F36] data-[state=active]:text-[#1A1F36] hover:text-gray-500"
             >
               Google
             </TabsTrigger>
             <TabsTrigger
               value="stripe"
-              className="px-0 text-2xl font-semibold  text-[#1A1F36] data-[state=active]:text-[#1A1F36] hover:text-gray-500"
+              className="px-0 text-2xl font-semibold text-[#1A1F36] data-[state=active]:text-[#1A1F36] hover:text-gray-500"
             >
               Stripe
             </TabsTrigger>
             <TabsTrigger
               value="amazon"
-              className="px-0 text-2xl font-semibold  text-[#1A1F36] data-[state=active]:text-[#1A1F36] hover:text-gray-500 "
+              className="px-0 text-2xl font-semibold text-[#1A1F36] data-[state=active]:text-[#1A1F36] hover:text-gray-500"
             >
               Amazon
             </TabsTrigger>
             <TabsTrigger
               value="shopify"
-              className="px-0 text-2xl font-semibold  text-[#1A1F36] data-[state=active]:text-[#1A1F36] hover:text-gray-500"
+              className="px-0 text-2xl font-semibold text-[#1A1F36] data-[state=active]:text-[#1A1F36] hover:text-gray-500"
             >
               Shopify
             </TabsTrigger>
