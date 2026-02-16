@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { db } from "@/infrastructure/database/db";
+import { db } from "@/infrastructure/database";
 import { sql } from "drizzle-orm";
 
 /**
