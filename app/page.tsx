@@ -1,5 +1,5 @@
 import Image from "next/image";
-import CardsSections from "./CardsSections";
+import CardsSections from "@/shared/components/LandingPage/CardsSections";
 
 export default function Home() {
   return (

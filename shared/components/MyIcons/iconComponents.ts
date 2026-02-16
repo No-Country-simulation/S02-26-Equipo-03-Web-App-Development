@@ -1,5 +1,5 @@
 import { IconType } from "@react-icons/all-files";
-import { NameIcon } from "./typeNameIcon";
+import { NameIcon } from "@/shared/components/MyIcons/typeNameIcon";
 import { FiLayers, FiActivity, FiGlobe, FiDatabase, FiSend, FiBarChart2 } from "react-icons/fi";
 
 export const iconComponents: Record<NameIcon, IconType> = {

@@ -1,5 +1,5 @@
-import { MyCard } from "@/components/MyCard/MyCard";
-import { MyIconsProperties } from "@/components/MyIcons/typeNameIcon";
+import { MyCard } from "@/shared/components/MyCard/MyCard";
+import { MyIconsProperties } from "@/shared/components/MyIcons/typeNameIcon";
 
 interface CardsSectionsProps {
   title: string;

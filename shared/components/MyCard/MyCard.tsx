@@ -1,6 +1,6 @@
-import { MyIcons } from "../MyIcons/MyIcons";
-import { MyIconsProperties } from "../MyIcons/typeNameIcon";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { MyIcons } from "@/shared/components/MyIcons/MyIcons";
+import { MyIconsProperties } from "@/shared/components/MyIcons/typeNameIcon";
+import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
 
 interface MyCardProps {
   icon?: MyIconsProperties;
