@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { auth } from "@/infrastructure/better-auth/auth";
+import { auth } from "@infrastructure/better-auth/auth";
 
 /**
  * Next.js 16 Proxy

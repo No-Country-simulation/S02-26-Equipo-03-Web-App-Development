@@ -1,16 +1,16 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { GET } from "./route";
-import { db } from "@/infrastructure/database/db";
+import { db } from "@infrastructure/database";
 
-// Mockeamos el módulo de base de datos
-vi.mock("@/infrastructure/database/db", () => ({
+// Mockeamos el módulo de base de datos usando el alias correcto
+vi.mock("@infrastructure/database", () => ({
   db: {
     select: vi.fn(),
   },
 }));
 
 // Mockeamos la tabla y operadores para evitar errores de importación en el test
-vi.mock("@/infrastructure/database/schemas/schema", () => ({
+vi.mock("@infrastructure/database/schemas/schema", () => ({
   analyticsTable: {},
 }));
 
