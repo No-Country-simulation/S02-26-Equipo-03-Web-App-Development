@@ -275,10 +275,18 @@ export const attributionsTable = sqliteTable("attributions", {
   eventId: text("event_id")
     .notNull()
     .references(() => eventsTable.id, { onDelete: "cascade" }),
+  /*Modifiqué la tabla attributions para que el campaignId sea opcional. 
+  Esto evita que la aplicación falle si Marketing lanza un anuncio con 
+  un nombre de campaña que aún no hemos registrado.*/
   campaignId: text("campaign_id")
-    .notNull()
     .references(() => campaignsTable.id, { onDelete: "cascade" }),
-  model: text("model").notNull(), // 'last_click', 'first_click', 'linear'
+  /*Agregué campos de texto para utm_source y utm_campaign. Así, 
+  aunque se borre una campaña en el futuro, mantenemos el 
+  registro histórico de qué link trajo al usuario.*/
+  utmSource: text("utm_source"), 
+  utmCampaign: text("utm_campaign"),
+  externalSessionId: text("external_session_id").notNull(),
+  model: text("model").notNull(), 
   weight: real("weight").notNull().default(1.0),
   attributedAt: integer("attributed_at", { mode: "timestamp_ms" }).$defaultFn(() => new Date()),
 });
