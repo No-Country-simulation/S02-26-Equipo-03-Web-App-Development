@@ -33,6 +33,7 @@ export async function proxy(request: NextRequest) {
         maxAge: 60 * 60 * 24 * 30, // 30 días
         sameSite: "lax",
         secure: process.env.NODE_ENV === "production",
+        httpOnly: true, // Seguridad: No accesible desde JS del cliente
       });
     }
   }
