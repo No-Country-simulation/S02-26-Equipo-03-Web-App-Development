@@ -10,7 +10,7 @@ export function PricingCard({ plan }: { plan: Plan }) {
         relative flex flex-col rounded-2xl p-7 transition-all duration-200
         ${
           isRecommended
-            ? "border-3 border-primary-blue shadow-2xl bg-white scale-[1.02]"
+            ? "border-4 border-primary-blue shadow-2xl bg-white scale-[1.02]"
             : "border border-gray-200 bg-white hover:border-gray-300 hover:shadow-md"
         }
       `}
