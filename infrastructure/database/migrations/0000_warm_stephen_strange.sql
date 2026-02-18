@@ -112,7 +112,7 @@ CREATE TABLE `events` (
 	`payload` text NOT NULL,
 	`visitor_id` text,
 	`session_id` text,
-	`timestamp` integer NOT NULL,
+	`timestamp_ms` integer NOT NULL,
 	`received_at` integer,
 	`status` text DEFAULT 'received' NOT NULL,
 	`deduplication_key` text,
@@ -179,6 +179,16 @@ CREATE TABLE `privacy_settings` (
 );
 --> statement-breakpoint
 CREATE UNIQUE INDEX `privacy_settings_project_id_unique` ON `privacy_settings` (`project_id`);--> statement-breakpoint
+CREATE TABLE `project_api_keys` (
+	`id` text PRIMARY KEY NOT NULL,
+	`project_id` text NOT NULL,
+	`key_hash` text NOT NULL,
+	`created_at` integer,
+	`revoked_at` integer,
+	FOREIGN KEY (`project_id`) REFERENCES `projects`(`id`) ON UPDATE no action ON DELETE cascade
+);
+--> statement-breakpoint
+CREATE UNIQUE INDEX `project_api_keys_key_hash_unique` ON `project_api_keys` (`key_hash`);--> statement-breakpoint
 CREATE TABLE `project_members` (
 	`id` text PRIMARY KEY NOT NULL,
 	`project_id` text NOT NULL,
@@ -187,19 +197,17 @@ CREATE TABLE `project_members` (
 	`joined_at` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL,
 	FOREIGN KEY (`project_id`) REFERENCES `projects`(`id`) ON UPDATE no action ON DELETE cascade,
 	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON UPDATE no action ON DELETE cascade,
-	FOREIGN KEY (`role_id`) REFERENCES `roles`(`id`) ON UPDATE no action ON DELETE no action
+	FOREIGN KEY (`role_id`) REFERENCES `roles`(`id`) ON UPDATE no action ON DELETE restrict
 );
 --> statement-breakpoint
 CREATE UNIQUE INDEX `project_members_project_user_idx` ON `project_members` (`project_id`,`user_id`);--> statement-breakpoint
 CREATE TABLE `projects` (
 	`id` text PRIMARY KEY NOT NULL,
-	`owner_id` text NOT NULL,
 	`name` text NOT NULL,
 	`description` text,
 	`status` text DEFAULT 'active' NOT NULL,
 	`created_at` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL,
-	`updated_at` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL,
-	FOREIGN KEY (`owner_id`) REFERENCES `user`(`id`) ON UPDATE no action ON DELETE cascade
+	`updated_at` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE `role_permissions` (
@@ -213,11 +221,13 @@ CREATE TABLE `role_permissions` (
 CREATE UNIQUE INDEX `role_permissions_role_permission_idx` ON `role_permissions` (`role_id`,`permission_id`);--> statement-breakpoint
 CREATE TABLE `roles` (
 	`id` text PRIMARY KEY NOT NULL,
+	`projectId` text NOT NULL,
 	`name` text NOT NULL,
-	`description` text
+	`description` text,
+	FOREIGN KEY (`projectId`) REFERENCES `projects`(`id`) ON UPDATE no action ON DELETE cascade
 );
 --> statement-breakpoint
-CREATE UNIQUE INDEX `roles_name_unique` ON `roles` (`name`);--> statement-breakpoint
+CREATE UNIQUE INDEX `roles_project_name_idx` ON `roles` (`projectId`,`name`);--> statement-breakpoint
 CREATE TABLE `session` (
 	`id` text PRIMARY KEY NOT NULL,
 	`expires_at` integer NOT NULL,

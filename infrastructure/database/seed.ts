@@ -34,10 +34,8 @@ async function seed() {
       .where(eq(usersTable.email, email))
       .limit(1);
 
-    let userId: string;
-
     if (user.length === 0) {
-      const inserted = await tx
+      await tx
         .insert(usersTable)
         .values({
           id: crypto.randomUUID(),
@@ -45,10 +43,6 @@ async function seed() {
           name: "Demo User",
         })
         .returning({ id: usersTable.id });
-
-      userId = inserted[0].id;
-    } else {
-      userId = user[0].id;
     }
 
     // =========================
@@ -70,7 +64,6 @@ async function seed() {
         .insert(projectsTable)
         .values({
           id: crypto.randomUUID(),
-          ownerId: userId,
           name: projectName,
           status: "active",
         })
