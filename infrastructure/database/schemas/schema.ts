@@ -501,13 +501,49 @@ export const accountRelations = relations(accountsTable, ({ one }) => ({
   }),
 }));
 
-export const projectsRelations = relations(projectsTable, ({ many }) => ({
+export const rolesRelations = relations(rolesTable, ({ one, many }) => ({
+  project: one(projectsTable, {
+    fields: [rolesTable.projectId],
+    references: [projectsTable.id],
+  }),
   members: many(projectMembersTable),
+  rolePermissions: many(rolePermissionsTable),
+}));
+
+export const permissionsRelations = relations(permissionsTable, ({ many }) => ({
+  rolePermissions: many(rolePermissionsTable),
+}));
+
+export const rolePermissionsRelations = relations(rolePermissionsTable, ({ one }) => ({
+  role: one(rolesTable, {
+    fields: [rolePermissionsTable.roleId],
+    references: [rolesTable.id],
+  }),
+  permission: one(permissionsTable, {
+    fields: [rolePermissionsTable.permissionId],
+    references: [permissionsTable.id],
+  }),
+}));
+
+export const projectsRelations = relations(projectsTable, ({ one, many }) => ({
+  roles: many(rolesTable),
+  members: many(projectMembersTable),
+  apiKeys: many(projectApiKeysTable),
   integrations: many(integrationsTable),
   campaigns: many(campaignsTable),
   events: many(eventsTable),
   transactions: many(transactionsTable),
+  orders: many(ordersTable),
   analytics: many(analyticsTable),
+  trackingHealthRecords: many(trackingHealthTable),
+  alerts: many(alertsTable),
+  healthHistory: many(healthHistoryTable),
+  usageCosts: many(usageCostsTable),
+  consentRecords: many(consentRecordsTable),
+  privacySettings: one(privacySettingsTable, {
+    fields: [projectsTable.id],
+    references: [privacySettingsTable.projectId],
+  }),
 }));
 
 export const projectApiKeyRelations = relations(projectApiKeysTable, ({ one }) => ({
@@ -532,6 +568,17 @@ export const projectMembersRelations = relations(projectMembersTable, ({ one }) 
   }),
 }));
 
+export const integrationsRelations = relations(integrationsTable, ({ one, many }) => ({
+  project: one(projectsTable, {
+    fields: [integrationsTable.projectId],
+    references: [projectsTable.id],
+  }),
+  campaigns: many(campaignsTable),
+  transactions: many(transactionsTable),
+  orders: many(ordersTable),
+  trackingHealthRecords: many(trackingHealthTable),
+}));
+
 export const campaignsRelations = relations(campaignsTable, ({ one, many }) => ({
   project: one(projectsTable, {
     fields: [campaignsTable.projectId],
@@ -543,6 +590,128 @@ export const campaignsRelations = relations(campaignsTable, ({ one, many }) => (
   }),
   attributions: many(attributionsTable),
   analytics: many(analyticsTable),
+}));
+
+export const eventsRelations = relations(eventsTable, ({ one, many }) => ({
+  project: one(projectsTable, {
+    fields: [eventsTable.projectId],
+    references: [projectsTable.id],
+  }),
+  validation: one(eventValidationsTable, {
+    fields: [eventsTable.id],
+    references: [eventValidationsTable.eventId],
+  }),
+  attributions: many(attributionsTable),
+}));
+
+export const eventValidationsRelations = relations(eventValidationsTable, ({ one }) => ({
+  event: one(eventsTable, {
+    fields: [eventValidationsTable.eventId],
+    references: [eventsTable.id],
+  }),
+}));
+
+export const attributionsRelations = relations(attributionsTable, ({ one }) => ({
+  event: one(eventsTable, {
+    fields: [attributionsTable.eventId],
+    references: [eventsTable.id],
+  }),
+  campaign: one(campaignsTable, {
+    fields: [attributionsTable.campaignId],
+    references: [campaignsTable.id],
+  }),
+}));
+
+export const transactionsRelations = relations(transactionsTable, ({ one, many }) => ({
+  project: one(projectsTable, {
+    fields: [transactionsTable.projectId],
+    references: [projectsTable.id],
+  }),
+  paymentIntegration: one(integrationsTable, {
+    fields: [transactionsTable.paymentIntegrationId],
+    references: [integrationsTable.id],
+  }),
+  orders: many(ordersTable),
+}));
+
+export const ordersRelations = relations(ordersTable, ({ one }) => ({
+  project: one(projectsTable, {
+    fields: [ordersTable.projectId],
+    references: [projectsTable.id],
+  }),
+  ecommerceIntegration: one(integrationsTable, {
+    fields: [ordersTable.ecommerceIntegrationId],
+    references: [integrationsTable.id],
+  }),
+  transaction: one(transactionsTable, {
+    fields: [ordersTable.transactionId],
+    references: [transactionsTable.id],
+  }),
+}));
+
+export const analyticsRelations = relations(analyticsTable, ({ one, many }) => ({
+  project: one(projectsTable, {
+    fields: [analyticsTable.projectId],
+    references: [projectsTable.id],
+  }),
+  campaign: one(campaignsTable, {
+    fields: [analyticsTable.campaignId],
+    references: [campaignsTable.id],
+  }),
+  snapshots: many(analyticsSnapshotsTable),
+}));
+
+export const analyticsSnapshotsRelations = relations(analyticsSnapshotsTable, ({ one }) => ({
+  analytics: one(analyticsTable, {
+    fields: [analyticsSnapshotsTable.analyticsId],
+    references: [analyticsTable.id],
+  }),
+}));
+
+export const trackingHealthRelations = relations(trackingHealthTable, ({ one }) => ({
+  project: one(projectsTable, {
+    fields: [trackingHealthTable.projectId],
+    references: [projectsTable.id],
+  }),
+  integration: one(integrationsTable, {
+    fields: [trackingHealthTable.integrationId],
+    references: [integrationsTable.id],
+  }),
+}));
+
+export const alertsRelations = relations(alertsTable, ({ one }) => ({
+  project: one(projectsTable, {
+    fields: [alertsTable.projectId],
+    references: [projectsTable.id],
+  }),
+}));
+
+export const healthHistoryRelations = relations(healthHistoryTable, ({ one }) => ({
+  project: one(projectsTable, {
+    fields: [healthHistoryTable.projectId],
+    references: [projectsTable.id],
+  }),
+}));
+
+export const usageCostsRelations = relations(usageCostsTable, ({ one }) => ({
+  project: one(projectsTable, {
+    fields: [usageCostsTable.projectId],
+    references: [projectsTable.id],
+  }),
+}));
+
+export const privacySettingsRelations = relations(privacySettingsTable, ({ one }) => ({
+  project: one(projectsTable, {
+    fields: [privacySettingsTable.projectId],
+    references: [projectsTable.id],
+  }),
+}));
+
+export const consentRecordsRelations = relations(consentRecordsTable, ({ one }) => ({
+  project: one(projectsTable, {
+    fields: [consentRecordsTable.projectId],
+    references: [projectsTable.id],
+  }),
 }));
 
 // ==================== TYPES ====================
