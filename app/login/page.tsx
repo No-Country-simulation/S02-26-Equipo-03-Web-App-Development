@@ -4,15 +4,20 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Field, FieldGroup, FieldLabel, FieldSet } from "@/shared/components/ui/field";
 import { MyIcons } from "@/shared/components/MyIcons/MyIcons";
 import { Button } from "@/shared/components/ui/button";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { formSchemaLogin } from "@/shared/Zod/formSchemaLogin";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import Link from "next/link";
+import { getSession, signInWithEmail, signOut } from "@/shared/lib/auth-client";
+import { useState } from "react";
 type FormData = z.infer<typeof formSchemaLogin>;
 
 export default function LoginForm() {
-  // const router = useRouter();
+  const router = useRouter();
+  const [status, setStatus] = useState<string>("");
+  const [sessionSummary, setSessionSummary] = useState<string>("");
+  const [isBusy, setIsBusy] = useState(false);
 
   const form = useForm<z.infer<typeof formSchemaLogin>>({
     resolver: zodResolver(formSchemaLogin),
@@ -21,8 +26,52 @@ export default function LoginForm() {
       password: "",
     },
   });
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    console.log(data);
+
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    setIsBusy(true);
+    setStatus("");
+
+    const result = await signInWithEmail(data);
+
+    if (result.error) {
+      setStatus(result.error.message ?? "No se pudo iniciar sesión.");
+      setIsBusy(false);
+      return;
+    }
+
+    setStatus("Sesión iniciada correctamente.");
+    setIsBusy(false);
+    router.push("/");
+  };
+
+  const handleGetSession = async () => {
+    setIsBusy(true);
+    const result = await getSession();
+
+    if (result.error) {
+      setSessionSummary(result.error.message ?? "No hay sesión activa.");
+      setIsBusy(false);
+      return;
+    }
+
+    const sessionData = result.data as { user?: { email?: string; name?: string } } | null;
+    const identity = sessionData?.user?.email ?? sessionData?.user?.name ?? "sesión activa";
+    setSessionSummary(`Sesión detectada: ${identity}`);
+    setIsBusy(false);
+  };
+
+  const handleSignOut = async () => {
+    setIsBusy(true);
+    const result = await signOut();
+    setIsBusy(false);
+
+    if (result.error) {
+      setStatus(result.error.message ?? "No se pudo cerrar sesión.");
+      return;
+    }
+
+    setStatus("Sesión cerrada correctamente.");
+    setSessionSummary("");
   };
 
   return (
@@ -98,10 +147,35 @@ export default function LoginForm() {
 
         <Button
           type="submit"
+          disabled={isBusy}
           className="mt-8 mb-5 w-full cursor-pointer rounded-lg bg-blue-600 py-3 text-white transition-colors hover:bg-blue-700"
         >
-          Iniciar sesión
+          {isBusy ? "Procesando..." : "Iniciar sesión"}
         </Button>
+
+        <div className="flex gap-2">
+          <Button
+            type="button"
+            variant="outline"
+            disabled={isBusy}
+            onClick={handleGetSession}
+            className="flex-1"
+          >
+            Ver sesión
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            disabled={isBusy}
+            onClick={handleSignOut}
+            className="flex-1"
+          >
+            Cerrar sesión
+          </Button>
+        </div>
+
+        {status ? <p className="mt-4 text-sm text-gray-700">{status}</p> : null}
+        {sessionSummary ? <p className="mt-1 text-sm text-gray-700">{sessionSummary}</p> : null}
 
         <p className="text-center text-sm text-gray-600">
           ¿No tenés acceso?{" "}
