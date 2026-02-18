@@ -103,11 +103,18 @@ export const verificationsTable = sqliteTable(
 /* ========================= 
     ROLES
 ==========================*/
-export const rolesTable = sqliteTable("roles", {
-  id: text("id").primaryKey(),
-  name: text("name").notNull().unique(),
-  description: text("description"),
-});
+export const rolesTable = sqliteTable(
+  "roles",
+  {
+    id: text("id").primaryKey(),
+    projectId: text("projectId")
+      .notNull()
+      .references(() => projectsTable.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    description: text("description"),
+  },
+  (table) => [uniqueIndex("roles_project_name_idx").on(table.projectId, table.name)]
+);
 
 /* ========================= 
     PERMISSIONS
@@ -143,9 +150,6 @@ export const rolePermissionsTable = sqliteTable(
 ==========================*/
 export const projectsTable = sqliteTable("projects", {
   id: text("id").primaryKey(),
-  ownerId: text("owner_id")
-    .notNull()
-    .references(() => usersTable.id, { onDelete: "cascade" }),
   name: text("name").notNull(),
   description: text("description"),
   status: text("status", { enum: ["active", "inactive", "archived"] })
@@ -158,6 +162,19 @@ export const projectsTable = sqliteTable("projects", {
     .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
     .$onUpdate(() => /* @__PURE__ */ new Date())
     .notNull(),
+});
+
+/* ========================= 
+    PROJECT API KEYS
+==========================*/
+export const projectApiKeysTable = sqliteTable("project_api_keys", {
+  id: text("id").primaryKey(),
+  projectId: text("project_id")
+    .notNull()
+    .references(() => projectsTable.id, { onDelete: "cascade" }),
+  keyHash: text("key_hash").notNull().unique(),
+  createdAt: integer("created_at", { mode: "timestamp_ms" }).$defaultFn(() => new Date()),
+  revokedAt: integer("revoked_at", { mode: "timestamp_ms" }),
 });
 
 /* ========================= 
@@ -175,7 +192,7 @@ export const projectMembersTable = sqliteTable(
       .references(() => usersTable.id, { onDelete: "cascade" }),
     roleId: text("role_id")
       .notNull()
-      .references(() => rolesTable.id),
+      .references(() => rolesTable.id, { onDelete: "restrict" }),
     joinedAt: integer("joined_at", { mode: "timestamp_ms" })
       .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
       .notNull(),
@@ -467,7 +484,6 @@ export const consentRecordsTable = sqliteTable("consent_records", {
 export const userRelations = relations(usersTable, ({ many }) => ({
   sessions: many(sessionsTable),
   accounts: many(accountsTable),
-  ownedProjects: many(projectsTable),
   projectMemberships: many(projectMembersTable),
 }));
 
@@ -485,15 +501,35 @@ export const accountRelations = relations(accountsTable, ({ one }) => ({
   }),
 }));
 
-export const projectsRelations = relations(projectsTable, ({ one, many }) => ({
-  owner: one(usersTable, {
-    fields: [projectsTable.ownerId],
-    references: [usersTable.id],
-  }),
+export const projectsRelations = relations(projectsTable, ({ many }) => ({
+  members: many(projectMembersTable),
+  integrations: many(integrationsTable),
   campaigns: many(campaignsTable),
   events: many(eventsTable),
   transactions: many(transactionsTable),
   analytics: many(analyticsTable),
+}));
+
+export const projectApiKeyRelations = relations(projectApiKeysTable, ({ one }) => ({
+  project: one(projectsTable, {
+    fields: [projectApiKeysTable.projectId],
+    references: [projectsTable.id],
+  }),
+}));
+
+export const projectMembersRelations = relations(projectMembersTable, ({ one }) => ({
+  project: one(projectsTable, {
+    fields: [projectMembersTable.projectId],
+    references: [projectsTable.id],
+  }),
+  user: one(usersTable, {
+    fields: [projectMembersTable.userId],
+    references: [usersTable.id],
+  }),
+  role: one(rolesTable, {
+    fields: [projectMembersTable.roleId],
+    references: [rolesTable.id],
+  }),
 }));
 
 export const campaignsRelations = relations(campaignsTable, ({ one, many }) => ({
@@ -505,6 +541,10 @@ export const campaignsRelations = relations(campaignsTable, ({ one, many }) => (
     fields: [campaignsTable.adsIntegrationId],
     references: [integrationsTable.id],
   }),
+  attributions: many(attributionsTable, {
+    relationName: "campaignId"
+  }),
+  analytics: many(analyticsTable),
 }));
 
 // ==================== TYPES ====================
