@@ -20,11 +20,13 @@
   "dependencies": {
     "@libsql/client": "^0.17.0",
     "@react-icons/all-files": "^4.1.0",
+    "@scalar/nextjs-api-reference": "^0.9.19",
     "better-auth": "^1.4.10",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dotenv": "^17.3.0",
     "drizzle-orm": "^0.45.1",
+    "drizzle-zod": "^0.8.3",
     "lucide-react": "^0.563.0",
     "next": "16.1.6",
     "prettier-plugin-tailwindcss": "^0.7.2",

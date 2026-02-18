@@ -14,6 +14,9 @@ importers:
       '@react-icons/all-files':
         specifier: ^4.1.0
         version: 4.1.0(react@19.2.3)
+      '@scalar/nextjs-api-reference':
+        specifier: ^0.9.19
+        version: 0.9.19(next@16.1.6(@babel/core@7.29.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3)
       better-auth:
         specifier: ^1.4.10
         version: 1.4.10(drizzle-kit@0.31.8)(drizzle-orm@0.45.1(@libsql/client@0.17.0)(kysely@0.28.11))(next@16.1.6(@babel/core@7.29.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(vitest@4.0.18(@types/node@20.19.31)(jiti@2.6.1)(lightningcss@1.30.2)(msw@2.12.10(@types/node@20.19.31)(typescript@5.9.3))(tsx@4.21.0))
@@ -29,6 +32,9 @@ importers:
       drizzle-orm:
         specifier: ^0.45.1
         version: 0.45.1(@libsql/client@0.17.0)(kysely@0.28.11)
+      drizzle-zod:
+        specifier: ^0.8.3
+        version: 0.8.3(drizzle-orm@0.45.1(@libsql/client@0.17.0)(kysely@0.28.11))(zod@4.3.6)
       lucide-react:
         specifier: ^0.563.0
         version: 0.563.0(react@19.2.3)
@@ -2032,6 +2038,25 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@scalar/core@0.3.38':
+    resolution: {integrity: sha512-vacEKCx46szDGKI5x8GrFUQygMMoeOVFxeltkLM1kLylAYs7iLprkwkLlEI0zJezE7mqiWIONh9MDJA2lTciIA==}
+    engines: {node: '>=20'}
+
+  '@scalar/helpers@0.2.12':
+    resolution: {integrity: sha512-Ig/H1Je8nqcDiY+YwFIpATxF2ko7zKrjIZFWK2gGeNTYK4Np9XnqDHg56jM3Xru439Eh4qHq9P/lX7Se5nnxFA==}
+    engines: {node: '>=20'}
+
+  '@scalar/nextjs-api-reference@0.9.19':
+    resolution: {integrity: sha512-ArA5bhUdwsT1PokPe+cbBIrQC+5CN5Ps8Z9s4nFO8BMvAnZOiSLnfNEnqfAPJKfwUXL5BFqDqZzABVoZqAUPMQ==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      next: ^15.0.0 || ^16.0.0
+      react: ^19.0.0
+
+  '@scalar/types@0.6.3':
+    resolution: {integrity: sha512-uicRSnA29SO+nwywdW5ycjIp24N/6FziPEpgC5nObCy5upUNpArN+xro06T1WX5zFnT9g7ADeTfFkWT+OLk/jA==}
+    engines: {node: '>=20'}
+
   '@sec-ant/readable-stream@0.4.1':
     resolution: {integrity: sha512-831qok9r2t8AlxLko40y2ebgSDhenenCatLVeW/uBtnHPyhHOvG0C7TvfgecV+wHzIm5KUICgzmVpWS+IMEAeg==}
 
@@ -2699,6 +2724,12 @@ packages:
         optional: true
       sqlite3:
         optional: true
+
+  drizzle-zod@0.8.3:
+    resolution: {integrity: sha512-66yVOuvGhKJnTdiqj1/Xaaz9/qzOdRJADpDa68enqS6g3t0kpNkwNYjUuaeXgZfO/UWuIM9HIhSlJ6C5ZraMww==}
+    peerDependencies:
+      drizzle-orm: '>=0.36.0'
+      zod: ^3.25.0 || ^4.0.0
 
   dunder-proto@1.0.1:
     resolution: {integrity: sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==}
@@ -3423,6 +3454,11 @@ packages:
   nanoid@3.3.11:
     resolution: {integrity: sha512-N8SpfPUnUp1bK+PMYW8qSWdl9U+wwNWI4QKxOYDy9JAro3WMX7p2OeVRF9v+347pnakNevPmiHhNmZ2HbFA76w==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
+    hasBin: true
+
+  nanoid@5.1.6:
+    resolution: {integrity: sha512-c7+7RQ+dMB5dPwwCp4ee1/iV/q2P6aK1mTZcfr1BTuVlyW9hJYiMPybJCcnBlQtuSmTIWNeazm/zqNoZSSElBg==}
+    engines: {node: ^18 || >=20}
     hasBin: true
 
   nanostores@1.1.0:
@@ -5988,6 +6024,25 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.57.1':
     optional: true
 
+  '@scalar/core@0.3.38':
+    dependencies:
+      '@scalar/types': 0.6.3
+
+  '@scalar/helpers@0.2.12': {}
+
+  '@scalar/nextjs-api-reference@0.9.19(next@16.1.6(@babel/core@7.29.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3)':
+    dependencies:
+      '@scalar/core': 0.3.38
+      next: 16.1.6(@babel/core@7.29.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      react: 19.2.3
+
+  '@scalar/types@0.6.3':
+    dependencies:
+      '@scalar/helpers': 0.2.12
+      nanoid: 5.1.6
+      type-fest: 5.4.4
+      zod: 4.3.6
+
   '@sec-ant/readable-stream@0.4.1': {}
 
   '@sindresorhus/merge-streams@4.0.0': {}
@@ -6484,6 +6539,11 @@ snapshots:
     optionalDependencies:
       '@libsql/client': 0.17.0
       kysely: 0.28.11
+
+  drizzle-zod@0.8.3(drizzle-orm@0.45.1(@libsql/client@0.17.0)(kysely@0.28.11))(zod@4.3.6):
+    dependencies:
+      drizzle-orm: 0.45.1(@libsql/client@0.17.0)(kysely@0.28.11)
+      zod: 4.3.6
 
   dunder-proto@1.0.1:
     dependencies:
@@ -7239,6 +7299,8 @@ snapshots:
   mute-stream@2.0.0: {}
 
   nanoid@3.3.11: {}
+
+  nanoid@5.1.6: {}
 
   nanostores@1.1.0: {}
 
