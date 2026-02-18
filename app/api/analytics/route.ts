@@ -4,13 +4,21 @@ import { analyticsTable } from "@infrastructure/database/schemas/schema";
 import { desc } from "drizzle-orm";
 
 /**
- * Analytics GET Endpoint
- *
- * Fetches the latest records from the analytics table.
- * Restricted to authenticated users.
- *
- * @route GET /api/analytics
- * @returns {object} Latest analytics records
+ * @swagger
+ * /api/analytics:
+ *   get:
+ *     tags: [Analytics]
+ *     summary: Fetch latest analytics records
+ *     description: Restricted to authenticated users. Fetches records from the analytics table.
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Latest analytics records retrieved successfully
+ *       401:
+ *         description: Unauthorized - Valid session required
+ *       500:
+ *         description: Internal Server Error
  */
 async function getAnalytics() {
   try {

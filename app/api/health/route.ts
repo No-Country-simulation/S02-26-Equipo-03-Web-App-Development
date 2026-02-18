@@ -3,10 +3,15 @@ import { db } from "@infrastructure/database";
 import { sql } from "drizzle-orm";
 
 /**
- * Health Check Endpoint
- *
- * @route GET /api/health
- * @returns {object} Health status with database connectivity and timestamp
+ * @swagger
+ * /api/health:
+ *   get:
+ *     description: Health Check Endpoint
+ *     responses:
+ *       200:
+ *         description: Health status with database connectivity and timestamp
+ *       500:
+ *         description: Internal Server Error
  */
 async function getDatabaseHealth() {
   try {
