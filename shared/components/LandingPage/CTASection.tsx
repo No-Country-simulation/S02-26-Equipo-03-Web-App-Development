@@ -1,5 +1,5 @@
 
-export function CTASection() {
+export default function CTASection() {
   return (
     <section className="px-4 py-32 bg-white">
       <div className="max-w-4xl mx-auto rounded-3xl overflow-hidden bg-gradient-cta px-8 py-20 text-center shadow-2xl shadow-blue-200">
