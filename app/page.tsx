@@ -2,13 +2,13 @@ import CardsSections from "@/shared/components/LandingPage/CardsSections";
 import DataSafety from "@/shared/components/LandingPage/DataSafety";
 import SocialProof from "@/shared/components/LandingPage/SocialProof";
 import Faqs from "@/shared/components/LandingPage/Faqs";
-import PricingSection from "@/shared/components/LandingPage/PricingSection";
-import CTASection from "@/shared/components/LandingPage/CTASection";
-import { Footer } from "@/shared/components/LandingPage/Footer";
+import { Hero, InfoCards } from "@/shared/components/LandingPage";
 
 export default function Home() {
   return (
-    <main className="min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
+    <main className="flex min-h-screen flex-col items-center justify-center bg-white">
+      <Hero />
+      <InfoCards />
       <div>
         <CardsSections
           title="La capa de verdad entre Ads y pagos reales"
@@ -107,11 +107,8 @@ export default function Home() {
         />
         <DataSafety />
         {/* Plans section */}
-        <PricingSection />
         <SocialProof />
         <Faqs />
-        <CTASection />
-        <Footer />
       </div>
     </main>
   );
