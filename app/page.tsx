@@ -3,7 +3,7 @@ import DataSafety from "@/shared/components/LandingPage/DataSafety";
 import SocialProof from "@/shared/components/LandingPage/SocialProof";
 import Faqs from "@/shared/components/LandingPage/Faqs";
 import PricingSection from "@/shared/components/LandingPage/PricingSection";
-import { CTASection } from "@/shared/components/LandingPage/CTASection";
+import CTASection from "@/shared/components/LandingPage/CTASection";
 import { Footer } from "@/shared/components/LandingPage/Footer";
 
 export default function Home() {
