@@ -490,8 +490,6 @@ export const projectsRelations = relations(projectsTable, ({ one, many }) => ({
     fields: [projectsTable.ownerId],
     references: [usersTable.id],
   }),
-  members: many(projectMembersTable),
-  integrations: many(integrationsTable),
   campaigns: many(campaignsTable),
   events: many(eventsTable),
   transactions: many(transactionsTable),
@@ -507,8 +505,6 @@ export const campaignsRelations = relations(campaignsTable, ({ one, many }) => (
     fields: [campaignsTable.adsIntegrationId],
     references: [integrationsTable.id],
   }),
-  attributions: many(attributionsTable),
-  analytics: many(analyticsTable),
 }));
 
 // ==================== TYPES ====================
