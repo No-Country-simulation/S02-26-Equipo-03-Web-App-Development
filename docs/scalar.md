@@ -18,7 +18,7 @@ La documentación de API se compone de dos archivos clave:
 
 ### 1. Archivo de especificación OpenAPI
 
-Ubicación: [`app/api/scalar/route.ts`](../app/api/scalar/route.ts)
+Ubicación: [`app/api/swagger-ui/route.ts`](../app/api/swagger-ui/route.ts)
 
 Este archivo contiene:
 
@@ -36,7 +36,7 @@ export async function GET() {
 
 ### 2. Página de interfaz
 
-Ubicación: [`app/scalar/page.tsx`](../app/scalar/page.tsx)
+Ubicación: [`app/swagger-ui/page.tsx`](../app/swagger-ui/page.tsx)
 
 Este archivo renderiza la interfaz de Swagger UI:
 
@@ -46,10 +46,10 @@ Este archivo renderiza la interfaz de Swagger UI:
 import SwaggerUI from "swagger-ui-react";
 import "swagger-ui-react/swagger-ui.css";
 
-export default function ScalarPage() {
+export default function SwaggerUiPage() {
   return (
     <SwaggerUI
-      url="/api/scalar"           // URL donde se obtiene el spec OpenAPI
+      url="/api/swagger-ui"           // URL donde se obtiene el spec OpenAPI
       defaultModelsExpandDepth={1}
       docExpansion="list"
     />
@@ -97,7 +97,7 @@ pnpm start
 2. **Abrir la documentación de Swagger UI:**
 
    ```
-   http://localhost:3000/scalar
+   http://localhost:3000/swagger-ui
    ```
 
 3. **Probar un endpoint:**
@@ -114,7 +114,7 @@ pnpm start
 
 ## Agregar más endpoints
 
-Para agregar más endpoints a la documentación, edita el objeto `openApiDocument` en [`app/api/scalar/route.ts`](../app/api/scalar/route.ts):
+Para agregar más endpoints a la documentación, edita el objeto `openApiDocument` en [`app/api/swagger-ui/route.ts`](../app/api/swagger-ui/route.ts):
 
 ### Ejemplo de endpoint GET
 
@@ -188,8 +188,8 @@ Para agregar más endpoints a la documentación, edita el objeto `openApiDocumen
 ## Notas importantes
 
 - **Swagger UI :** Swagger UI es más estable y compatible con Next.js 16. Se probaron , pero Swagger UI ofrece mejor funcionamiento.
-- **Especificación en `/api/scalar`:** Esta ruta devuelve solo el JSON de OpenAPI. No es para acceso directo del usuario.
-- **Interfaz en `/scalar`:** Esta es la ruta que debes compartir con tu equipo para que vean la documentación interactiva.
+- **Especificación en `/api/swagger-ui`:** Esta ruta devuelve solo el JSON de OpenAPI. No es para acceso directo del usuario.
+- **Interfaz en `/swagger-ui`:** Esta es la ruta que debes compartir con tu equipo para que vean la documentación interactiva.
 - **Autenticación:** Algunos endpoints requieren autenticación (Better Auth). Al probarlos desde Swagger UI sin credenciales, recibirás un error 401 Unauthorized.
 - **Puerto:** El servidor debe estar corriendo en el puerto 3000 (configurado en el documento OpenAPI).
 - **Parámetros con valores por defecto:** Usa el campo `example` en el schema para proporcionar valores iniciales en Swagger UI.
