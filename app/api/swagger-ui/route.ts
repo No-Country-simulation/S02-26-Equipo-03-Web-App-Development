@@ -1,5 +1,7 @@
 export const dynamic = "force-dynamic";
 
+const DEFAULT_LOCAL_SERVER = "http://localhost:3000";
+
 const openApiDocument = {
   openapi: "3.0.0",
   info: {
@@ -7,12 +9,6 @@ const openApiDocument = {
     description: "API para el proyecto de análisis y reportes",
     version: "1.0.0",
   },
-  servers: [
-    {
-      url: "http://localhost:3000",
-      description: "Servidor de desarrollo",
-    },
-  ],
   paths: {
     "/api/health": {
       get: {
@@ -135,6 +131,37 @@ const openApiDocument = {
   },
 };
 
-export async function GET() {
-  return Response.json(openApiDocument);
+function getServerOrigin(request: Request) {
+  const url = new URL(request.url);
+  const forwardedProto = request.headers.get("x-forwarded-proto");
+  const forwardedHost = request.headers.get("x-forwarded-host");
+
+  if (forwardedHost) {
+    const protocol = forwardedProto ?? url.protocol.replace(":", "");
+    return `${protocol}://${forwardedHost}`;
+  }
+
+  return url.origin;
+}
+
+export async function GET(request: Request) {
+  const currentOrigin = getServerOrigin(request);
+
+  return Response.json({
+    ...openApiDocument,
+    servers: [
+      {
+        url: currentOrigin,
+        description: "Servidor actual",
+      },
+      ...(currentOrigin === DEFAULT_LOCAL_SERVER
+        ? []
+        : [
+            {
+              url: DEFAULT_LOCAL_SERVER,
+              description: "Servidor local",
+            },
+          ]),
+    ],
+  });
 }
