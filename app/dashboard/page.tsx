@@ -1,10 +1,10 @@
-import { KpiCards } from "@/shared/components/Dashboard/KpiCards";
-import { RevenueChart } from "@/shared/components/Dashboard/RevenueChart";
-import { ProblemsPanel } from "@/shared/components/Dashboard/ProblemsPanel";
+import { KpiCards } from "@/shared/components/Dashboard/Home/KpiCards";
+import { RevenueChart } from "@/shared/components/Dashboard/Home/RevenueChart";
+import { ProblemsPanel } from "@/shared/components/Dashboard/Home/ProblemsPanel";
 
 export default function DashboardHome() {
   return (
-    <div className="flex flex-col gap-5 overflow-y-auto px-6 py-6 bg-gray-50/40 min-h-full">
+    <div className="flex min-h-full flex-col gap-5 overflow-y-auto bg-gray-50/40 px-6 py-6">
       {/* KPIs */}
       <KpiCards />
 
