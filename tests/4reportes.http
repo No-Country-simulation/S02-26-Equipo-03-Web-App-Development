@@ -1,0 +1,56 @@
+@appUrl = http://localhost:3000/api
+
+### General Health Check no protected
+GET {{appUrl}}/health
+
+### v1 general analytics enpoints protected
+GET {{appUrl}}/v1/generalanalytics
+
+### v1 general analytics enpoints protected 1
+GET {{appUrl}}/v1/generalanalytics1
+
+### v1 general analytics enpoints protected 2 correct filter 200
+GET {{appUrl}}/v1/generalanalytics2?conversions=22
+
+### v1 general analytics enpoints protected 2; 200 no data
+GET {{appUrl}}/v1/generalanalytics2?conversions=-1000
+
+### v1 general analytics enpoints protected 2 bad req 400
+GET http://localhost:3000/api/v1/generalanalytics2?conbersions=1
+
+### v1 general analytics enpoints protected
+GET {{appUrl}}/v1/analytics/analytics
+
+### v1 alerts enpoints protected
+GET {{appUrl}}/v1/alerts/alert
+
+### v1 alerts enpoints protected 1
+GET {{appUrl}}/v1/alerts/alert1
+
+### v1 reports enpoints protected
+GET {{appUrl}}/v1/reports/roi
+
+### v1 reports enpoints protected 1
+GET {{appUrl}}/v1/reports/pac
+
+### 2. Probar Login
+POST {{appUrl}}/auth/sign-in/email
+Content-Type: application/json
+Origin: http://localhost:3000
+Referer: http://localhost:3000/
+
+{
+    "email": "test@example.com",
+    "password": "password123"
+}
+
+### 3. Verificar Sesión Actual
+GET {{appUrl}}/auth/get-session
+
+### 4. Cerrar Sesión (Sign Out)
+POST {{appUrl}}/auth/sign-out
+Content-Type: application/json
+Origin: http://localhost:3000
+Referer: http://localhost:3000/
+
+{}
