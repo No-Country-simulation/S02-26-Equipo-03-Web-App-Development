@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Premium Demo - Analytics Pixel</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --primary: #6366f1;
+        --primary-hover: #4f46e5;
+        --bg: #0f172a;
+        --card-bg: #1e293b;
+        --text: #f8fafc;
+        --text-dim: #94a3b8;
+        --accent: #22d3ee;
+        --glass: rgba(30, 41, 59, 0.7);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Outfit", sans-serif;
+        background-color: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+        overflow-x: hidden;
+        background-image:
+          radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
+          radial-gradient(circle at 80% 80%, rgba(34, 211, 238, 0.1) 0%, transparent 40%);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+      }
+
+      .container {
+        max-width: 800px;
+        width: 100%;
+        text-align: center;
+        z-index: 10;
+      }
+
+      h1 {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        background: linear-gradient(to right, #6366f1, #22d3ee);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        letter-spacing: -0.02em;
+      }
+
+      p {
+        font-size: 1.25rem;
+        color: var(--text-dim);
+        margin-bottom: 3rem;
+        max-width: 600px;
+        margin-inline: auto;
+      }
+
+      .card {
+        background: var(--glass);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 24px;
+        padding: 3rem;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 30px 60px -12px rgba(99, 102, 241, 0.2);
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        background: rgba(99, 102, 241, 0.1);
+        color: var(--primary);
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        border: 1px solid rgba(99, 102, 241, 0.2);
+      }
+
+      .actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+
+      button {
+        padding: 1rem 2rem;
+        font-size: 1rem;
+        font-weight: 600;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-family: inherit;
+      }
+
+      .btn-primary {
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        box-shadow:
+          0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      }
+
+      .btn-primary:hover {
+        background-color: var(--primary-hover);
+        transform: scale(1.02);
+      }
+
+      .btn-outline {
+        background-color: transparent;
+        color: var(--text);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .btn-outline:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+        border-color: rgba(255, 255, 255, 0.4);
+      }
+
+      .logs {
+        margin-top: 3rem;
+        width: 100%;
+        max-width: 600px;
+        text-align: left;
+        background: #000;
+        border-radius: 12px;
+        padding: 1.5rem;
+        font-family: "Courier New", Courier, monospace;
+        font-size: 0.85rem;
+        color: #10b981;
+        border: 1px solid #1e293b;
+        max-height: 200px;
+        overflow-y: auto;
+      }
+
+      .log-entry {
+        margin-bottom: 0.5rem;
+        border-bottom: 1px solid #111;
+        padding-bottom: 0.25rem;
+      }
+
+      .log-time {
+        color: #64748b;
+        margin-right: 0.5rem;
+      }
+
+      @media (max-width: 640px) {
+        h1 {
+          font-size: 2.5rem;
+        }
+        .actions {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+
+    <!-- ANALYTICS PIXEL SNIPPET -->
+    <script>
+      (function (w, d, s, u, k) {
+        w["_aq"] = w["_aq"] || [];
+        w["_ak"] = k;
+        w["_au"] = u;
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s);
+        j.async = true;
+        // Usamos una ruta relativa para este demo, pero en producción sería la URL absoluta
+        //?utm_source=meta&utm_medium=cpc&utm_campaign=black_friday&fbclid=fb_998877
+        j.src = "pixel.js";
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "http://localhost:3000", "56065e6a5decce35b0dbc78cc980c48fd33b661eca644cfce6a10b2507335010");
+    </script>
+  </head>
+  <body>
+    <div class="container text-center">
+      <span class="badge">External Site Simulation</span>
+      <h1>Experience the Power of Real-time Analytics</h1>
+      <p>
+        This page is a standalone simulation connected to our custom tracking pixel. Click the
+        buttons below to trigger events and watch them fire.
+      </p>
+
+      <div class="card">
+        <h3>Interactive Tracking Console</h3>
+        <p style="font-size: 1rem; margin-bottom: 2rem">
+          Interact with these elements to see how the pixel captures behavior.
+        </p>
+
+        <div class="actions">
+          <button class="btn-primary" id="btn-purchase">Simulate Purchase</button>
+          <button class="btn-outline" id="btn-lead">Capture Lead</button>
+          <button class="btn-outline" id="btn-nav">Custom Navigation Event</button>
+          <button class="btn-outline" id="btn-search">Search Simulation</button>
+        </div>
+      </div>
+
+      <div class="logs" id="console-logs">
+        <div class="log-entry"><span class="log-time">[System]</span> Initializing tracker...</div>
+        <div class="log-entry">
+          <span class="log-time">[System]</span> Page view event sent automatically.
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const logsContainer = document.getElementById("console-logs");
+
+      function addLog(message) {
+        const entry = document.createElement("div");
+        entry.className = "log-entry";
+        const time = new Date().toLocaleTimeString();
+        entry.innerHTML = `<span class="log-time">[${time}]</span> ${message}`;
+        logsContainer.prepend(entry);
+      }
+
+      document.getElementById("btn-purchase").addEventListener("click", () => {
+        const data = {
+          amount: (Math.random() * 100 + 10).toFixed(2),
+          currency: "USD",
+          items: ["Premium Subscription"],
+        };
+        window._aq.push(["track", "purchase", data]);
+        addLog(`Event sent: <b>purchase</b> - $${data.amount}`);
+      });
+
+      document.getElementById("btn-lead").addEventListener("click", () => {
+        const data = {
+          email: "test@example.com",
+          source: "demo_landing",
+        };
+        window._aq.push(["track", "lead", data]);
+        addLog(`Event sent: <b>lead</b> - ${data.email}`);
+      });
+
+      document.getElementById("btn-nav").addEventListener("click", () => {
+        window._aq.push(["track", "navigation", { destination: "/pricing" }]);
+        addLog(`Event sent: <b>navigation</b> to /pricing`);
+      });
+
+      document.getElementById("btn-search").addEventListener("click", () => {
+        window._aq.push(["track", "search", { query: "analytics" }]);
+        addLog(`Event sent: <b>search</b> - "analytics"`);
+      });
+    </script>
+  </body>
+</html>
