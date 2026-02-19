@@ -30,6 +30,10 @@ export default [
       ...(nextCoreWebVitals.rules ?? {}),
       quotes: ["error", "double"],
       semi: ["error", "always"],
+      "no-unused-vars": ["error", { 
+        argsIgnorePattern: "^_",
+        varsIgnorePattern: "^_"
+      }],
     },
   },
 
