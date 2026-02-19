@@ -588,7 +588,9 @@ export const campaignsRelations = relations(campaignsTable, ({ one, many }) => (
     fields: [campaignsTable.adsIntegrationId],
     references: [integrationsTable.id],
   }),
-  attributions: many(attributionsTable),
+  attributions: many(attributionsTable, {
+    relationName: "campaignId"
+  }),
   analytics: many(analyticsTable),
 }));
 
