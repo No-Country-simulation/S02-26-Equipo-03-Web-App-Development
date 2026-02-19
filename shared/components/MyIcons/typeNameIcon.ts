@@ -4,4 +4,12 @@ export interface MyIconsProperties {
   className?: string;
 }
 
-export type NameIcon = "database" | "activity" | "layers" | "globe" | "send" | "barChart";
+export type NameIcon =
+  | "database"
+  | "activity"
+  | "layers"
+  | "globe"
+  | "send"
+  | "barChart"
+  | "email"
+  | "password";
