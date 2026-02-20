@@ -1,38 +1,37 @@
 ﻿import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { getAnalyticsByConversions } from "@/modules/analytics.controller";
+import {
+  getAnalyticsByConversions,
+  parseConversionsParam,
+  parseLimitParam,
+} from "@/modules/analytics.controller";
 
 export const dynamic = "force-dynamic";
 
-function parseConversions(req: NextRequest): number | null {
-  const { searchParams } = new URL(req.url);
-  const conversionsParam = searchParams.get("conversions");
-
-  if (!conversionsParam) {
-    return null;
-  }
-
-  const parsed = Number(conversionsParam);
-
-  if (!Number.isInteger(parsed)) {
-    return null;
-  }
-
-  return parsed;
-}
-
 export async function GET(req: NextRequest) {
-  const conversions = parseConversions(req);
+  const { searchParams } = new URL(req.url);
+  const conversions = parseConversionsParam(searchParams.get("conversions"));
+  const limit = parseLimitParam(searchParams.get("limit"), 50);
 
   if (conversions === null) {
     return NextResponse.json(
       {
         status: "error",
-        message: "Query parameter 'conversions' is required and must be an integer",
+        message: "Query parameter 'conversions' is required and must be a positive integer",
       },
       { status: 400 }
     );
   }
 
-  return getAnalyticsByConversions(conversions);
+  if (limit === null) {
+    return NextResponse.json(
+      {
+        status: "error",
+        message: "Query parameter 'limit' must be a positive integer",
+      },
+      { status: 400 }
+    );
+  }
+
+  return getAnalyticsByConversions(conversions, limit);
 }

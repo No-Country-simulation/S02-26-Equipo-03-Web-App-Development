@@ -14,6 +14,7 @@ export async function proxy(request: NextRequest) {
   // 1. Definimos las rutas que requieren sesión obligatoria
   const isProtectedRoute =
     pathname.startsWith("/api/analytics") ||
+    pathname.startsWith("/api/v1/analytics") ||
     pathname.startsWith("/api/protected") ||
     pathname.startsWith("/api/projects");
 
@@ -44,5 +45,10 @@ export async function proxy(request: NextRequest) {
  * en qué rutas específicas debe ejecutarse este proxy.
  */
 export const config = {
-  matcher: ["/api/analytics/:path*", "/api/protected/:path*", "/api/projects/:path*"],
+  matcher: [
+    "/api/analytics/:path*",
+    "/api/v1/analytics/:path*",
+    "/api/protected/:path*",
+    "/api/projects/:path*",
+  ],
 };

@@ -1,6 +1,6 @@
-﻿import type { NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { getAnalytics, parseLimitParam } from "@/modules/analytics.controller";
+import { getAnalyticsAnomalies, parseLimitParam } from "@/modules/analytics.controller";
 
 export const dynamic = "force-dynamic";
 
@@ -18,5 +18,5 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  return getAnalytics(limit);
+  return getAnalyticsAnomalies(limit);
 }

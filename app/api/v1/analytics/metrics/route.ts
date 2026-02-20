@@ -1,12 +1,12 @@
-﻿import type { NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { getAnalytics, parseLimitParam } from "@/modules/analytics.controller";
+import { getAnalyticsMetrics, parseLimitParam } from "@/modules/analytics.controller";
 
 export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const limit = parseLimitParam(searchParams.get("limit"), 50);
+  const limit = parseLimitParam(searchParams.get("limit"), 200);
 
   if (limit === null) {
     return NextResponse.json(
@@ -18,5 +18,5 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  return getAnalytics(limit);
+  return getAnalyticsMetrics(limit);
 }
