@@ -103,11 +103,18 @@ export const verificationsTable = sqliteTable(
 /* ========================= 
     ROLES
 ==========================*/
-export const rolesTable = sqliteTable("roles", {
-  id: text("id").primaryKey(),
-  name: text("name").notNull().unique(),
-  description: text("description"),
-});
+export const rolesTable = sqliteTable(
+  "roles",
+  {
+    id: text("id").primaryKey(),
+    projectId: text("projectId")
+      .notNull()
+      .references(() => projectsTable.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    description: text("description"),
+  },
+  (table) => [uniqueIndex("roles_project_name_idx").on(table.projectId, table.name)]
+);
 
 /* ========================= 
     PERMISSIONS
@@ -143,9 +150,6 @@ export const rolePermissionsTable = sqliteTable(
 ==========================*/
 export const projectsTable = sqliteTable("projects", {
   id: text("id").primaryKey(),
-  ownerId: text("owner_id")
-    .notNull()
-    .references(() => usersTable.id, { onDelete: "cascade" }),
   name: text("name").notNull(),
   description: text("description"),
   status: text("status", { enum: ["active", "inactive", "archived"] })
@@ -158,6 +162,19 @@ export const projectsTable = sqliteTable("projects", {
     .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
     .$onUpdate(() => /* @__PURE__ */ new Date())
     .notNull(),
+});
+
+/* ========================= 
+    PROJECT API KEYS
+==========================*/
+export const projectApiKeysTable = sqliteTable("project_api_keys", {
+  id: text("id").primaryKey(),
+  projectId: text("project_id")
+    .notNull()
+    .references(() => projectsTable.id, { onDelete: "cascade" }),
+  keyHash: text("key_hash").notNull().unique(),
+  createdAt: integer("created_at", { mode: "timestamp_ms" }).$defaultFn(() => new Date()),
+  revokedAt: integer("revoked_at", { mode: "timestamp_ms" }),
 });
 
 /* ========================= 
@@ -175,7 +192,7 @@ export const projectMembersTable = sqliteTable(
       .references(() => usersTable.id, { onDelete: "cascade" }),
     roleId: text("role_id")
       .notNull()
-      .references(() => rolesTable.id),
+      .references(() => rolesTable.id, { onDelete: "restrict" }),
     joinedAt: integer("joined_at", { mode: "timestamp_ms" })
       .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
       .notNull(),
@@ -475,7 +492,6 @@ export const consentRecordsTable = sqliteTable("consent_records", {
 export const userRelations = relations(usersTable, ({ many }) => ({
   sessions: many(sessionsTable),
   accounts: many(accountsTable),
-  ownedProjects: many(projectsTable),
   projectMemberships: many(projectMembersTable),
 }));
 
@@ -493,17 +509,82 @@ export const accountRelations = relations(accountsTable, ({ one }) => ({
   }),
 }));
 
-export const projectsRelations = relations(projectsTable, ({ one, many }) => ({
-  owner: one(usersTable, {
-    fields: [projectsTable.ownerId],
-    references: [usersTable.id],
+export const rolesRelations = relations(rolesTable, ({ one, many }) => ({
+  project: one(projectsTable, {
+    fields: [rolesTable.projectId],
+    references: [projectsTable.id],
   }),
   members: many(projectMembersTable),
+  rolePermissions: many(rolePermissionsTable),
+}));
+
+export const permissionsRelations = relations(permissionsTable, ({ many }) => ({
+  rolePermissions: many(rolePermissionsTable),
+}));
+
+export const rolePermissionsRelations = relations(rolePermissionsTable, ({ one }) => ({
+  role: one(rolesTable, {
+    fields: [rolePermissionsTable.roleId],
+    references: [rolesTable.id],
+  }),
+  permission: one(permissionsTable, {
+    fields: [rolePermissionsTable.permissionId],
+    references: [permissionsTable.id],
+  }),
+}));
+
+export const projectsRelations = relations(projectsTable, ({ one, many }) => ({
+  roles: many(rolesTable),
+  members: many(projectMembersTable),
+  apiKeys: many(projectApiKeysTable),
   integrations: many(integrationsTable),
   campaigns: many(campaignsTable),
   events: many(eventsTable),
   transactions: many(transactionsTable),
+  orders: many(ordersTable),
   analytics: many(analyticsTable),
+  trackingHealthRecords: many(trackingHealthTable),
+  alerts: many(alertsTable),
+  healthHistory: many(healthHistoryTable),
+  usageCosts: many(usageCostsTable),
+  consentRecords: many(consentRecordsTable),
+  privacySettings: one(privacySettingsTable, {
+    fields: [projectsTable.id],
+    references: [privacySettingsTable.projectId],
+  }),
+}));
+
+export const projectApiKeyRelations = relations(projectApiKeysTable, ({ one }) => ({
+  project: one(projectsTable, {
+    fields: [projectApiKeysTable.projectId],
+    references: [projectsTable.id],
+  }),
+}));
+
+export const projectMembersRelations = relations(projectMembersTable, ({ one }) => ({
+  project: one(projectsTable, {
+    fields: [projectMembersTable.projectId],
+    references: [projectsTable.id],
+  }),
+  user: one(usersTable, {
+    fields: [projectMembersTable.userId],
+    references: [usersTable.id],
+  }),
+  role: one(rolesTable, {
+    fields: [projectMembersTable.roleId],
+    references: [rolesTable.id],
+  }),
+}));
+
+export const integrationsRelations = relations(integrationsTable, ({ one, many }) => ({
+  project: one(projectsTable, {
+    fields: [integrationsTable.projectId],
+    references: [projectsTable.id],
+  }),
+  campaigns: many(campaignsTable),
+  transactions: many(transactionsTable),
+  orders: many(ordersTable),
+  trackingHealthRecords: many(trackingHealthTable),
 }));
 
 export const campaignsRelations = relations(campaignsTable, ({ one, many }) => ({
@@ -515,8 +596,132 @@ export const campaignsRelations = relations(campaignsTable, ({ one, many }) => (
     fields: [campaignsTable.adsIntegrationId],
     references: [integrationsTable.id],
   }),
-  attributions: many(attributionsTable),
+  attributions: many(attributionsTable, {
+    relationName: "campaignId"
+  }),
   analytics: many(analyticsTable),
+}));
+
+export const eventsRelations = relations(eventsTable, ({ one, many }) => ({
+  project: one(projectsTable, {
+    fields: [eventsTable.projectId],
+    references: [projectsTable.id],
+  }),
+  validation: one(eventValidationsTable, {
+    fields: [eventsTable.id],
+    references: [eventValidationsTable.eventId],
+  }),
+  attributions: many(attributionsTable),
+}));
+
+export const eventValidationsRelations = relations(eventValidationsTable, ({ one }) => ({
+  event: one(eventsTable, {
+    fields: [eventValidationsTable.eventId],
+    references: [eventsTable.id],
+  }),
+}));
+
+export const attributionsRelations = relations(attributionsTable, ({ one }) => ({
+  event: one(eventsTable, {
+    fields: [attributionsTable.eventId],
+    references: [eventsTable.id],
+  }),
+  campaign: one(campaignsTable, {
+    fields: [attributionsTable.campaignId],
+    references: [campaignsTable.id],
+  }),
+}));
+
+export const transactionsRelations = relations(transactionsTable, ({ one, many }) => ({
+  project: one(projectsTable, {
+    fields: [transactionsTable.projectId],
+    references: [projectsTable.id],
+  }),
+  paymentIntegration: one(integrationsTable, {
+    fields: [transactionsTable.paymentIntegrationId],
+    references: [integrationsTable.id],
+  }),
+  orders: many(ordersTable),
+}));
+
+export const ordersRelations = relations(ordersTable, ({ one }) => ({
+  project: one(projectsTable, {
+    fields: [ordersTable.projectId],
+    references: [projectsTable.id],
+  }),
+  ecommerceIntegration: one(integrationsTable, {
+    fields: [ordersTable.ecommerceIntegrationId],
+    references: [integrationsTable.id],
+  }),
+  transaction: one(transactionsTable, {
+    fields: [ordersTable.transactionId],
+    references: [transactionsTable.id],
+  }),
+}));
+
+export const analyticsRelations = relations(analyticsTable, ({ one, many }) => ({
+  project: one(projectsTable, {
+    fields: [analyticsTable.projectId],
+    references: [projectsTable.id],
+  }),
+  campaign: one(campaignsTable, {
+    fields: [analyticsTable.campaignId],
+    references: [campaignsTable.id],
+  }),
+  snapshots: many(analyticsSnapshotsTable),
+}));
+
+export const analyticsSnapshotsRelations = relations(analyticsSnapshotsTable, ({ one }) => ({
+  analytics: one(analyticsTable, {
+    fields: [analyticsSnapshotsTable.analyticsId],
+    references: [analyticsTable.id],
+  }),
+}));
+
+export const trackingHealthRelations = relations(trackingHealthTable, ({ one }) => ({
+  project: one(projectsTable, {
+    fields: [trackingHealthTable.projectId],
+    references: [projectsTable.id],
+  }),
+  integration: one(integrationsTable, {
+    fields: [trackingHealthTable.integrationId],
+    references: [integrationsTable.id],
+  }),
+}));
+
+export const alertsRelations = relations(alertsTable, ({ one }) => ({
+  project: one(projectsTable, {
+    fields: [alertsTable.projectId],
+    references: [projectsTable.id],
+  }),
+}));
+
+export const healthHistoryRelations = relations(healthHistoryTable, ({ one }) => ({
+  project: one(projectsTable, {
+    fields: [healthHistoryTable.projectId],
+    references: [projectsTable.id],
+  }),
+}));
+
+export const usageCostsRelations = relations(usageCostsTable, ({ one }) => ({
+  project: one(projectsTable, {
+    fields: [usageCostsTable.projectId],
+    references: [projectsTable.id],
+  }),
+}));
+
+export const privacySettingsRelations = relations(privacySettingsTable, ({ one }) => ({
+  project: one(projectsTable, {
+    fields: [privacySettingsTable.projectId],
+    references: [projectsTable.id],
+  }),
+}));
+
+export const consentRecordsRelations = relations(consentRecordsTable, ({ one }) => ({
+  project: one(projectsTable, {
+    fields: [consentRecordsTable.projectId],
+    references: [projectsTable.id],
+  }),
 }));
 
 // ==================== TYPES ====================
