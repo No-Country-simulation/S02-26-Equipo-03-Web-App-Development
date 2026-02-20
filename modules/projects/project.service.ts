@@ -6,7 +6,23 @@ import { ProjectApiKeyRepository } from "@/modules/projects/apiKeys/projectApiKe
 import crypto from "crypto";
 
 export class ProjectService {
-  static async createProject(userId: string, name: string, description: string) {
+  static async getUserProjects(userId: string) {
+    return ProjectRepository.findByUser(userId, db);
+  }
+
+  static async getProject(userId: string, projectId: string) {
+    return db.transaction(async (tx) => {
+      const isMember = await ProjectMemberRepository.isMember(projectId, userId, tx);
+
+      if (!isMember) {
+        throw new Error("Forbidden");
+      }
+
+      return ProjectRepository.findById(projectId, tx);
+    });
+  }
+
+  static async createProject(userId: string, name: string, description?: string) {
     return db.transaction(async (tx) => {
       // Create project
       const project = await ProjectRepository.create({ name, description }, tx);
@@ -23,7 +39,7 @@ export class ProjectService {
       await ProjectRoleRepository.assignAllPermissions(ownerRole.id, tx);
 
       // Create relation between project, owner role and user
-      await ProjectMemberRepository.insert(project.id, userId, ownerRole.id, tx);
+      await ProjectMemberRepository.addMember(project.id, userId, ownerRole.id, tx);
 
       // Create API key
       const apiKey = crypto.randomBytes(32).toString("hex");
@@ -52,7 +68,13 @@ export class ProjectService {
         throw new Error("Forbidden");
       }
 
-      return ProjectRepository.update(projectId, data, tx);
+      const updated = await ProjectRepository.update(projectId, data, tx);
+
+      if (!updated) {
+        throw new Error("Project not found");
+      }
+
+      return updated;
     });
   }
 
@@ -68,9 +90,5 @@ export class ProjectService {
 
       await ProjectRepository.archive(projectId, tx);
     });
-  }
-
-  static async getUserProjects(userId: string) {
-    return ProjectRepository.findByUser(userId, db);
   }
 }
