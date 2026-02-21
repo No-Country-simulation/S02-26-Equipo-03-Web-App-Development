@@ -1,54 +1,61 @@
-import { ProjectRoleRepository } from "../roles/projectRole.repository";
 import { ProjectMemberRepository } from "./projectMember.repository";
-import { UserRepository } from "@/modules/users/user.repository";
-import { db, DBConnection } from "@/infrastructure/database";
+import { db } from "@/infrastructure/database";
 
 export class ProjectMemberService {
   static async addMember(actorId: string, projectId: string, targetUserId: string, roleId: string) {
     return db.transaction(async (tx) => {
-      // 1️. Validate actor permissions
-      await this.assertCanManageMembers(actorId, projectId, tx);
+      const permissions = await ProjectMemberRepository.getUserPermissions(projectId, actorId, tx);
 
-      // 2️. Verify that the target user exists
-      // UserRepository doesn't exist yet
-      const targetUser = await UserRepository.findById(targetUserId, tx);
-      if (!targetUser) {
-        throw new Error("User not found");
+      const canManage = permissions.some(
+        (p) => p.resource === "project_member" && p.action === "create"
+      );
+
+      if (!canManage) {
+        throw new Error("Forbidden");
       }
 
-      // 3️. Verify that it is not already in the project
-      const existingMember = await ProjectMemberRepository.findByUser(projectId, targetUserId, tx);
+      const exists = await ProjectMemberRepository.isMember(projectId, targetUserId, tx);
 
-      if (existingMember) {
-        throw new Error("User already a member of this project");
+      if (exists) {
+        throw new Error("User already member");
       }
 
-      // 4️. Verify that the role belongs to the project
-      const role = await ProjectRoleRepository.findById(roleId, tx);
-
-      if (!role || role.projectId !== projectId) {
-        throw new Error("Invalid role for this project");
-      }
-
-      // 5️. Insert member
-      await ProjectMemberRepository.insert(projectId, targetUserId, roleId, tx);
+      return ProjectMemberRepository.addMember(projectId, targetUserId, roleId, tx);
     });
   }
 
-  // Helper function
-  private static async assertCanManageMembers(
-    actorId: string,
-    projectId: string,
-    tx: DBConnection
-  ) {
-    const permissions = await ProjectMemberRepository.getUserPermissions(projectId, actorId, tx);
+  static async listMembers(actorId: string, projectId: string) {
+    return db.transaction(async (tx) => {
+      const isMember = await ProjectMemberRepository.isMember(projectId, actorId, tx);
 
-    const canManage = permissions.some(
-      (p) => p.resource === "project_members" && p.action === "manage"
-    );
+      if (!isMember) {
+        throw new Error("Forbidden");
+      }
 
-    if (!canManage) {
-      throw new Error("Not allowed to manage members");
-    }
+      return ProjectMemberRepository.listMembers(projectId, tx);
+    });
   }
+
+  static async removeMember(actorId: string, projectId: string, targetUserId: string) {
+    return db.transaction(async (tx) => {
+      const permissions = await ProjectMemberRepository.getUserPermissions(projectId, actorId, tx);
+
+      const canDelete = permissions.some(
+        (p) => p.resource === "project_member" && p.action === "delete"
+      );
+
+      if (!canDelete) {
+        throw new Error("Forbidden");
+      }
+
+      const exists = await ProjectMemberRepository.isMember(projectId, targetUserId, tx);
+
+      if (!exists) {
+        throw new Error("User is not a member");
+      }
+
+      await ProjectMemberRepository.removeMember(projectId, targetUserId, tx);
+    });
+  }
+
 }

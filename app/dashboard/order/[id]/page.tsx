@@ -1,0 +1,36 @@
+import Link from "next/link";
+import { ChevronLeft } from "lucide-react";
+import { OrderDetailSection } from "@shared/components/Orders/Detail/OrderDetailSection";
+import { ORDER_DETAIL_MOCK } from "@shared/components/Orders/mock/order-detail.mock";
+
+interface OrderDetailPageProps {
+  params: { id: string };
+}
+
+// Cuando tengas API real, reemplazá esto por un fetch real usando params.id
+async function getOrder(_id: string) {
+  // const order = await fetch(`/api/orders/${_id}`).then(r => r.json());
+  return ORDER_DETAIL_MOCK;
+}
+
+export default async function OrderDetailPage({ params }: OrderDetailPageProps) {
+  const { id } = await params;
+  const order = await getOrder(id);
+
+  return (
+    <div>
+      {/* Back nav */}
+      <div className="max-w-5xl p-6 mx-auto">
+        <Link
+          href="/dashboard/order"
+          className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-800 transition-colors"
+        >
+          <ChevronLeft className="h-4 w-4" />
+          Volver a Órdenes
+        </Link>
+      </div>
+
+      <OrderDetailSection order={order} />
+    </div>
+  );
+}

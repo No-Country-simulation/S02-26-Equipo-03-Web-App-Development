@@ -3,9 +3,6 @@ import DataSafety from "@/shared/components/LandingPage/DataSafety";
 import SocialProof from "@/shared/components/LandingPage/SocialProof";
 import Faqs from "@/shared/components/LandingPage/Faqs";
 import { Hero, InfoCards } from "@/shared/components/LandingPage";
-import PricingSection from "@/shared/components/LandingPage/PricingSection";
-import CTASection from "@/shared/components/LandingPage/CTASection";
-import { Footer } from "@/shared/components/LandingPage/Footer";
 
 export default function Home() {
   return (
@@ -110,11 +107,8 @@ export default function Home() {
         />
         <DataSafety />
         {/* Plans section */}
-        <PricingSection />
         <SocialProof />
         <Faqs />
-        <CTASection />
-        <Footer />
       </div>
     </main>
   );

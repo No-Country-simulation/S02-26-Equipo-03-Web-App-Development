@@ -16,6 +16,7 @@ import {
 import { Button } from "@shared/components/ui/button";
 import { Info, ChevronLeft, ChevronRight } from "lucide-react";
 import { Order, OrderSource, OrderStatus } from "../../types/orders.types";
+import { useRouter } from "next/navigation";
 
 // --- Sub-components ---
 
@@ -101,6 +102,7 @@ export function OrdersTable({
   const start = (page - 1) * pageSize + 1;
   const end = Math.min(page * pageSize, total);
   const totalPages = Math.ceil(total / pageSize);
+  const router = useRouter();
 
   return (
     <>
@@ -133,6 +135,7 @@ export function OrdersTable({
           {orders.map((order, i) => (
             <TableRow
               key={`${order.id}-${i}`}
+              onClick={() => router.push(`/dashboard/order/${order.id}`)}
               className="cursor-pointer transition-colors hover:bg-gray-50/60"
             >
               <TableCell className="text-sm text-gray-400">{order.id}</TableCell>

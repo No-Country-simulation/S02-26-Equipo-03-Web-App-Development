@@ -5,7 +5,7 @@ import {
 } from "@/infrastructure/database/schemas/schema";
 import { randomUUID } from "crypto";
 import { DBConnection } from "@/infrastructure/database";
-import { eq } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 
 export class ProjectRoleRepository {
   static async createRole(
@@ -64,5 +64,29 @@ export class ProjectRoleRepository {
 
   static async delete(roleId: string, database: DBConnection) {
     await database.delete(rolesTable).where(eq(rolesTable.id, roleId));
+  }
+
+  static async removePermissions(roleId: string, permissionIds: string[], database: DBConnection) {
+    if (permissionIds.length === 0) return;
+
+    await database
+      .delete(rolePermissionsTable)
+      .where(
+        and(
+          eq(rolePermissionsTable.roleId, roleId),
+          inArray(rolePermissionsTable.permissionId, permissionIds)
+        )
+      );
+  }
+
+  static async filterExistingPermissions(permissionIds: string[], database: DBConnection) {
+    if (permissionIds.length === 0) return [];
+
+    const result = await database
+      .select({ id: permissionsTable.id })
+      .from(permissionsTable)
+      .where(inArray(permissionsTable.id, permissionIds));
+
+    return result.map((p) => p.id);
   }
 }

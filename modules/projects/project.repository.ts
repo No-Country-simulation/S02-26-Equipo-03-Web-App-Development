@@ -1,35 +1,10 @@
 import { projectsTable, Project } from "@/infrastructure/database/schemas/schema";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { randomUUID } from "crypto";
 import { projectMembersTable } from "@/infrastructure/database/schemas/schema";
 import { DBConnection } from "@/infrastructure/database";
 
 export class ProjectRepository {
-  static async create(
-    data: {
-      name: string;
-      description?: string;
-    },
-    database: DBConnection
-  ): Promise<Project> {
-    const id = randomUUID();
-
-    await database.insert(projectsTable).values({
-      id,
-      name: data.name,
-      description: data.description ?? null,
-      status: "active",
-    });
-
-    const project = await this.findById(id, database);
-
-    if (!project) {
-      throw new Error("Project creation failed");
-    }
-
-    return project;
-  }
-
   static async findById(projectId: string, database: DBConnection): Promise<Project | null> {
     const result = await database
       .select()
@@ -55,6 +30,31 @@ export class ProjectRepository {
       .where(eq(projectMembersTable.userId, userId));
 
     return result;
+  }
+
+  static async create(
+    data: {
+      name: string;
+      description?: string;
+    },
+    database: DBConnection
+  ): Promise<Project> {
+    const id = randomUUID();
+
+    await database.insert(projectsTable).values({
+      id,
+      name: data.name,
+      description: data.description ?? null,
+      status: "active",
+    });
+
+    const project = await this.findById(id, database);
+
+    if (!project) {
+      throw new Error("Project creation failed");
+    }
+
+    return project;
   }
 
   static async update(
@@ -89,4 +89,24 @@ export class ProjectRepository {
       })
       .where(eq(projectsTable.id, projectId));
   }
+
+  static async assertCanManageMembers(
+    projectId: string,
+    userAssertId: string,
+    database: DBConnection
+  ): Promise<boolean> {
+    const result = await database
+      .select({ id: projectMembersTable })
+      .from(projectMembersTable)
+      .where(
+        and(
+          eq(projectMembersTable.projectId, projectId),
+          eq(projectMembersTable.userId, userAssertId)
+        )
+      )
+      .limit(1);
+
+      return result.length > 0;
+  }
+
 }
