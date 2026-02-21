@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { WebhookResponse } from "@shared/types/integration.types";
-import { integrationsTable, transactionsTable } from "@infrastructure/database/schemas/schema";
+import { integrationsTable, ordersTable, transactionsTable } from "@infrastructure/database/schemas/schema";
 import { DBConnection } from "@infrastructure/database/index";
 import { eq } from "drizzle-orm";
 
@@ -42,6 +42,10 @@ export abstract class IntegrationConnector {
   protected async createTransactionRecord(data: typeof transactionsTable.$inferInsert) {
     return await this.db.insert(transactionsTable).values(data).returning();
   }
+
+  protected async createOrderRecord(data: typeof ordersTable.$inferInsert) {
+    return await this.db.insert(ordersTable).values(data).returning();
+  } 
 
   // Utilidad para responder a Next.js de forma consistente
   protected sendResponse(result: WebhookResponse): NextResponse {

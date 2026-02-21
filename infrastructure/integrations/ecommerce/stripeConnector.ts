@@ -71,7 +71,7 @@ export class StripeConnector extends IntegrationConnector {
                 // Atribución: Recuperar el ID de sesión de marketing
                 const sessionId = paymentIntent.metadata?.external_session_id; 
 
-                // 4. BUSCAR LA INTEGRACIÓN (Para evitar el error de NULL)
+                // 4. BUSCAR LA INTEGRACIÓN
                 const integration = await this.db.query.integrationsTable.findFirst({
                     where: (table, { and, eq }) => and(
                         eq(table.projectId, projectId),
@@ -83,7 +83,6 @@ export class StripeConnector extends IntegrationConnector {
                     throw new Error(`No active Stripe integration was found for the project: ${projectId}`);
                 }
 
-                // 5. PERSISTIR LA TRANSACCIÓN
                 const transaction = await this.createTransactionRecord({
                     id: crypto.randomUUID(),
                     projectId: projectId,
@@ -101,7 +100,18 @@ export class StripeConnector extends IntegrationConnector {
                     console.error("Error al guardar la transacción.");
                 }
 
-                // Si llegamos aquí, la firma fue válida y la transacción se guardó.
+                await this.createOrderRecord({
+                    id: crypto.randomUUID(),
+                    projectId: projectId,
+                    transactionId: transaction[0].id, // Vinculamos con la transacción recién creada
+                    totalAmount: paymentIntent.amount / 100,
+                    currency: paymentIntent.currency.toUpperCase(),
+                    status: "confirmed",
+                    orderDate: new Date(),
+                    externalOrderId: paymentIntent.metadata?.external_session_id || paymentIntent.id
+                });
+
+                // Si llegamos aquí, la firma fue válida, la orden y la transacción se alamacenaron.
                 await this.updateIntegrationStatus(integration.id, "connected");
 
                 return {
