@@ -1,8 +1,6 @@
-import { rolePermissionsTable } from "@/infrastructure/database/schemas/schema";
 import { ProjectMemberRepository } from "../members/projectMember.repository";
 import { ProjectRoleRepository } from "./projectRole.repository";
 import { db, DBConnection } from "@/infrastructure/database";
-import { and, eq, inArray } from "drizzle-orm";
 
 export class ProjectRoleService {
   static async createRole(
@@ -29,13 +27,42 @@ export class ProjectRoleService {
     return db.transaction(async (tx) => {
       await this.assertCanManageRoles(actorId, projectId, tx);
 
-      const role = await ProjectRoleRepository.findById(roleId, tx);
+      const role = await this.getRoleOrThrow(roleId, projectId, tx);
 
-      if (!role || role.projectId !== projectId) {
-        throw new Error("Role not found in project");
+      if (role.name === "owner") {
+        throw new Error("Cannot modify owner role permissions");
       }
 
-      await ProjectRoleRepository.assignPermissions(roleId, permissionIds, tx);
+      // validate permissions exist
+      const validPermissions = await ProjectRoleRepository.filterExistingPermissions(
+        permissionIds,
+        tx
+      );
+
+      if (validPermissions.length !== permissionIds.length) {
+        throw new Error("Invalid permission ids");
+      }
+
+      await ProjectRoleRepository.assignPermissions(roleId, validPermissions, tx);
+    });
+  }
+
+  static async removePermissions(
+    actorId: string,
+    projectId: string,
+    roleId: string,
+    permissionIds: string[]
+  ) {
+    return db.transaction(async (tx) => {
+      await this.assertCanManageRoles(actorId, projectId, tx);
+
+      const role = await this.getRoleOrThrow(roleId, projectId, tx);
+
+      if (role.name === "owner") {
+        throw new Error("Cannot modify owner role permissions");
+      }
+
+      await ProjectRoleRepository.removePermissions(roleId, permissionIds, tx);
     });
   }
 
@@ -43,11 +70,7 @@ export class ProjectRoleService {
     return db.transaction(async (tx) => {
       await this.assertCanManageRoles(actorId, projectId, tx);
 
-      const role = await ProjectRoleRepository.findById(roleId, tx);
-
-      if (!role) {
-        throw new Error("Role not found");
-      }
+      const role = await this.getRoleOrThrow(roleId, projectId, tx);
 
       if (role.name === "owner") {
         throw new Error("Cannot delete owner role");
@@ -63,26 +86,25 @@ export class ProjectRoleService {
     });
   }
 
+  private static async getRoleOrThrow(roleId: string, projectId: string, tx: DBConnection) {
+    const role = await ProjectRoleRepository.findById(roleId, tx);
+
+    if (!role || role.projectId !== projectId) {
+      throw new Error("Role not found in project");
+    }
+
+    return role;
+  }
+
   private static async assertCanManageRoles(actorId: string, projectId: string, tx: DBConnection) {
     const permissions = await ProjectMemberRepository.getUserPermissions(projectId, actorId, tx);
 
-    const canManage = permissions.some((p) => p.resource === "roles" && p.action === "manage");
+    const canManage = permissions.some(
+      (p) => p.resource === "project_role" && p.action === "manage"
+    );
 
     if (!canManage) {
       throw new Error("Not allowed to manage roles");
     }
-  }
-
-  static async removePermissions(roleId: string, permissionIds: string[], database: DBConnection) {
-    if (permissionIds.length === 0) return;
-
-    await database
-      .delete(rolePermissionsTable)
-      .where(
-        and(
-          eq(rolePermissionsTable.roleId, roleId),
-          inArray(rolePermissionsTable.permissionId, permissionIds)
-        )
-      );
   }
 }

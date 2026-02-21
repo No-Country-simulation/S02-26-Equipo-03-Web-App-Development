@@ -10,8 +10,8 @@ export class ProjectApiKeyRepository {
 
     await database.insert(projectApiKeysTable).values({
       id,
-      projectId: projectId,
-      keyHash: keyHash,
+      projectId,
+      keyHash,
     });
 
     return { id };
@@ -42,11 +42,11 @@ export class ProjectApiKeyRepository {
       .where(eq(projectApiKeysTable.projectId, projectId));
   }
 
-  static async revoke(keyId: string, database: DBConnection): Promise<boolean> {
+  static async revoke(projectId: string, keyId: string, database: DBConnection): Promise<boolean> {
     const result = await database
       .update(projectApiKeysTable)
       .set({ revokedAt: new Date() })
-      .where(eq(projectApiKeysTable.id, keyId))
+      .where(and(eq(projectApiKeysTable.id, keyId), eq(projectApiKeysTable.projectId, projectId)))
       .returning({ id: projectApiKeysTable.id });
 
     return result.length > 0;
@@ -62,26 +62,24 @@ export class ProjectApiKeyRepository {
   }
 
   static async rotate(projectId: string, database: DBConnection) {
-    return database.transaction(async (tx) => {
-      await tx
-        .update(projectApiKeysTable)
-        .set({ revokedAt: new Date() })
-        .where(
-          and(eq(projectApiKeysTable.projectId, projectId), isNull(projectApiKeysTable.revokedAt))
-        );
+    await database
+      .update(projectApiKeysTable)
+      .set({ revokedAt: new Date() })
+      .where(
+        and(eq(projectApiKeysTable.projectId, projectId), isNull(projectApiKeysTable.revokedAt))
+      );
 
-      const apiKey = crypto.randomBytes(32).toString("hex");
-      const hash = crypto.createHash("sha256").update(apiKey).digest("hex");
+    const apiKey = crypto.randomBytes(32).toString("hex");
+    const hash = crypto.createHash("sha256").update(apiKey).digest("hex");
 
-      const id = randomUUID();
+    const id = randomUUID();
 
-      await tx.insert(projectApiKeysTable).values({
-        id,
-        projectId,
-        keyHash: hash,
-      });
-
-      return apiKey;
+    await database.insert(projectApiKeysTable).values({
+      id,
+      projectId,
+      keyHash: hash,
     });
+
+    return apiKey;
   }
 }
