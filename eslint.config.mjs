@@ -7,7 +7,7 @@ const nextCoreWebVitals = nextPlugin.configs?.["core-web-vitals"] ?? {};
 
 export default [
   {
-    ignores: [".next/**", "node_modules/**"],
+    ignores: [".next/**", "node_modules/**", "public/pixel.js"],
   },
 
   js.configs.recommended,
@@ -30,6 +30,10 @@ export default [
       ...(nextCoreWebVitals.rules ?? {}),
       quotes: ["error", "double"],
       semi: ["error", "always"],
+      "no-unused-vars": ["error", { 
+        argsIgnorePattern: "^_",
+        varsIgnorePattern: "^_"
+      }],
     },
   },
 

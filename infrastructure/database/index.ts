@@ -2,6 +2,8 @@ import "dotenv/config";
 import { drizzle } from "drizzle-orm/libsql";
 import { createClient } from "@libsql/client";
 import * as schema from "@infrastructure/database/schemas/schema";
+import { LibSQLDatabase, LibSQLTransaction } from "drizzle-orm/libsql";
+import { ExtractTablesWithRelations } from "drizzle-orm";
 
 const databaseUrl = process.env.DATABASE_URL;
 const authToken = process.env.DATABASE_AUTH_TOKEN;
@@ -23,4 +25,16 @@ const client = createClient({
 
 export const db = drizzle(client, { schema });
 
-export const dbType = isLocal ? "SQLite (Local)" : "Turso (Cloud)";
+// Define the complete schema
+type TSchema = typeof schema;
+
+// Extract relationships
+type TRelations = ExtractTablesWithRelations<TSchema>;
+
+// Clean types for DB and Transaction
+export type Database = LibSQLDatabase<TSchema>;
+
+export type Transaction = LibSQLTransaction<TSchema, TRelations>;
+
+// The unified type for repositories (this is necessary for transactions with drizzle due to type errors)
+export type DBConnection = Database | Transaction;
