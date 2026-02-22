@@ -16,10 +16,13 @@ import { pixelGetSchema } from "@/modules/events/event.validators";
 import type { RequestMetadata } from "@/modules/events/event.types";
 
 // 1x1 transparent GIF (para el GET con <img> tag)
-const PIXEL_GIF = Buffer.from(
-  "R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
-  "base64"
-);
+const PIXEL_GIF = Buffer.from("R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7", "base64");
+
+const CORS_HEADERS = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, x-api-key",
+};
 
 /**
  * Extrae metadatos del request HTTP.
@@ -30,10 +33,7 @@ function extractMetadata(req: NextRequest): RequestMetadata {
 
   // Anonimizar IP: quitar último octeto (GDPR-friendly)
   const parts = ip.split(".");
-  const ipAnonymized =
-    parts.length === 4
-      ? `${parts[0]}.${parts[1]}.${parts[2]}.0`
-      : ip;
+  const ipAnonymized = parts.length === 4 ? `${parts[0]}.${parts[1]}.${parts[2]}.0` : ip;
 
   return {
     ipAnonymized,
@@ -46,7 +46,7 @@ function extractMetadata(req: NextRequest): RequestMetadata {
 /**
  * POST /api/v1/track
  *
-    * El Pixel envía un JSON con fetch(). Es el método preferido.
+ * El Pixel envía un JSON con fetch(). Es el método preferido.
  */
 export async function POST(req: NextRequest) {
   try {
@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
     if (!apiKey) {
       return NextResponse.json(
         { success: false, error: "Missing x-api-key header" },
-        { status: 401 }
+        { status: 401, headers: CORS_HEADERS }
       );
     }
 
@@ -66,16 +66,16 @@ export async function POST(req: NextRequest) {
     const result = await EventService.trackEvent(apiKey, body, metadata);
 
     if (!result.success) {
-      return NextResponse.json(result, { status: 400 });
+      return NextResponse.json(result, { status: 400, headers: CORS_HEADERS });
     }
 
-    return NextResponse.json(result, { status: 202 }); // 202 Accepted
+    return NextResponse.json(result, { status: 202, headers: CORS_HEADERS }); // 202 Accepted
   } catch (error) {
     console.error("POST /api/v1/track error:", error);
 
     return NextResponse.json(
       { success: false, error: "Internal Server Error" },
-      { status: 500 }
+      { status: 500, headers: CORS_HEADERS }
     );
   }
 }
@@ -85,8 +85,8 @@ export async function POST(req: NextRequest) {
  *
  * Responde un pixel 1x1 transparente (para tracking con <img> tag).
  * Útil cuando JavaScript está bloqueado.
-    * El payload viene como un query param "d" codificado en base64.
-    * 
+ * El payload viene como un query param "d" codificado en base64.
+ *
  */
 export async function GET(req: NextRequest) {
   try {
@@ -103,6 +103,7 @@ export async function GET(req: NextRequest) {
         headers: {
           "Content-Type": "image/gif",
           "Cache-Control": "no-store, no-cache, must-revalidate",
+          ...CORS_HEADERS,
         },
       });
     }
@@ -116,7 +117,7 @@ export async function GET(req: NextRequest) {
     } catch {
       return new Response(PIXEL_GIF, {
         status: 200,
-        headers: { "Content-Type": "image/gif" },
+        headers: { "Content-Type": "image/gif", ...CORS_HEADERS },
       });
     }
 
@@ -130,8 +131,7 @@ export async function GET(req: NextRequest) {
         "Content-Type": "image/gif",
         "Content-Length": PIXEL_GIF.length.toString(),
         "Cache-Control": "no-store, no-cache, must-revalidate",
-        // CORS headers para permitir cross-origin
-        "Access-Control-Allow-Origin": "*",
+        ...CORS_HEADERS,
       },
     });
   } catch (error) {
@@ -139,7 +139,7 @@ export async function GET(req: NextRequest) {
 
     return new Response(PIXEL_GIF, {
       status: 200,
-      headers: { "Content-Type": "image/gif" },
+      headers: { "Content-Type": "image/gif", ...CORS_HEADERS },
     });
   }
 }
@@ -152,9 +152,7 @@ export async function OPTIONS() {
   return new Response(null, {
     status: 204,
     headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type, x-api-key",
+      ...CORS_HEADERS,
       "Access-Control-Max-Age": "86400",
     },
   });
