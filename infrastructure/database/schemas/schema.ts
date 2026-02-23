@@ -588,9 +588,10 @@ export const campaignsRelations = relations(campaignsTable, ({ one, many }) => (
     fields: [campaignsTable.adsIntegrationId],
     references: [integrationsTable.id],
   }),
-  attributions: many(attributionsTable, {
-    relationName: "campaignId"
-  }),
+  attributions: many(attributionsTable),    
+    //, {
+    //relationName: "campaignId" // posible problema con drizzle studio
+  //}),
   analytics: many(analyticsTable),
 }));
 
