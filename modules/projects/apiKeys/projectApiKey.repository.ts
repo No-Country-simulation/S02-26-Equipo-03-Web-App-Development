@@ -31,6 +31,15 @@ export class ProjectApiKeyRepository {
     return result[0] ?? null;
   }
 
+  /**
+   * Resuelve un proyecto a partir de su API Key cruda.
+   * Útil para integraciones externas (Stripe, Pixel) donde solo tenemos la Key.
+   */
+  static async findProjectByRawKey(rawKey: string, database: DBConnection) {
+    const hash = crypto.createHash("sha256").update(rawKey).digest("hex");
+    return this.findActiveByHash(hash, database);
+  }
+
   static async findByProject(projectId: string, database: DBConnection) {
     return database
       .select({

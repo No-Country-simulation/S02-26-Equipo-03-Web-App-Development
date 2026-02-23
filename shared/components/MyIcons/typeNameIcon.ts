@@ -12,4 +12,6 @@ export type NameIcon =
   | "send"
   | "barChart"
   | "email"
-  | "password";
+  | "password"
+  | "play"
+  | "repair";
