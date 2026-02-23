@@ -146,5 +146,70 @@
         },
       },
     },
+    "/v1/projects": {
+      get: {
+        summary: "List projects",
+        tags: ["Projects"],
+        responses: {
+          "200": {
+            description: "Projects retrieved successfully",
+          },
+          "401": { description: "Unauthorized" },
+          "500": { description: "Internal Server Error" },
+        },
+      },
+      post: {
+        summary: "Create a new project",
+        tags: ["Projects"],
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                required: ["name", "description"],
+                properties: {
+                  name: { type: "string" },
+                  description: { type: "string" },
+                },
+              },
+            },
+          },
+        },
+        responses: {
+          "201": { description: "Project created" },
+          "400": { description: "Validation error" },
+          "401": { description: "Unauthorized" },
+        },
+      },
+    },
+  },
+  "v1/projects/{id}": {
+    get: {
+      summary: "Gets a project if the user is a member",
+      tags: ["Projects"],
+      requestBody: {
+        required: true,
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              required: ["userId", "projectId"],
+              properties: {
+                userId: { type: "string" },
+                projectId: { type: "string" },
+              },
+            },
+          },
+        },
+      },
+      responses: {
+        "201": { description: "Project created" },
+        "401": { description: "Unauthorized" },
+        "403": { description: "Forbidden" },
+        "404": { description: "Not Found" },
+        "500": { description: "Internal Server Error" },
+      },
+    },
   },
 } as const;
