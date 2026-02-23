@@ -2,17 +2,6 @@ import { NextResponse } from "next/server";
 import { db } from "@infrastructure/database";
 import { sql } from "drizzle-orm";
 
-/**
- * @swagger
- * /api/health:
- *   get:
- *     description: Health Check Endpoint
- *     responses:
- *       200:
- *         description: Health status with database connectivity and timestamp
- *       500:
- *         description: Internal Server Error
- */
 async function getDatabaseHealth() {
   try {
     // Optimized connectivity check using a simple value select

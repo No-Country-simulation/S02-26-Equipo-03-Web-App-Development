@@ -1,5 +1,4 @@
 import { createSwaggerSpec } from "next-swagger-doc";
-import path from "path";
 
 export const getApiDocs = async () => {
   const spec = createSwaggerSpec({

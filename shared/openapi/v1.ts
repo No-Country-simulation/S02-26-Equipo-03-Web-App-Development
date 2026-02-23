@@ -7,6 +7,94 @@
   },
   servers: [{ url: "/api" }],
   paths: {
+    "/health": {
+      get: {
+        summary: "Health Check Endpoint",
+        tags: ["Health"],
+        responses: {
+          "200": { description: "Health status with database connectivity and timestamp" },
+          "500": { description: "Internal Server Error" },
+        },
+      },
+    },
+
+    "/auth/sign-up/email": {
+      post: {
+        summary: "Register a new user with email",
+        tags: ["Auth"],
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                properties: {
+                  email: { type: "string" },
+                  password: { type: "string" },
+                  name: { type: "string" },
+                },
+              },
+            },
+          },
+        },
+        responses: {
+          "200": {
+            description: "User registered successfully",
+          },
+        },
+      },
+    },
+    "/auth/sign-in/email": {
+      post: {
+        summary: "Login with email",
+        tags: ["Auth"],
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                properties: {
+                  email: { type: "string" },
+                  password: { type: "string" },
+                },
+              },
+            },
+          },
+        },
+        responses: {
+          "200": {
+            description: "Login successful",
+          },
+        },
+      },
+    },
+    "/auth/get-session": {
+      get: {
+        summary: "Get current session details",
+        tags: ["Auth"],
+        responses: {
+          "200": {
+            description: "Session data retrieved",
+          },
+          "401": {
+            description: "Not authenticated",
+          },
+        },
+      },
+    },
+    "/auth/sign-out": {
+      post: {
+        summary: "Logout current user",
+        tags: ["Auth"],
+        responses: {
+          "200": {
+            description: "Logged out successfully",
+          },
+        },
+      },
+    },
+
     "/v1/analytics": {
       get: {
         summary: "Get analytics records",
