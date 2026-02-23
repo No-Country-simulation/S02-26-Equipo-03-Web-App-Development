@@ -28,9 +28,9 @@ async function test() {
       })
       .returning();
 
-    console.log("✅ Orden creada:", order);
+    console.log("Orden creada:", order);
   } catch (e) {
-    console.error("❌ Error al crear orden:", e);
+    console.error("Error al crear orden:", e);
   }
 }
 
