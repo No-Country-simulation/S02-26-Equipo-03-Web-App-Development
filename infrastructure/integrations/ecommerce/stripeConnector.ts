@@ -92,9 +92,25 @@ export class StripeConnector extends IntegrationConnector {
        */
       this.logEvent("STRIPE", event.type, projectId);
 
-      if (event.type === "payment_intent.succeeded") {
+      if (
+        event.type === "payment_intent.succeeded" ||
+        event.type === "checkout.session.completed"
+      ) {
+        const isSession = event.type === "checkout.session.completed";
+        const session = event.data.object as any;
+
         // Atribución: Recuperar el ID de sesión de marketing
-        const sessionId = paymentIntent.metadata?.external_session_id;
+        const metadata = session.metadata || {};
+        console.log("DEBUG [Stripe Metadata]:", JSON.stringify(metadata, null, 2));
+        const amount = isSession ? session.amount_total / 100 : session.amount / 100;
+        const currency = (session.currency || "USD").toUpperCase();
+        const externalId = isSession ? session.payment_intent : session.id;
+
+        // Datos del Cliente y Producto (Enriquecimiento)
+        const customerName =
+          session.customer_details?.name || metadata.customer_name || "Cliente Desconocido";
+        const customerEmail = session.customer_details?.email || metadata.customer_email || "S/E";
+        const productName = metadata.product_name || "Producto General";
 
         // 4. BUSCAR LA INTEGRACIÓN
         const integration = await this.db.query.integrationsTable.findFirst({
@@ -108,69 +124,125 @@ export class StripeConnector extends IntegrationConnector {
 
         // --- PROCESAMIENTO ATÓMICO CON TRANSACCIÓN ---
         await (this.db as any).transaction(async (tx: any) => {
+          const schema = await import("@infrastructure/database/schemas/schema");
           // A. Verificar idempotencia (¿Ya existe la transacción?)
           const existingTx = await tx.query.transactionsTable.findFirst({
-            where: (table: any, { eq }: any) => eq(table.externalId, paymentIntent.id),
+            where: (table: any, { eq }: any) => eq(table.externalId, externalId),
           });
 
           let transactionId = existingTx?.id;
 
           if (!existingTx) {
             const newTx = await tx
-              .insert((await import("@infrastructure/database/schemas/schema")).transactionsTable)
+              .insert(schema.transactionsTable)
               .values({
                 id: crypto.randomUUID(),
                 projectId: projectId,
                 paymentIntegrationId: integration.id,
-                externalId: paymentIntent.id,
-                amount: paymentIntent.amount / 100,
-                currency: paymentIntent.currency.toUpperCase(),
+                externalId: externalId,
+                amount: amount,
+                currency: currency,
                 status: "completed",
                 transactionDate: new Date(),
+                metadata: JSON.stringify(metadata),
               })
               .returning();
             transactionId = newTx[0].id;
-            console.log("Transacción creada:", transactionId);
+            console.log("✅ Transacción creada:", transactionId);
           } else {
-            console.log("Transacción ya existía (omitido):", transactionId);
+            console.log("ℹ️ Transacción ya existía (omitido):", transactionId);
           }
 
-          // B. Verificar/Crear la Orden
+          // B. Verificar/Crear o Actualizar la Orden
           const existingOrder = await tx.query.ordersTable.findFirst({
             where: (table: any, { eq }: any) => eq(table.transactionId, transactionId),
           });
 
           if (!existingOrder) {
+            await tx.insert(schema.ordersTable).values({
+              id: crypto.randomUUID(),
+              projectId: projectId,
+              transactionId: transactionId,
+              totalAmount: amount,
+              currency: currency,
+              status: "confirmed",
+              orderDate: new Date(),
+              externalOrderId: isSession ? session.id : externalId,
+              customerName: customerName,
+              customerEmail: customerEmail,
+              productName: productName,
+            });
+            console.log("✅ Orden enriquecida creada para:", customerName);
+          } else if (isSession || customerName !== "Cliente Desconocido") {
+            // Si la orden ya existía (creada por payment_intent) pero ahora tenemos
+            // mejores datos (del session), la actualizamos.
             await tx
-              .insert((await import("@infrastructure/database/schemas/schema")).ordersTable)
-              .values({
-                id: crypto.randomUUID(),
-                projectId: projectId,
-                transactionId: transactionId,
-                totalAmount: paymentIntent.amount / 100,
-                currency: paymentIntent.currency.toUpperCase(),
-                status: "confirmed",
-                orderDate: new Date(),
-                externalOrderId: paymentIntent.id, // Usamos el ID de Stripe que es único por pago
-              });
-            console.log("Orden creada para transacción:", transactionId);
+              .update(schema.ordersTable)
+              .set({
+                customerName: customerName,
+                customerEmail: customerEmail,
+                productName: productName,
+                externalOrderId: isSession ? session.id : externalId,
+              })
+              .where(eq(schema.ordersTable.id, existingOrder.id));
+            console.log("🔄 Orden actualizada con datos de cliente:", customerName);
           } else {
-            console.log("Orden ya existía para transacción:", transactionId);
+            console.log("ℹ️ Orden ya existía y no hay datos nuevos para actualizar.");
           }
 
-          // C. Actualizar estado de integración
+          // C. Registrar Evento de Compra para Atribución
+          const purchaseEventId = crypto.randomUUID();
+          await tx.insert(schema.eventsTable).values({
+            id: purchaseEventId,
+            projectId: projectId,
+            eventType: "purchase",
+            source: "stripe",
+            payload: JSON.stringify(session),
+            timestamp: new Date(),
+            status: "processed",
+          });
+
+          // D. Atribución Automática (Top level o Atribución estructurada)
+          let utmCampaign = metadata.utm_campaign || metadata.campaign || "";
+
+          // Si no está en el top level, buscamos en el objeto 'attribution' que viene de tienda-cliente
+          if (!utmCampaign && metadata.attribution) {
+            try {
+              const attrData = JSON.parse(metadata.attribution);
+              utmCampaign = attrData.params?.utm_campaign || "";
+            } catch (e) {
+              console.log("No se pudo parsear el metadato de atribución:", e);
+            }
+          }
+
+          if (utmCampaign) {
+            const campaign = await tx.query.campaignsTable.findFirst({
+              where: (table: any, { and, eq }: any) =>
+                and(eq(table.projectId, projectId), eq(table.name, utmCampaign)),
+            });
+
+            if (campaign) {
+              await tx.insert(schema.attributionsTable).values({
+                id: crypto.randomUUID(),
+                eventId: purchaseEventId,
+                campaignId: campaign.id,
+                model: "last_click",
+                weight: 1.0,
+              });
+              console.log(` Atribución lograda: Venta vinculada a campaña "${utmCampaign}"`);
+            } else {
+              console.log(` No se encontró campaña en DB con nombre: "${utmCampaign}"`);
+            }
+          }
+
+          // E. Actualizar estado de integración
           await tx
-            .update((await import("@infrastructure/database/schemas/schema")).integrationsTable)
+            .update(schema.integrationsTable)
             .set({
               status: "connected",
               connectedAt: new Date(),
             })
-            .where(
-              eq(
-                (await import("@infrastructure/database/schemas/schema")).integrationsTable.id,
-                integration.id
-              )
-            );
+            .where(eq(schema.integrationsTable.id, integration.id));
         });
         // ----------------------------------------------
 
@@ -178,12 +250,12 @@ export class StripeConnector extends IntegrationConnector {
           success: true,
           message: "Pago procesado exitosamente",
           projectId: projectId,
-          externalId: paymentIntent.id,
+          externalId: externalId,
           plataform: "STRIPE",
           normalizedData: {
-            status: this.mapStatus(paymentIntent.status),
-            amount: paymentIntent.amount / 100,
-            currency: paymentIntent.currency,
+            status: "PAGADO",
+            amount: amount,
+            currency: currency,
             paymentType: "PAGO ÚNICO",
           },
         };

@@ -340,6 +340,9 @@ export const ordersTable = sqliteTable("orders", {
     .notNull()
     .default("pending"),
   orderDate: integer("order_date", { mode: "timestamp_ms" }).notNull(),
+  customerName: text("customer_name"),
+  customerEmail: text("customer_email"),
+  productName: text("product_name"),
 });
 
 /* ========================= 
@@ -588,9 +591,9 @@ export const campaignsRelations = relations(campaignsTable, ({ one, many }) => (
     fields: [campaignsTable.adsIntegrationId],
     references: [integrationsTable.id],
   }),
-  attributions: many(attributionsTable),    
-    //, {
-    //relationName: "campaignId" // posible problema con drizzle studio
+  attributions: many(attributionsTable),
+  //, {
+  //relationName: "campaignId" // posible problema con drizzle studio
   //}),
   analytics: many(analyticsTable),
 }));
