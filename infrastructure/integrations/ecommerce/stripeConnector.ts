@@ -105,6 +105,12 @@ export class StripeConnector extends IntegrationConnector {
         const currency = (session.currency || "USD").toUpperCase();
         const externalId = isSession ? session.payment_intent : session.id;
 
+        // Datos del Cliente y Producto (Enriquecimiento)
+        const customerName =
+          session.customer_details?.name || metadata.customer_name || "Cliente Desconocido";
+        const customerEmail = session.customer_details?.email || metadata.customer_email || "S/E";
+        const productName = metadata.product_name || "Producto General";
+
         // 4. BUSCAR LA INTEGRACIÓN
         const integration = await this.db.query.integrationsTable.findFirst({
           where: (table, { and, eq }) =>
@@ -117,6 +123,7 @@ export class StripeConnector extends IntegrationConnector {
 
         // --- PROCESAMIENTO ATÓMICO CON TRANSACCIÓN ---
         await (this.db as any).transaction(async (tx: any) => {
+          const schema = await import("@infrastructure/database/schemas/schema");
           // A. Verificar idempotencia (¿Ya existe la transacción?)
           const existingTx = await tx.query.transactionsTable.findFirst({
             where: (table: any, { eq }: any) => eq(table.externalId, externalId),
@@ -125,7 +132,6 @@ export class StripeConnector extends IntegrationConnector {
           let transactionId = existingTx?.id;
 
           if (!existingTx) {
-            const schema = await import("@infrastructure/database/schemas/schema");
             const newTx = await tx
               .insert(schema.transactionsTable)
               .values({
@@ -146,13 +152,12 @@ export class StripeConnector extends IntegrationConnector {
             console.log("ℹ️ Transacción ya existía (omitido):", transactionId);
           }
 
-          // B. Verificar/Crear la Orden
+          // B. Verificar/Crear o Actualizar la Orden
           const existingOrder = await tx.query.ordersTable.findFirst({
             where: (table: any, { eq }: any) => eq(table.transactionId, transactionId),
           });
 
           if (!existingOrder) {
-            const schema = await import("@infrastructure/database/schemas/schema");
             await tx.insert(schema.ordersTable).values({
               id: crypto.randomUUID(),
               projectId: projectId,
@@ -162,14 +167,29 @@ export class StripeConnector extends IntegrationConnector {
               status: "confirmed",
               orderDate: new Date(),
               externalOrderId: isSession ? session.id : externalId,
+              customerName: customerName,
+              customerEmail: customerEmail,
+              productName: productName,
             });
-            console.log("✅ Orden creada para transacción:", transactionId);
+            console.log("✅ Orden enriquecida creada para:", customerName);
+          } else if (isSession || customerName !== "Cliente Desconocido") {
+            // Si la orden ya existía (creada por payment_intent) pero ahora tenemos
+            // mejores datos (del session), la actualizamos.
+            await tx
+              .update(schema.ordersTable)
+              .set({
+                customerName: customerName,
+                customerEmail: customerEmail,
+                productName: productName,
+                externalOrderId: isSession ? session.id : externalId,
+              })
+              .where(eq(schema.ordersTable.id, existingOrder.id));
+            console.log("🔄 Orden actualizada con datos de cliente:", customerName);
           } else {
-            console.log("ℹ️ Orden ya existía para transacción:", transactionId);
+            console.log("ℹ️ Orden ya existía y no hay datos nuevos para actualizar.");
           }
 
           // C. Actualizar estado de integración
-          const schema = await import("@infrastructure/database/schemas/schema");
           await tx
             .update(schema.integrationsTable)
             .set({

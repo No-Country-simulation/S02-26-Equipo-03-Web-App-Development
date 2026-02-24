@@ -94,6 +94,100 @@
         },
       },
     },
+    "/v1/track": {
+      post: {
+        summary: "Track an event (JSON)",
+        tags: ["Tracking"],
+        parameters: [
+          {
+            name: "x-api-key",
+            in: "header",
+            required: true,
+            schema: { type: "string" },
+            description: "Project API Key",
+          },
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                properties: {
+                  event: { type: "string" },
+                  properties: { type: "object" },
+                },
+              },
+            },
+          },
+        },
+        responses: {
+          "202": { description: "Event received" },
+          "401": { description: "Missing x-api-key header" },
+        },
+      },
+      get: {
+        summary: "Track an event (Pixel)",
+        tags: ["Tracking"],
+        parameters: [
+          {
+            name: "k",
+            in: "query",
+            required: true,
+            schema: { type: "string" },
+            description: "Project API Key",
+          },
+          {
+            name: "d",
+            in: "query",
+            required: true,
+            schema: { type: "string" },
+            description: "Base64 encoded tracking payload",
+          },
+        ],
+        responses: {
+          "200": {
+            description: "Transparent GIF pixel",
+            content: { "image/gif": { schema: { type: "string", format: "binary" } } },
+          },
+        },
+      },
+    },
+    "/v1/orders": {
+      get: {
+        summary: "List all orders",
+        tags: ["Orders"],
+        parameters: [
+          {
+            name: "projectId",
+            in: "query",
+            required: true,
+            schema: { type: "string" },
+            description: "The ID of the project to fetch orders from",
+          },
+        ],
+        responses: {
+          "200": {
+            description: "List of orders",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    success: { type: "boolean" },
+                    count: { type: "integer" },
+                    data: { type: "array" },
+                  },
+                },
+              },
+            },
+          },
+          "400": { description: "Missing projectId" },
+          "401": { description: "Unauthorized" },
+          "403": { description: "Forbidden" },
+        },
+      },
+    },
 
     "/v1/analytics": {
       get: {
