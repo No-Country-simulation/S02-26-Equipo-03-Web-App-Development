@@ -12,7 +12,30 @@
         summary: "Health Check Endpoint",
         tags: ["Health"],
         responses: {
-          "200": { description: "Health status with database connectivity and timestamp" },
+          "200": {
+            description: "Health status with database connectivity and timestamp",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    status: { type: "string" },
+                    database: { type: "string" },
+                    message: { type: "string" },
+                    timestamp: { type: "string", format: "date-time" },
+                    enviroment: { type: "string" },
+                  },
+                },
+                example: {
+                  status: "ok",
+                  database: "connected",
+                  message: "Hello World Backend",
+                  timestamp: "2026-02-24T17:53:55.900Z",
+                  enviroment: "development",
+                },
+              },
+            },
+          },
           "500": { description: "Internal Server Error" },
         },
       },
@@ -28,10 +51,16 @@
             "application/json": {
               schema: {
                 type: "object",
+                required: ["email", "password", "name"],
                 properties: {
-                  email: { type: "string" },
+                  email: { type: "string", format: "email" },
                   password: { type: "string" },
                   name: { type: "string" },
+                },
+                example: {
+                  email: "johndoe@gmail.com",
+                  password: "password",
+                  name: "johndoe",
                 },
               },
             },
@@ -40,10 +69,56 @@
         responses: {
           "200": {
             description: "User registered successfully",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    token: { type: "string" },
+                    user: {
+                      type: "object",
+                      properties: {
+                        id: { type: "string" },
+                        name: { type: "string" },
+                        email: { type: "string", format: "email" },
+                        emailVerified: { type: "boolean" },
+                        image: {
+                          type: "string",
+                          nullable: true,
+                        },
+                        createdAt: {
+                          type: "string",
+                          format: "date-time",
+                        },
+                        updatedAt: {
+                          type: "string",
+                          format: "date-time",
+                        },
+                      },
+                    },
+                  },
+                },
+                example: {
+                  token: "nEq0xudr9XpbqiAxA5ntUcBlRrn0Ffhg",
+                  user: {
+                    id: "WbBomeKPVGUaE8i2cPv0pRvUJX1svhV",
+                    name: "johndoe",
+                    email: "johndoe@gmail.com",
+                    emailVerified: false,
+                    image: null,
+                    createdAt: "2026-02-24T14:37:12.253Z",
+                    updatedAt: "2026-02-24T14:37:12.253Z",
+                  },
+                },
+              },
+            },
           },
+          "422": { description: "User already exists" },
+          "500": { description: "Internal Server Error" },
         },
       },
     },
+
     "/auth/sign-in/email": {
       post: {
         summary: "Login with email",
@@ -54,9 +129,14 @@
             "application/json": {
               schema: {
                 type: "object",
+                required: ["email", "password"],
                 properties: {
-                  email: { type: "string" },
+                  email: { type: "string", format: "email" },
                   password: { type: "string" },
+                },
+                example: {
+                  email: "johndoe@gmail.com",
+                  password: "password",
                 },
               },
             },
@@ -65,10 +145,54 @@
         responses: {
           "200": {
             description: "Login successful",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    redirect: { type: "boolean" },
+                    token: { type: "string" },
+                    user: {
+                      type: "object",
+                      properties: {
+                        name: { type: "string" },
+                        email: { type: "string", format: "email" },
+                        emailVerified: { type: "boolean" },
+                        image: { type: "boolean" },
+                        createdAt: {
+                          type: "string",
+                          format: "date-time",
+                        },
+                        updatedAt: {
+                          type: "string",
+                          format: "date-time",
+                        },
+                        id: { type: "string" },
+                      },
+                    },
+                  },
+                },
+                example: {
+                  redirect: false,
+                  token: "nEq0xudr9XpbqiAxA5ntUcBlRrn0Ffhg",
+                  user: {
+                    name: "johndoe",
+                    email: "johndoe@gmail.com",
+                    emailVerified: false,
+                    image: null,
+                    createdAt: "2026-02-24T14:37:12.253Z",
+                    updatedAt: "2026-02-24T14:37:12.253Z",
+                    id: "WbBomeKPV6UaE8i2cPv0pBrVUJX1swhV",
+                  },
+                },
+              },
+            },
           },
+          "401": { description: "Unauthorized" },
         },
       },
     },
+
     "/auth/get-session": {
       get: {
         summary: "Get current session details",
@@ -76,6 +200,59 @@
         responses: {
           "200": {
             description: "Session data retrieved",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    session: {
+                      expiresAt: {
+                        type: "string",
+                        format: "date-time",
+                      },
+                      token: { type: "string" },
+                      createdAt: { type: "string", format: "date-time" },
+                      updatedAt: { type: "string", format: "date-time" },
+                      ipAddress: { type: "string" },
+                      userAgent: { type: "string" },
+                      userId: { type: "string" },
+                      id: { type: "string" },
+                    },
+                    user: {
+                      name: { type: "string" },
+                      email: { type: "string", format: "email" },
+                      emailVerified: { type: "boolean" },
+                      image: { type: "boolean" },
+                      createdAt: { type: "string", format: "date-time" },
+                      updatedAt: { type: "string", format: "date-time" },
+                      id: { type: "string" },
+                    },
+                  },
+                },
+                example: {
+                  session: {
+                    expiresAt: "2026-02-24T14:37:12.253Z",
+                    token: "nEq0xudr9XpbqiAxA5ntUcBlRrn0Ffhg",
+                    createdAt: "2026-02-24T14:37:12.253Z",
+                    updatedAt: "2026-02-24T14:37:12.253Z",
+                    ipAddress: "0000:0000:0000:0000:0000:0000:0000:0000",
+                    userAgent:
+                      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+                    userId: "WbBomeKPV6UaE8i2cPv0pBrVUJX1swh0",
+                    id: "6TnROj0WQ5Y0bPJmfeHqjb6K66NsCOvz",
+                  },
+                  user: {
+                    name: "johndoe",
+                    email: "johndoe@gmail.com",
+                    emailVerified: false,
+                    image: null,
+                    createdAt: "2026-02-24T14:37:12.253Z",
+                    updatedAt: "2026-02-24T14:37:12.253Z",
+                    id: "WbBomeKPV6UaE8i2cPv0pBrVUJX1swhV",
+                  },
+                },
+              },
+            },
           },
           "401": {
             description: "Not authenticated",
@@ -83,13 +260,38 @@
         },
       },
     },
+
     "/auth/sign-out": {
       post: {
         summary: "Logout current user",
         tags: ["Auth"],
+        requestBody: {
+          required: false,
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                example: {},
+              },
+            },
+          },
+        },
         responses: {
           "200": {
             description: "Logged out successfully",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    success: { type: "boolean" },
+                  },
+                },
+                example: {
+                  success: true,
+                },
+              },
+            },
           },
         },
       },
@@ -116,6 +318,7 @@
         },
       },
     },
+
     "/v1/analytics/by-conversions": {
       get: {
         summary: "Get analytics records filtered by conversions",
@@ -144,6 +347,7 @@
         },
       },
     },
+
     "/v1/analytics/metrics": {
       get: {
         summary: "Get aggregated analytics metrics",
@@ -165,6 +369,7 @@
         },
       },
     },
+
     "/v1/analytics/alerts": {
       get: {
         summary: "Get unresolved alerts",
@@ -192,6 +397,7 @@
         },
       },
     },
+
     "/v1/analytics/timeline": {
       get: {
         summary: "Get analytics timeline snapshots",
@@ -213,6 +419,7 @@
         },
       },
     },
+
     "/v1/analytics/anomalies": {
       get: {
         summary: "Get anomaly alerts",
@@ -234,6 +441,7 @@
         },
       },
     },
+
     "/v1/projects": {
       get: {
         summary: "List projects",
@@ -271,6 +479,7 @@
         },
       },
     },
+
     "/v1/projects/{id}": {
       get: {
         summary: "Get a project by id if the user is a member",
@@ -340,6 +549,7 @@
         },
       },
     },
+
     "/v1/projects/{id}/members": {
       get: {
         summary: "List members of the project",
@@ -424,6 +634,7 @@
         },
       },
     },
+
     "/v1/projects/{id}/api-keys": {
       get: {
         summary: "List all API keys for a project",
@@ -460,6 +671,7 @@
           "500": { description: "Internal server error" },
         },
       },
+
       "/v1/projects/{id}/api-keys/{keyId}": {
         delete: {
           summary: "Revoke a specific API key",
