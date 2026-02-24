@@ -7,6 +7,7 @@ import { formatDate, timeAgo } from "@/shared/lib/utils"
 import { Button } from "@/shared/components/ui/button"
 import { MyIcons } from "@/shared/components/MyIcons/MyIcons"
 
+
 interface Props {
   params: { id: string }
 }
@@ -15,10 +16,11 @@ interface Props {
 export default async function IssueDetailPage({ params }: Props) {
   const { id } = await params
     const issue = issues.find((i) => i.id === id)
-  if (!issue) return notFound()
+  if (!issue) return notFound() // Si el issue no existe, muestra una página explicando que no se encontro
     const { text  } = timeAgo(issue.createdAt)
   return (
     <div className="min-h-screen p-6">
+   
       <div className="max-w-4xl mx-auto space-y-8 gap-2">
 
         {/* Back */}
@@ -115,19 +117,21 @@ export default async function IssueDetailPage({ params }: Props) {
           </p>
         </div>
 
-        {/* CTA */}
-        <Button variant="ghost" className="w-full border border-gray-600 rounded-xl py-3 text-black font-medium hover:bg-muted transition-colors">
+ <div className="flex flex-col gap-4">
+        <Button variant="ghost" className="w-full cursor-pointer border border-gray-600 rounded-xl py-3 text-black font-medium hover:bg-muted transition-colors">
           SIMULAR EVENTO 
           <MyIcons name="play" className="w-4 h-4 ml-2" size={32}/>
         </Button>
- <Button variant="ghost" className="w-full border border-gray-600 rounded-xl py-3 text-black font-medium hover:bg-muted transition-colors">
+         <Button variant="ghost" className="w-full cursor-pointer border border-gray-600 rounded-xl py-3 text-black font-medium hover:bg-muted transition-colors">
         REPARAR INTEGRACIÓN
           <MyIcons name="repair" className="w-4 h-4 ml-2" size={32}/>
-        </Button> <Button variant="default" className="w-full border border-gray-600 rounded-xl py-3 text-white font-medium hover:bg-muted transition-colors">
+        </Button> <Button variant="default" className="w-full cursor-pointer border border-gray-600 rounded-xl py-3 text-white font-medium hover:bg-muted hover:text-black transition-colors">
          MARCAR COMO SOLUCIONADO
           
         </Button>
+        </div>
       </div>
+      
     </div>
   )
 }
