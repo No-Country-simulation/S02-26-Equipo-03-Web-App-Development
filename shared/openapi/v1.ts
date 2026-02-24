@@ -7,17 +7,6 @@
   },
   servers: [{ url: "/api" }],
   paths: {
-    "/health": {
-      get: {
-        summary: "Health Check Endpoint",
-        tags: ["Health"],
-        responses: {
-          "200": { description: "Health status with database connectivity and timestamp" },
-          "500": { description: "Internal Server Error" },
-        },
-      },
-    },
-
     "/auth/sign-up/email": {
       post: {
         summary: "Register a new user with email",
