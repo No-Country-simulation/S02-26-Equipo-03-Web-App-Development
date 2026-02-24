@@ -1,8 +1,14 @@
 import Sidebard from "@/app/dashboard/Sidebard";
 import HeaderDashboard from "@/app/dashboard/HeaderDashboard";
 import { SidebarProvider } from "@/shared/components/ui/sidebar";
+import { redirect } from "next/navigation";
+import { getCurrentUser } from "@/shared/lib/getCurrentUser";
 
-export default function DashboardPage({ children }: { children: React.ReactNode }) {
+export default async function DashboardPage({ children }: { children: React.ReactNode }) {
+  await getCurrentUser().catch(() => {
+    redirect("/login");
+  });
+
   return (
     <SidebarProvider>
       <div className="flex h-screen w-full">
