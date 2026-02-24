@@ -3,147 +3,278 @@ import { OrderStatus } from "@shared/types/orders.types";
 import { IntegrationConnector } from "@infrastructure/integrations/IntegrationConnector";
 import { WebhookResponse } from "@shared/types/integration.types";
 import { DBConnection } from "@infrastructure/database";
+import { eq } from "drizzle-orm";
 
 export class StripeConnector extends IntegrationConnector {
-    private stripe: Stripe;
+  private stripe: Stripe;
 
-    constructor(db:DBConnection, apiKey: string) {
-        super(db);
+  constructor(db: DBConnection, apiKey: string) {
+    super(db);
 
-        if (!apiKey) {
-            throw new Error("StripeConnector: The API Key is required to initialize the SDK.");
-        }
-        
-        this.stripe = new Stripe(apiKey, {
-            apiVersion: "2026-01-28.clover" as any
+    if (!apiKey) {
+      throw new Error("StripeConnector: The API Key is required to initialize the SDK.");
+    }
+
+    this.stripe = new Stripe(apiKey, {
+      apiVersion: "2026-01-28.clover" as any,
+    });
+  }
+
+  // Traducir los estados de Stripe
+  private mapStatus(stripeStatus: string): OrderStatus {
+    switch (stripeStatus) {
+      case "succeeded":
+        return "PAGADO";
+      case "processing":
+        return "PENDIENTE";
+      case "requires_payment_method":
+        return "FALLIDO";
+      default:
+        return "PENDIENTE";
+    }
+  }
+
+  /**
+   * Valida la firma del webhook de Stripe.
+   */
+  async validateSignature(
+    payload: string,
+    signature: string,
+    secretwebhookSecret: string
+  ): Promise<boolean> {
+    try {
+      // constructEvent para asegurar la autenticidad.
+      this.stripe.webhooks.constructEvent(payload, signature, secretwebhookSecret);
+      return true;
+    } catch (error) {
+      console.error("Signature error:", error);
+      return false;
+    }
+  }
+
+  /**
+   * Procesa el webhook de Stripe y normaliza los datos.
+   */
+  async processWebhook(
+    payload: string,
+    signature: string,
+    secretwebhookSecret: string
+  ): Promise<WebhookResponse> {
+    try {
+      // 1. Validar firma
+      const event = this.stripe.webhooks.constructEvent(payload, signature, secretwebhookSecret);
+
+      // 2. Extraer el objeto
+      const paymentIntent = event.data.object as Stripe.PaymentIntent;
+
+      // 3. Extraer el id del proyecto o API Key
+      const apiKeyOrId = paymentIntent.metadata?.project_id || "";
+
+      if (!apiKeyOrId) {
+        throw new Error("The webhook does not contain a project_id in the metadata.");
+      }
+
+      // --- INTELIGENCIA DE RESOLUCIÓN ---
+      // Intentamos buscar si lo que recibimos es una API Key
+      // Importación dinámica para evitar ciclos o dependencias pesadas si fuera necesario
+      const { ProjectApiKeyRepository } =
+        await import("@/modules/projects/apiKeys/projectApiKey.repository");
+      const apiKeyRecord = await ProjectApiKeyRepository.findProjectByRawKey(apiKeyOrId, this.db);
+
+      // Si encontramos un registro, usamos su projectId real.
+      // Si no, asumimos que ya era un ID de proyecto válido.
+      const projectId = apiKeyRecord ? apiKeyRecord.projectId : apiKeyOrId;
+      // ----------------------------------
+
+      /**
+       * Logging: Integrado con el método logEvent de la clase base para
+       * monitorear eventos en tiempo real."
+       */
+      this.logEvent("STRIPE", event.type, projectId);
+
+      if (
+        event.type === "payment_intent.succeeded" ||
+        event.type === "checkout.session.completed"
+      ) {
+        const isSession = event.type === "checkout.session.completed";
+        const session = event.data.object as any;
+
+        // Atribución: Recuperar el ID de sesión de marketing
+        const metadata = session.metadata || {};
+        console.log("DEBUG [Stripe Metadata]:", JSON.stringify(metadata, null, 2));
+        const amount = isSession ? session.amount_total / 100 : session.amount / 100;
+        const currency = (session.currency || "USD").toUpperCase();
+        const externalId = isSession ? session.payment_intent : session.id;
+
+        // Datos del Cliente y Producto (Enriquecimiento)
+        const customerName =
+          session.customer_details?.name || metadata.customer_name || "Cliente Desconocido";
+        const customerEmail = session.customer_details?.email || metadata.customer_email || "S/E";
+        const productName = metadata.product_name || "Producto General";
+
+        // 4. BUSCAR LA INTEGRACIÓN
+        const integration = await this.db.query.integrationsTable.findFirst({
+          where: (table, { and, eq }) =>
+            and(eq(table.projectId, projectId), eq(table.platform, "STRIPE")),
         });
-    }
 
-    // Traducir los estados de Stripe
-    private mapStatus(stripeStatus: string): OrderStatus {
-        switch (stripeStatus) {
-            case 'succeeded': return "PAGADO";
-            case 'processing': return "PENDIENTE";
-            case 'requires_payment_method': return "FALLIDO";
-            default: return "PENDIENTE";
+        if (!integration) {
+          throw new Error(`No active Stripe integration was found for the project: ${projectId}`);
         }
-    }
 
-    /**
-     * Valida la firma del webhook de Stripe.
-     */
-    async validateSignature(payload: string, signature: string, secretwebhookSecret: string): Promise<boolean> {
-        try {
-            // constructEvent para asegurar la autenticidad.
-            this.stripe.webhooks.constructEvent(payload, signature, secretwebhookSecret);
-            return true;
-        } catch (error) {
-            console.error("Signature error:", error);
-            return false;
-        }
-    }
+        // --- PROCESAMIENTO ATÓMICO CON TRANSACCIÓN ---
+        await (this.db as any).transaction(async (tx: any) => {
+          const schema = await import("@infrastructure/database/schemas/schema");
+          // A. Verificar idempotencia (¿Ya existe la transacción?)
+          const existingTx = await tx.query.transactionsTable.findFirst({
+            where: (table: any, { eq }: any) => eq(table.externalId, externalId),
+          });
 
-    /**
-     * Procesa el webhook de Stripe y normaliza los datos.
-     */
-    async processWebhook(payload: string, signature: string, secretwebhookSecret: string): Promise<WebhookResponse> {
-        try {
-            // 1. Validar firma
-            const event = this.stripe.webhooks.constructEvent(payload, signature, secretwebhookSecret);
+          let transactionId = existingTx?.id;
 
-            // 2. Extraer el objeto
-            const paymentIntent = event.data.object as Stripe.PaymentIntent;
-            
-            // 3. Extraer el id del proyecto
-            const projectId = paymentIntent.metadata?.project_id || ""; 
+          if (!existingTx) {
+            const newTx = await tx
+              .insert(schema.transactionsTable)
+              .values({
+                id: crypto.randomUUID(),
+                projectId: projectId,
+                paymentIntegrationId: integration.id,
+                externalId: externalId,
+                amount: amount,
+                currency: currency,
+                status: "completed",
+                transactionDate: new Date(),
+                metadata: JSON.stringify(metadata),
+              })
+              .returning();
+            transactionId = newTx[0].id;
+            console.log("✅ Transacción creada:", transactionId);
+          } else {
+            console.log("ℹ️ Transacción ya existía (omitido):", transactionId);
+          }
 
-            if (!projectId) {
-                throw new Error("The webhook does not contain a project_id in the metadata.");
+          // B. Verificar/Crear o Actualizar la Orden
+          const existingOrder = await tx.query.ordersTable.findFirst({
+            where: (table: any, { eq }: any) => eq(table.transactionId, transactionId),
+          });
+
+          if (!existingOrder) {
+            await tx.insert(schema.ordersTable).values({
+              id: crypto.randomUUID(),
+              projectId: projectId,
+              transactionId: transactionId,
+              totalAmount: amount,
+              currency: currency,
+              status: "confirmed",
+              orderDate: new Date(),
+              externalOrderId: isSession ? session.id : externalId,
+              customerName: customerName,
+              customerEmail: customerEmail,
+              productName: productName,
+            });
+            console.log("✅ Orden enriquecida creada para:", customerName);
+          } else if (isSession || customerName !== "Cliente Desconocido") {
+            // Si la orden ya existía (creada por payment_intent) pero ahora tenemos
+            // mejores datos (del session), la actualizamos.
+            await tx
+              .update(schema.ordersTable)
+              .set({
+                customerName: customerName,
+                customerEmail: customerEmail,
+                productName: productName,
+                externalOrderId: isSession ? session.id : externalId,
+              })
+              .where(eq(schema.ordersTable.id, existingOrder.id));
+            console.log("🔄 Orden actualizada con datos de cliente:", customerName);
+          } else {
+            console.log("ℹ️ Orden ya existía y no hay datos nuevos para actualizar.");
+          }
+
+          // C. Registrar Evento de Compra para Atribución
+          const purchaseEventId = crypto.randomUUID();
+          await tx.insert(schema.eventsTable).values({
+            id: purchaseEventId,
+            projectId: projectId,
+            eventType: "purchase",
+            source: "stripe",
+            payload: JSON.stringify(session),
+            timestamp: new Date(),
+            status: "processed",
+          });
+
+          // D. Atribución Automática (Top level o Atribución estructurada)
+          let utmCampaign = metadata.utm_campaign || metadata.campaign || "";
+
+          // Si no está en el top level, buscamos en el objeto 'attribution' que viene de tienda-cliente
+          if (!utmCampaign && metadata.attribution) {
+            try {
+              const attrData = JSON.parse(metadata.attribution);
+              utmCampaign = attrData.params?.utm_campaign || "";
+            } catch (e) {
+              console.log("No se pudo parsear el metadato de atribución:", e);
             }
+          }
 
-            /**
-             * Logging: Integrado con el método logEvent de la clase base para 
-             * monitorear eventos en tiempo real."
-            */
-            this.logEvent("STRIPE", event.type, projectId);
-            
-            if (event.type === "payment_intent.succeeded") {
-                // Atribución: Recuperar el ID de sesión de marketing
-                const sessionId = paymentIntent.metadata?.external_session_id; 
+          if (utmCampaign) {
+            const campaign = await tx.query.campaignsTable.findFirst({
+              where: (table: any, { and, eq }: any) =>
+                and(eq(table.projectId, projectId), eq(table.name, utmCampaign)),
+            });
 
-                // 4. BUSCAR LA INTEGRACIÓN
-                const integration = await this.db.query.integrationsTable.findFirst({
-                    where: (table, { and, eq }) => and(
-                        eq(table.projectId, projectId),
-                        eq(table.platform, "STRIPE")
-                    ),
-                });
-
-                if (!integration) {
-                    throw new Error(`No active Stripe integration was found for the project: ${projectId}`);
-                }
-
-                const transaction = await this.createTransactionRecord({
-                    id: crypto.randomUUID(),
-                    projectId: projectId,
-                    paymentIntegrationId: integration.id,
-                    externalId: paymentIntent.id,
-                    amount: paymentIntent.amount / 100,
-                    currency: paymentIntent.currency.toUpperCase(),
-                    status: "completed",
-                    transactionDate: new Date()
-                });
-
-                if (transaction) {
-                    console.log("Transacción guardada exitosamente:", transaction);
-                } else {
-                    console.error("Error al guardar la transacción.");
-                }
-
-                await this.createOrderRecord({
-                    id: crypto.randomUUID(),
-                    projectId: projectId,
-                    transactionId: transaction[0].id, // Vinculamos con la transacción recién creada
-                    totalAmount: paymentIntent.amount / 100,
-                    currency: paymentIntent.currency.toUpperCase(),
-                    status: "confirmed",
-                    orderDate: new Date(),
-                    externalOrderId: paymentIntent.metadata?.external_session_id || paymentIntent.id
-                });
-
-                // Si llegamos aquí, la firma fue válida, la orden y la transacción se alamacenaron.
-                await this.updateIntegrationStatus(integration.id, "connected");
-
-                return {
-                    success: true,
-                    message: "Pago procesado exitosamente",
-                    projectId: projectId,
-                    externalId: paymentIntent.id,
-                    plataform: "STRIPE",
-                    normalizedData: {
-                        status: this.mapStatus(paymentIntent.status),
-                        amount: paymentIntent.amount / 100,
-                        currency: paymentIntent.currency,
-                        paymentType: "PAGO ÚNICO"
-                    }
-                };
+            if (campaign) {
+              await tx.insert(schema.attributionsTable).values({
+                id: crypto.randomUUID(),
+                eventId: purchaseEventId,
+                campaignId: campaign.id,
+                model: "last_click",
+                weight: 1.0,
+              });
+              console.log(` Atribución lograda: Venta vinculada a campaña "${utmCampaign}"`);
+            } else {
+              console.log(` No se encontró campaña en DB con nombre: "${utmCampaign}"`);
             }
-            
-            return { 
-                success: true,// el evento se recibió bien, solo no lo procesamos
-                message: `Evento recibido pero ignorado: ${event.type}`, 
-                projectId, 
-                plataform: "STRIPE" 
-            };
-    
-        } catch (error: any) {
-            console.error("Error al procesar el webhook:", error.message);
-            return { 
-                success: false, 
-                message: error.message, 
-                projectId: (error as any).projectId || "unknown", 
-                plataform: "STRIPE" 
-            };
-        }
+          }
+
+          // E. Actualizar estado de integración
+          await tx
+            .update(schema.integrationsTable)
+            .set({
+              status: "connected",
+              connectedAt: new Date(),
+            })
+            .where(eq(schema.integrationsTable.id, integration.id));
+        });
+        // ----------------------------------------------
+
+        return {
+          success: true,
+          message: "Pago procesado exitosamente",
+          projectId: projectId,
+          externalId: externalId,
+          plataform: "STRIPE",
+          normalizedData: {
+            status: "PAGADO",
+            amount: amount,
+            currency: currency,
+            paymentType: "PAGO ÚNICO",
+          },
+        };
+      }
+
+      return {
+        success: true, // el evento se recibió bien, solo no lo procesamos
+        message: `Evento recibido pero ignorado: ${event.type}`,
+        projectId,
+        plataform: "STRIPE",
+      };
+    } catch (error: any) {
+      console.error("Error al procesar el webhook:", error.message);
+      return {
+        success: false,
+        message: error.message,
+        projectId: (error as any).projectId || "unknown",
+        plataform: "STRIPE",
+      };
     }
+  }
 }

@@ -9,8 +9,9 @@ import {
   FiBarChart2,
   FiMail,
   FiLock,
+  FiPlay,
 } from "react-icons/fi";
-
+import { GiAutoRepair } from "react-icons/gi";
 export const iconComponents: Record<NameIcon, IconType> = {
   database: FiDatabase,
   activity: FiActivity,
@@ -20,4 +21,6 @@ export const iconComponents: Record<NameIcon, IconType> = {
   barChart: FiBarChart2,
   password: FiLock,
   email: FiMail,
+  play: FiPlay,
+  repair: GiAutoRepair,
 };

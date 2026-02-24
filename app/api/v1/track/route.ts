@@ -44,9 +44,54 @@ function extractMetadata(req: NextRequest): RequestMetadata {
 }
 
 /**
- * POST /api/v1/track
- *
- * El Pixel envía un JSON con fetch(). Es el método preferido.
+ * @swagger
+ * /api/v1/track:
+ *   post:
+ *     summary: Track an event (JSON)
+ *     description: Preferred method to track events. Receives a JSON payload.
+ *     tags:
+ *       - Tracking
+ *     parameters:
+ *       - in: header
+ *         name: x-api-key
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Project API Key
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               event:
+ *                 type: string
+ *               properties:
+ *                 type: object
+ *     responses:
+ *       202:
+ *         description: Event received
+ *   get:
+ *     summary: Track an event (Pixel)
+ *     description: Fallback method using a transparent pixel. Useful for no-JS environments.
+ *     tags:
+ *       - Tracking
+ *     parameters:
+ *       - in: query
+ *         name: k
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Project API Key
+ *     responses:
+ *       200:
+ *         description: Transparent GIF pixel
+ *         content:
+ *           image/gif:
+ *             schema:
+ *               type: string
+ *               format: binary
  */
 export async function POST(req: NextRequest) {
   try {
