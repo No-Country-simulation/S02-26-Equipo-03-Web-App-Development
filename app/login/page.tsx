@@ -41,7 +41,7 @@ export default function LoginForm() {
 
     setStatus("Sesión iniciada correctamente.");
     setIsBusy(false);
-    router.push("/");
+    router.push("/dashboard");
   };
 
   const handleGetSession = async () => {

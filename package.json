@@ -15,7 +15,8 @@
     "db:push": "pnpm drizzle-kit push",
     "db:studio": "pnpm drizzle-kit studio --port 4985",
     "db:migrate": "pnpm drizzle-kit migrate",
-    "db:seed": "tsx infrastructure/database/seed.ts"
+    "db:seed": "tsx infrastructure/database/seed.ts",
+    "db:clean": "tsx infrastructure/database/clean.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

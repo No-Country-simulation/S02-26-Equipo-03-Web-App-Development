@@ -7,19 +7,24 @@ import {
   getIntegrationStatus,
 } from "@/app/dashboard/tracking/dashboardLogic"
 import { IntegrationsStatus } from "@/app/dashboard/tracking/IntegrationsStatus"
+import { TrackingSkeleton } from "@/app/dashboard/tracking/TrackingSkeleton"
 
 export default function DashboardPage() {
   const sortedIssues = sortIssuesByImpact(issues)
   const totalRisk = calculateTotalRisk(sortedIssues)
   const integrations = getIntegrationStatus(sortedIssues)
-
+  // cambiar el .lenght por un estado de carga para mostrar el skeleton mientras se cargan los datos reales
   return (
     <div className="min-h-screen bg-muted/40 p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
-        <RevenueCard totalRisk={totalRisk} />
-        <IntegrationsStatus integrations={integrations} />
-        <IssuesTable issues={sortedIssues} />
-      </div>
+      {issues.length > 0 ? (
+        <div className="max-w-7xl mx-auto space-y-6">
+          <RevenueCard totalRisk={totalRisk} />
+          <IntegrationsStatus integrations={integrations} />
+          <IssuesTable issues={sortedIssues} />
+        </div>
+      ) : (
+        <TrackingSkeleton />
+      )}
     </div>
   )
 }

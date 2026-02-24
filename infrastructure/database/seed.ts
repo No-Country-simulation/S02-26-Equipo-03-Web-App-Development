@@ -1,10 +1,15 @@
 import { db } from "./index";
+import crypto from "crypto";
 import { eq } from "drizzle-orm";
 import {
   analyticsTable,
   projectsTable,
   usersTable,
   campaignsTable,
+  projectApiKeysTable,
+  projectMembersTable,
+  integrationsTable,
+  rolesTable,
   type InsertAnalytics,
 } from "./schemas/schema";
 
@@ -28,6 +33,8 @@ async function seed() {
 
     const email = "demo@example.com";
 
+    let userId: string;
+
     let user = await tx
       .select({ id: usersTable.id })
       .from(usersTable)
@@ -35,7 +42,7 @@ async function seed() {
       .limit(1);
 
     if (user.length === 0) {
-      await tx
+      const inserted = await tx
         .insert(usersTable)
         .values({
           id: crypto.randomUUID(),
@@ -43,13 +50,16 @@ async function seed() {
           name: "Demo User",
         })
         .returning({ id: usersTable.id });
+      userId = inserted[0].id;
+    } else {
+      userId = user[0].id;
     }
 
     // =========================
     // 2️⃣ PROJECT
     // =========================
 
-    const projectName = "E-commerce Demo Project";
+    const projectName = "Mi Primer Proyecto";
 
     let project = await tx
       .select({ id: projectsTable.id })
@@ -179,12 +189,101 @@ async function seed() {
     ];
 
     await tx.insert(analyticsTable).values(analyticsRecords);
+
+    // =========================
+    // 5️⃣ ROLES & MEMBERS
+    // =========================
+
+    const roleName = "Admin";
+    let role = await tx
+      .select({ id: rolesTable.id })
+      .from(rolesTable)
+      .where(eq(rolesTable.name, roleName))
+      .limit(1);
+
+    let roleId: string;
+    if (role.length === 0) {
+      const inserted = await tx
+        .insert(rolesTable)
+        .values({
+          id: crypto.randomUUID(),
+          projectId,
+          name: roleName,
+          description: "Full access to the project",
+        })
+        .returning({ id: rolesTable.id });
+      roleId = inserted[0].id;
+    } else {
+      roleId = role[0].id;
+    }
+
+    // Link user to project
+    const member = await tx
+      .select()
+      .from(projectMembersTable)
+      .where(eq(projectMembersTable.projectId, projectId))
+      .limit(1);
+
+    if (member.length === 0) {
+      await tx.insert(projectMembersTable).values({
+        id: crypto.randomUUID(),
+        projectId,
+        userId,
+        roleId,
+      });
+    }
+
+    // =========================
+    // 6️⃣ API KEY
+    // =========================
+
+    const apiKeyExists = await tx
+      .select()
+      .from(projectApiKeysTable)
+      .where(eq(projectApiKeysTable.projectId, projectId))
+      .limit(1);
+
+    if (apiKeyExists.length === 0) {
+      const rawApiKey = "pk_live_demo_123456789";
+      const keyHash = crypto.createHash("sha256").update(rawApiKey).digest("hex");
+
+      await tx.insert(projectApiKeysTable).values({
+        id: crypto.randomUUID(),
+        projectId,
+        keyHash: keyHash,
+        createdAt: new Date(),
+      });
+      console.log(`🔑 Seed API Key: ${rawApiKey}`);
+    }
+
+    // =========================
+    // 7️⃣ INTEGRATIONS
+    // =========================
+
+    const integrationName = "Stripe Main";
+    const integrationExists = await tx
+      .select()
+      .from(integrationsTable)
+      .where(eq(integrationsTable.name, integrationName))
+      .limit(1);
+
+    if (integrationExists.length === 0) {
+      await tx.insert(integrationsTable).values({
+        id: crypto.randomUUID(),
+        projectId,
+        name: integrationName,
+        type: "payment",
+        platform: "stripe",
+        status: "connected",
+        connectedAt: new Date(),
+      });
+    }
   });
 
-  console.log("✅ Seeding completed!");
+  console.log("Seeding completed!");
 }
 
 seed().catch((err) => {
-  console.error("❌ Seeding failed:", err);
+  console.error(" Seeding failed:", err);
   process.exit(1);
 });
