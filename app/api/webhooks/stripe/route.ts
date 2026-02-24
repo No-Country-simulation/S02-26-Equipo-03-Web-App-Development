@@ -1,8 +1,8 @@
-/** 
- * Recibir la petición POST, 
+/**
+ * Recibir la petición POST,
  * extraer los headers y el body crudo
  * e instanciar el StripeConnector.
-*/
+ */
 
 import { NextRequest, NextResponse } from "next/server";
 import { StripeConnector } from "@infrastructure/integrations/ecommerce/stripeConnector";
@@ -14,6 +14,7 @@ function requireHeader(value: string | null, name: string): string {
 }
 
 export async function POST(req: NextRequest) {
+  console.log(" [Webhook] Petición recibida en /api/webhooks/stripe");
 
   // 1. Extraer el body como texto y la firma de los headers
   const payload = await req.text();
@@ -23,23 +24,18 @@ export async function POST(req: NextRequest) {
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
   const apiKey = process.env.STRIPE_SECRET_KEY;
 
-  if(!apiKey){
+  if (!apiKey) {
     console.log("STRIPE_SECRET_KEY no está definida en el .env");
     return NextResponse.json({ error: "Incomplete configuration" }, { status: 500 });
   }
 
   const connector = new StripeConnector(db, apiKey);
 
-  try { 
+  try {
     // 3. Llamar al proceso centralizado del conector
-    const result = await connector.processWebhook(
-      payload, 
-      signature, 
-      webhookSecret
-    );
-    return NextResponse.json(result, { status: 200 });    
-  }
-  catch (error) {
+    const result = await connector.processWebhook(payload, signature, webhookSecret);
+    return NextResponse.json(result, { status: 200 });
+  } catch (error) {
     console.error("Error processing stripe webhook:", error);
     return NextResponse.json({ received: false }, { status: 400 });
   }
@@ -70,5 +66,5 @@ export async function POST(req: NextRequest) {
  * 6️⃣ Verificar resultados:
  *    - Revisar los logs en consola para confirmar que el webhook fue procesado correctamente
  *    - Revisar la base de datos que se hayan insertado la transacción y la orden
- * 
+ *
  */

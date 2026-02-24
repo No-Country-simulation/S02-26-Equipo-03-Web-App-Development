@@ -92,9 +92,18 @@ export class StripeConnector extends IntegrationConnector {
        */
       this.logEvent("STRIPE", event.type, projectId);
 
-      if (event.type === "payment_intent.succeeded") {
+      if (
+        event.type === "payment_intent.succeeded" ||
+        event.type === "checkout.session.completed"
+      ) {
+        const isSession = event.type === "checkout.session.completed";
+        const session = event.data.object as any;
+
         // Atribución: Recuperar el ID de sesión de marketing
-        const sessionId = paymentIntent.metadata?.external_session_id;
+        const metadata = session.metadata || {};
+        const amount = isSession ? session.amount_total / 100 : session.amount / 100;
+        const currency = (session.currency || "USD").toUpperCase();
+        const externalId = isSession ? session.payment_intent : session.id;
 
         // 4. BUSCAR LA INTEGRACIÓN
         const integration = await this.db.query.integrationsTable.findFirst({
@@ -110,29 +119,31 @@ export class StripeConnector extends IntegrationConnector {
         await (this.db as any).transaction(async (tx: any) => {
           // A. Verificar idempotencia (¿Ya existe la transacción?)
           const existingTx = await tx.query.transactionsTable.findFirst({
-            where: (table: any, { eq }: any) => eq(table.externalId, paymentIntent.id),
+            where: (table: any, { eq }: any) => eq(table.externalId, externalId),
           });
 
           let transactionId = existingTx?.id;
 
           if (!existingTx) {
+            const schema = await import("@infrastructure/database/schemas/schema");
             const newTx = await tx
-              .insert((await import("@infrastructure/database/schemas/schema")).transactionsTable)
+              .insert(schema.transactionsTable)
               .values({
                 id: crypto.randomUUID(),
                 projectId: projectId,
                 paymentIntegrationId: integration.id,
-                externalId: paymentIntent.id,
-                amount: paymentIntent.amount / 100,
-                currency: paymentIntent.currency.toUpperCase(),
+                externalId: externalId,
+                amount: amount,
+                currency: currency,
                 status: "completed",
                 transactionDate: new Date(),
+                metadata: JSON.stringify(metadata),
               })
               .returning();
             transactionId = newTx[0].id;
-            console.log("Transacción creada:", transactionId);
+            console.log("✅ Transacción creada:", transactionId);
           } else {
-            console.log("Transacción ya existía (omitido):", transactionId);
+            console.log("ℹ️ Transacción ya existía (omitido):", transactionId);
           }
 
           // B. Verificar/Crear la Orden
@@ -141,36 +152,31 @@ export class StripeConnector extends IntegrationConnector {
           });
 
           if (!existingOrder) {
-            await tx
-              .insert((await import("@infrastructure/database/schemas/schema")).ordersTable)
-              .values({
-                id: crypto.randomUUID(),
-                projectId: projectId,
-                transactionId: transactionId,
-                totalAmount: paymentIntent.amount / 100,
-                currency: paymentIntent.currency.toUpperCase(),
-                status: "confirmed",
-                orderDate: new Date(),
-                externalOrderId: paymentIntent.id, // Usamos el ID de Stripe que es único por pago
-              });
-            console.log("Orden creada para transacción:", transactionId);
+            const schema = await import("@infrastructure/database/schemas/schema");
+            await tx.insert(schema.ordersTable).values({
+              id: crypto.randomUUID(),
+              projectId: projectId,
+              transactionId: transactionId,
+              totalAmount: amount,
+              currency: currency,
+              status: "confirmed",
+              orderDate: new Date(),
+              externalOrderId: isSession ? session.id : externalId,
+            });
+            console.log("✅ Orden creada para transacción:", transactionId);
           } else {
-            console.log("Orden ya existía para transacción:", transactionId);
+            console.log("ℹ️ Orden ya existía para transacción:", transactionId);
           }
 
           // C. Actualizar estado de integración
+          const schema = await import("@infrastructure/database/schemas/schema");
           await tx
-            .update((await import("@infrastructure/database/schemas/schema")).integrationsTable)
+            .update(schema.integrationsTable)
             .set({
               status: "connected",
               connectedAt: new Date(),
             })
-            .where(
-              eq(
-                (await import("@infrastructure/database/schemas/schema")).integrationsTable.id,
-                integration.id
-              )
-            );
+            .where(eq(schema.integrationsTable.id, integration.id));
         });
         // ----------------------------------------------
 
@@ -178,12 +184,12 @@ export class StripeConnector extends IntegrationConnector {
           success: true,
           message: "Pago procesado exitosamente",
           projectId: projectId,
-          externalId: paymentIntent.id,
+          externalId: externalId,
           plataform: "STRIPE",
           normalizedData: {
-            status: this.mapStatus(paymentIntent.status),
-            amount: paymentIntent.amount / 100,
-            currency: paymentIntent.currency,
+            status: "PAGADO",
+            amount: amount,
+            currency: currency,
             paymentType: "PAGO ÚNICO",
           },
         };
