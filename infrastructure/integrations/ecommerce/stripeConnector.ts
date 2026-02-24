@@ -101,6 +101,7 @@ export class StripeConnector extends IntegrationConnector {
 
         // Atribución: Recuperar el ID de sesión de marketing
         const metadata = session.metadata || {};
+        console.log("DEBUG [Stripe Metadata]:", JSON.stringify(metadata, null, 2));
         const amount = isSession ? session.amount_total / 100 : session.amount / 100;
         const currency = (session.currency || "USD").toUpperCase();
         const externalId = isSession ? session.payment_intent : session.id;
@@ -189,7 +190,52 @@ export class StripeConnector extends IntegrationConnector {
             console.log("ℹ️ Orden ya existía y no hay datos nuevos para actualizar.");
           }
 
-          // C. Actualizar estado de integración
+          // C. Registrar Evento de Compra para Atribución
+          const purchaseEventId = crypto.randomUUID();
+          await tx.insert(schema.eventsTable).values({
+            id: purchaseEventId,
+            projectId: projectId,
+            eventType: "purchase",
+            source: "stripe",
+            payload: JSON.stringify(session),
+            timestamp: new Date(),
+            status: "processed",
+          });
+
+          // D. Atribución Automática (Top level o Atribución estructurada)
+          let utmCampaign = metadata.utm_campaign || metadata.campaign || "";
+
+          // Si no está en el top level, buscamos en el objeto 'attribution' que viene de tienda-cliente
+          if (!utmCampaign && metadata.attribution) {
+            try {
+              const attrData = JSON.parse(metadata.attribution);
+              utmCampaign = attrData.params?.utm_campaign || "";
+            } catch (e) {
+              console.log("No se pudo parsear el metadato de atribución:", e);
+            }
+          }
+
+          if (utmCampaign) {
+            const campaign = await tx.query.campaignsTable.findFirst({
+              where: (table: any, { and, eq }: any) =>
+                and(eq(table.projectId, projectId), eq(table.name, utmCampaign)),
+            });
+
+            if (campaign) {
+              await tx.insert(schema.attributionsTable).values({
+                id: crypto.randomUUID(),
+                eventId: purchaseEventId,
+                campaignId: campaign.id,
+                model: "last_click",
+                weight: 1.0,
+              });
+              console.log(` Atribución lograda: Venta vinculada a campaña "${utmCampaign}"`);
+            } else {
+              console.log(` No se encontró campaña en DB con nombre: "${utmCampaign}"`);
+            }
+          }
+
+          // E. Actualizar estado de integración
           await tx
             .update(schema.integrationsTable)
             .set({
