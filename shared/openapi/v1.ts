@@ -139,6 +139,10 @@
                   password: "password",
                 },
               },
+              example: {
+                email: "test@example.com",
+                password: "password123",
+              },
             },
           },
         },
@@ -310,49 +314,10 @@
             description: "Project API Key",
           },
         ],
-        requestBody: {
-          required: true,
-          content: {
-            "application/json": {
-              schema: {
-                type: "object",
-                properties: {
-                  event: { type: "string" },
-                  properties: { type: "object" },
-                },
-              },
-            },
-          },
-        },
         responses: {
-          "202": { description: "Event received" },
-          "401": { description: "Missing x-api-key header" },
-        },
-      },
-      get: {
-        summary: "Track an event (Pixel)",
-        tags: ["Tracking"],
-        parameters: [
-          {
-            name: "k",
-            in: "query",
-            required: true,
-            schema: { type: "string" },
-            description: "Project API Key",
-          },
-          {
-            name: "d",
-            in: "query",
-            required: true,
-            schema: { type: "string" },
-            description: "Base64 encoded tracking payload",
-          },
-        ],
-        responses: {
-          "200": {
-            description: "Transparent GIF pixel",
-            content: { "image/gif": { schema: { type: "string", format: "binary" } } },
-          },
+          "200": { description: "Event tracked successfully" },
+          "401": { description: "Unauthorized" },
+          "500": { description: "Internal Server Error" },
         },
       },
     },
@@ -412,7 +377,7 @@
 
     "/v1/orders": {
       get: {
-        summary: "List all orders",
+        summary: "List all orders for a project",
         tags: ["Orders"],
         parameters: [
           {
@@ -424,45 +389,10 @@
           },
         ],
         responses: {
-          "200": {
-            description: "List of orders",
-            content: {
-              "application/json": {
-                schema: {
-                  type: "object",
-                  properties: {
-                    success: { type: "boolean" },
-                    count: { type: "integer" },
-                    data: { type: "array" },
-                  },
-                },
-              },
-            },
-          },
+          "200": { description: "A list of orders" },
           "400": { description: "Missing projectId" },
           "401": { description: "Unauthorized" },
           "403": { description: "Forbidden" },
-        },
-      },
-    },
-
-    "/v1/analytics": {
-      get: {
-        summary: "Get analytics records",
-        tags: ["Analytics"],
-        parameters: [
-          {
-            name: "limit",
-            in: "query",
-            required: false,
-            schema: { type: "integer", minimum: 1, default: 50 },
-          },
-        ],
-        responses: {
-          "200": { description: "Analytics records retrieved" },
-          "400": { description: "Invalid query parameter" },
-          "401": { description: "Unauthorized" },
-          "404": { description: "Route not found" },
           "500": { description: "Internal Server Error" },
         },
       },
@@ -470,29 +400,53 @@
 
     "/v1/analytics/by-conversions": {
       get: {
-        summary: "Get analytics records filtered by conversions",
-        tags: ["Analytics"],
+        summary: "List members of the project",
+        tags: ["Projects"],
         parameters: [
           {
-            name: "conversions",
-            in: "query",
+            name: "id",
+            in: "path",
             required: true,
-            schema: { type: "integer" },
-            description: "Exact conversions value",
-          },
-          {
-            name: "limit",
-            in: "query",
-            required: false,
-            schema: { type: "integer", minimum: 1, default: 50 },
+            schema: { type: "string" },
           },
         ],
         responses: {
-          "200": { description: "Filtered analytics records retrieved" },
-          "400": { description: "Invalid query parameter" },
+          "200": { description: "Project members retrieved successfully" },
           "401": { description: "Unauthorized" },
-          "404": { description: "Route not found" },
-          "500": { description: "Internal Server Error" },
+          "500": { description: "Internal server error" },
+        },
+      },
+      post: {
+        summary: "Add a member to the project (owner only)",
+        tags: ["Projects"],
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            schema: { type: "string" },
+          },
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                required: ["targetUserId", "roleId"],
+                properties: {
+                  targetUserId: { type: "string" },
+                  roleId: { type: "string" },
+                },
+              },
+            },
+          },
+        },
+        responses: {
+          "201": { description: "Member added successfully" },
+          "400": { description: "Invalid input" },
+          "401": { description: "Unauthorized" },
+          "500": { description: "Internal server error" },
         },
       },
     },
@@ -503,46 +457,51 @@
         tags: ["Analytics"],
         parameters: [
           {
-            name: "limit",
-            in: "query",
-            required: false,
-            schema: { type: "integer", minimum: 1, default: 200 },
+            name: "id",
+            in: "path",
+            required: true,
+            schema: { type: "string" },
           },
         ],
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                required: ["targetUserId"],
+                properties: {
+                  targetUserId: { type: "string" },
+                },
+              },
+            },
+          },
+        },
         responses: {
-          "200": { description: "Aggregated metrics retrieved" },
-          "400": { description: "Invalid query parameter" },
+          "204": { description: "Member removed successfully" },
+          "400": { description: "Invalid input" },
           "401": { description: "Unauthorized" },
-          "404": { description: "Route not found" },
-          "500": { description: "Internal Server Error" },
+          "500": { description: "Internal server error" },
         },
       },
     },
 
     "/v1/analytics/alerts": {
       get: {
-        summary: "Get unresolved alerts",
-        tags: ["Analytics"],
+        summary: "List all API keys for a project",
+        tags: ["Projects"],
         parameters: [
           {
-            name: "severity",
-            in: "query",
-            required: false,
-            schema: { type: "string", enum: ["low", "medium", "high", "critical"] },
-          },
-          {
-            name: "limit",
-            in: "query",
-            required: false,
-            schema: { type: "integer", minimum: 1, default: 50 },
+            name: "id",
+            in: "path",
+            required: true,
+            schema: { type: "string" },
           },
         ],
         responses: {
-          "200": { description: "Alerts retrieved" },
-          "400": { description: "Invalid query parameter" },
+          "200": { description: "API keys retrieved successfully" },
           "401": { description: "Unauthorized" },
-          "404": { description: "Route not found" },
-          "500": { description: "Internal Server Error" },
+          "500": { description: "Internal server error" },
         },
       },
     },
@@ -553,39 +512,62 @@
         tags: ["Analytics"],
         parameters: [
           {
-            name: "limit",
-            in: "query",
-            required: false,
-            schema: { type: "integer", minimum: 1, default: 100 },
+            name: "id",
+            in: "path",
+            required: true,
+            schema: { type: "string" },
           },
         ],
         responses: {
-          "200": { description: "Timeline retrieved" },
-          "400": { description: "Invalid query parameter" },
+          "201": { description: "New API key generated successfully" },
           "401": { description: "Unauthorized" },
-          "404": { description: "Route not found" },
-          "500": { description: "Internal Server Error" },
+          "500": { description: "Internal server error" },
+        },
+      },
+      "/v1/projects/{id}/api-keys/{keyId}": {
+        delete: {
+          summary: "Revoke a specific API key",
+          tags: ["Projects"],
+          parameters: [
+            {
+              name: "id",
+              in: "path",
+              required: true,
+              schema: { type: "string" },
+            },
+            {
+              name: "keyId",
+              in: "path",
+              required: true,
+              schema: { type: "string" },
+            },
+          ],
+          responses: {
+            "204": { description: "API key revoked successfully" },
+            "401": { description: "Unauthorized" },
+            "500": { description: "Internal server error" },
+          },
         },
       },
     },
 
     "/v1/analytics/anomalies": {
       get: {
-        summary: "Get anomaly alerts",
-        tags: ["Analytics"],
+        summary: "Report of orders for a specific user (protected endpoint)",
+        tags: ["Report"],
         parameters: [
           {
-            name: "limit",
+            name: "userId",
             in: "query",
-            required: false,
-            schema: { type: "integer", minimum: 1, default: 50 },
+            required: true,
+            schema: { type: "string" },
+            description: "Authenticated user id used to fetch orders analytics report",
           },
         ],
         responses: {
-          "200": { description: "Anomalies retrieved" },
-          "400": { description: "Invalid query parameter" },
-          "401": { description: "Unauthorized" },
-          "404": { description: "Route not found" },
+          "200": { description: "Orders report retrieved successfully" },
+          "400": { description: "Invalid request parameters" },
+          "401": { description: "Unauthorized access to orders report" },
           "500": { description: "Internal Server Error" },
         },
       },
