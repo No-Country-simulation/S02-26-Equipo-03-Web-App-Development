@@ -1,5 +1,5 @@
 import { projectsTable, Project } from "@/infrastructure/database/schemas/schema";
-import { and, eq, inArray } from "drizzle-orm";
+import { and, eq, ne, inArray } from "drizzle-orm";
 import { randomUUID } from "crypto";
 import { projectMembersTable } from "@/infrastructure/database/schemas/schema";
 import { DBConnection } from "@/infrastructure/database";
@@ -74,10 +74,9 @@ export class ProjectRepository {
     const result = await database
       .update(projectsTable)
       .set(data)
-      .where(eq(projectsTable.id, projectId))
+      .where(and(eq(projectsTable.id, projectId), ne(projectsTable.status, "archived")))
       .returning();
 
-    // If nothing was updated → it doesn't exist
     if (result.length === 0) {
       return null;
     }
