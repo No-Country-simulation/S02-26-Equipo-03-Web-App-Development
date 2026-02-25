@@ -36,7 +36,7 @@ export async function getProject(req: NextRequest, context: { params: Promise<{ 
 
 /**
  * PUT /api/projects/id
- * Edits a new project
+ * Edits an existing project if the user has permissions of edit
  */
 export async function editProject(req: NextRequest, context: { params: Promise<{ id: string }> }) {
   try {
