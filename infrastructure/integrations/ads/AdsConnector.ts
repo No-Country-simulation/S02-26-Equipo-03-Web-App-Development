@@ -13,8 +13,6 @@ export abstract class AdsConnector extends IntegrationConnector {
 
   /**
    * Generar la URL a la que el usuario irá para dar permiso.
-   * getAuthorizationUrl() obliga a que cada conector implemente su propia 
-     forma de generar la URL de OAuth
   */
   abstract getAuthorizationUrl(projectId: string, customer_email: string, customer_name: string): string;
 

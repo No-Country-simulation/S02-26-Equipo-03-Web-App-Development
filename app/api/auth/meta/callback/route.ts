@@ -1,4 +1,4 @@
-import { MetaConnector } from "@infrastructure/integrations/ads/metaConnector"
+import { MetaConnector } from "@infrastructure/integrations/ads/metaAdsConnector"
 import { db } from "@infrastructure/database";
 
 export async function GET(req: Request) {

@@ -9,7 +9,7 @@ import { AdsConnector } from "@infrastructure/integrations/ads/AdsConnector";
 import { DBConnection } from "@infrastructure/database";
 import { integrationsTable } from "@infrastructure/database/schemas/schema";
 import { eq } from "drizzle-orm";
-import { WebhookResponse } from "../IntegrationConnector";
+import { WebhookResponse } from "@infrastructure/integrations/IntegrationConnector";
 
 export class MetaConnector extends AdsConnector {
     private clientId = process.env.META_APP_ID || "";
@@ -21,7 +21,7 @@ export class MetaConnector extends AdsConnector {
         this.redirectUri = `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/meta/callback`;
     }
     
-    // 1. Generar la URL de autorización
+    // 1. Generar la URL de autorización: crea el state codificado y arma la URL de Meta
     getAuthorizationUrl(projectId: string, customer_email: string, customer_name: string): string {
         const scope = ["ads_management", "ads_read"].join(",");
         //scope → permisos solicitados por la app: 
@@ -40,12 +40,11 @@ export class MetaConnector extends AdsConnector {
         const params = new URLSearchParams({
             client_id: this.clientId, 
             redirect_uri: this.redirectUri,// URL a la que Meta enviará el código temporal después de que el usuario autorice
-            state: encodedState, // <--- Saber qué projectId, usuario y email autorizó
-            scope: scope, //permisos que solicita tu app
+            state: encodedState, 
+            scope: scope, 
             response_type: "code" //indica que esperas un código de autorización code para intercambiarlo por un token
         });
         
-        console.log(`URL de autorización: https://www.facebook.com/v18.0/dialog/oauth?${params.toString()}`);
         return `https://www.facebook.com/v18.0/dialog/oauth?${params.toString()}`;
     }
 
@@ -101,6 +100,14 @@ export class MetaConnector extends AdsConnector {
         // 3. Obtener el ID de la cuenta publicitaria
         const adAccountId = await this.getUserAdAccounts(tokens.accessToken);
 
+        //El campo credentials guardara los datos de OAuth
+        const objCredentials = JSON.stringify({ 
+            accessToken: tokens.accessToken, 
+            expiresAt: tokens.expiresAt.getTime(), 
+            scope: tokens.scope,
+            adAccountId: adAccountId,
+        })
+
         // 4. Guardar en integrationsTable usando el servicio de cifrado
         await this.createIntegrationRecord({
             id: crypto.randomUUID(),
@@ -113,13 +120,7 @@ export class MetaConnector extends AdsConnector {
             status: "connected",
             platform: "meta",
             accountId: adAccountId,
-            credentials: { 
-                //Campos para OAuth
-                "accessToken": tokens.accessToken, 
-                "expiresAt": tokens.expiresAt.getTime(), 
-                "scope": tokens.scope,
-                "adAccountId": adAccountId,
-            },
+            credentials: objCredentials,
             connectedAt: new Date()
         });
         
