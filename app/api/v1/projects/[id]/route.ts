@@ -81,8 +81,19 @@ export async function archiveProject(
     const deleted = await ProjectService.archiveProject(user.id, id);
 
     return NextResponse.json(deleted, { status: 200 });
-  } catch (error) {
+  } catch (error: any) {
     console.error("DELETE /projects error:", error);
+    if (error.message === "AlreadyArchivedOrNotFound") {
+      return NextResponse.json(
+        { message: "Project already archived or not found" },
+        { status: 409 }
+      );
+    }
+
+    if (error.message === "Forbidden") {
+      return NextResponse.json({ message: "Forbidden" }, { status: 403 });
+    }
+
     return NextResponse.json({ message: "Internal Error" }, { status: 500 });
   }
 }

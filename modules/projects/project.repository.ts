@@ -85,13 +85,16 @@ export class ProjectRepository {
   }
 
   static async archive(projectId: string, database: DBConnection) {
-    await database
+    const result = await database
       .update(projectsTable)
       .set({
         status: "archived",
         updatedAt: new Date(),
       })
-      .where(eq(projectsTable.id, projectId));
+      .where(and(eq(projectsTable.id, projectId), ne(projectsTable.status, "archived")))
+      .returning();
+
+    return result[0] ?? null;
   }
 
   static async assertCanManageMembers(

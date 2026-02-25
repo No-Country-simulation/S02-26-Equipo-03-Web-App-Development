@@ -99,7 +99,13 @@ export class ProjectService {
         throw new Error("Forbidden");
       }
 
-      await ProjectRepository.archive(projectId, tx);
+      const archivedProject = await ProjectRepository.archive(projectId, tx);
+
+      if (!archivedProject) {
+        throw new Error("AlreadyArchivedOrNotFound");
+      }
+
+      return archivedProject;
     });
   }
 }
