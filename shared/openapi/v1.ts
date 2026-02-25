@@ -313,52 +313,10 @@
             schema: { type: "string" },
             description: "Project API Key",
           },
-          "401": { description: "Unauthorized" },
-          "500": { description: "Internal Server Error" },
-        },
-      },
-      post: {
-        summary: "Create a new project",
-        tags: ["Projects"],
-        requestBody: {
-          required: true,
-          content: {
-            "application/json": {
-              schema: {
-                type: "object",
-                required: ["name", "description"],
-                properties: {
-                  name: { type: "string" },
-                  description: { type: "string" },
-                },
-              },
-            },
-          },
-        },
-        responses: {
-          "201": { description: "Project created" },
-          "400": { description: "Validation error" },
-          "401": { description: "Unauthorized" },
-        },
-      },
-    },
-    "/v1/projects/{id}": {
-      get: {
-        summary: "Get a project by id if the user is a member",
-        tags: ["Projects"],
-        parameters: [
-          {
-            name: "id",
-            in: "path",
-            required: true,
-            schema: { type: "string" },
-          },
         ],
         responses: {
-          "200": { description: "Project retrieved successfully" },
+          "200": { description: "Event tracked successfully" },
           "401": { description: "Unauthorized" },
-          "403": { description: "Forbidden" },
-          "404": { description: "Project not found" },
           "500": { description: "Internal Server Error" },
         },
       },
@@ -419,50 +377,22 @@
 
     "/v1/orders": {
       get: {
-        summary: "List all orders",
+        summary: "List all orders for a project",
         tags: ["Orders"],
         parameters: [
           {
-            name: "id",
-            in: "path",
+            name: "projectId",
+            in: "query",
             required: true,
             schema: { type: "string" },
-          },
-        ],
-        requestBody: {
-          required: true,
-          content: {
-            "application/json": {
-              schema: {
-                type: "object",
-                properties: {
-                  name: { type: "string" },
-                  description: { type: "string" },
-                },
-              },
-            },
-          },
-        },
-        responses: {
-          "200": { description: "Project updated successfully" },
-          "401": { description: "Unauthorized" },
-          "500": { description: "Internal Server Error" },
-        },
-      },
-      delete: {
-        summary: "Archive (delete) an existing project",
-        tags: ["Projects"],
-        parameters: [
-          {
-            name: "id",
-            in: "path",
-            required: true,
-            schema: { type: "string" },
+            description: "The ID of the project to fetch orders from",
           },
         ],
         responses: {
-          "200": { description: "Project archived successfully" },
+          "200": { description: "A list of orders" },
+          "400": { description: "Missing projectId" },
           "401": { description: "Unauthorized" },
+          "403": { description: "Forbidden" },
           "500": { description: "Internal Server Error" },
         },
       },
