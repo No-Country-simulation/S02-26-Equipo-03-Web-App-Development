@@ -3,6 +3,7 @@ import { ProjectRepository } from "./project.repository";
 import { ProjectMemberRepository } from "@/modules/projects/members/projectMember.repository";
 import { ProjectRoleRepository } from "@/modules/projects/roles/projectRole.repository";
 import { ProjectApiKeyRepository } from "@/modules/projects/apiKeys/projectApiKey.repository";
+import { AdsSimulatorService } from "@/infrastructure/services/AdsSimulatorService";
 import crypto from "crypto";
 
 export class ProjectService {
@@ -23,7 +24,7 @@ export class ProjectService {
   }
 
   static async createProject(userId: string, name: string, description?: string) {
-    return db.transaction(async (tx) => {
+    const result = await db.transaction(async (tx) => {
       // Create project
       const project = await ProjectRepository.create({ name, description }, tx);
 
@@ -52,6 +53,16 @@ export class ProjectService {
         apiKey,
       };
     });
+
+    // Auto-Simulate Ads data for development (Outside transaction)
+    try {
+      await AdsSimulatorService.simulateProjectAds(result.project.id);
+      console.log(`[Auto-Simulate] Mock data generated for project: ${result.project.id}`);
+    } catch (e) {
+      console.error(`[Auto-Simulate] Failed for project ${result.project.id}:`, e);
+    }
+
+    return result;
   }
 
   static async updateProject(
@@ -88,7 +99,13 @@ export class ProjectService {
         throw new Error("Forbidden");
       }
 
-      await ProjectRepository.archive(projectId, tx);
+      const archivedProject = await ProjectRepository.archive(projectId, tx);
+
+      if (!archivedProject) {
+        throw new Error("AlreadyArchivedOrNotFound");
+      }
+
+      return archivedProject;
     });
   }
 }

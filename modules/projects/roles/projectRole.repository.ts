@@ -6,6 +6,7 @@ import {
 import { randomUUID } from "crypto";
 import { DBConnection } from "@/infrastructure/database";
 import { and, eq, inArray } from "drizzle-orm";
+import { standardPermissions } from "./projectRole.constants";
 
 export class ProjectRoleRepository {
   static async createRole(
@@ -26,8 +27,27 @@ export class ProjectRoleRepository {
     return { id };
   }
 
+  static async ensureStandardPermissions(database: DBConnection) {
+    const inserted: { id: string }[] = [];
+    for (const p of standardPermissions) {
+      const [res] = await database
+        .insert(permissionsTable)
+        .values({
+          id: randomUUID(),
+          ...p,
+        })
+        .returning({ id: permissionsTable.id });
+      inserted.push(res);
+    }
+    return inserted;
+  }
+
   static async assignAllPermissions(roleId: string, database: DBConnection) {
-    const permissions = await database.select({ id: permissionsTable.id }).from(permissionsTable);
+    let permissions = await database.select({ id: permissionsTable.id }).from(permissionsTable);
+
+    if (permissions.length === 0) {
+      permissions = await this.ensureStandardPermissions(database);
+    }
 
     if (permissions.length === 0) return;
 

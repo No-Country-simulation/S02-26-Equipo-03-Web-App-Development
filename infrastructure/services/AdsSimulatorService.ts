@@ -15,6 +15,18 @@ export class AdsSimulatorService {
   static async simulateProjectAds(projectId: string) {
     console.log(` Simulating Ads data for project: ${projectId}`);
 
+    // 0. Check if analytics already exist to avoid duplication
+    const existingAnalytics = await db.query.analyticsTable.findFirst({
+      where: (table, { eq }) => eq(table.projectId, projectId),
+    });
+
+    if (existingAnalytics) {
+      console.log(
+        `[Simulator] Project ${projectId} already has analytics data. Skipping simulation.`
+      );
+      return false;
+    }
+
     // 1. Ensure integrations exist
     const platforms = [
       { name: "Meta Ads Simulator", platform: "meta", type: "ads" },
@@ -118,6 +130,7 @@ export class AdsSimulatorService {
     }
 
     console.log(`✅ Simulation completed for project ${projectId}`);
+    return true;
   }
 
   /**
