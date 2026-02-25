@@ -356,6 +356,7 @@
         },
       },
     },
+
     "/v1/campaigns": {
       post: {
         summary: "Create a manual campaign",
@@ -385,6 +386,7 @@
         },
       },
     },
+
     "/v1/simulate/ads": {
       get: {
         summary: "Simulates Meta and Google Ads data for a project",
@@ -407,6 +409,7 @@
         },
       },
     },
+
     "/v1/orders": {
       get: {
         summary: "List all orders",
@@ -590,7 +593,7 @@
 
     "/v1/projects": {
       get: {
-        summary: "List projects",
+        summary: "List active and inactive projects",
         tags: ["Projects"],
         responses: {
           "200": {
@@ -783,6 +786,14 @@
                     updatedAt: { type: "string", format: "date-time" },
                   },
                 },
+                example: {
+                  id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  name: "Updated Project Name",
+                  description: "Updated description",
+                  status: "active",
+                  createdAt: "2026-02-24T21:50:18.729Z",
+                  updatedAt: "2026-02-24T21:50:18.729Z",
+                },
               },
             },
           },
@@ -832,7 +843,7 @@
     "/v1/projects/{id}/members": {
       get: {
         summary: "List members of the project",
-        tags: ["Projects"],
+        tags: ["Members"],
         parameters: [
           {
             name: "id",
@@ -842,14 +853,40 @@
           },
         ],
         responses: {
-          "200": { description: "Project members retrieved successfully" },
+          "200": {
+            description: "Project members retrieved successfully",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "array",
+                  items: {
+                    type: "object",
+                    properties: {
+                      userId: { type: "string", format: "uuid" },
+                      email: { type: "string", format: "email" },
+                      roleId: { type: "string", format: "uuid" },
+                      joinedAt: { type: "string", format: "date-time" },
+                    },
+                  },
+                },
+                example: [
+                  {
+                    userId: "WbBomeKPV6UaE8i2cPv0pBrVUJX1swhV",
+                    email: "johndoe@gmail.com",
+                    roleId: "7a112499-f6ae-4df4-954e-33839833a1b2",
+                    joinedAt: "2026-02-24T21:50:18.729Z",
+                  },
+                ],
+              },
+            },
+          },
           "401": { description: "Unauthorized" },
           "500": { description: "Internal server error" },
         },
       },
       post: {
         summary: "Add a member to the project (owner only)",
-        tags: ["Projects"],
+        tags: ["Members"],
         parameters: [
           {
             name: "id",
@@ -882,7 +919,7 @@
       },
       delete: {
         summary: "Remove a member from the project",
-        tags: ["Projects"],
+        tags: ["Members"],
         parameters: [
           {
             name: "id",
@@ -917,7 +954,7 @@
     "/v1/projects/{id}/api-keys": {
       get: {
         summary: "List all API keys for a project",
-        tags: ["Projects"],
+        tags: ["Api-Keys"],
         parameters: [
           {
             name: "id",
@@ -935,7 +972,7 @@
 
       post: {
         summary: "Rotate API key (revoke active and create new one)",
-        tags: ["Projects"],
+        tags: ["Api-Keys"],
         parameters: [
           {
             name: "id",
@@ -954,7 +991,7 @@
       "/v1/projects/{id}/api-keys/{keyId}": {
         delete: {
           summary: "Revoke a specific API key",
-          tags: ["Projects"],
+          tags: ["Api-Keys"],
           parameters: [
             {
               name: "id",

@@ -1,5 +1,5 @@
 import { projectsTable, Project } from "@/infrastructure/database/schemas/schema";
-import { and, eq } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 import { randomUUID } from "crypto";
 import { projectMembersTable } from "@/infrastructure/database/schemas/schema";
 import { DBConnection } from "@/infrastructure/database";
@@ -27,7 +27,12 @@ export class ProjectRepository {
       })
       .from(projectsTable)
       .innerJoin(projectMembersTable, eq(projectMembersTable.projectId, projectsTable.id))
-      .where(eq(projectMembersTable.userId, userId));
+      .where(
+        and(
+          eq(projectMembersTable.userId, userId),
+          inArray(projectsTable.status, ["active", "inactive"])
+        )
+      );
 
     return result;
   }
@@ -106,7 +111,6 @@ export class ProjectRepository {
       )
       .limit(1);
 
-      return result.length > 0;
+    return result.length > 0;
   }
-
 }
