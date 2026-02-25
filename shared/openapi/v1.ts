@@ -356,7 +356,57 @@
         },
       },
     },
-
+    "/v1/campaigns": {
+      post: {
+        summary: "Create a manual campaign",
+        tags: ["Campaigns"],
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                required: ["projectId", "name"],
+                properties: {
+                  projectId: { type: "string" },
+                  name: { type: "string" },
+                  budget: { type: "number" },
+                  status: { type: "string", enum: ["active", "paused", "completed", "draft"] },
+                },
+              },
+            },
+          },
+        },
+        responses: {
+          "201": { description: "Campaign created" },
+          "400": { description: "Invalid input" },
+          "401": { description: "Unauthorized" },
+          "403": { description: "Forbidden" },
+        },
+      },
+    },
+    "/v1/simulate/ads": {
+      get: {
+        summary: "Simulates Meta and Google Ads data for a project",
+        description:
+          "Generates mock campaigns and analytics for testing purposes. ⚠️ WARNING: New projects are already created with simulated campaigns automatically. Running this manually will duplicate metrics in the dashboard.",
+        tags: ["Simulation"],
+        parameters: [
+          {
+            name: "projectId",
+            in: "query",
+            required: false,
+            schema: { type: "string" },
+            description: "The ID of the project to simulate data for.",
+          },
+        ],
+        responses: {
+          "200": { description: "Simulation successful" },
+          "404": { description: "Project not found" },
+          "500": { description: "Internal server error" },
+        },
+      },
+    },
     "/v1/orders": {
       get: {
         summary: "List all orders",
