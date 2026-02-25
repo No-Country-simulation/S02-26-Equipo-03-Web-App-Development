@@ -33,7 +33,6 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(campaign, { status: 201 });
   } catch (error: any) {
-    console.error("POST /api/v1/campaigns error:", error);
     return NextResponse.json(
       { message: error.message || "Internal Server Error" },
       { status: 500 }

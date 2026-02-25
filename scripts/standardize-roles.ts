@@ -10,15 +10,17 @@ async function standardizeRoleNames() {
     .update(rolesTable)
     .set({ name: "owner" })
     .where(or(eq(rolesTable.name, "Admin"), eq(rolesTable.name, "admin")))
-    .returning();
-
-  console.log(`✅ Se han actualizado ${result.length} roles de 'Admin' a 'owner'.`);
-
-  if (result.length > 0) {
-    result.forEach((r) => {
-      console.log(`   - Proyecto: ${r.projectId} ahora tiene rol 'owner'`);
+    .returning({
+      updatedId: rolesTable.id,
+      projectId: rolesTable.projectId,
+      newName: rolesTable.name,
     });
-  }
+
+  console.log(`✅ Roles estandarizados a 'owner': ${result.length}`);
+
+  result.forEach((r) => {
+    console.log(`   - Proyecto [${r.projectId}]: Role ID ${r.updatedId} -> ${r.newName}`);
+  });
 
   console.log("Estandarización completada.");
 }

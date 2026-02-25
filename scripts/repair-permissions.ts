@@ -4,7 +4,6 @@ import {
   rolePermissionsTable,
   permissionsTable,
 } from "../infrastructure/database/schemas/schema";
-import { eq } from "drizzle-orm";
 import crypto from "crypto";
 
 async function repairPermissions() {
@@ -13,29 +12,40 @@ async function repairPermissions() {
   const allPermissions = await db.select().from(permissionsTable);
   const allRoles = await db.select().from(rolesTable);
 
-  // Filtramos roles que deberían tener permisos totales (owner o Admin)
+  // 1. Obtener todas las vinculaciones existentes para evitar consultas individuales en el loop
+  const existingRelations = await db.select().from(rolePermissionsTable);
+
+  // 2. Usar un Set para búsquedas O(1)
+  const existingSet = new Set(existingRelations.map((rel) => `${rel.roleId}:${rel.permissionId}`));
+
+  // Filtramos roles que deberían tener permisos totales (owner o admin)
   const targetRoles = allRoles.filter(
     (r) => r.name.toLowerCase() === "owner" || r.name.toLowerCase() === "admin"
   );
 
+  const newRelations: (typeof rolePermissionsTable.$inferInsert)[] = [];
+
   for (const role of targetRoles) {
-    console.log(`Revisando rol ${role.name} del proyecto ${role.projectId}...`);
-
     for (const perm of allPermissions) {
-      const existing = await db.query.rolePermissionsTable.findFirst({
-        where: (table, { and, eq }) =>
-          and(eq(table.roleId, role.id), eq(table.permissionId, perm.id)),
-      });
+      const key = `${role.id}:${perm.id}`;
 
-      if (!existing) {
-        await db.insert(rolePermissionsTable).values({
+      if (!existingSet.has(key)) {
+        newRelations.push({
           id: crypto.randomUUID(),
           roleId: role.id,
           permissionId: perm.id,
         });
-        console.log(`  ✅ Vinculado: ${perm.resource}:${perm.action}`);
       }
     }
+  }
+
+  // 3. Insertar todo de una sola vez (Batch Insert)
+  if (newRelations.length > 0) {
+    console.log(`Insertando ${newRelations.length} nuevas vinculaciones de permisos...`);
+    await db.insert(rolePermissionsTable).values(newRelations);
+    console.log("✅ Vinculaciones creadas con éxito.");
+  } else {
+    console.log("ℹ️ No se encontraron permisos faltantes.");
   }
 
   console.log("Reparación completada.");

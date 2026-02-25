@@ -41,7 +41,14 @@ export async function GET(req: NextRequest) {
       projectId = project.id;
     }
 
-    await AdsSimulatorService.simulateProjectAds(projectId);
+    const ran = await AdsSimulatorService.simulateProjectAds(projectId);
+
+    if (!ran) {
+      return NextResponse.json({
+        success: true,
+        message: `Simulation skipped for project ${projectId} because it already has analytics data.`,
+      });
+    }
 
     return NextResponse.json({
       success: true,
