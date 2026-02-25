@@ -5,9 +5,12 @@ import { db } from "@infrastructure/database";
 /**
  * @swagger
  * /api/v1/simulate/ads:
- *   post:
+ *   get:
  *     summary: Simulates Meta and Google Ads data for a project
- *     description: Generates mock campaigns and analytics for testing purposes.
+ *     description: |
+ *       Generates mock campaigns and analytics for testing purposes.
+ *       ⚠️ **WARNING**: New projects are already created with simulated campaigns automatically.
+ *       Running this manually will duplicate metrics in the dashboard.
  *     tags:
  *       - Simulation
  *     parameters:

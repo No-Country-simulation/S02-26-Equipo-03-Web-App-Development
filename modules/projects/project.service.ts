@@ -3,6 +3,7 @@ import { ProjectRepository } from "./project.repository";
 import { ProjectMemberRepository } from "@/modules/projects/members/projectMember.repository";
 import { ProjectRoleRepository } from "@/modules/projects/roles/projectRole.repository";
 import { ProjectApiKeyRepository } from "@/modules/projects/apiKeys/projectApiKey.repository";
+import { AdsSimulatorService } from "@/infrastructure/services/AdsSimulatorService";
 import crypto from "crypto";
 
 export class ProjectService {
@@ -46,6 +47,14 @@ export class ProjectService {
       const hash = crypto.createHash("sha256").update(apiKey).digest("hex");
 
       await ProjectApiKeyRepository.create(project.id, hash, tx);
+
+      // Auto-Simulate Ads data for development
+      try {
+        await AdsSimulatorService.simulateProjectAds(project.id);
+        console.log(`[Auto-Simulate] Mock data generated for project: ${project.id}`);
+      } catch (e) {
+        console.error(`[Auto-Simulate] Failed for project ${project.id}:`, e);
+      }
 
       return {
         project,
