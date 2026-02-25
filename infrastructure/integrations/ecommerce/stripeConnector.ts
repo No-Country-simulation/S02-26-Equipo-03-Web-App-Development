@@ -4,6 +4,7 @@ import { IntegrationConnector } from "@infrastructure/integrations/IntegrationCo
 import { WebhookResponse } from "@shared/types/integration.types";
 import { DBConnection } from "@infrastructure/database";
 import { eq } from "drizzle-orm";
+import crypto from "crypto";
 
 export class StripeConnector extends IntegrationConnector {
   private stripe: Stripe;
@@ -107,19 +108,53 @@ export class StripeConnector extends IntegrationConnector {
         const externalId = isSession ? session.payment_intent : session.id;
 
         // Datos del Cliente y Producto (Enriquecimiento)
+        // Datos del Cliente y Producto (Enriquecimiento)
         const customerName =
-          session.customer_details?.name || metadata.customer_name || "Cliente Desconocido";
-        const customerEmail = session.customer_details?.email || metadata.customer_email || "S/E";
-        const productName = metadata.product_name || "Producto General";
+          session.customer_details?.name ||
+          metadata.customer_name ||
+          metadata.name ||
+          metadata.full_name ||
+          "Cliente Desconocido";
 
-        // 4. BUSCAR LA INTEGRACIÓN
-        const integration = await this.db.query.integrationsTable.findFirst({
+        const customerEmail =
+          session.customer_details?.email || metadata.customer_email || metadata.email || "S/E";
+
+        const productName = metadata.product_name || metadata.product || "Producto General";
+
+        console.log(`[Stripe Webhook] Datos extraídos:`, {
+          customerName,
+          customerEmail,
+          productName,
+          type: event.type,
+        });
+
+        // 4. BUSCAR LA INTEGRACIÓN (O CREARLA AUTOMÁTICAMENTE)
+        let integration = await this.db.query.integrationsTable.findFirst({
           where: (table, { and, eq }) =>
             and(eq(table.projectId, projectId), eq(table.platform, "STRIPE")),
         });
 
         if (!integration) {
-          throw new Error(`No active Stripe integration was found for the project: ${projectId}`);
+          console.log(
+            `[Stripe Webhook] Integración no encontrada para el proyecto ${projectId}. Creándola de forma automática...`
+          );
+          const schema = await import("@infrastructure/database/schemas/schema");
+
+          const newIntegration = await this.db
+            .insert(schema.integrationsTable)
+            .values({
+              id: crypto.randomUUID(),
+              projectId: projectId,
+              name: "Conexión Automática Stripe",
+              type: "payment",
+              platform: "STRIPE",
+              status: "connected",
+              connectedAt: new Date(),
+            })
+            .returning();
+
+          integration = newIntegration[0];
+          console.log("✅ Integración creada automáticamente.");
         }
 
         // --- PROCESAMIENTO ATÓMICO CON TRANSACCIÓN ---
