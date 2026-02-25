@@ -1,8 +1,18 @@
 import { NextResponse } from "next/server";
-import { WebhookResponse } from "@shared/types/integration.types";
+// import { WebhookResponse } from "@shared/types/integration.types";
 import { integrationsTable, ordersTable, transactionsTable } from "@infrastructure/database/schemas/schema";
 import { DBConnection } from "@infrastructure/database/index";
 import { eq } from "drizzle-orm";
+
+export type IntegrationStatus = "CONECTADO" | "DESCONECTADO" | "ERROR" | "PENDIENTE";
+
+export interface WebhookResponse {
+  success: boolean;
+  message: string;
+  projectId: string; // El ID de nuestro sistema al que pertenece este pago
+  externalId?: string; // El ID que nos da Stripe (ej. ch_3N...)
+  plataform: "stripe" | "meta ads" | "google ads";
+}
 
 export abstract class IntegrationConnector {
   protected db: DBConnection;

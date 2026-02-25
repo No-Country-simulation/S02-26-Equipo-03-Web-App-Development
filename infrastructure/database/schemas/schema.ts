@@ -208,6 +208,10 @@ export const integrationsTable = sqliteTable("integrations", {
   projectId: text("project_id")
     .notNull()
     .references(() => projectsTable.id, { onDelete: "cascade" }),
+  //Campos para integraciones de e-commerce: agregue los campos de usuario: customerName y customerEmail
+  customerName: text("customer_name"),
+  customerEmail: text("customer_email"),
+  
   name: text("name").notNull(),
   type: text("type", { enum: ["ecommerce", "payment", "ads"] }).notNull(),
   status: text("status", {
@@ -217,11 +221,8 @@ export const integrationsTable = sqliteTable("integrations", {
     .default("pending"),
   credentials: text("credentials", { mode: "json" }), // Encrypted JSON
   connectedAt: integer("connected_at", { mode: "timestamp_ms" }),
-  // Specific fields by type
   platform: text("platform"), // e.g., 'stripe', 'meta', 'google'
-  storeUrl: text("store_url"),
-  apiKey: text("api_key"),
-  merchantId: text("merchant_id"),
+  apiKey: text("api_key"), // definir si apiKey ira dentro de crendential encriptado
   accountId: text("account_id"),
 });
 
