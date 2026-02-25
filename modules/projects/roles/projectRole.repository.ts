@@ -26,8 +26,37 @@ export class ProjectRoleRepository {
     return { id };
   }
 
+  static async ensureStandardPermissions(database: DBConnection) {
+    const standardPermissions = [
+      { name: "Ver Proyecto", resource: "project", action: "read" },
+      { name: "Editar Proyecto", resource: "project", action: "update" },
+      { name: "Eliminar Proyecto", resource: "project", action: "delete" },
+      { name: "Gestionar Roles", resource: "project_role", action: "manage" },
+      { name: "Gestionar API Keys", resource: "api_key", action: "manage" },
+      { name: "Invitar Miembros", resource: "project_member", action: "create" },
+      { name: "Eliminar Miembros", resource: "project_member", action: "delete" },
+    ];
+
+    const inserted: { id: string }[] = [];
+    for (const p of standardPermissions) {
+      const [res] = await database
+        .insert(permissionsTable)
+        .values({
+          id: randomUUID(),
+          ...p,
+        })
+        .returning({ id: permissionsTable.id });
+      inserted.push(res);
+    }
+    return inserted;
+  }
+
   static async assignAllPermissions(roleId: string, database: DBConnection) {
-    const permissions = await database.select({ id: permissionsTable.id }).from(permissionsTable);
+    let permissions = await database.select({ id: permissionsTable.id }).from(permissionsTable);
+
+    if (permissions.length === 0) {
+      permissions = await this.ensureStandardPermissions(database);
+    }
 
     if (permissions.length === 0) return;
 

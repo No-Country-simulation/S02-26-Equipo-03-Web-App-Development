@@ -24,7 +24,7 @@ export class ProjectService {
   }
 
   static async createProject(userId: string, name: string, description?: string) {
-    return db.transaction(async (tx) => {
+    const result = await db.transaction(async (tx) => {
       // Create project
       const project = await ProjectRepository.create({ name, description }, tx);
 
@@ -48,19 +48,21 @@ export class ProjectService {
 
       await ProjectApiKeyRepository.create(project.id, hash, tx);
 
-      // Auto-Simulate Ads data for development
-      try {
-        await AdsSimulatorService.simulateProjectAds(project.id);
-        console.log(`[Auto-Simulate] Mock data generated for project: ${project.id}`);
-      } catch (e) {
-        console.error(`[Auto-Simulate] Failed for project ${project.id}:`, e);
-      }
-
       return {
         project,
         apiKey,
       };
     });
+
+    // Auto-Simulate Ads data for development (Outside transaction)
+    try {
+      await AdsSimulatorService.simulateProjectAds(result.project.id);
+      console.log(`[Auto-Simulate] Mock data generated for project: ${result.project.id}`);
+    } catch (e) {
+      console.error(`[Auto-Simulate] Failed for project ${result.project.id}:`, e);
+    }
+
+    return result;
   }
 
   static async updateProject(
