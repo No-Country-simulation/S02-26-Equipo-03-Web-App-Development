@@ -5,20 +5,8 @@ import { z } from "zod";
 import { createProjectSchema } from "@/modules/projects/project.validators";
 
 /**
- * @swagger
- * /api/v1/projects:
- *   get:
- *     summary: Get user projects
- *     description: Returns a list of all projects belonging to the authenticated user.
- *     tags:
- *       - Projects
- *     security:
- *       - BearerAuth: []
- *     responses:
- *       200:
- *         description: A list of projects
- *       401:
- *         description: Unauthorized
+ * GET /api/v1/projects
+ * Returns a list of all projects belonging to the authenticated user.
  */
 export async function getProjectsFromUser() {
   try {
@@ -39,35 +27,8 @@ export async function getProjectsFromUser() {
 }
 
 /**
- * @swagger
- * /api/v1/projects:
- *   post:
- *     summary: Create a new project
- *     description: Creates a new project for the authenticated user.
- *     tags:
- *       - Projects
- *     security:
- *       - BearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - name
- *             properties:
- *               name:
- *                 type: string
- *               description:
- *                 type: string
- *     responses:
- *       201:
- *         description: Project created
- *       400:
- *         description: Invalid input
- *       401:
- *         description: Unauthorized
+ * POST /api/v1/projects:
+ * Creates a new project for the authenticated user.
  */
 export async function createProject(req: NextRequest) {
   try {

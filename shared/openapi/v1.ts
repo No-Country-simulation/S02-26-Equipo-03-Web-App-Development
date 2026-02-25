@@ -296,6 +296,7 @@
         },
       },
     },
+
     "/v1/track": {
       post: {
         summary: "Track an event (JSON)",
@@ -355,6 +356,7 @@
         },
       },
     },
+
     "/v1/campaigns": {
       post: {
         summary: "Create a manual campaign",
@@ -384,6 +386,7 @@
         },
       },
     },
+
     "/v1/simulate/ads": {
       get: {
         summary: "Simulates Meta and Google Ads data for a project",
@@ -406,6 +409,7 @@
         },
       },
     },
+
     "/v1/orders": {
       get: {
         summary: "List all orders",
@@ -589,16 +593,45 @@
 
     "/v1/projects": {
       get: {
-        summary: "List projects",
+        summary: "List active and inactive projects",
         tags: ["Projects"],
         responses: {
           "200": {
             description: "Projects retrieved successfully",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "array",
+                  items: {
+                    type: "object",
+                    properties: {
+                      id: { type: "string", format: "uuid" },
+                      name: { type: "string" },
+                      description: { type: "string" },
+                      status: { type: "string" },
+                      createdAt: { type: "string", format: "date-time" },
+                      updatedAt: { type: "string", format: "date-time" },
+                    },
+                  },
+                },
+                example: [
+                  {
+                    id: "906ca1ef-2fe1-4a21-a85b-a4003ef53af1",
+                    name: "ProjectTest1",
+                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+                    status: "active",
+                    createdAt: "2026-02-24T21:50:16.221Z",
+                    updatedAt: "2026-02-24T21:50:16.221Z",
+                  },
+                ],
+              },
+            },
           },
           "401": { description: "Unauthorized" },
           "500": { description: "Internal Server Error" },
         },
       },
+
       post: {
         summary: "Create a new project",
         tags: ["Projects"],
@@ -614,11 +647,48 @@
                   description: { type: "string" },
                 },
               },
+              example: {
+                name: "ProjectTest1",
+                description:
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+              },
             },
           },
         },
         responses: {
-          "201": { description: "Project created" },
+          "201": {
+            description: "Project created",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    project: {
+                      id: { type: "string" },
+                      name: { type: "string" },
+                      description: { type: "string" },
+                      status: { type: "string" },
+                      createdAt: { type: "string", format: "date-time" },
+                      updatedAt: { type: "string", format: "date-time" },
+                    },
+                    apiKey: { type: "string" },
+                  },
+                },
+                example: {
+                  project: {
+                    id: "906ca1ef-2fe1-4a21-a85b-a4003ef53af0",
+                    name: "ProjectTest1",
+                    description:
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                    status: "active",
+                    createdAt: "2026-02-24T21:50:16.221Z",
+                    updatedAt: "2026-02-24T21:50:16.221Z",
+                  },
+                  apiKey: "b681cde2be03aaf9d428e77bb0b20b9dc6271ad991a6d5f5031a3a0db97029e0",
+                },
+              },
+            },
+          },
           "400": { description: "Validation error" },
           "401": { description: "Unauthorized" },
         },
@@ -634,17 +704,43 @@
             name: "id",
             in: "path",
             required: true,
-            schema: { type: "string" },
+            schema: { type: "string", format: "uuid" },
           },
         ],
         responses: {
-          "200": { description: "Project retrieved successfully" },
+          "200": {
+            description: "Project retrieved successfully",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    id: { type: "string", format: "uuid" },
+                    name: { type: "string" },
+                    description: { type: "string" },
+                    status: { type: "string" },
+                    createdAt: { type: "string", format: "date-time" },
+                    updatedAt: { type: "string", format: "date-time" },
+                  },
+                },
+                example: {
+                  id: "906ca1ef-2fe1-4a21-a85b-a4003ef53af1",
+                  name: "ProjectTest1",
+                  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                  status: "active",
+                  createdAt: "2026-02-24T21:50:16.221Z",
+                  updatedAt: "2026-02-24T21:50:16.221Z",
+                },
+              },
+            },
+          },
           "401": { description: "Unauthorized" },
           "403": { description: "Forbidden" },
           "404": { description: "Project not found" },
           "500": { description: "Internal Server Error" },
         },
       },
+
       put: {
         summary: "Update an existing project",
         tags: ["Projects"],
@@ -653,7 +749,7 @@
             name: "id",
             in: "path",
             required: true,
-            schema: { type: "string" },
+            schema: { type: "string", format: "uuid" },
           },
         ],
         requestBody: {
@@ -667,15 +763,47 @@
                   description: { type: "string" },
                 },
               },
+              example: {
+                name: "Updated Project Name",
+                description: "Updated description",
+              },
             },
           },
         },
         responses: {
-          "200": { description: "Project updated successfully" },
+          "200": {
+            description: "Project updated successfully",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    id: { type: "string", format: "uuid" },
+                    name: { type: "string" },
+                    description: { type: "string" },
+                    status: { type: "string" },
+                    createdAt: { type: "string", format: "date-time" },
+                    updatedAt: { type: "string", format: "date-time" },
+                  },
+                },
+                example: {
+                  id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  name: "Updated Project Name",
+                  description: "Updated description",
+                  status: "active",
+                  createdAt: "2026-02-24T21:50:18.729Z",
+                  updatedAt: "2026-02-24T21:50:18.729Z",
+                },
+              },
+            },
+          },
           "401": { description: "Unauthorized" },
+          "403": { description: "Forbidden" },
+          "404": { description: "Project not found" },
           "500": { description: "Internal Server Error" },
         },
       },
+
       delete: {
         summary: "Archive (delete) an existing project",
         tags: ["Projects"],
@@ -684,12 +812,39 @@
             name: "id",
             in: "path",
             required: true,
-            schema: { type: "string" },
+            schema: { type: "string", format: "uuid" },
           },
         ],
         responses: {
-          "200": { description: "Project archived successfully" },
+          "200": {
+            description: "Project archived successfully",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    id: { type: "string", format: "uuid" },
+                    name: { type: "string" },
+                    description: { type: "string" },
+                    status: { type: "string" },
+                    createdAt: { type: "string", format: "date-time" },
+                    updatedAt: { type: "string", format: "date-time" },
+                  },
+                },
+                example: {
+                  id: "906ca1ef-2fe1-4a21-a85b-a4003ef53af0",
+                  name: "ProjectTest1",
+                  description: "DescriptionTest1",
+                  status: "archived",
+                  createdAt: "2026-02-24T21:50:16.221Z",
+                  updatedAt: "2026-02-24T21:50:16.221Z",
+                },
+              },
+            },
+          },
           "401": { description: "Unauthorized" },
+          "403": { description: "Forbidden" },
+          "409": { description: "Project already archived or not found" },
           "500": { description: "Internal Server Error" },
         },
       },
@@ -698,7 +853,7 @@
     "/v1/projects/{id}/members": {
       get: {
         summary: "List members of the project",
-        tags: ["Projects"],
+        tags: ["Members"],
         parameters: [
           {
             name: "id",
@@ -708,14 +863,40 @@
           },
         ],
         responses: {
-          "200": { description: "Project members retrieved successfully" },
+          "200": {
+            description: "Project members retrieved successfully",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "array",
+                  items: {
+                    type: "object",
+                    properties: {
+                      userId: { type: "string", format: "uuid" },
+                      email: { type: "string", format: "email" },
+                      roleId: { type: "string", format: "uuid" },
+                      joinedAt: { type: "string", format: "date-time" },
+                    },
+                  },
+                },
+                example: [
+                  {
+                    userId: "WbBomeKPV6UaE8i2cPv0pBrVUJX1swhV",
+                    email: "johndoe@gmail.com",
+                    roleId: "7a112499-f6ae-4df4-954e-33839833a1b2",
+                    joinedAt: "2026-02-24T21:50:18.729Z",
+                  },
+                ],
+              },
+            },
+          },
           "401": { description: "Unauthorized" },
           "500": { description: "Internal server error" },
         },
       },
       post: {
         summary: "Add a member to the project (owner only)",
-        tags: ["Projects"],
+        tags: ["Members"],
         parameters: [
           {
             name: "id",
@@ -748,7 +929,7 @@
       },
       delete: {
         summary: "Remove a member from the project",
-        tags: ["Projects"],
+        tags: ["Members"],
         parameters: [
           {
             name: "id",
@@ -783,7 +964,7 @@
     "/v1/projects/{id}/api-keys": {
       get: {
         summary: "List all API keys for a project",
-        tags: ["Projects"],
+        tags: ["Api-Keys"],
         parameters: [
           {
             name: "id",
@@ -801,7 +982,7 @@
 
       post: {
         summary: "Rotate API key (revoke active and create new one)",
-        tags: ["Projects"],
+        tags: ["Api-Keys"],
         parameters: [
           {
             name: "id",
@@ -820,7 +1001,7 @@
       "/v1/projects/{id}/api-keys/{keyId}": {
         delete: {
           summary: "Revoke a specific API key",
-          tags: ["Projects"],
+          tags: ["Api-Keys"],
           parameters: [
             {
               name: "id",
