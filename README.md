@@ -210,7 +210,7 @@ Abrir: [http://localhost:3000](http://localhost:3000)
   <tr align="center">
     <td>Ivan Andrade</td>
     <td>Diseñador UX UI</td>
-    <td>https://github.com/</td>
+    <td>https://www.behance.net/ivaanandrade</td>
     <td>https://www.linkedin.com/in/</td>
   </tr>
 
