@@ -1,4 +1,4 @@
-﻿export const openApiSpec = {
+﻿﻿export const openApiSpec = {
   openapi: "3.0.3",
   info: {
     title: "Project Text API",
@@ -10,6 +10,8 @@
     "/health": {
       get: {
         summary: "Health Check Endpoint",
+        description:
+          "Author: Favian - Checks  connectivity and returns server status with timestamp",
         tags: ["Health"],
         responses: {
           "200": {
@@ -398,14 +400,15 @@
       },
     },
 
-    "/v1/analytics/by-conversions": {
+    "/v1/analytics/orders": {
       get: {
-        summary: "List members of the project",
-        tags: ["Projects"],
+        summary: "List of payments with order details.",
+        /*  description: "Author: Favian",*/
+        tags: ["Analytics Reports"],
         parameters: [
           {
-            name: "id",
-            in: "path",
+            name: "idUser",
+            in: "query",
             required: true,
             schema: { type: "string" },
           },
@@ -414,161 +417,6 @@
           "200": { description: "Project members retrieved successfully" },
           "401": { description: "Unauthorized" },
           "500": { description: "Internal server error" },
-        },
-      },
-      post: {
-        summary: "Add a member to the project (owner only)",
-        tags: ["Projects"],
-        parameters: [
-          {
-            name: "id",
-            in: "path",
-            required: true,
-            schema: { type: "string" },
-          },
-        ],
-        requestBody: {
-          required: true,
-          content: {
-            "application/json": {
-              schema: {
-                type: "object",
-                required: ["targetUserId", "roleId"],
-                properties: {
-                  targetUserId: { type: "string" },
-                  roleId: { type: "string" },
-                },
-              },
-            },
-          },
-        },
-        responses: {
-          "201": { description: "Member added successfully" },
-          "400": { description: "Invalid input" },
-          "401": { description: "Unauthorized" },
-          "500": { description: "Internal server error" },
-        },
-      },
-    },
-
-    "/v1/analytics/metrics": {
-      get: {
-        summary: "Get aggregated analytics metrics",
-        tags: ["Analytics"],
-        parameters: [
-          {
-            name: "id",
-            in: "path",
-            required: true,
-            schema: { type: "string" },
-          },
-        ],
-        requestBody: {
-          required: true,
-          content: {
-            "application/json": {
-              schema: {
-                type: "object",
-                required: ["targetUserId"],
-                properties: {
-                  targetUserId: { type: "string" },
-                },
-              },
-            },
-          },
-        },
-        responses: {
-          "204": { description: "Member removed successfully" },
-          "400": { description: "Invalid input" },
-          "401": { description: "Unauthorized" },
-          "500": { description: "Internal server error" },
-        },
-      },
-    },
-
-    "/v1/analytics/alerts": {
-      get: {
-        summary: "List all API keys for a project",
-        tags: ["Projects"],
-        parameters: [
-          {
-            name: "id",
-            in: "path",
-            required: true,
-            schema: { type: "string" },
-          },
-        ],
-        responses: {
-          "200": { description: "API keys retrieved successfully" },
-          "401": { description: "Unauthorized" },
-          "500": { description: "Internal server error" },
-        },
-      },
-    },
-
-    "/v1/analytics/timeline": {
-      get: {
-        summary: "Get analytics timeline snapshots",
-        tags: ["Analytics"],
-        parameters: [
-          {
-            name: "id",
-            in: "path",
-            required: true,
-            schema: { type: "string" },
-          },
-        ],
-        responses: {
-          "201": { description: "New API key generated successfully" },
-          "401": { description: "Unauthorized" },
-          "500": { description: "Internal server error" },
-        },
-      },
-      "/v1/projects/{id}/api-keys/{keyId}": {
-        delete: {
-          summary: "Revoke a specific API key",
-          tags: ["Projects"],
-          parameters: [
-            {
-              name: "id",
-              in: "path",
-              required: true,
-              schema: { type: "string" },
-            },
-            {
-              name: "keyId",
-              in: "path",
-              required: true,
-              schema: { type: "string" },
-            },
-          ],
-          responses: {
-            "204": { description: "API key revoked successfully" },
-            "401": { description: "Unauthorized" },
-            "500": { description: "Internal server error" },
-          },
-        },
-      },
-    },
-
-    "/v1/analytics/anomalies": {
-      get: {
-        summary: "Report of orders for a specific user (protected endpoint)",
-        tags: ["Report"],
-        parameters: [
-          {
-            name: "userId",
-            in: "query",
-            required: true,
-            schema: { type: "string" },
-            description: "Authenticated user id used to fetch orders analytics report",
-          },
-        ],
-        responses: {
-          "200": { description: "Orders report retrieved successfully" },
-          "400": { description: "Invalid request parameters" },
-          "401": { description: "Unauthorized access to orders report" },
-          "500": { description: "Internal Server Error" },
         },
       },
     },
@@ -937,50 +785,6 @@
         responses: {
           "204": { description: "Member removed successfully" },
           "400": { description: "Invalid input" },
-          "401": { description: "Unauthorized" },
-          "500": { description: "Internal server error" },
-        },
-      },
-    },
-
-    "/v1/projects/{id}/roles": {
-      get: {
-        summary: "List roles of the project",
-        tags: ["Roles"],
-        parameters: [
-          {
-            name: "id",
-            in: "path",
-            required: true,
-            schema: { type: "string" },
-          },
-        ],
-        responses: {
-          "200": {
-            description: "Project roles retrieved successfully",
-            content: {
-              "application/json": {
-                schema: {
-                  type: "array",
-                  items: {
-                    type: "object",
-                    properties: {
-                      roleid: { type: "string", format: "uuid" },
-                      name: { type: "string" },
-                      description: { type: "string" },
-                    },
-                  },
-                },
-                example: [
-                  {
-                    roleId: "75f07a6c-b2d6-4258-9d2f-72b776f73c9B",
-                    name: "owner",
-                    description: "Project owner",
-                  },
-                ],
-              },
-            },
-          },
           "401": { description: "Unauthorized" },
           "500": { description: "Internal server error" },
         },
