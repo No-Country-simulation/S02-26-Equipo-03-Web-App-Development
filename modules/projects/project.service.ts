@@ -1,4 +1,4 @@
-import { db } from "@/infrastructure/database";
+import { DBConnection, db } from "@/infrastructure/database";
 import { ProjectRepository } from "./project.repository";
 import { ProjectMemberRepository } from "@/modules/projects/members/projectMember.repository";
 import { ProjectRoleRepository } from "@/modules/projects/roles/projectRole.repository";
@@ -7,6 +7,22 @@ import { AdsSimulatorService } from "@/infrastructure/services/AdsSimulatorServi
 import crypto from "crypto";
 
 export class ProjectService {
+  static async assertPermission(
+    userId: string,
+    projectId: string,
+    resource: string,
+    action: string,
+    db: DBConnection
+  ) {
+    const permissions = await ProjectRoleRepository.getUserPermissions(projectId, userId, db);
+
+    const allowed = permissions.some((p) => p.resource === resource && p.action === action);
+
+    if (!allowed) {
+      throw new Error("Forbidden");
+    }
+  }
+
   static async getUserProjects(userId: string) {
     return ProjectRepository.findByUser(userId, db);
   }
@@ -71,13 +87,8 @@ export class ProjectService {
     data: { name?: string; description?: string }
   ) {
     return db.transaction(async (tx) => {
-      const permissions = await ProjectMemberRepository.getUserPermissions(projectId, userId, tx);
-
-      const canUpdate = permissions.some((p) => p.resource === "project" && p.action === "update");
-
-      if (!canUpdate) {
-        throw new Error("Forbidden");
-      }
+      // 1. Authorization
+      await ProjectService.assertPermission(userId, projectId, "project", "update", tx);
 
       const updated = await ProjectRepository.update(projectId, data, tx);
 
@@ -91,7 +102,9 @@ export class ProjectService {
 
   static async archiveProject(userId: string, projectId: string) {
     return db.transaction(async (tx) => {
-      const permissions = await ProjectMemberRepository.getUserPermissions(projectId, userId, tx);
+      // 1. Authorization
+      await ProjectService.assertPermission(userId, projectId, "project", "delete", tx);
+      const permissions = await ProjectRoleRepository.getUserPermissions(projectId, userId, tx);
 
       const canDelete = permissions.some((p) => p.resource === "project" && p.action === "delete");
 
