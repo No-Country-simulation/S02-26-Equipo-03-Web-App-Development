@@ -1,4 +1,5 @@
 import { ProjectMemberRepository } from "../members/projectMember.repository";
+import { ProjectRepository } from "../project.repository";
 import { ProjectRoleRepository } from "./projectRole.repository";
 import { db, DBConnection } from "@/infrastructure/database";
 
@@ -11,6 +12,11 @@ export class ProjectRoleService {
   ) {
     return db.transaction(async (tx) => {
       await this.assertCanManageRoles(actorId, projectId, tx);
+
+      const project = await ProjectRepository.findById(projectId, tx);
+
+      if (!project) throw new Error("ProjectNotFound");
+      if (project.status === "archived") throw new Error("ProjectArchived");
 
       const role = await ProjectRoleRepository.createRole(projectId, name, description, tx);
 
@@ -43,7 +49,7 @@ export class ProjectRoleService {
         throw new Error("Invalid permission ids");
       }
 
-      await ProjectRoleRepository.assignPermissions(roleId, validPermissions, tx);
+      await ProjectRoleRepository.assignPermissions(roleId, projectId, validPermissions, tx);
     });
   }
 
@@ -70,6 +76,11 @@ export class ProjectRoleService {
     return db.transaction(async (tx) => {
       await this.assertCanManageRoles(actorId, projectId, tx);
 
+      const project = await ProjectRepository.findById(projectId, tx);
+
+      if (!project) throw new Error("ProjectNotFound");
+      if (project.status === "archived") throw new Error("ProjectArchived");
+
       const role = await this.getRoleOrThrow(roleId, projectId, tx);
 
       if (role.name === "owner") {
@@ -82,22 +93,22 @@ export class ProjectRoleService {
         throw new Error("Role is assigned to members");
       }
 
-      await ProjectRoleRepository.delete(roleId, tx);
+      await ProjectRoleRepository.delete(roleId, projectId, tx);
     });
   }
 
   private static async getRoleOrThrow(roleId: string, projectId: string, tx: DBConnection) {
-    const role = await ProjectRoleRepository.findById(roleId, tx);
+    const role = await ProjectRoleRepository.findByIdAndProject(roleId, projectId, tx);
 
-    if (!role || role.projectId !== projectId) {
-      throw new Error("Role not found in project");
+    if (!role) {
+      throw new Error("RoleNotFound");
     }
 
     return role;
   }
 
   private static async assertCanManageRoles(actorId: string, projectId: string, tx: DBConnection) {
-    const permissions = await ProjectMemberRepository.getUserPermissions(projectId, actorId, tx);
+    const permissions = await ProjectRoleRepository.getUserPermissions(projectId, actorId, tx);
 
     const canManage = permissions.some(
       (p) => p.resource === "project_role" && p.action === "manage"

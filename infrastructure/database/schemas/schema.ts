@@ -124,7 +124,9 @@ export const permissionsTable = sqliteTable("permissions", {
   name: text("name").notNull(),
   resource: text("resource").notNull(),
   action: text("action").notNull(),
-});
+},
+  (table) => [uniqueIndex("permissions_resource_action_unique").on(table.resource, table.action)]
+);
 
 /* ========================= 
     ROLE PERMISSIONS
