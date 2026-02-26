@@ -791,6 +791,50 @@
       },
     },
 
+    "/v1/projects/{id}/roles": {
+      get: {
+        summary: "List roles of the project",
+        tags: ["Roles"],
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            schema: { type: "string" },
+          },
+        ],
+        responses: {
+          "200": {
+            description: "Project roles retrieved successfully",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "array",
+                  items: {
+                    type: "object",
+                    properties: {
+                      roleid: { type: "string", format: "uuid" },
+                      name: { type: "string" },
+                      description: { type: "string" },
+                    },
+                  },
+                },
+                example: [
+                  {
+                    roleId: "75f07a6c-b2d6-4258-9d2f-72b776f73c9B",
+                    name: "owner",
+                    description: "Project owner",
+                  },
+                ],
+              },
+            },
+          },
+          "401": { description: "Unauthorized" },
+          "500": { description: "Internal server error" },
+        },
+      },
+    },
+
     "/v1/projects/{id}/api-keys": {
       get: {
         summary: "List all API keys for a project",

@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "173b11d3-024c-42e8-a887-75fd5973c3a9",
+  "id": "e322fb8d-f5fa-45dd-a33a-e0624ca6eb14",
   "prevId": "1d3b8a47-190b-40e3-b642-65901195a8de",
   "tables": {
     "account": {
@@ -1192,7 +1192,16 @@
           "autoincrement": false
         }
       },
-      "indexes": {},
+      "indexes": {
+        "permissions_resource_action_unique": {
+          "name": "permissions_resource_action_unique",
+          "columns": [
+            "resource",
+            "action"
+          ],
+          "isUnique": true
+        }
+      },
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
