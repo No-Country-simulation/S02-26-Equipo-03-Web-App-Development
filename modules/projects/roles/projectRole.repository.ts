@@ -8,6 +8,8 @@ import { randomUUID } from "crypto";
 import { DBConnection } from "@/infrastructure/database";
 import { and, eq, inArray } from "drizzle-orm";
 import { standardPermissions } from "./projectRole.constants";
+import { rolePermissionMap } from "./projectRole.constants";
+import { ProjectRole, roleHierarchy } from "../project.types";
 
 export class ProjectRoleRepository {
   static async getUserPermissions(projectId: string, userId: string, database: DBConnection) {
@@ -58,6 +60,55 @@ export class ProjectRoleRepository {
     });
 
     return { id };
+  }
+
+  static async createDefaultRoles(projectId: string, database: DBConnection) {
+    // 1️. Ensure permissions exist
+    await this.ensureStandardPermissions(database);
+
+    // 2️. Get all available permissions
+    const allPermissions = await database
+      .select({
+        id: permissionsTable.id,
+        resource: permissionsTable.resource,
+        action: permissionsTable.action,
+      })
+      .from(permissionsTable);
+
+    const createdRoles: Record<string, string> = {};
+
+    for (const roleName of Object.keys(roleHierarchy) as ProjectRole[]) {
+      const roleId = randomUUID();
+
+      // Create rol
+      await database.insert(rolesTable).values({
+        id: roleId,
+        projectId,
+        name: roleName,
+        description: `${roleName} default role`,
+      });
+
+      createdRoles[roleName] = roleId;
+
+      // Filter permissions for this role
+      const allowedPermissions = allPermissions.filter((p) =>
+        rolePermissionMap[roleName].some(
+          (rp) => rp.resource === p.resource && rp.action === p.action
+        )
+      );
+
+      if (allowedPermissions.length > 0) {
+        await database.insert(rolePermissionsTable).values(
+          allowedPermissions.map((permission) => ({
+            id: randomUUID(),
+            roleId,
+            permissionId: permission.id,
+          }))
+        );
+      }
+    }
+
+    return createdRoles;
   }
 
   static async ensureStandardPermissions(database: DBConnection) {

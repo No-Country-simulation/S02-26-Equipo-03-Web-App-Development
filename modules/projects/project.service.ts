@@ -64,10 +64,7 @@ export class ProjectService {
 
       await ProjectApiKeyRepository.create(project.id, hash, tx);
 
-      return {
-        project,
-        apiKey,
-      };
+      return { project, apiKey };
     });
 
     // Auto-Simulate Ads data for development (Outside transaction)
