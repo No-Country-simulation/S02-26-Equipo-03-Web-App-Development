@@ -31,6 +31,17 @@ export class ProjectRoleRepository {
     return result;
   }
 
+  static async listRoles(projectId: string, database: DBConnection) {
+    return database
+      .select({
+        roleId: rolesTable.id,
+        name: rolesTable.name,
+        description: rolesTable.description,
+      })
+      .from(rolesTable)
+      .where(eq(rolesTable.projectId, projectId));
+  }
+
   static async createRole(
     projectId: string,
     name: string,

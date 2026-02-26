@@ -1,9 +1,19 @@
 import { ProjectMemberRepository } from "../members/projectMember.repository";
 import { ProjectRepository } from "../project.repository";
+import { ProjectService } from "../project.service";
 import { ProjectRoleRepository } from "./projectRole.repository";
 import { db, DBConnection } from "@/infrastructure/database";
 
 export class ProjectRoleService {
+  static async listRoles(userId: string, projectId: string) {
+    return db.transaction(async (tx) => {
+      // 1. Authorization
+      await ProjectService.assertPermission(userId, projectId, "project", "read", tx);
+
+      return ProjectRoleRepository.listRoles(projectId, tx);
+    });
+  }
+
   static async createRole(
     actorId: string,
     projectId: string,
