@@ -1,289 +1,120 @@
-import { db } from "./index";
-import crypto from "crypto";
-import { eq } from "drizzle-orm";
+﻿import { readFile } from "node:fs/promises";
+import { createClient } from "@libsql/client";
+import { drizzle } from "drizzle-orm/libsql";
+import { sql } from "drizzle-orm";
 import {
+  accountsTable,
+  alertsTable,
+  analyticsSnapshotsTable,
   analyticsTable,
-  projectsTable,
-  usersTable,
+  attributionsTable,
   campaignsTable,
+  consentRecordsTable,
+  eventValidationsTable,
+  eventsTable,
+  healthHistoryTable,
+  integrationsTable,
+  ordersTable,
+  permissionsTable,
+  privacySettingsTable,
   projectApiKeysTable,
   projectMembersTable,
-  integrationsTable,
+  projectsTable,
+  rolePermissionsTable,
   rolesTable,
-  type InsertAnalytics,
+  sessionsTable,
+  trackingHealthTable,
+  transactionsTable,
+  usageCostsTable,
+  usersTable,
+  verificationsTable,
 } from "./schemas/schema";
+import * as schema from "./schemas/schema";
 
-/**
- * Helper to get a date in the past
- */
-function getPastDate(days: number): Date {
-  const date = new Date();
-  date.setDate(date.getDate() - days);
-  date.setHours(0, 0, 0, 0);
-  return date;
+const SNAPSHOT_PATH = "infrastructure/database/seed-data.json";
+const LOCAL_DATABASE_URL = "file:./local.db";
+
+type SeedPayload = Record<string, Record<string, unknown>[]>;
+type SeedTableDef = { key: string; table: any };
+
+const TABLES: SeedTableDef[] = [
+  { key: "users", table: usersTable },
+  { key: "verifications", table: verificationsTable },
+  { key: "projects", table: projectsTable },
+  { key: "permissions", table: permissionsTable },
+  { key: "integrations", table: integrationsTable },
+  { key: "roles", table: rolesTable },
+  { key: "accounts", table: accountsTable },
+  { key: "sessions", table: sessionsTable },
+  { key: "campaigns", table: campaignsTable },
+  { key: "events", table: eventsTable },
+  { key: "eventValidations", table: eventValidationsTable },
+  { key: "rolePermissions", table: rolePermissionsTable },
+  { key: "projectApiKeys", table: projectApiKeysTable },
+  { key: "projectMembers", table: projectMembersTable },
+  { key: "transactions", table: transactionsTable },
+  { key: "orders", table: ordersTable },
+  { key: "analytics", table: analyticsTable },
+  { key: "analyticsSnapshots", table: analyticsSnapshotsTable },
+  { key: "attributions", table: attributionsTable },
+  { key: "trackingHealth", table: trackingHealthTable },
+  { key: "alerts", table: alertsTable },
+  { key: "healthHistory", table: healthHistoryTable },
+  { key: "usageCosts", table: usageCostsTable },
+  { key: "privacySettings", table: privacySettingsTable },
+  { key: "consentRecords", table: consentRecordsTable },
+];
+
+const TIMESTAMP_FIELD_PATTERN =
+  /(createdAt|updatedAt|expiresAt|connectedAt|startDate|endDate|timestamp|receivedAt|validatedAt|attributedAt|transactionDate|orderDate|periodStart|periodEnd|snapshotDate|checkedAt|triggeredAt|resolvedAt|recordedAt|givenAt|revokedAt|joinedAt)$/i;
+
+function chunkRows<T>(rows: T[], chunkSize = 100): T[][] {
+  const chunks: T[][] = [];
+  for (let i = 0; i < rows.length; i += chunkSize) chunks.push(rows.slice(i, i + chunkSize));
+  return chunks;
+}
+
+function normalizeSeedRow(row: Record<string, unknown>): Record<string, unknown> {
+  const normalized: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(row)) {
+    normalized[key] = typeof value === "number" && TIMESTAMP_FIELD_PATTERN.test(key) ? new Date(value) : value;
+  }
+  return normalized;
 }
 
 async function seed() {
-  console.log("🌱 Seeding database...");
+  const raw = await readFile(SNAPSHOT_PATH, "utf8");
+  const payload = JSON.parse(raw) as SeedPayload;
 
-  await db.transaction(async (tx) => {
-    // =========================
-    // 1️⃣ USER
-    // =========================
+  const localClient = createClient({ url: LOCAL_DATABASE_URL });
+  const localDb = drizzle(localClient, { schema });
 
-    const email = "demo@example.com";
+  console.log(`Aplicando seed fijo desde ${SNAPSHOT_PATH} en ${LOCAL_DATABASE_URL}...`);
 
-    let userId: string;
-
-    let user = await tx
-      .select({ id: usersTable.id })
-      .from(usersTable)
-      .where(eq(usersTable.email, email))
-      .limit(1);
-
-    if (user.length === 0) {
-      const inserted = await tx
-        .insert(usersTable)
-        .values({
-          id: crypto.randomUUID(),
-          email,
-          name: "Demo User",
-        })
-        .returning({ id: usersTable.id });
-      userId = inserted[0].id;
-    } else {
-      userId = user[0].id;
+  await localDb.transaction(async (tx) => {
+    await tx.run(sql`PRAGMA foreign_keys = OFF`);
+    for (const { table } of [...TABLES].reverse()) {
+      await tx.delete(table);
     }
+    await tx.run(sql`PRAGMA foreign_keys = ON`);
 
-    // =========================
-    // 2️⃣ PROJECT
-    // =========================
-
-    const projectName = "Mi Primer Proyecto";
-
-    let project = await tx
-      .select({ id: projectsTable.id })
-      .from(projectsTable)
-      .where(eq(projectsTable.name, projectName))
-      .limit(1);
-
-    let projectId: string;
-
-    if (project.length === 0) {
-      const inserted = await tx
-        .insert(projectsTable)
-        .values({
-          id: crypto.randomUUID(),
-          name: projectName,
-          status: "active",
-        })
-        .returning({ id: projectsTable.id });
-
-      projectId = inserted[0].id;
-    } else {
-      projectId = project[0].id;
-    }
-
-    // =========================
-    // 3️⃣ CAMPAIGN
-    // =========================
-
-    const campaignName = "Summer Sale 2026";
-
-    let campaign = await tx
-      .select({ id: campaignsTable.id })
-      .from(campaignsTable)
-      .where(eq(campaignsTable.name, campaignName))
-      .limit(1);
-
-    let campaignId: string;
-
-    if (campaign.length === 0) {
-      const inserted = await tx
-        .insert(campaignsTable)
-        .values({
-          id: crypto.randomUUID(),
-          projectId,
-          name: campaignName,
-          status: "active",
-          budget: 5000,
-          spent: 1200,
-        })
-        .returning({ id: campaignsTable.id });
-
-      campaignId = inserted[0].id;
-    } else {
-      campaignId = campaign[0].id;
-    }
-
-    // =========================
-    // 4️⃣ ANALYTICS (últimos 5 días)
-    // =========================
-
-    const analyticsRecords: InsertAnalytics[] = [
-      {
-        id: crypto.randomUUID(),
-        projectId,
-        campaignId,
-        periodStart: getPastDate(5),
-        periodEnd: getPastDate(4),
-        impressions: 10000,
-        clicks: 450,
-        conversions: 22,
-        revenue: 2200,
-        adSpend: 300,
-        roi: 6.33,
-      },
-      {
-        id: crypto.randomUUID(),
-        projectId,
-        campaignId,
-        periodStart: getPastDate(4),
-        periodEnd: getPastDate(3),
-        impressions: 12000,
-        clicks: 520,
-        conversions: 28,
-        revenue: 2800,
-        adSpend: 350,
-        roi: 7.0,
-      },
-      {
-        id: crypto.randomUUID(),
-        projectId,
-        campaignId,
-        periodStart: getPastDate(3),
-        periodEnd: getPastDate(2),
-        impressions: 15000,
-        clicks: 610,
-        conversions: 35,
-        revenue: 3500,
-        adSpend: 400,
-        roi: 7.75,
-      },
-      {
-        id: crypto.randomUUID(),
-        projectId,
-        campaignId,
-        periodStart: getPastDate(2),
-        periodEnd: getPastDate(1),
-        impressions: 11000,
-        clicks: 480,
-        conversions: 25,
-        revenue: 2500,
-        adSpend: 320,
-        roi: 6.81,
-      },
-      {
-        id: crypto.randomUUID(),
-        projectId,
-        campaignId,
-        periodStart: getPastDate(1),
-        periodEnd: new Date(),
-        impressions: 14000,
-        clicks: 580,
-        conversions: 32,
-        revenue: 3200,
-        adSpend: 380,
-        roi: 7.42,
-      },
-    ];
-
-    await tx.insert(analyticsTable).values(analyticsRecords);
-
-    // =========================
-    // 5️⃣ ROLES & MEMBERS
-    // =========================
-
-    const roleName = "Admin";
-    let role = await tx
-      .select({ id: rolesTable.id })
-      .from(rolesTable)
-      .where(eq(rolesTable.name, roleName))
-      .limit(1);
-
-    let roleId: string;
-    if (role.length === 0) {
-      const inserted = await tx
-        .insert(rolesTable)
-        .values({
-          id: crypto.randomUUID(),
-          projectId,
-          name: roleName,
-          description: "Full access to the project",
-        })
-        .returning({ id: rolesTable.id });
-      roleId = inserted[0].id;
-    } else {
-      roleId = role[0].id;
-    }
-
-    // Link user to project
-    const member = await tx
-      .select()
-      .from(projectMembersTable)
-      .where(eq(projectMembersTable.projectId, projectId))
-      .limit(1);
-
-    if (member.length === 0) {
-      await tx.insert(projectMembersTable).values({
-        id: crypto.randomUUID(),
-        projectId,
-        userId,
-        roleId,
-      });
-    }
-
-    // =========================
-    // 6️⃣ API KEY
-    // =========================
-
-    const apiKeyExists = await tx
-      .select()
-      .from(projectApiKeysTable)
-      .where(eq(projectApiKeysTable.projectId, projectId))
-      .limit(1);
-
-    if (apiKeyExists.length === 0) {
-      const rawApiKey = "pk_live_demo_123456789";
-      const keyHash = crypto.createHash("sha256").update(rawApiKey).digest("hex");
-
-      await tx.insert(projectApiKeysTable).values({
-        id: crypto.randomUUID(),
-        projectId,
-        keyHash: keyHash,
-        createdAt: new Date(),
-      });
-      console.log(`🔑 Seed API Key: ${rawApiKey}`);
-    }
-
-    // =========================
-    // 7️⃣ INTEGRATIONS
-    // =========================
-
-    const integrationName = "Stripe Main";
-    const integrationExists = await tx
-      .select()
-      .from(integrationsTable)
-      .where(eq(integrationsTable.name, integrationName))
-      .limit(1);
-
-    if (integrationExists.length === 0) {
-      await tx.insert(integrationsTable).values({
-        id: crypto.randomUUID(),
-        projectId,
-        name: integrationName,
-        type: "payment",
-        platform: "stripe",
-        status: "connected",
-        connectedAt: new Date(),
-      });
+    for (const { key, table } of TABLES) {
+      const rows = (payload[key] ?? []).map((row) => normalizeSeedRow(row));
+      if (rows.length === 0) {
+        console.log(`- ${key}: 0 filas (omitida)`);
+        continue;
+      }
+      for (const rowsChunk of chunkRows(rows)) {
+        await tx.insert(table).values(rowsChunk as any);
+      }
+      console.log(`- ${key}: ${rows.length} filas`);
     }
   });
 
-  console.log("Seeding completed!");
+  console.log("Seed completado.");
 }
 
 seed().catch((err) => {
-  console.error(" Seeding failed:", err);
+  console.error("Seed falló:", err);
   process.exit(1);
 });

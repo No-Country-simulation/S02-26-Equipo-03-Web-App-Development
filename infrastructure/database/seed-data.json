@@ -1,0 +1,4348 @@
+{
+  "users": [
+    {
+      "id": "GfN5kLx6xlYHIbmvNYW33CMGnl6BLakD",
+      "name": "Hernan",
+      "email": "hernan@email.com",
+      "emailVerified": false,
+      "image": null,
+      "createdAt": 1771911928104,
+      "updatedAt": 1771911928104
+    },
+    {
+      "id": "WbBomeKPV6UaE8i2cPv0pBrVUJX1swhV",
+      "name": "johndoe",
+      "email": "johndoe@gmail.com",
+      "emailVerified": false,
+      "image": null,
+      "createdAt": 1771943832253,
+      "updatedAt": 1771943832253
+    },
+    {
+      "id": "iQyGTjO6JfGOGhdV5L4YUoG4E859Ed4d",
+      "name": "brahi",
+      "email": "brahianpdev@gmail.com",
+      "emailVerified": false,
+      "image": null,
+      "createdAt": 1771944514738,
+      "updatedAt": 1771944514738
+    },
+    {
+      "id": "DpR33NGVKCqRzGpbbeg7WdtfZzflhWBB",
+      "name": "brahi",
+      "email": "brahianpdev2@gmail.com",
+      "emailVerified": false,
+      "image": null,
+      "createdAt": 1771944600719,
+      "updatedAt": 1771944600719
+    },
+    {
+      "id": "WvboyQp2bTmdijKa3DocqSZeI8Z5Wnax",
+      "name": "brahi",
+      "email": "jdtest@gmail.com",
+      "emailVerified": false,
+      "image": null,
+      "createdAt": 1771944717279,
+      "updatedAt": 1771944717279
+    },
+    {
+      "id": "404lxxQkxEm0SXIiVEiV0aB0VH304NUJ",
+      "name": "Cristian T.",
+      "email": "cristian@mail.com",
+      "emailVerified": false,
+      "image": null,
+      "createdAt": 1771957020500,
+      "updatedAt": 1771957020500
+    },
+    {
+      "id": "pnA29EXS1tCA3qYYwCnqPVRi3Pi768C8",
+      "name": "isa",
+      "email": "isabel@gmail.com",
+      "emailVerified": false,
+      "image": null,
+      "createdAt": 1771967870401,
+      "updatedAt": 1771967870401
+    },
+    {
+      "id": "Jj20v7IDUXqWPNMzxeShtjHGfRIyjUsB",
+      "name": "Guido Casasola",
+      "email": "guido@gmail.com",
+      "emailVerified": false,
+      "image": null,
+      "createdAt": 1771983171819,
+      "updatedAt": 1771983171819
+    },
+    {
+      "id": "HJy5jFueZxnSGg78P3wfbEA1XpFkUOXg",
+      "name": "Gustavo C",
+      "email": "gustavo@gmail.com",
+      "emailVerified": false,
+      "image": null,
+      "createdAt": 1771985849779,
+      "updatedAt": 1771985849779
+    },
+    {
+      "id": "tKlAD0ij6pHULTALSYMRYmp3zDdQC5sm",
+      "name": "Emir C",
+      "email": "emir@gmail.com",
+      "emailVerified": false,
+      "image": null,
+      "createdAt": 1771988369415,
+      "updatedAt": 1771988369415
+    },
+    {
+      "id": "ERrm4iiEl8xansotwFjHLW8vdem1m8Am",
+      "name": "johndoe2",
+      "email": "johndoe2@gmail.com",
+      "emailVerified": false,
+      "image": null,
+      "createdAt": 1772031082206,
+      "updatedAt": 1772031082206
+    },
+    {
+      "id": "XiPEiPLyqyPg16TzQb0bdkTRHCG7IuZT",
+      "name": "Roma E",
+      "email": "roma@gmail.com",
+      "emailVerified": false,
+      "image": null,
+      "createdAt": 1772047370321,
+      "updatedAt": 1772047370321
+    }
+  ],
+  "verifications": [],
+  "projects": [
+    {
+      "id": "db25b1f6-ca2b-42a7-bfb7-49cedcf81e76",
+      "name": "Mi Primer Proyecto",
+      "description": null,
+      "status": "active",
+      "createdAt": 1771944515291,
+      "updatedAt": 1771944515291
+    },
+    {
+      "id": "17a6690f-adfb-45af-ab48-090bf1543f34",
+      "name": "Mi Primer Proyecto",
+      "description": null,
+      "status": "active",
+      "createdAt": 1771944601269,
+      "updatedAt": 1771944601269
+    },
+    {
+      "id": "0a81f079-b110-421e-99b5-83c81eee4e8c",
+      "name": "Mi Primer Proyecto",
+      "description": null,
+      "status": "active",
+      "createdAt": 1771944717841,
+      "updatedAt": 1771944717841
+    },
+    {
+      "id": "5acc484f-b9e6-486b-8e71-9c17515ff6d6",
+      "name": "Mi Primer Proyecto",
+      "description": null,
+      "status": "active",
+      "createdAt": 1771957020469,
+      "updatedAt": 1771957020469
+    },
+    {
+      "id": "a34d160a-0621-45f5-aca2-c58de3783eb3",
+      "name": "Mi Primer Proyecto",
+      "description": null,
+      "status": "active",
+      "createdAt": 1771967870546,
+      "updatedAt": 1771967870546
+    },
+    {
+      "id": "7ea434ab-f027-477d-b3a9-e56427d24ec6",
+      "name": "ClothesAndPets",
+      "description": "Great Store",
+      "status": "active",
+      "createdAt": 1771968062187,
+      "updatedAt": 1771968062187
+    },
+    {
+      "id": "906ca1ef-2fe1-4a21-a85b-a4003ef53af1",
+      "name": "ProjectTest1",
+      "description": "DescriptionTest1",
+      "status": "active",
+      "createdAt": 1771969816221,
+      "updatedAt": 1772030105951
+    },
+    {
+      "id": "3df3ab96-14d9-40d5-ab9f-050fe8ed8bbe",
+      "name": "Mi Primer Proyecto",
+      "description": null,
+      "status": "active",
+      "createdAt": 1771978352617,
+      "updatedAt": 1771978352617
+    },
+    {
+      "id": "ebd0bad9-36a1-471e-943b-ace801d382f3",
+      "name": "Proyecto de GUIDO",
+      "description": "no tenemos una descripcion larga",
+      "status": "active",
+      "createdAt": 1771983173002,
+      "updatedAt": 1771985716464
+    },
+    {
+      "id": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "name": "Proyecto de Gustavo",
+      "description": "este es el proyecto de gustavo",
+      "status": "active",
+      "createdAt": 1771985851650,
+      "updatedAt": 1771986003714
+    },
+    {
+      "id": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "name": "Proyecto Emir",
+      "description": "proyecto de Emir",
+      "status": "active",
+      "createdAt": 1771988370459,
+      "updatedAt": 1771988900237
+    },
+    {
+      "id": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "name": "Mi Primer Proyecto",
+      "description": "Proyecto inicial creado automáticamente",
+      "status": "active",
+      "createdAt": 1772031082479,
+      "updatedAt": 1772031082479
+    },
+    {
+      "id": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "name": "Mi Primer Proyecto",
+      "description": "Proyecto inicial creado automáticamente",
+      "status": "active",
+      "createdAt": 1772047371217,
+      "updatedAt": 1772047371217
+    }
+  ],
+  "permissions": [
+    {
+      "id": "283e222b-8fdd-4490-8563-0c231cc39f1f",
+      "name": "Ver Proyecto",
+      "resource": "project",
+      "action": "read"
+    },
+    {
+      "id": "44224c75-c6a3-4c23-94fd-d6b057bb03da",
+      "name": "Editar Proyecto",
+      "resource": "project",
+      "action": "update"
+    },
+    {
+      "id": "d2512e54-a301-4e31-821d-bd226f355db6",
+      "name": "Eliminar Proyecto",
+      "resource": "project",
+      "action": "delete"
+    },
+    {
+      "id": "68f9e23b-34bd-4694-84fc-dcdeb61ecefe",
+      "name": "Gestionar Roles",
+      "resource": "project_role",
+      "action": "manage"
+    },
+    {
+      "id": "dc9dbe05-ffc1-473f-a9fb-1bb119acfe81",
+      "name": "Gestionar API Keys",
+      "resource": "api_key",
+      "action": "manage"
+    },
+    {
+      "id": "0653edc7-9cc2-4946-933f-65cb350e8fee",
+      "name": "Invitar Miembros",
+      "resource": "project_member",
+      "action": "create"
+    },
+    {
+      "id": "26352229-b092-44b3-8a56-b300eeeef09b",
+      "name": "Eliminar Miembros",
+      "resource": "project_member",
+      "action": "delete"
+    }
+  ],
+  "integrations": [
+    {
+      "id": "6b693113-306b-4d66-acb1-2b82f5090765",
+      "projectId": "ebd0bad9-36a1-471e-943b-ace801d382f3",
+      "name": "Conexión Automática Stripe",
+      "type": "payment",
+      "status": "connected",
+      "credentials": null,
+      "connectedAt": 1771983271872,
+      "platform": "STRIPE",
+      "storeUrl": null,
+      "apiKey": null,
+      "merchantId": null,
+      "accountId": null
+    },
+    {
+      "id": "4169cf15-328e-4c0a-873a-12c907c1902f",
+      "projectId": "ebd0bad9-36a1-471e-943b-ace801d382f3",
+      "name": "Conexión Automática Stripe",
+      "type": "payment",
+      "status": "connected",
+      "credentials": null,
+      "connectedAt": 1771983273038,
+      "platform": "STRIPE",
+      "storeUrl": null,
+      "apiKey": null,
+      "merchantId": null,
+      "accountId": null
+    },
+    {
+      "id": "5f6b9f70-a979-4b89-81ec-9b9b15550172",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "name": "Meta Ads Simulator",
+      "type": "ads",
+      "status": "connected",
+      "credentials": null,
+      "connectedAt": 1771985854707,
+      "platform": "meta",
+      "storeUrl": null,
+      "apiKey": null,
+      "merchantId": null,
+      "accountId": null
+    },
+    {
+      "id": "5efbb119-7cb1-4edd-988e-1e15358d58cc",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "name": "Google Ads Simulator",
+      "type": "ads",
+      "status": "connected",
+      "credentials": null,
+      "connectedAt": 1771985855205,
+      "platform": "google",
+      "storeUrl": null,
+      "apiKey": null,
+      "merchantId": null,
+      "accountId": null
+    },
+    {
+      "id": "d0da6377-50f6-4439-9af3-dffb5fe40274",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "name": "Conexión Automática Stripe",
+      "type": "payment",
+      "status": "connected",
+      "credentials": null,
+      "connectedAt": 1771986118602,
+      "platform": "STRIPE",
+      "storeUrl": null,
+      "apiKey": null,
+      "merchantId": null,
+      "accountId": null
+    },
+    {
+      "id": "e94c63b4-d12b-45d7-8020-c18b3f84751d",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "name": "Meta Ads Simulator",
+      "type": "ads",
+      "status": "connected",
+      "credentials": null,
+      "connectedAt": 1771988371409,
+      "platform": "meta",
+      "storeUrl": null,
+      "apiKey": null,
+      "merchantId": null,
+      "accountId": null
+    },
+    {
+      "id": "ca6e12b8-c83e-4f15-9e2e-4ac9e5f33923",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "name": "Google Ads Simulator",
+      "type": "ads",
+      "status": "connected",
+      "credentials": null,
+      "connectedAt": 1771988371819,
+      "platform": "google",
+      "storeUrl": null,
+      "apiKey": null,
+      "merchantId": null,
+      "accountId": null
+    },
+    {
+      "id": "ecccdc12-e191-4cec-8b09-ea88a7ce2ad8",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "name": "Conexión Automática Stripe",
+      "type": "payment",
+      "status": "connected",
+      "credentials": null,
+      "connectedAt": 1771988590269,
+      "platform": "STRIPE",
+      "storeUrl": null,
+      "apiKey": null,
+      "merchantId": null,
+      "accountId": null
+    },
+    {
+      "id": "87b900de-d8db-4109-9a73-b42f41ba1278",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "name": "Conexión Automática Stripe",
+      "type": "payment",
+      "status": "connected",
+      "credentials": null,
+      "connectedAt": 1771988591311,
+      "platform": "STRIPE",
+      "storeUrl": null,
+      "apiKey": null,
+      "merchantId": null,
+      "accountId": null
+    },
+    {
+      "id": "8f7d0f67-4f8a-437d-882b-a985fbdce9af",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "name": "Meta Ads Simulator",
+      "type": "ads",
+      "status": "connected",
+      "credentials": null,
+      "connectedAt": 1772031084289,
+      "platform": "meta",
+      "storeUrl": null,
+      "apiKey": null,
+      "merchantId": null,
+      "accountId": null
+    },
+    {
+      "id": "4f6091f8-0263-4b12-8688-80affb6ee227",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "name": "Google Ads Simulator",
+      "type": "ads",
+      "status": "connected",
+      "credentials": null,
+      "connectedAt": 1772031084663,
+      "platform": "google",
+      "storeUrl": null,
+      "apiKey": null,
+      "merchantId": null,
+      "accountId": null
+    },
+    {
+      "id": "289aa3b9-a0be-4424-b49b-ca7a8a1ecb86",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "name": "Meta Ads Simulator",
+      "type": "ads",
+      "status": "connected",
+      "credentials": null,
+      "connectedAt": 1772047372580,
+      "platform": "meta",
+      "storeUrl": null,
+      "apiKey": null,
+      "merchantId": null,
+      "accountId": null
+    },
+    {
+      "id": "52098524-603a-4c06-88e0-e3b910a6c6ee",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "name": "Google Ads Simulator",
+      "type": "ads",
+      "status": "connected",
+      "credentials": null,
+      "connectedAt": 1772047373010,
+      "platform": "google",
+      "storeUrl": null,
+      "apiKey": null,
+      "merchantId": null,
+      "accountId": null
+    },
+    {
+      "id": "fd3c80b4-b376-495b-ac7a-42bd818d5896",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "name": "Conexión Automática Stripe",
+      "type": "payment",
+      "status": "connected",
+      "credentials": null,
+      "connectedAt": 1772053531738,
+      "platform": "STRIPE",
+      "storeUrl": null,
+      "apiKey": null,
+      "merchantId": null,
+      "accountId": null
+    },
+    {
+      "id": "73d2469d-2a0d-4a84-9f53-195929fbe99f",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "name": "Conexión Automática Stripe",
+      "type": "payment",
+      "status": "connected",
+      "credentials": null,
+      "connectedAt": 1772047771581,
+      "platform": "STRIPE",
+      "storeUrl": null,
+      "apiKey": null,
+      "merchantId": null,
+      "accountId": null
+    }
+  ],
+  "roles": [
+    {
+      "id": "c025d3e2-d47f-4523-b9cd-a6ccfc41fc3c",
+      "projectId": "db25b1f6-ca2b-42a7-bfb7-49cedcf81e76",
+      "name": "owner",
+      "description": "Administrador total del proyecto"
+    },
+    {
+      "id": "75f07a6c-b2d6-4258-9d2f-72b776f73c9a",
+      "projectId": "17a6690f-adfb-45af-ab48-090bf1543f34",
+      "name": "owner",
+      "description": "Administrador total del proyecto"
+    },
+    {
+      "id": "92850b85-4cbc-488b-8860-624a50f48c84",
+      "projectId": "0a81f079-b110-421e-99b5-83c81eee4e8c",
+      "name": "owner",
+      "description": "Administrador total del proyecto"
+    },
+    {
+      "id": "b1adcb12-7cf0-4f76-aa9e-f32b2466db44",
+      "projectId": "5acc484f-b9e6-486b-8e71-9c17515ff6d6",
+      "name": "owner",
+      "description": "Administrador total del proyecto"
+    },
+    {
+      "id": "d41bea16-fe6a-462f-918d-3096fbd7958a",
+      "projectId": "a34d160a-0621-45f5-aca2-c58de3783eb3",
+      "name": "owner",
+      "description": "Administrador total del proyecto"
+    },
+    {
+      "id": "bc89160d-ec6a-4edb-95cb-ea5297e3267d",
+      "projectId": "7ea434ab-f027-477d-b3a9-e56427d24ec6",
+      "name": "owner",
+      "description": "Project owner"
+    },
+    {
+      "id": "7a112499-f6ae-4df4-954e-33839833a1b2",
+      "projectId": "906ca1ef-2fe1-4a21-a85b-a4003ef53af1",
+      "name": "owner",
+      "description": "Project owner"
+    },
+    {
+      "id": "8d11d702-5998-4411-a828-2e939aea60fc",
+      "projectId": "3df3ab96-14d9-40d5-ab9f-050fe8ed8bbe",
+      "name": "owner",
+      "description": "Administrador total del proyecto"
+    },
+    {
+      "id": "433d0aeb-c83a-4d68-983e-3702392b02ca",
+      "projectId": "ebd0bad9-36a1-471e-943b-ace801d382f3",
+      "name": "owner",
+      "description": "Administrador total del proyecto"
+    },
+    {
+      "id": "c2c39489-10f9-4a25-8e76-9cefec651d72",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "name": "owner",
+      "description": "Project owner"
+    },
+    {
+      "id": "a52c5d2c-f58f-4aa7-9674-705b3b16c28b",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "name": "owner",
+      "description": "Project owner"
+    },
+    {
+      "id": "b45ac87c-10f8-4adb-b579-0333f7160313",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "name": "owner",
+      "description": "Project owner"
+    },
+    {
+      "id": "12c6bd45-93d1-4155-bf0a-2dc76f7cdacd",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "name": "owner",
+      "description": "Project owner"
+    }
+  ],
+  "accounts": [
+    {
+      "id": "7ITaS1XBqKZMcNgxm12YHCq8dQWay6X3",
+      "accountId": "GfN5kLx6xlYHIbmvNYW33CMGnl6BLakD",
+      "providerId": "credential",
+      "userId": "GfN5kLx6xlYHIbmvNYW33CMGnl6BLakD",
+      "accessToken": null,
+      "refreshToken": null,
+      "idToken": null,
+      "accessTokenExpiresAt": null,
+      "refreshTokenExpiresAt": null,
+      "scope": null,
+      "password": "36cfb9abc5aa5c6d316d2a5d7a1e0154:e1fef42888cad1e7c020214b5b499db4e56a3afa5e738873b903b3c83b7081f59de9f3f10659e587dfeb1a41204eb4932f373c31278c0e63736dfb0e3ba0b785",
+      "createdAt": 1771911929377,
+      "updatedAt": 1771911929377
+    },
+    {
+      "id": "t9EdTjuj2GPGwZKZeveD0DR4HLJ6aY0u",
+      "accountId": "WbBomeKPV6UaE8i2cPv0pBrVUJX1swhV",
+      "providerId": "credential",
+      "userId": "WbBomeKPV6UaE8i2cPv0pBrVUJX1swhV",
+      "accessToken": null,
+      "refreshToken": null,
+      "idToken": null,
+      "accessTokenExpiresAt": null,
+      "refreshTokenExpiresAt": null,
+      "scope": null,
+      "password": "841d4e154d78bd04bfd6850e9e1c5471:7d4adfa4fa9432ae9f278a63ade065d734b3bb92fa59f45c84cad09727def2aa6d79182974f94165e18790375c5a60b8d91efcae412cfc1f71f32cc4ddbe2088",
+      "createdAt": 1771943832501,
+      "updatedAt": 1771943832501
+    },
+    {
+      "id": "Fuz0bIp8PPQV8ivmGEGbk6vfB8nKkWsQ",
+      "accountId": "iQyGTjO6JfGOGhdV5L4YUoG4E859Ed4d",
+      "providerId": "credential",
+      "userId": "iQyGTjO6JfGOGhdV5L4YUoG4E859Ed4d",
+      "accessToken": null,
+      "refreshToken": null,
+      "idToken": null,
+      "accessTokenExpiresAt": null,
+      "refreshTokenExpiresAt": null,
+      "scope": null,
+      "password": "463474b610bfaf10b16234a558386356:f720fadeb29ab70eb08f776bb2b2a6f26338919c1a9927e29c343fda7353311095874d57b161c4131ea7ba0332732ccf6ac4a3ed67a226bab85813ae572ae4b3",
+      "createdAt": 1771944515605,
+      "updatedAt": 1771944515605
+    },
+    {
+      "id": "aVBO6fJmahsCb9MT4be1p3n23N6C3A8b",
+      "accountId": "DpR33NGVKCqRzGpbbeg7WdtfZzflhWBB",
+      "providerId": "credential",
+      "userId": "DpR33NGVKCqRzGpbbeg7WdtfZzflhWBB",
+      "accessToken": null,
+      "refreshToken": null,
+      "idToken": null,
+      "accessTokenExpiresAt": null,
+      "refreshTokenExpiresAt": null,
+      "scope": null,
+      "password": "b4540e37531ae7a348e3e937749b4486:37474eda362e6afc37c339b0aa5e311b098f84c6b7078bd06b37b205f49b118cc5193f4377719c205ffdead5ff428c64f6ffe1a22c46c64a8095cb4948a48506",
+      "createdAt": 1771944601563,
+      "updatedAt": 1771944601563
+    },
+    {
+      "id": "YHKmQDkofKX9rMX2xalQFRJtzndnS3Of",
+      "accountId": "WvboyQp2bTmdijKa3DocqSZeI8Z5Wnax",
+      "providerId": "credential",
+      "userId": "WvboyQp2bTmdijKa3DocqSZeI8Z5Wnax",
+      "accessToken": null,
+      "refreshToken": null,
+      "idToken": null,
+      "accessTokenExpiresAt": null,
+      "refreshTokenExpiresAt": null,
+      "scope": null,
+      "password": "b4bd030fd3dbdd8c1ee8c59517dacb9f:3b342fa3cf3257156fe0c3baf8c13882f025e64c6d34d103e825a864f0f3707e013546e8bf162cfe613ecf999278582fa20c61d38caef016e0c3cea051ab8815",
+      "createdAt": 1771944718166,
+      "updatedAt": 1771944718166
+    },
+    {
+      "id": "phGVDQ0mn2Oa6lUknE2pRjK2NibF0y2R",
+      "accountId": "404lxxQkxEm0SXIiVEiV0aB0VH304NUJ",
+      "providerId": "credential",
+      "userId": "404lxxQkxEm0SXIiVEiV0aB0VH304NUJ",
+      "accessToken": null,
+      "refreshToken": null,
+      "idToken": null,
+      "accessTokenExpiresAt": null,
+      "refreshTokenExpiresAt": null,
+      "scope": null,
+      "password": "f04c6ad58a4bd428be639925d196e5c4:bb52aa6916065d284303f6dd38f5328d040202333daba95f7d00df0243d58ad0317ce5bf4f96fb50ed80af77a21ce14cf84efa92d1e6e6de17d463eff03bcac7",
+      "createdAt": 1771957021529,
+      "updatedAt": 1771957021529
+    },
+    {
+      "id": "BUQ7gEOZxysVEjw8FE2XWs781J9SXKT7",
+      "accountId": "pnA29EXS1tCA3qYYwCnqPVRi3Pi768C8",
+      "providerId": "credential",
+      "userId": "pnA29EXS1tCA3qYYwCnqPVRi3Pi768C8",
+      "accessToken": null,
+      "refreshToken": null,
+      "idToken": null,
+      "accessTokenExpiresAt": null,
+      "refreshTokenExpiresAt": null,
+      "scope": null,
+      "password": "495a709b1939431eb3be61d8452343e3:ec778fe9154c315f55b5ec5ea402c2b8d1b25bafeaa0a02e8fab3d724b5fab033bbebb38260f1edec6b22fa547fb327583b3bbf7721cf04edb5f52a5e9c4c14b",
+      "createdAt": 1771967871207,
+      "updatedAt": 1771967871207
+    },
+    {
+      "id": "FXHnBSYiEnyy6pNcGuG3QvPxwUzsgzgj",
+      "accountId": "Jj20v7IDUXqWPNMzxeShtjHGfRIyjUsB",
+      "providerId": "credential",
+      "userId": "Jj20v7IDUXqWPNMzxeShtjHGfRIyjUsB",
+      "accessToken": null,
+      "refreshToken": null,
+      "idToken": null,
+      "accessTokenExpiresAt": null,
+      "refreshTokenExpiresAt": null,
+      "scope": null,
+      "password": "4d2b4258e2e6b07b9277fac618cb0dc7:63cd5da54eb99c110a08131ce1398ba7c878b767e3915c33018dcae274d59b29c040e0fcef3b2d38dbe51ce0bd4f4a73924ae0ec604029d086fa52e602588ecc",
+      "createdAt": 1771983173424,
+      "updatedAt": 1771983173424
+    },
+    {
+      "id": "2IHj0Jla117g09wUkBfd6MvqSRCueT1f",
+      "accountId": "HJy5jFueZxnSGg78P3wfbEA1XpFkUOXg",
+      "providerId": "credential",
+      "userId": "HJy5jFueZxnSGg78P3wfbEA1XpFkUOXg",
+      "accessToken": null,
+      "refreshToken": null,
+      "idToken": null,
+      "accessTokenExpiresAt": null,
+      "refreshTokenExpiresAt": null,
+      "scope": null,
+      "password": "3e053551720549390db79bb4ad60e3c4:201fe4ef3d8a3e21561397911554cb5621a8aa8fbc4ef2fbf9fe7b268aa8aae5d9f9244cdee31643237a69cb2d14eb9f36b2973f5fce1f7e2a404aed8b74a3a2",
+      "createdAt": 1771985866178,
+      "updatedAt": 1771985866178
+    },
+    {
+      "id": "NNt7umWaFv84GlyTp42fTWnfEvcaDHOy",
+      "accountId": "tKlAD0ij6pHULTALSYMRYmp3zDdQC5sm",
+      "providerId": "credential",
+      "userId": "tKlAD0ij6pHULTALSYMRYmp3zDdQC5sm",
+      "accessToken": null,
+      "refreshToken": null,
+      "idToken": null,
+      "accessTokenExpiresAt": null,
+      "refreshTokenExpiresAt": null,
+      "scope": null,
+      "password": "17c84cfe62658be351336a4c652129cf:10a2287187fa08ff76d573c4f2f9a597e8d981aabe7faf0c37eeb858bc99a99182bc7efbfeb6a3cbd958387c5e17caf2299ef16d77c316eb383a88a18fedd137",
+      "createdAt": 1771988380037,
+      "updatedAt": 1771988380037
+    },
+    {
+      "id": "PBIYvLJYkf1a50cgGGZ0nQRzIOQueGUh",
+      "accountId": "ERrm4iiEl8xansotwFjHLW8vdem1m8Am",
+      "providerId": "credential",
+      "userId": "ERrm4iiEl8xansotwFjHLW8vdem1m8Am",
+      "accessToken": null,
+      "refreshToken": null,
+      "idToken": null,
+      "accessTokenExpiresAt": null,
+      "refreshTokenExpiresAt": null,
+      "scope": null,
+      "password": "1f73d2e6163f9040063bbaaa7998bb3d:48ece047f64c3178a4e3b9990b034cf0d8b9cf16282c96d85044606f7e572ae9d63c06db4c6cdad8ed1fade5e32cdb8024832e588ba72757dd32432dae5a8e28",
+      "createdAt": 1772031091950,
+      "updatedAt": 1772031091950
+    },
+    {
+      "id": "UGICS6glOGVfjsEaPQOp2IbWdmNz7OdV",
+      "accountId": "XiPEiPLyqyPg16TzQb0bdkTRHCG7IuZT",
+      "providerId": "credential",
+      "userId": "XiPEiPLyqyPg16TzQb0bdkTRHCG7IuZT",
+      "accessToken": null,
+      "refreshToken": null,
+      "idToken": null,
+      "accessTokenExpiresAt": null,
+      "refreshTokenExpiresAt": null,
+      "scope": null,
+      "password": "d1308c41465aed132b2be56a01f135a2:e8bd55faf51d63570a430e4d654e65537c68505f965f0088701ccfcb9d8253aba256cff51371edcdcb2f485ddc6fa287c0e588d102a637b7cc50e531bfcfea46",
+      "createdAt": 1772047382594,
+      "updatedAt": 1772047382594
+    }
+  ],
+  "sessions": [
+    {
+      "id": "6xLaAQd7c1g41KM7TKvGugg4tyhZs76o",
+      "expiresAt": 1772516729591,
+      "token": "TznL062tIcAum4V0IzoK9vR2DniozY0D",
+      "createdAt": 1771911929592,
+      "updatedAt": 1771911929592,
+      "ipAddress": "0000:0000:0000:0000:0000:0000:0000:0000",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0",
+      "userId": "GfN5kLx6xlYHIbmvNYW33CMGnl6BLakD"
+    },
+    {
+      "id": "4GYAulI4zjGhrU0KmJ2QesEKoBmUZ10T",
+      "expiresAt": 1772517941501,
+      "token": "6XsyQXlVMAV9Y45EPBCTk5PUqJsn45vG",
+      "createdAt": 1771913141504,
+      "updatedAt": 1771913141504,
+      "ipAddress": "0000:0000:0000:0000:0000:0000:0000:0000",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0",
+      "userId": "GfN5kLx6xlYHIbmvNYW33CMGnl6BLakD"
+    },
+    {
+      "id": "5Am09vDI9mqq8evHYTQOKXf1yPUKe0Lm",
+      "expiresAt": 1772518147149,
+      "token": "itM7DG0VFeRaHQA1DyLrm7XqAs75mXr7",
+      "createdAt": 1771913347150,
+      "updatedAt": 1771913347150,
+      "ipAddress": "0000:0000:0000:0000:0000:0000:0000:0000",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0",
+      "userId": "GfN5kLx6xlYHIbmvNYW33CMGnl6BLakD"
+    },
+    {
+      "id": "6bDr1znuuVKF4vFUSk8lLbgtTHwEVJ6o",
+      "expiresAt": 1772518424898,
+      "token": "6EZzdjsFS27OHqv00ROQdAAhSpRxenOI",
+      "createdAt": 1771913624898,
+      "updatedAt": 1771913624898,
+      "ipAddress": "0000:0000:0000:0000:0000:0000:0000:0000",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0",
+      "userId": "GfN5kLx6xlYHIbmvNYW33CMGnl6BLakD"
+    },
+    {
+      "id": "4c2HdC31F2MUhQQ1S5fY1r0DuVprgPIJ",
+      "expiresAt": 1772548632756,
+      "token": "nEq0xudr9XpbqiAxA5ntUcBlRrnOffhg",
+      "createdAt": 1771943832757,
+      "updatedAt": 1771943832757,
+      "ipAddress": "0000:0000:0000:0000:0000:0000:0000:0000",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "userId": "WbBomeKPV6UaE8i2cPv0pBrVUJX1swhV"
+    },
+    {
+      "id": "SCzd4zHya0arezugy6RBTTXWV38FOqiA",
+      "expiresAt": 1772548995871,
+      "token": "XWWj84OwyYW86eUeuETfZ5eJIcADeuK4",
+      "createdAt": 1771944195872,
+      "updatedAt": 1771944195872,
+      "ipAddress": "0000:0000:0000:0000:0000:0000:0000:0000",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "userId": "WbBomeKPV6UaE8i2cPv0pBrVUJX1swhV"
+    },
+    {
+      "id": "YOgnPdfwYvi502Pa1wVAqS6RSDMrHRa5",
+      "expiresAt": 1772549031926,
+      "token": "0NL3gVRDiS0turm8jw6GWMALPU7Feiwf",
+      "createdAt": 1771944231926,
+      "updatedAt": 1771944231926,
+      "ipAddress": "0000:0000:0000:0000:0000:0000:0000:0000",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "userId": "WbBomeKPV6UaE8i2cPv0pBrVUJX1swhV"
+    },
+    {
+      "id": "36aNUczjtCOGbTIFxBaSWFwtlcdiD6sG",
+      "expiresAt": 1772549315772,
+      "token": "S9aKXX2gF6gc5lzb1GS1H2WJyYxFlLAP",
+      "createdAt": 1771944515772,
+      "updatedAt": 1771944515772,
+      "ipAddress": "0000:0000:0000:0000:0000:0000:0000:0000",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+      "userId": "iQyGTjO6JfGOGhdV5L4YUoG4E859Ed4d"
+    },
+    {
+      "id": "5ollcTFKfEpnBQZcFSaM33uU6o3shZzn",
+      "expiresAt": 1772549401727,
+      "token": "4ptxbUjus0GdGUobT0kNCc7FcJIWBI1f",
+      "createdAt": 1771944601728,
+      "updatedAt": 1771944601728,
+      "ipAddress": "0000:0000:0000:0000:0000:0000:0000:0000",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+      "userId": "DpR33NGVKCqRzGpbbeg7WdtfZzflhWBB"
+    },
+    {
+      "id": "HNKMAiqGD9Ger0Aru1DetRN9yRvwRMS6",
+      "expiresAt": 1772549411746,
+      "token": "f4M3ld9IhTzUVc3absJ5ZJSjlOUaJIqb",
+      "createdAt": 1771944611746,
+      "updatedAt": 1771944611746,
+      "ipAddress": "0000:0000:0000:0000:0000:0000:0000:0000",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+      "userId": "DpR33NGVKCqRzGpbbeg7WdtfZzflhWBB"
+    },
+    {
+      "id": "F6ghYD4o8NSu4Cfmg6fRk7ah0rw98xR0",
+      "expiresAt": 1772561905251,
+      "token": "0YtRnX2jntPfWsHEnmubdEEyAr36LQ7y",
+      "createdAt": 1771957105251,
+      "updatedAt": 1771957105251,
+      "ipAddress": "0000:0000:0000:0000:0000:0000:0000:0000",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0",
+      "userId": "404lxxQkxEm0SXIiVEiV0aB0VH304NUJ"
+    },
+    {
+      "id": "XW2YzhzTtB5Wkv5Hs3eI7IpADfzMsXoH",
+      "expiresAt": 1772562007418,
+      "token": "Arc1RkhA1Kvghb5rZ4ps74BeqGYRQ1y1",
+      "createdAt": 1771957207419,
+      "updatedAt": 1771957207419,
+      "ipAddress": "0000:0000:0000:0000:0000:0000:0000:0000",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "userId": "404lxxQkxEm0SXIiVEiV0aB0VH304NUJ"
+    },
+    {
+      "id": "RWf51kJy9FSE101SllMuIdwsqc4hVQOh",
+      "expiresAt": 1772562378467,
+      "token": "V4O7OyQC6Q9dIp0kQtMOhcsFBAGGJqhk",
+      "createdAt": 1771957578469,
+      "updatedAt": 1771957578469,
+      "ipAddress": "0000:0000:0000:0000:0000:0000:0000:0000",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0",
+      "userId": "404lxxQkxEm0SXIiVEiV0aB0VH304NUJ"
+    },
+    {
+      "id": "E1TNJ4TsiQdOs59kZuYi0gsLVOA8nEoK",
+      "expiresAt": 1772572671354,
+      "token": "39d8iqsiFQ6qbshPbuivwZQ5oW7VIHp8",
+      "createdAt": 1771967871355,
+      "updatedAt": 1771967871355,
+      "ipAddress": "0000:0000:0000:0000:0000:0000:0000:0000",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+      "userId": "pnA29EXS1tCA3qYYwCnqPVRi3Pi768C8"
+    },
+    {
+      "id": "Na9CPr4NBBrXW4LPWy8tChKVBKPalo5O",
+      "expiresAt": 1772574424132,
+      "token": "CW8txssu7bIQLRpmyMmd6rC9mpCVyYJp",
+      "createdAt": 1771969624135,
+      "updatedAt": 1771969624135,
+      "ipAddress": "0000:0000:0000:0000:0000:0000:0000:0000",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "userId": "WbBomeKPV6UaE8i2cPv0pBrVUJX1swhV"
+    },
+    {
+      "id": "RbXzUihkrG48XzJfHV0YRE74sTmMOMoh",
+      "expiresAt": 1772587973727,
+      "token": "CoiaOQBZ8o1si4DgiMhIGnyhzodCiCeV",
+      "createdAt": 1771983173727,
+      "updatedAt": 1771983173727,
+      "ipAddress": "0000:0000:0000:0000:0000:0000:0000:0000",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0",
+      "userId": "Jj20v7IDUXqWPNMzxeShtjHGfRIyjUsB"
+    },
+    {
+      "id": "Ybz0tM5t9lI2uBtaYTRnEHR678WsglwO",
+      "expiresAt": 1772590666391,
+      "token": "VbyFoZzGIZB5wMLqjpbYNDhNoVZNxkpX",
+      "createdAt": 1771985866391,
+      "updatedAt": 1771985866391,
+      "ipAddress": "0000:0000:0000:0000:0000:0000:0000:0000",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0",
+      "userId": "HJy5jFueZxnSGg78P3wfbEA1XpFkUOXg"
+    },
+    {
+      "id": "2jo12199zM676ySZmUKQ2UoR8TjLhsph",
+      "expiresAt": 1772593180320,
+      "token": "4hou0i0dxCo5HrLglKCEwyvDfJIqCw6G",
+      "createdAt": 1771988380320,
+      "updatedAt": 1771988380320,
+      "ipAddress": "0000:0000:0000:0000:0000:0000:0000:0000",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0",
+      "userId": "tKlAD0ij6pHULTALSYMRYmp3zDdQC5sm"
+    },
+    {
+      "id": "jektH9cbKl79T6q6Qra4cEZGxLwgap9k",
+      "expiresAt": 1772635892144,
+      "token": "EntpZjoNzotjio83ViUVKXTm8N9Yb11y",
+      "createdAt": 1772031092145,
+      "updatedAt": 1772031092145,
+      "ipAddress": "0000:0000:0000:0000:0000:0000:0000:0000",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "userId": "ERrm4iiEl8xansotwFjHLW8vdem1m8Am"
+    },
+    {
+      "id": "A6RjKwfronRJ8KN7kzBA848SYDb1lmAz",
+      "expiresAt": 1772635931855,
+      "token": "VFXkue4kCxiZxC5IbEcGn05ujlKBeLZa",
+      "createdAt": 1772031131856,
+      "updatedAt": 1772031131856,
+      "ipAddress": "0000:0000:0000:0000:0000:0000:0000:0000",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "userId": "WbBomeKPV6UaE8i2cPv0pBrVUJX1swhV"
+    },
+    {
+      "id": "Nh1Nip540tVkG9eenFqH0Wsmr1gk39eF",
+      "expiresAt": 1772652182926,
+      "token": "UXmUJ4SJhZRagW6dCTx8IoWrryrx0W0c",
+      "createdAt": 1772047382927,
+      "updatedAt": 1772047382927,
+      "ipAddress": "0000:0000:0000:0000:0000:0000:0000:0000",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0",
+      "userId": "XiPEiPLyqyPg16TzQb0bdkTRHCG7IuZT"
+    },
+    {
+      "id": "e0xNGbqlhbdT1SOupRcIvELgCslbBVxY",
+      "expiresAt": 1772661085320,
+      "token": "psJn3225YLJ3AkHT0jxY8L5vkAkROGPw",
+      "createdAt": 1772056285325,
+      "updatedAt": 1772056285325,
+      "ipAddress": "0000:0000:0000:0000:0000:0000:0000:0000",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0",
+      "userId": "XiPEiPLyqyPg16TzQb0bdkTRHCG7IuZT"
+    },
+    {
+      "id": "nbDEXSRtQ2KxMHul1ZgWVc4qtLTMZRvY",
+      "expiresAt": 1772663007563,
+      "token": "ExiemQ8I1n6htkOeXsjguw7En1mtVPfi",
+      "createdAt": 1772058207585,
+      "updatedAt": 1772058207585,
+      "ipAddress": "0000:0000:0000:0000:0000:0000:0000:0000",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "userId": "pnA29EXS1tCA3qYYwCnqPVRi3Pi768C8"
+    },
+    {
+      "id": "HvbDoK3qfKymjbfsKfIlXCfQzmnogwGm",
+      "expiresAt": 1772663049268,
+      "token": "ic1sGVr8ZSvwqbVbZpwjAyCPmbqCbsDw",
+      "createdAt": 1772058249269,
+      "updatedAt": 1772058249269,
+      "ipAddress": "0000:0000:0000:0000:0000:0000:0000:0000",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0",
+      "userId": "XiPEiPLyqyPg16TzQb0bdkTRHCG7IuZT"
+    }
+  ],
+  "campaigns": [
+    {
+      "id": "c0d553ad-f84d-4f9a-a14d-5bb0303ab4b2",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "adsIntegrationId": "5f6b9f70-a979-4b89-81ec-9b9b15550172",
+      "externalId": null,
+      "name": "black_friday",
+      "budget": 2500,
+      "spent": 2358,
+      "startDate": 1769393855728,
+      "endDate": null,
+      "status": "active"
+    },
+    {
+      "id": "c313d198-c33c-4e1a-9424-7eb607feb1c2",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "adsIntegrationId": "5f6b9f70-a979-4b89-81ec-9b9b15550172",
+      "externalId": null,
+      "name": "meta_retargeting_v1",
+      "budget": 1500,
+      "spent": 958,
+      "startDate": 1769393858091,
+      "endDate": null,
+      "status": "active"
+    },
+    {
+      "id": "cbd3cd15-e177-4be0-a117-36d50877c8d5",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "adsIntegrationId": "5efbb119-7cb1-4edd-988e-1e15358d58cc",
+      "externalId": null,
+      "name": "summer_sale_2026",
+      "budget": 3000,
+      "spent": 2690,
+      "startDate": 1769393861431,
+      "endDate": null,
+      "status": "active"
+    },
+    {
+      "id": "bb23de83-72de-41bb-ac94-954f5f9478fc",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "adsIntegrationId": "5efbb119-7cb1-4edd-988e-1e15358d58cc",
+      "externalId": null,
+      "name": "google_leads_test",
+      "budget": 1000,
+      "spent": 591,
+      "startDate": 1769393863922,
+      "endDate": null,
+      "status": "paused"
+    },
+    {
+      "id": "120203ee-c322-43a5-83ab-00b67686f14e",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "adsIntegrationId": "e94c63b4-d12b-45d7-8020-c18b3f84751d",
+      "externalId": null,
+      "name": "black_friday",
+      "budget": 2500,
+      "spent": 966,
+      "startDate": 1769396372217,
+      "endDate": null,
+      "status": "active"
+    },
+    {
+      "id": "7b5a792e-0940-4cc6-b812-dea3c2f0559c",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "adsIntegrationId": "e94c63b4-d12b-45d7-8020-c18b3f84751d",
+      "externalId": null,
+      "name": "meta_retargeting_v1",
+      "budget": 1500,
+      "spent": 660,
+      "startDate": 1769396374168,
+      "endDate": null,
+      "status": "active"
+    },
+    {
+      "id": "32885a7a-ce90-43c1-8327-5c4c1d443b81",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "adsIntegrationId": "ca6e12b8-c83e-4f15-9e2e-4ac9e5f33923",
+      "externalId": null,
+      "name": "summer_sale_2026",
+      "budget": 3000,
+      "spent": 2665,
+      "startDate": 1769396376170,
+      "endDate": null,
+      "status": "active"
+    },
+    {
+      "id": "58956c07-d0d3-4d3f-8df4-8d467f8735ae",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "adsIntegrationId": "ca6e12b8-c83e-4f15-9e2e-4ac9e5f33923",
+      "externalId": null,
+      "name": "google_leads_test",
+      "budget": 1000,
+      "spent": 681,
+      "startDate": 1769396378161,
+      "endDate": null,
+      "status": "paused"
+    },
+    {
+      "id": "17972dad-1023-4a5f-8803-7bf03de25194",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "adsIntegrationId": "8f7d0f67-4f8a-437d-882b-a985fbdce9af",
+      "externalId": null,
+      "name": "black_friday",
+      "budget": 2500,
+      "spent": 76,
+      "startDate": 1769439085052,
+      "endDate": null,
+      "status": "active"
+    },
+    {
+      "id": "03fe5e5a-2fe3-438f-bf61-92ad4ee7f080",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "adsIntegrationId": "8f7d0f67-4f8a-437d-882b-a985fbdce9af",
+      "externalId": null,
+      "name": "meta_retargeting_v1",
+      "budget": 1500,
+      "spent": 602,
+      "startDate": 1769439086869,
+      "endDate": null,
+      "status": "active"
+    },
+    {
+      "id": "579c6430-492c-48dc-bd9a-1b03612f5c97",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "adsIntegrationId": "4f6091f8-0263-4b12-8688-80affb6ee227",
+      "externalId": null,
+      "name": "summer_sale_2026",
+      "budget": 3000,
+      "spent": 2793,
+      "startDate": 1769439088596,
+      "endDate": null,
+      "status": "active"
+    },
+    {
+      "id": "4e995804-8ea9-461c-abb0-a6ff94b934f4",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "adsIntegrationId": "4f6091f8-0263-4b12-8688-80affb6ee227",
+      "externalId": null,
+      "name": "google_leads_test",
+      "budget": 1000,
+      "spent": 5,
+      "startDate": 1769439090364,
+      "endDate": null,
+      "status": "paused"
+    },
+    {
+      "id": "c341016d-f3d0-4a7a-a2da-a0680e343737",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "adsIntegrationId": "289aa3b9-a0be-4424-b49b-ca7a8a1ecb86",
+      "externalId": null,
+      "name": "black_friday",
+      "budget": 2500,
+      "spent": 317,
+      "startDate": 1769455373503,
+      "endDate": null,
+      "status": "active"
+    },
+    {
+      "id": "251872f4-1d6f-4b01-8dfc-e4a2961a855c",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "adsIntegrationId": "289aa3b9-a0be-4424-b49b-ca7a8a1ecb86",
+      "externalId": null,
+      "name": "meta_retargeting_v1",
+      "budget": 1500,
+      "spent": 1433,
+      "startDate": 1769455376061,
+      "endDate": null,
+      "status": "active"
+    },
+    {
+      "id": "c5a174a6-0384-496f-8cad-32471ea541e1",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "adsIntegrationId": "52098524-603a-4c06-88e0-e3b910a6c6ee",
+      "externalId": null,
+      "name": "summer_sale_2026",
+      "budget": 3000,
+      "spent": 1234,
+      "startDate": 1769455378203,
+      "endDate": null,
+      "status": "active"
+    },
+    {
+      "id": "d942c141-9e1a-4912-916d-6c8368863cc0",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "adsIntegrationId": "52098524-603a-4c06-88e0-e3b910a6c6ee",
+      "externalId": null,
+      "name": "google_leads_test",
+      "budget": 1000,
+      "spent": 984,
+      "startDate": 1769455380362,
+      "endDate": null,
+      "status": "paused"
+    }
+  ],
+  "events": [
+    {
+      "id": "b46bbcb4-8400-4ad9-a445-0ba8e7d06afe",
+      "projectId": "3df3ab96-14d9-40d5-ab9f-050fe8ed8bbe",
+      "eventType": "page_view",
+      "source": "pixel",
+      "payload": {
+        "data": {
+          "title": "Stripe Checkout Sample",
+          "path": "/"
+        },
+        "url": "http://localhost:4242/",
+        "referrer": "http://localhost:4242/"
+      },
+      "visitorId": "7fa7d807-bc0a-4865-b30e-c53b0be2301b",
+      "sessionId": "c1c73cb1-e2e0-4a42-8448-7dc4682887c9",
+      "timestamp": 1771978523094,
+      "receivedAt": 1771978524405,
+      "status": "received",
+      "deduplicationKey": "746b6eb65e211ac47623e4b16f3519801ba55ca5c6fc7eef157d55ee30b09dba"
+    },
+    {
+      "id": "74ebba2f-3730-4f54-bc95-a722aa4e3361",
+      "projectId": "3df3ab96-14d9-40d5-ab9f-050fe8ed8bbe",
+      "eventType": "page_view",
+      "source": "pixel",
+      "payload": {
+        "data": {
+          "title": "Stripe Checkout Sample",
+          "path": "/"
+        },
+        "url": "http://localhost:4242/?utm_source=google&utm_medium=cpc&utm_campaign=summer_sale&gclip=g_test_123",
+        "referrer": "http://localhost:4242/",
+        "utm": {
+          "source": "google",
+          "medium": "cpc",
+          "campaign": "summer_sale"
+        }
+      },
+      "visitorId": "7fa7d807-bc0a-4865-b30e-c53b0be2301b",
+      "sessionId": "c1c73cb1-e2e0-4a42-8448-7dc4682887c9",
+      "timestamp": 1771978526493,
+      "receivedAt": 1771978526938,
+      "status": "received",
+      "deduplicationKey": "75ac60544e9d9a20b4cfc1d511465d01db9724cd8afe65012917d995467c77ea"
+    },
+    {
+      "id": "64b8d767-d953-425b-afa0-1a2475692789",
+      "projectId": "3df3ab96-14d9-40d5-ab9f-050fe8ed8bbe",
+      "eventType": "page_view",
+      "source": "pixel",
+      "payload": {
+        "data": {
+          "title": "Stripe Checkout Sample",
+          "path": "/success"
+        },
+        "url": "http://localhost:4242/success?session_id=cs_test_a1CMxsW2hQbvI3DOPTH6hRbsRmpLo0pzYBSkA5g6ReQK1ibUnS4I1jMFow"
+      },
+      "visitorId": "7fa7d807-bc0a-4865-b30e-c53b0be2301b",
+      "sessionId": "c1c73cb1-e2e0-4a42-8448-7dc4682887c9",
+      "timestamp": 1771978584758,
+      "receivedAt": 1771978586615,
+      "status": "received",
+      "deduplicationKey": "1433a3b8a91deae038cbf3d0d29c8fb70a628a8f8c7494344ca8bef3812022aa"
+    },
+    {
+      "id": "ad8db0ca-6045-4516-9e3a-e74d39b860c0",
+      "projectId": "3df3ab96-14d9-40d5-ab9f-050fe8ed8bbe",
+      "eventType": "page_view",
+      "source": "pixel",
+      "payload": {
+        "data": {
+          "title": "Stripe Checkout Sample",
+          "path": "/"
+        },
+        "url": "http://localhost:4242/",
+        "referrer": "http://localhost:4242/"
+      },
+      "visitorId": "7fa7d807-bc0a-4865-b30e-c53b0be2301b",
+      "sessionId": "c1c73cb1-e2e0-4a42-8448-7dc4682887c9",
+      "timestamp": 1771978945619,
+      "receivedAt": 1771978946810,
+      "status": "received",
+      "deduplicationKey": "d9dee84ccaee6d6a4bbead7dc2971324f0bb77f21eb38ed739540bea5c985ef8"
+    },
+    {
+      "id": "41960056-665f-424e-a56a-74ad48bffaa0",
+      "projectId": "3df3ab96-14d9-40d5-ab9f-050fe8ed8bbe",
+      "eventType": "page_view",
+      "source": "pixel",
+      "payload": {
+        "data": {
+          "title": "Stripe Checkout Sample",
+          "path": "/"
+        },
+        "url": "http://localhost:4242/?utm_source=facebook&utm_medium=social&utm_campaign=black_friday&utm_content=video_ad&fclip=f_test_456",
+        "referrer": "http://localhost:4242/",
+        "utm": {
+          "source": "facebook",
+          "medium": "social",
+          "campaign": "black_friday",
+          "content": "video_ad"
+        }
+      },
+      "visitorId": "7fa7d807-bc0a-4865-b30e-c53b0be2301b",
+      "sessionId": "c1c73cb1-e2e0-4a42-8448-7dc4682887c9",
+      "timestamp": 1771978949074,
+      "receivedAt": 1771978949524,
+      "status": "received",
+      "deduplicationKey": "c54b7838eaf5eaa7f226129452d5cc0566285afa9cca9eb75a84f882a8c42e60"
+    },
+    {
+      "id": "8f2ccc2a-51c8-4b85-b3d3-dfd135bf1710",
+      "projectId": "3df3ab96-14d9-40d5-ab9f-050fe8ed8bbe",
+      "eventType": "page_view",
+      "source": "pixel",
+      "payload": {
+        "data": {
+          "title": "Stripe Checkout Sample",
+          "path": "/success"
+        },
+        "url": "http://localhost:4242/success?session_id=cs_test_a1bRMb487ySKQKfEd5ux5SxlwPooAiSHNXh9FeT4JD4KlxmXs35fYS2Ca5"
+      },
+      "visitorId": "7fa7d807-bc0a-4865-b30e-c53b0be2301b",
+      "sessionId": "c1c73cb1-e2e0-4a42-8448-7dc4682887c9",
+      "timestamp": 1771979009388,
+      "receivedAt": 1771979009807,
+      "status": "received",
+      "deduplicationKey": "e3a78163426b285a4e8bff28a42aee1bc70d72041843070df1b2798cba01adc9"
+    },
+    {
+      "id": "35279fa7-7fb0-4a77-9679-17e81acd4497",
+      "projectId": "ebd0bad9-36a1-471e-943b-ace801d382f3",
+      "eventType": "page_view",
+      "source": "pixel",
+      "payload": {
+        "data": {
+          "title": "Stripe Checkout Sample",
+          "path": "/"
+        },
+        "url": "http://localhost:4242/",
+        "referrer": "http://localhost:4242/"
+      },
+      "visitorId": "7fa7d807-bc0a-4865-b30e-c53b0be2301b",
+      "sessionId": "c1c73cb1-e2e0-4a42-8448-7dc4682887c9",
+      "timestamp": 1771983218844,
+      "receivedAt": 1771983220524,
+      "status": "received",
+      "deduplicationKey": "f4fe9af8ca9fe4ec23418c31cf63baa52007da4373136a0452caa07749a5a8c5"
+    },
+    {
+      "id": "3d259cc2-bad9-4837-8459-e25ae4e050f3",
+      "projectId": "ebd0bad9-36a1-471e-943b-ace801d382f3",
+      "eventType": "page_view",
+      "source": "pixel",
+      "payload": {
+        "data": {
+          "title": "Stripe Checkout Sample",
+          "path": "/"
+        },
+        "url": "http://localhost:4242/?utm_source=google&utm_medium=cpc&utm_campaign=summer_sale&gclip=g_test_123",
+        "referrer": "http://localhost:4242/",
+        "utm": {
+          "source": "google",
+          "medium": "cpc",
+          "campaign": "summer_sale"
+        }
+      },
+      "visitorId": "7fa7d807-bc0a-4865-b30e-c53b0be2301b",
+      "sessionId": "c1c73cb1-e2e0-4a42-8448-7dc4682887c9",
+      "timestamp": 1771983221770,
+      "receivedAt": 1771983222264,
+      "status": "received",
+      "deduplicationKey": "bac7b305a03979c3475cb442e57906c9707110b2137b595437c82dafa34c2177"
+    },
+    {
+      "id": "2cb088c9-4267-4a9c-a566-7df6c965fb27",
+      "projectId": "ebd0bad9-36a1-471e-943b-ace801d382f3",
+      "eventType": "purchase",
+      "source": "stripe",
+      "payload": "{\"id\":\"pi_3T4WzgHecPYCuthF17CT8lmN\",\"object\":\"payment_intent\",\"amount\":599,\"amount_capturable\":0,\"amount_details\":{\"shipping\":{\"amount\":0,\"from_postal_code\":null,\"to_postal_code\":null},\"tax\":{\"total_tax_amount\":0},\"tip\":{}},\"amount_received\":599,\"application\":null,\"application_fee_amount\":null,\"automatic_payment_methods\":null,\"canceled_at\":null,\"cancellation_reason\":null,\"capture_method\":\"automatic_async\",\"client_secret\":\"pi_3T4WzgHecPYCuthF17CT8lmN_secret_92Q3vtlI0sGk2ymlhsfpk5t2S\",\"confirmation_method\":\"automatic\",\"created\":1771983268,\"currency\":\"usd\",\"customer\":null,\"customer_account\":null,\"description\":null,\"excluded_payment_method_types\":null,\"last_payment_error\":null,\"latest_charge\":\"ch_3T4WzgHecPYCuthF1qugjOJt\",\"livemode\":false,\"metadata\":{\"attribution\":\"{\\\"params\\\":{\\\"gclip\\\":\\\"g_test_123\\\",\\\"utm_source\\\":\\\"google\\\",\\\"utm_medium\\\":\\\"cpc\\\",\\\"utm_campaign\\\":\\\"summer_sale\\\"},\\\"expiry\\\":1772588021743}\",\"external_session_id\":\"7fa7d807-bc0a-4865-b30e-c53b0be2301b\",\"source\":\"tienda-cliente-test\",\"product_name\":\"Pasha Original Edition\",\"project_id\":\"pk_live_93274cb2eaf9407d96d73805bd3aea55\"},\"next_action\":null,\"on_behalf_of\":null,\"payment_details\":{\"customer_reference\":null,\"order_reference\":\"cs_test_a15ZNRLnag9XUfN42lb1vOIpsvwIpf138Ul5JIMoigTCDqJGjjRGmhfHcO\"},\"payment_method\":\"pm_1T4WzfHecPYCuthFzWbRGYJw\",\"payment_method_configuration_details\":null,\"payment_method_options\":{\"card\":{\"installments\":null,\"mandate_options\":null,\"network\":null,\"request_three_d_secure\":\"automatic\"}},\"payment_method_types\":[\"card\"],\"processing\":null,\"receipt_email\":null,\"review\":null,\"setup_future_usage\":null,\"shipping\":null,\"source\":null,\"statement_descriptor\":null,\"statement_descriptor_suffix\":null,\"status\":\"succeeded\",\"transfer_data\":null,\"transfer_group\":null}",
+      "visitorId": null,
+      "sessionId": null,
+      "timestamp": 1771983271496,
+      "receivedAt": 1771983271496,
+      "status": "processed",
+      "deduplicationKey": null
+    },
+    {
+      "id": "ca324493-ec2c-486f-b004-45971ada12c0",
+      "projectId": "ebd0bad9-36a1-471e-943b-ace801d382f3",
+      "eventType": "purchase",
+      "source": "stripe",
+      "payload": "{\"id\":\"cs_test_a15ZNRLnag9XUfN42lb1vOIpsvwIpf138Ul5JIMoigTCDqJGjjRGmhfHcO\",\"object\":\"checkout.session\",\"adaptive_pricing\":{\"enabled\":true},\"after_expiration\":null,\"allow_promotion_codes\":null,\"amount_subtotal\":599,\"amount_total\":599,\"automatic_tax\":{\"enabled\":false,\"liability\":null,\"provider\":null,\"status\":null},\"billing_address_collection\":null,\"branding_settings\":{\"background_color\":\"#ffffff\",\"border_style\":\"rounded\",\"button_color\":\"#0074d4\",\"display_name\":\"Entorno de prueba de New business\",\"font_family\":\"default\",\"icon\":null,\"logo\":null},\"cancel_url\":\"http://localhost:4242/canceled\",\"client_reference_id\":null,\"client_secret\":null,\"collected_information\":null,\"consent\":null,\"consent_collection\":null,\"created\":1771983224,\"currency\":\"usd\",\"currency_conversion\":null,\"custom_fields\":[],\"custom_text\":{\"after_submit\":null,\"shipping_address\":null,\"submit\":null,\"terms_of_service_acceptance\":null},\"customer\":null,\"customer_account\":null,\"customer_creation\":\"if_required\",\"customer_details\":{\"address\":{\"city\":null,\"country\":\"AR\",\"line1\":null,\"line2\":null,\"postal_code\":null,\"state\":null},\"business_name\":null,\"email\":\"guido@gmail.com\",\"individual_name\":null,\"name\":\"Guido 22\",\"phone\":null,\"tax_exempt\":\"none\",\"tax_ids\":[]},\"customer_email\":null,\"discounts\":[],\"expires_at\":1772069624,\"invoice\":null,\"invoice_creation\":{\"enabled\":false,\"invoice_data\":{\"account_tax_ids\":null,\"custom_fields\":null,\"description\":null,\"footer\":null,\"issuer\":null,\"metadata\":{},\"rendering_options\":null}},\"livemode\":false,\"locale\":null,\"metadata\":{\"attribution\":\"{\\\"params\\\":{\\\"gclip\\\":\\\"g_test_123\\\",\\\"utm_source\\\":\\\"google\\\",\\\"utm_medium\\\":\\\"cpc\\\",\\\"utm_campaign\\\":\\\"summer_sale\\\"},\\\"expiry\\\":1772588021743}\",\"external_session_id\":\"7fa7d807-bc0a-4865-b30e-c53b0be2301b\",\"source\":\"tienda-cliente-test\",\"product_name\":\"Pasha Original Edition\",\"project_id\":\"pk_live_93274cb2eaf9407d96d73805bd3aea55\"},\"mode\":\"payment\",\"origin_context\":null,\"payment_intent\":\"pi_3T4WzgHecPYCuthF17CT8lmN\",\"payment_link\":null,\"payment_method_collection\":\"if_required\",\"payment_method_configuration_details\":{\"id\":\"pmc_1SwuMcHecPYCuthFDkLY6xMV\",\"parent\":null},\"payment_method_options\":{\"card\":{\"request_three_d_secure\":\"automatic\"}},\"payment_method_types\":[\"card\",\"link\",\"cashapp\",\"amazon_pay\",\"crypto\"],\"payment_status\":\"paid\",\"permissions\":null,\"phone_number_collection\":{\"enabled\":false},\"recovered_from\":null,\"saved_payment_method_options\":null,\"setup_intent\":null,\"shipping_address_collection\":null,\"shipping_cost\":null,\"shipping_options\":[],\"status\":\"complete\",\"submit_type\":null,\"subscription\":null,\"success_url\":\"http://localhost:4242/success?session_id={CHECKOUT_SESSION_ID}\",\"total_details\":{\"amount_discount\":0,\"amount_shipping\":0,\"amount_tax\":0},\"ui_mode\":\"hosted\",\"url\":null,\"wallet_options\":null}",
+      "visitorId": null,
+      "sessionId": null,
+      "timestamp": 1771983272660,
+      "receivedAt": 1771983272660,
+      "status": "processed",
+      "deduplicationKey": null
+    },
+    {
+      "id": "4c809b27-bc62-4bf6-8a22-dff08f228f1a",
+      "projectId": "ebd0bad9-36a1-471e-943b-ace801d382f3",
+      "eventType": "page_view",
+      "source": "pixel",
+      "payload": {
+        "data": {
+          "title": "Stripe Checkout Sample",
+          "path": "/success"
+        },
+        "url": "http://localhost:4242/success?session_id=cs_test_a15ZNRLnag9XUfN42lb1vOIpsvwIpf138Ul5JIMoigTCDqJGjjRGmhfHcO"
+      },
+      "visitorId": "7fa7d807-bc0a-4865-b30e-c53b0be2301b",
+      "sessionId": "c1c73cb1-e2e0-4a42-8448-7dc4682887c9",
+      "timestamp": 1771983273829,
+      "receivedAt": 1771983274354,
+      "status": "received",
+      "deduplicationKey": "69c73f08467291815a08caccaa4997602db624718dd36e7cbd62c70a69fb7ec5"
+    },
+    {
+      "id": "9a80b729-8a57-4358-8bcf-2ce95e4475e0",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "eventType": "page_view",
+      "source": "pixel",
+      "payload": {
+        "data": {
+          "title": "Stripe Checkout Sample",
+          "path": "/"
+        },
+        "url": "http://localhost:4242/",
+        "referrer": "http://localhost:4242/"
+      },
+      "visitorId": "7fa7d807-bc0a-4865-b30e-c53b0be2301b",
+      "sessionId": "c1c73cb1-e2e0-4a42-8448-7dc4682887c9",
+      "timestamp": 1771986072567,
+      "receivedAt": 1771986073639,
+      "status": "received",
+      "deduplicationKey": "57914fbc05c0c5b6f18142dab19191241d4e5ef943c0bcce9450808979dce50f"
+    },
+    {
+      "id": "37a99db3-d9dc-4689-9f89-12024a0062af",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "eventType": "page_view",
+      "source": "pixel",
+      "payload": {
+        "data": {
+          "title": "Stripe Checkout Sample",
+          "path": "/"
+        },
+        "url": "http://localhost:4242/?utm_source=facebook&utm_medium=social&utm_campaign=black_friday&utm_content=video_ad&fclip=f_test_456",
+        "referrer": "http://localhost:4242/",
+        "utm": {
+          "source": "facebook",
+          "medium": "social",
+          "campaign": "black_friday",
+          "content": "video_ad"
+        }
+      },
+      "visitorId": "7fa7d807-bc0a-4865-b30e-c53b0be2301b",
+      "sessionId": "c1c73cb1-e2e0-4a42-8448-7dc4682887c9",
+      "timestamp": 1771986073960,
+      "receivedAt": 1771986074956,
+      "status": "received",
+      "deduplicationKey": "c8977802345a5c04bf8bedd490a858ca499d091e7e5c145f0d275df2ca91a20f"
+    },
+    {
+      "id": "d3326c2f-b1ac-4033-ada3-a0abef73cf77",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "eventType": "purchase",
+      "source": "stripe",
+      "payload": "{\"id\":\"pi_3T4XjZHecPYCuthF0PozwSvg\",\"object\":\"payment_intent\",\"amount\":599,\"amount_capturable\":0,\"amount_details\":{\"shipping\":{\"amount\":0,\"from_postal_code\":null,\"to_postal_code\":null},\"tax\":{\"total_tax_amount\":0},\"tip\":{}},\"amount_received\":599,\"application\":null,\"application_fee_amount\":null,\"automatic_payment_methods\":null,\"canceled_at\":null,\"cancellation_reason\":null,\"capture_method\":\"automatic_async\",\"client_secret\":\"pi_3T4XjZHecPYCuthF0PozwSvg_secret_K6OfFs8HsnrgOs0B0vxp27anp\",\"confirmation_method\":\"automatic\",\"created\":1771986113,\"currency\":\"usd\",\"customer\":null,\"customer_account\":null,\"description\":null,\"excluded_payment_method_types\":null,\"last_payment_error\":null,\"latest_charge\":\"ch_3T4XjZHecPYCuthF0iEdZwLe\",\"livemode\":false,\"metadata\":{\"attribution\":\"{\\\"params\\\":{\\\"fclip\\\":\\\"f_test_456\\\",\\\"utm_source\\\":\\\"facebook\\\",\\\"utm_medium\\\":\\\"social\\\",\\\"utm_campaign\\\":\\\"black_friday\\\",\\\"utm_content\\\":\\\"video_ad\\\"},\\\"expiry\\\":1772590873941}\",\"external_session_id\":\"7fa7d807-bc0a-4865-b30e-c53b0be2301b\",\"source\":\"tienda-cliente-test\",\"product_name\":\"Pasha Original Edition\",\"project_id\":\"882d581e14f65712a9c6d2ea606bc24550f280ae88bbb9bed4d93e8f2da3a978\"},\"next_action\":null,\"on_behalf_of\":null,\"payment_details\":{\"customer_reference\":null,\"order_reference\":\"cs_test_a1OLqVYQVWAmadMBwrmd7OupXunECgE7Rf7Vs1ZJtsP65tQYkTZFGpbYR4\"},\"payment_method\":\"pm_1T4XjZHecPYCuthFpySrI6wA\",\"payment_method_configuration_details\":null,\"payment_method_options\":{\"card\":{\"installments\":null,\"mandate_options\":null,\"network\":null,\"request_three_d_secure\":\"automatic\"}},\"payment_method_types\":[\"card\"],\"processing\":null,\"receipt_email\":null,\"review\":null,\"setup_future_usage\":null,\"shipping\":null,\"source\":null,\"statement_descriptor\":null,\"statement_descriptor_suffix\":null,\"status\":\"succeeded\",\"transfer_data\":null,\"transfer_group\":null}",
+      "visitorId": null,
+      "sessionId": null,
+      "timestamp": 1771986116591,
+      "receivedAt": 1771986116591,
+      "status": "processed",
+      "deduplicationKey": null
+    },
+    {
+      "id": "c4f9f909-ffaa-4449-a77f-a064069e08ed",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "eventType": "purchase",
+      "source": "stripe",
+      "payload": "{\"id\":\"cs_test_a1OLqVYQVWAmadMBwrmd7OupXunECgE7Rf7Vs1ZJtsP65tQYkTZFGpbYR4\",\"object\":\"checkout.session\",\"adaptive_pricing\":{\"enabled\":true},\"after_expiration\":null,\"allow_promotion_codes\":null,\"amount_subtotal\":599,\"amount_total\":599,\"automatic_tax\":{\"enabled\":false,\"liability\":null,\"provider\":null,\"status\":null},\"billing_address_collection\":null,\"branding_settings\":{\"background_color\":\"#ffffff\",\"border_style\":\"rounded\",\"button_color\":\"#0074d4\",\"display_name\":\"Entorno de prueba de New business\",\"font_family\":\"default\",\"icon\":null,\"logo\":null},\"cancel_url\":\"http://localhost:4242/canceled\",\"client_reference_id\":null,\"client_secret\":null,\"collected_information\":null,\"consent\":null,\"consent_collection\":null,\"created\":1771986075,\"currency\":\"usd\",\"currency_conversion\":null,\"custom_fields\":[],\"custom_text\":{\"after_submit\":null,\"shipping_address\":null,\"submit\":null,\"terms_of_service_acceptance\":null},\"customer\":null,\"customer_account\":null,\"customer_creation\":\"if_required\",\"customer_details\":{\"address\":{\"city\":null,\"country\":\"AR\",\"line1\":null,\"line2\":null,\"postal_code\":null,\"state\":null},\"business_name\":null,\"email\":\"gustavo@gmail.com\",\"individual_name\":null,\"name\":\"Gustavo\",\"phone\":null,\"tax_exempt\":\"none\",\"tax_ids\":[]},\"customer_email\":null,\"discounts\":[],\"expires_at\":1772072475,\"invoice\":null,\"invoice_creation\":{\"enabled\":false,\"invoice_data\":{\"account_tax_ids\":null,\"custom_fields\":null,\"description\":null,\"footer\":null,\"issuer\":null,\"metadata\":{},\"rendering_options\":null}},\"livemode\":false,\"locale\":null,\"metadata\":{\"attribution\":\"{\\\"params\\\":{\\\"fclip\\\":\\\"f_test_456\\\",\\\"utm_source\\\":\\\"facebook\\\",\\\"utm_medium\\\":\\\"social\\\",\\\"utm_campaign\\\":\\\"black_friday\\\",\\\"utm_content\\\":\\\"video_ad\\\"},\\\"expiry\\\":1772590873941}\",\"external_session_id\":\"7fa7d807-bc0a-4865-b30e-c53b0be2301b\",\"source\":\"tienda-cliente-test\",\"product_name\":\"Pasha Original Edition\",\"project_id\":\"882d581e14f65712a9c6d2ea606bc24550f280ae88bbb9bed4d93e8f2da3a978\"},\"mode\":\"payment\",\"origin_context\":null,\"payment_intent\":\"pi_3T4XjZHecPYCuthF0PozwSvg\",\"payment_link\":null,\"payment_method_collection\":\"if_required\",\"payment_method_configuration_details\":{\"id\":\"pmc_1SwuMcHecPYCuthFDkLY6xMV\",\"parent\":null},\"payment_method_options\":{\"card\":{\"request_three_d_secure\":\"automatic\"}},\"payment_method_types\":[\"card\",\"link\",\"cashapp\",\"amazon_pay\",\"crypto\"],\"payment_status\":\"paid\",\"permissions\":null,\"phone_number_collection\":{\"enabled\":false},\"recovered_from\":null,\"saved_payment_method_options\":null,\"setup_intent\":null,\"shipping_address_collection\":null,\"shipping_cost\":null,\"shipping_options\":[],\"status\":\"complete\",\"submit_type\":null,\"subscription\":null,\"success_url\":\"http://localhost:4242/success?session_id={CHECKOUT_SESSION_ID}\",\"total_details\":{\"amount_discount\":0,\"amount_shipping\":0,\"amount_tax\":0},\"ui_mode\":\"hosted\",\"url\":null,\"wallet_options\":null}",
+      "visitorId": null,
+      "sessionId": null,
+      "timestamp": 1771986118024,
+      "receivedAt": 1771986118024,
+      "status": "processed",
+      "deduplicationKey": null
+    },
+    {
+      "id": "043d817a-81d9-4979-b04b-56abe15aa1ff",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "eventType": "page_view",
+      "source": "pixel",
+      "payload": {
+        "data": {
+          "title": "Stripe Checkout Sample",
+          "path": "/success"
+        },
+        "url": "http://localhost:4242/success?session_id=cs_test_a1OLqVYQVWAmadMBwrmd7OupXunECgE7Rf7Vs1ZJtsP65tQYkTZFGpbYR4"
+      },
+      "visitorId": "7fa7d807-bc0a-4865-b30e-c53b0be2301b",
+      "sessionId": "c1c73cb1-e2e0-4a42-8448-7dc4682887c9",
+      "timestamp": 1771986118755,
+      "receivedAt": 1771986119148,
+      "status": "received",
+      "deduplicationKey": "c4b736d18cd51bcc133945bbde29b5f01cb5634ac942eb048bc3f284844f7131"
+    },
+    {
+      "id": "5766a101-0038-4661-a332-ca5f499af528",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "eventType": "page_view",
+      "source": "pixel",
+      "payload": {
+        "data": {
+          "title": "Stripe Checkout Sample",
+          "path": "/"
+        },
+        "url": "http://localhost:4242/"
+      },
+      "visitorId": "7fa7d807-bc0a-4865-b30e-c53b0be2301b",
+      "sessionId": "bef9b39c-9ed0-4ed0-9d0b-cf3f91baace1",
+      "timestamp": 1771988434062,
+      "receivedAt": 1771988435349,
+      "status": "received",
+      "deduplicationKey": "1ba981f1f583dfac811c0e76b4a92d05623bb08580721b71c829600800c2b76f"
+    },
+    {
+      "id": "e4a6cb29-ccd9-42d0-b724-88964913a73a",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "eventType": "page_view",
+      "source": "pixel",
+      "payload": {
+        "data": {
+          "title": "Stripe Checkout Sample",
+          "path": "/"
+        },
+        "url": "http://localhost:4242/",
+        "referrer": "http://localhost:4242/"
+      },
+      "visitorId": "7fa7d807-bc0a-4865-b30e-c53b0be2301b",
+      "sessionId": "bef9b39c-9ed0-4ed0-9d0b-cf3f91baace1",
+      "timestamp": 1771988539103,
+      "receivedAt": 1771988540503,
+      "status": "received",
+      "deduplicationKey": "425e370d93fbf27b7befc22185c6e83bb0fe2d60622913aedb728273c9ff1778"
+    },
+    {
+      "id": "f8547206-2b56-4545-b42a-2fa3ff9a880d",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "eventType": "page_view",
+      "source": "pixel",
+      "payload": {
+        "data": {
+          "title": "Stripe Checkout Sample",
+          "path": "/"
+        },
+        "url": "http://localhost:4242/?utm_source=google&utm_medium=cpc&utm_campaign=summer_sale&gclip=g_test_123",
+        "referrer": "http://localhost:4242/",
+        "utm": {
+          "source": "google",
+          "medium": "cpc",
+          "campaign": "summer_sale"
+        }
+      },
+      "visitorId": "7fa7d807-bc0a-4865-b30e-c53b0be2301b",
+      "sessionId": "bef9b39c-9ed0-4ed0-9d0b-cf3f91baace1",
+      "timestamp": 1771988542684,
+      "receivedAt": 1771988543263,
+      "status": "received",
+      "deduplicationKey": "09e187c51bdc09dee8d197fec2160c821ed3bde9946e7100d6c43c5bc66f1831"
+    },
+    {
+      "id": "c9b9564c-5056-4850-afa8-1afe9ed03a84",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "eventType": "purchase",
+      "source": "stripe",
+      "payload": "{\"id\":\"cs_test_a11WTEFKRyhmu1zP0aScTMohEXPLPbgfK66b3BBkkDPxg2HRmhO9WEB6cm\",\"object\":\"checkout.session\",\"adaptive_pricing\":{\"enabled\":true},\"after_expiration\":null,\"allow_promotion_codes\":null,\"amount_subtotal\":599,\"amount_total\":599,\"automatic_tax\":{\"enabled\":false,\"liability\":null,\"provider\":null,\"status\":null},\"billing_address_collection\":null,\"branding_settings\":{\"background_color\":\"#ffffff\",\"border_style\":\"rounded\",\"button_color\":\"#0074d4\",\"display_name\":\"Entorno de prueba de New business\",\"font_family\":\"default\",\"icon\":null,\"logo\":null},\"cancel_url\":\"http://localhost:4242/canceled\",\"client_reference_id\":null,\"client_secret\":null,\"collected_information\":null,\"consent\":null,\"consent_collection\":null,\"created\":1771988546,\"currency\":\"usd\",\"currency_conversion\":null,\"custom_fields\":[],\"custom_text\":{\"after_submit\":null,\"shipping_address\":null,\"submit\":null,\"terms_of_service_acceptance\":null},\"customer\":null,\"customer_account\":null,\"customer_creation\":\"if_required\",\"customer_details\":{\"address\":{\"city\":null,\"country\":\"AR\",\"line1\":null,\"line2\":null,\"postal_code\":null,\"state\":null},\"business_name\":null,\"email\":\"emir@mail.com\",\"individual_name\":null,\"name\":\"Emir Ka\",\"phone\":null,\"tax_exempt\":\"none\",\"tax_ids\":[]},\"customer_email\":null,\"discounts\":[],\"expires_at\":1772074946,\"invoice\":null,\"invoice_creation\":{\"enabled\":false,\"invoice_data\":{\"account_tax_ids\":null,\"custom_fields\":null,\"description\":null,\"footer\":null,\"issuer\":null,\"metadata\":{},\"rendering_options\":null}},\"livemode\":false,\"locale\":null,\"metadata\":{\"attribution\":\"{\\\"params\\\":{\\\"gclip\\\":\\\"g_test_123\\\",\\\"utm_source\\\":\\\"google\\\",\\\"utm_medium\\\":\\\"cpc\\\",\\\"utm_campaign\\\":\\\"summer_sale\\\"},\\\"expiry\\\":1772593342640}\",\"external_session_id\":\"7fa7d807-bc0a-4865-b30e-c53b0be2301b\",\"source\":\"tienda-cliente-test\",\"product_name\":\"Pasha Original Edition\",\"project_id\":\"348629b9ac21e6a60fd712b7ba0032a52ea7d0ec51610ff7d4fe313fdc2215d9\"},\"mode\":\"payment\",\"origin_context\":null,\"payment_intent\":\"pi_3T4YNTHecPYCuthF18svbdZO\",\"payment_link\":null,\"payment_method_collection\":\"if_required\",\"payment_method_configuration_details\":{\"id\":\"pmc_1SwuMcHecPYCuthFDkLY6xMV\",\"parent\":null},\"payment_method_options\":{\"card\":{\"request_three_d_secure\":\"automatic\"}},\"payment_method_types\":[\"card\",\"link\",\"cashapp\",\"amazon_pay\",\"crypto\"],\"payment_status\":\"paid\",\"permissions\":null,\"phone_number_collection\":{\"enabled\":false},\"recovered_from\":null,\"saved_payment_method_options\":null,\"setup_intent\":null,\"shipping_address_collection\":null,\"shipping_cost\":null,\"shipping_options\":[],\"status\":\"complete\",\"submit_type\":null,\"subscription\":null,\"success_url\":\"http://localhost:4242/success?session_id={CHECKOUT_SESSION_ID}\",\"total_details\":{\"amount_discount\":0,\"amount_shipping\":0,\"amount_tax\":0},\"ui_mode\":\"hosted\",\"url\":null,\"wallet_options\":null}",
+      "visitorId": null,
+      "sessionId": null,
+      "timestamp": 1771988589873,
+      "receivedAt": 1771988589873,
+      "status": "processed",
+      "deduplicationKey": null
+    },
+    {
+      "id": "d44381b2-4320-4bff-a21c-0105ad1fac8e",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "eventType": "purchase",
+      "source": "stripe",
+      "payload": "{\"id\":\"pi_3T4YNTHecPYCuthF18svbdZO\",\"object\":\"payment_intent\",\"amount\":599,\"amount_capturable\":0,\"amount_details\":{\"shipping\":{\"amount\":0,\"from_postal_code\":null,\"to_postal_code\":null},\"tax\":{\"total_tax_amount\":0},\"tip\":{}},\"amount_received\":599,\"application\":null,\"application_fee_amount\":null,\"automatic_payment_methods\":null,\"canceled_at\":null,\"cancellation_reason\":null,\"capture_method\":\"automatic_async\",\"client_secret\":\"pi_3T4YNTHecPYCuthF18svbdZO_secret_QRiOCCjxzqIAE8PgRcSotyaBX\",\"confirmation_method\":\"automatic\",\"created\":1771988587,\"currency\":\"usd\",\"customer\":null,\"customer_account\":null,\"description\":null,\"excluded_payment_method_types\":null,\"last_payment_error\":null,\"latest_charge\":\"ch_3T4YNTHecPYCuthF1tAaQEg4\",\"livemode\":false,\"metadata\":{\"attribution\":\"{\\\"params\\\":{\\\"gclip\\\":\\\"g_test_123\\\",\\\"utm_source\\\":\\\"google\\\",\\\"utm_medium\\\":\\\"cpc\\\",\\\"utm_campaign\\\":\\\"summer_sale\\\"},\\\"expiry\\\":1772593342640}\",\"external_session_id\":\"7fa7d807-bc0a-4865-b30e-c53b0be2301b\",\"source\":\"tienda-cliente-test\",\"product_name\":\"Pasha Original Edition\",\"project_id\":\"348629b9ac21e6a60fd712b7ba0032a52ea7d0ec51610ff7d4fe313fdc2215d9\"},\"next_action\":null,\"on_behalf_of\":null,\"payment_details\":{\"customer_reference\":null,\"order_reference\":\"cs_test_a11WTEFKRyhmu1zP0aScTMohEXPLPbgfK66b3BBkkDPxg2HRmhO9WEB6cm\"},\"payment_method\":\"pm_1T4YNSHecPYCuthFJX6xjcqD\",\"payment_method_configuration_details\":null,\"payment_method_options\":{\"card\":{\"installments\":null,\"mandate_options\":null,\"network\":null,\"request_three_d_secure\":\"automatic\"}},\"payment_method_types\":[\"card\"],\"processing\":null,\"receipt_email\":null,\"review\":null,\"setup_future_usage\":null,\"shipping\":null,\"source\":null,\"statement_descriptor\":null,\"statement_descriptor_suffix\":null,\"status\":\"succeeded\",\"transfer_data\":null,\"transfer_group\":null}",
+      "visitorId": null,
+      "sessionId": null,
+      "timestamp": 1771988590951,
+      "receivedAt": 1771988590952,
+      "status": "processed",
+      "deduplicationKey": null
+    },
+    {
+      "id": "f82f8c61-e737-4575-9f02-2e0a6d2d3a57",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "eventType": "page_view",
+      "source": "pixel",
+      "payload": {
+        "data": {
+          "title": "Stripe Checkout Sample",
+          "path": "/success"
+        },
+        "url": "http://localhost:4242/success?session_id=cs_test_a11WTEFKRyhmu1zP0aScTMohEXPLPbgfK66b3BBkkDPxg2HRmhO9WEB6cm"
+      },
+      "visitorId": "7fa7d807-bc0a-4865-b30e-c53b0be2301b",
+      "sessionId": "bef9b39c-9ed0-4ed0-9d0b-cf3f91baace1",
+      "timestamp": 1771988593111,
+      "receivedAt": 1771988593521,
+      "status": "received",
+      "deduplicationKey": "b67ffa8d5099d7489b8db994c6b57d8bc6098abb996d7b16b8f71b6fb968364a"
+    },
+    {
+      "id": "1cfb0c5d-a323-440f-b746-fb86f93742b1",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "eventType": "page_view",
+      "source": "pixel",
+      "payload": {
+        "data": {
+          "title": "Stripe Checkout Sample",
+          "path": "/"
+        },
+        "url": "http://localhost:4242/"
+      },
+      "visitorId": "7fa7d807-bc0a-4865-b30e-c53b0be2301b",
+      "sessionId": "8d8ecb50-d7cd-44ab-9aff-e04817331b1d",
+      "timestamp": 1772047437882,
+      "receivedAt": 1772047439194,
+      "status": "received",
+      "deduplicationKey": "fd4beb15ddde97459b78dfdfd381ca8a54e1b81f4b00ef54593696b9434f5f24"
+    },
+    {
+      "id": "cbda6399-189b-4773-9a68-9e8899cab49c",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "eventType": "page_view",
+      "source": "pixel",
+      "payload": {
+        "data": {
+          "title": "Stripe Checkout Sample",
+          "path": "/"
+        },
+        "url": "http://localhost:4242/",
+        "referrer": "http://localhost:4242/"
+      },
+      "visitorId": "7fa7d807-bc0a-4865-b30e-c53b0be2301b",
+      "sessionId": "8d8ecb50-d7cd-44ab-9aff-e04817331b1d",
+      "timestamp": 1772047441071,
+      "receivedAt": 1772047441507,
+      "status": "received",
+      "deduplicationKey": "6d66f010b7012321aeb4f9f6db6fbea271dd7b19f49348d7bb4cb4cfd1abaa5d"
+    },
+    {
+      "id": "431f5543-61a4-4320-a418-64844cbd12b0",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "eventType": "page_view",
+      "source": "pixel",
+      "payload": {
+        "data": {
+          "title": "Stripe Checkout Sample",
+          "path": "/"
+        },
+        "url": "http://localhost:4242/?utm_source=facebook&utm_medium=social&utm_campaign=black_friday&utm_content=video_ad&fclip=f_test_456",
+        "referrer": "http://localhost:4242/",
+        "utm": {
+          "source": "facebook",
+          "medium": "social",
+          "campaign": "black_friday",
+          "content": "video_ad"
+        }
+      },
+      "visitorId": "7fa7d807-bc0a-4865-b30e-c53b0be2301b",
+      "sessionId": "8d8ecb50-d7cd-44ab-9aff-e04817331b1d",
+      "timestamp": 1772047443499,
+      "receivedAt": 1772047443887,
+      "status": "received",
+      "deduplicationKey": "85df6b1719709d1d2a608c091c8058a7045f430c93abfe04f177bfbfaef6074d"
+    },
+    {
+      "id": "35bdf7b1-03f7-4ef4-ad6e-5d57af674a59",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "eventType": "page_view",
+      "source": "pixel",
+      "payload": {
+        "data": {
+          "title": "Stripe Checkout Sample",
+          "path": "/success"
+        },
+        "url": "http://localhost:4242/success?session_id=cs_test_a1bZ3mvuC8lHpLB3x3YNeL99sZmEg6JsI6N3vuFvmn7Sounh3qwo7iRzmp"
+      },
+      "visitorId": "7fa7d807-bc0a-4865-b30e-c53b0be2301b",
+      "sessionId": "8d8ecb50-d7cd-44ab-9aff-e04817331b1d",
+      "timestamp": 1772047500352,
+      "receivedAt": 1772047501816,
+      "status": "received",
+      "deduplicationKey": "12ce9d6372fde316e9656f3fb5402498e1e74a9eadd7d879a260a5ed80f45a20"
+    },
+    {
+      "id": "9894a929-aeae-4053-93a0-2985d502046d",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "eventType": "page_view",
+      "source": "pixel",
+      "payload": {
+        "data": {
+          "title": "Stripe Checkout Sample",
+          "path": "/"
+        },
+        "url": "http://localhost:4242/",
+        "referrer": "http://localhost:4242/"
+      },
+      "visitorId": "7fa7d807-bc0a-4865-b30e-c53b0be2301b",
+      "sessionId": "8d8ecb50-d7cd-44ab-9aff-e04817331b1d",
+      "timestamp": 1772047729859,
+      "receivedAt": 1772047731881,
+      "status": "received",
+      "deduplicationKey": "e80b7f5df9c91ca19b11c959b933b3991573208c3161f981c9e21c166868b250"
+    },
+    {
+      "id": "2e44f6ea-9de0-4ee7-a7af-102990d8ffc8",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "eventType": "page_view",
+      "source": "pixel",
+      "payload": {
+        "data": {
+          "title": "Stripe Checkout Sample",
+          "path": "/"
+        },
+        "url": "http://localhost:4242/?utm_source=facebook&utm_medium=social&utm_campaign=black_friday&utm_content=video_ad&fclip=f_test_456",
+        "referrer": "http://localhost:4242/",
+        "utm": {
+          "source": "facebook",
+          "medium": "social",
+          "campaign": "black_friday",
+          "content": "video_ad"
+        }
+      },
+      "visitorId": "7fa7d807-bc0a-4865-b30e-c53b0be2301b",
+      "sessionId": "8d8ecb50-d7cd-44ab-9aff-e04817331b1d",
+      "timestamp": 1772047731761,
+      "receivedAt": 1772047732983,
+      "status": "received",
+      "deduplicationKey": "3074f538a93c596480c91a33d64615910dc08a05f63cac32ea718accc8c0eec8"
+    },
+    {
+      "id": "cc746bfa-a54d-4849-8759-986a600efe2e",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "eventType": "purchase",
+      "source": "stripe",
+      "payload": "{\"id\":\"pi_3T4nlyHecPYCuthF1QBqzfMm\",\"object\":\"payment_intent\",\"amount\":599,\"amount_capturable\":0,\"amount_details\":{\"shipping\":{\"amount\":0,\"from_postal_code\":null,\"to_postal_code\":null},\"tax\":{\"total_tax_amount\":0},\"tip\":{}},\"amount_received\":599,\"application\":null,\"application_fee_amount\":null,\"automatic_payment_methods\":null,\"canceled_at\":null,\"cancellation_reason\":null,\"capture_method\":\"automatic_async\",\"client_secret\":\"pi_3T4nlyHecPYCuthF1QBqzfMm_secret_7TV3HIe4eciCBuXcwfHpEcD5z\",\"confirmation_method\":\"automatic\",\"created\":1772047766,\"currency\":\"usd\",\"customer\":null,\"customer_account\":null,\"description\":null,\"excluded_payment_method_types\":null,\"last_payment_error\":null,\"latest_charge\":\"ch_3T4nlyHecPYCuthF1f39sXmD\",\"livemode\":false,\"metadata\":{\"attribution\":\"{\\\"params\\\":{\\\"fclip\\\":\\\"f_test_456\\\",\\\"utm_source\\\":\\\"facebook\\\",\\\"utm_medium\\\":\\\"social\\\",\\\"utm_campaign\\\":\\\"black_friday\\\",\\\"utm_content\\\":\\\"video_ad\\\"},\\\"expiry\\\":1772652531736}\",\"external_session_id\":\"7fa7d807-bc0a-4865-b30e-c53b0be2301b\",\"source\":\"tienda-cliente-test\",\"product_name\":\"Pasha Original Edition\",\"project_id\":\"0ffc36f314f138ebaf60c672f232fd2982bbfa36a949ea9ba16c903c3f8706b1\"},\"next_action\":null,\"on_behalf_of\":null,\"payment_details\":{\"customer_reference\":null,\"order_reference\":\"cs_test_a18s088SOJGTM1JLhGaBmvt0oY7tx2nedx9d3CxOIeFhNXNQz6xGZW0o0f\"},\"payment_method\":\"pm_1T4nlxHecPYCuthFtFCf0kgu\",\"payment_method_configuration_details\":null,\"payment_method_options\":{\"card\":{\"installments\":null,\"mandate_options\":null,\"network\":null,\"request_three_d_secure\":\"automatic\"}},\"payment_method_types\":[\"card\"],\"processing\":null,\"receipt_email\":null,\"review\":null,\"setup_future_usage\":null,\"shipping\":null,\"source\":null,\"statement_descriptor\":null,\"statement_descriptor_suffix\":null,\"status\":\"succeeded\",\"transfer_data\":null,\"transfer_group\":null}",
+      "visitorId": null,
+      "sessionId": null,
+      "timestamp": 1772047769693,
+      "receivedAt": 1772047769693,
+      "status": "processed",
+      "deduplicationKey": null
+    },
+    {
+      "id": "4bc3214f-615a-4820-afed-d62033174e99",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "eventType": "purchase",
+      "source": "stripe",
+      "payload": "{\"id\":\"cs_test_a18s088SOJGTM1JLhGaBmvt0oY7tx2nedx9d3CxOIeFhNXNQz6xGZW0o0f\",\"object\":\"checkout.session\",\"adaptive_pricing\":{\"enabled\":true},\"after_expiration\":null,\"allow_promotion_codes\":null,\"amount_subtotal\":599,\"amount_total\":599,\"automatic_tax\":{\"enabled\":false,\"liability\":null,\"provider\":null,\"status\":null},\"billing_address_collection\":null,\"branding_settings\":{\"background_color\":\"#ffffff\",\"border_style\":\"rounded\",\"button_color\":\"#0074d4\",\"display_name\":\"Entorno de prueba de New business\",\"font_family\":\"default\",\"icon\":null,\"logo\":null},\"cancel_url\":\"http://localhost:4242/canceled\",\"client_reference_id\":null,\"client_secret\":null,\"collected_information\":null,\"consent\":null,\"consent_collection\":null,\"created\":1772047733,\"currency\":\"usd\",\"currency_conversion\":null,\"custom_fields\":[],\"custom_text\":{\"after_submit\":null,\"shipping_address\":null,\"submit\":null,\"terms_of_service_acceptance\":null},\"customer\":null,\"customer_account\":null,\"customer_creation\":\"if_required\",\"customer_details\":{\"address\":{\"city\":null,\"country\":\"AR\",\"line1\":null,\"line2\":null,\"postal_code\":null,\"state\":null},\"business_name\":null,\"email\":\"roma@mail.com\",\"individual_name\":null,\"name\":\"Roma Emir\",\"phone\":null,\"tax_exempt\":\"none\",\"tax_ids\":[]},\"customer_email\":null,\"discounts\":[],\"expires_at\":1772134133,\"invoice\":null,\"invoice_creation\":{\"enabled\":false,\"invoice_data\":{\"account_tax_ids\":null,\"custom_fields\":null,\"description\":null,\"footer\":null,\"issuer\":null,\"metadata\":{},\"rendering_options\":null}},\"livemode\":false,\"locale\":null,\"metadata\":{\"attribution\":\"{\\\"params\\\":{\\\"fclip\\\":\\\"f_test_456\\\",\\\"utm_source\\\":\\\"facebook\\\",\\\"utm_medium\\\":\\\"social\\\",\\\"utm_campaign\\\":\\\"black_friday\\\",\\\"utm_content\\\":\\\"video_ad\\\"},\\\"expiry\\\":1772652531736}\",\"external_session_id\":\"7fa7d807-bc0a-4865-b30e-c53b0be2301b\",\"source\":\"tienda-cliente-test\",\"product_name\":\"Pasha Original Edition\",\"project_id\":\"0ffc36f314f138ebaf60c672f232fd2982bbfa36a949ea9ba16c903c3f8706b1\"},\"mode\":\"payment\",\"origin_context\":null,\"payment_intent\":\"pi_3T4nlyHecPYCuthF1QBqzfMm\",\"payment_link\":null,\"payment_method_collection\":\"if_required\",\"payment_method_configuration_details\":{\"id\":\"pmc_1SwuMcHecPYCuthFDkLY6xMV\",\"parent\":null},\"payment_method_options\":{\"card\":{\"request_three_d_secure\":\"automatic\"}},\"payment_method_types\":[\"card\",\"link\",\"cashapp\",\"amazon_pay\",\"crypto\"],\"payment_status\":\"paid\",\"permissions\":null,\"phone_number_collection\":{\"enabled\":false},\"recovered_from\":null,\"saved_payment_method_options\":null,\"setup_intent\":null,\"shipping_address_collection\":null,\"shipping_cost\":null,\"shipping_options\":[],\"status\":\"complete\",\"submit_type\":null,\"subscription\":null,\"success_url\":\"http://localhost:4242/success?session_id={CHECKOUT_SESSION_ID}\",\"total_details\":{\"amount_discount\":0,\"amount_shipping\":0,\"amount_tax\":0},\"ui_mode\":\"hosted\",\"url\":null,\"wallet_options\":null}",
+      "visitorId": null,
+      "sessionId": null,
+      "timestamp": 1772047771009,
+      "receivedAt": 1772047771009,
+      "status": "processed",
+      "deduplicationKey": null
+    },
+    {
+      "id": "acd10a1a-f781-4267-8fe0-bc81dc032c34",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "eventType": "page_view",
+      "source": "pixel",
+      "payload": {
+        "data": {
+          "title": "Stripe Checkout Sample",
+          "path": "/success"
+        },
+        "url": "http://localhost:4242/success?session_id=cs_test_a18s088SOJGTM1JLhGaBmvt0oY7tx2nedx9d3CxOIeFhNXNQz6xGZW0o0f"
+      },
+      "visitorId": "7fa7d807-bc0a-4865-b30e-c53b0be2301b",
+      "sessionId": "8d8ecb50-d7cd-44ab-9aff-e04817331b1d",
+      "timestamp": 1772047769493,
+      "receivedAt": 1772047769932,
+      "status": "received",
+      "deduplicationKey": "e0b481f1ec90339e2b11468fa87bf6a9dfce99bc2327a0f9caf631b38e9ad21b"
+    },
+    {
+      "id": "7d579392-8011-419a-b696-104528109ace",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "eventType": "page_view",
+      "source": "pixel",
+      "payload": {
+        "data": {
+          "title": "Stripe Checkout Sample",
+          "path": "/"
+        },
+        "url": "http://localhost:4242/",
+        "referrer": "http://localhost:4242/"
+      },
+      "visitorId": "7fa7d807-bc0a-4865-b30e-c53b0be2301b",
+      "sessionId": "8d8ecb50-d7cd-44ab-9aff-e04817331b1d",
+      "timestamp": 1772053472396,
+      "receivedAt": 1772053473569,
+      "status": "received",
+      "deduplicationKey": "34d8a2d00f2e04ab18e7d7684473b9a784251e55968de14b939c9406367e7957"
+    },
+    {
+      "id": "dd4176d5-701d-4de4-bb59-7551098068ba",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "eventType": "page_view",
+      "source": "pixel",
+      "payload": {
+        "data": {
+          "title": "Stripe Checkout Sample",
+          "path": "/"
+        },
+        "url": "http://localhost:4242/?utm_source=google&utm_medium=cpc&utm_campaign=summer_sale&gclip=g_test_123",
+        "referrer": "http://localhost:4242/",
+        "utm": {
+          "source": "google",
+          "medium": "cpc",
+          "campaign": "summer_sale"
+        }
+      },
+      "visitorId": "7fa7d807-bc0a-4865-b30e-c53b0be2301b",
+      "sessionId": "8d8ecb50-d7cd-44ab-9aff-e04817331b1d",
+      "timestamp": 1772053474291,
+      "receivedAt": 1772053474796,
+      "status": "received",
+      "deduplicationKey": "635c9687b24562bd89e14a10b8379c0522c8427cbe7a5d0ba4df3d599cfff39d"
+    },
+    {
+      "id": "8372ff46-a10a-4053-9f4e-ad882a69ddf8",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "eventType": "purchase",
+      "source": "stripe",
+      "payload": "{\"id\":\"pi_3T4pGsHecPYCuthF0TMv5TdH\",\"object\":\"payment_intent\",\"amount\":599,\"amount_capturable\":0,\"amount_details\":{\"shipping\":{\"amount\":0,\"from_postal_code\":null,\"to_postal_code\":null},\"tax\":{\"total_tax_amount\":0},\"tip\":{}},\"amount_received\":599,\"application\":null,\"application_fee_amount\":null,\"automatic_payment_methods\":null,\"canceled_at\":null,\"cancellation_reason\":null,\"capture_method\":\"automatic_async\",\"client_secret\":\"pi_3T4pGsHecPYCuthF0TMv5TdH_secret_vWdxSXUewVNCDBSeiUeRmu04z\",\"confirmation_method\":\"automatic\",\"created\":1772053526,\"currency\":\"usd\",\"customer\":null,\"customer_account\":null,\"description\":null,\"excluded_payment_method_types\":null,\"last_payment_error\":null,\"latest_charge\":\"ch_3T4pGsHecPYCuthF0SEW2m5W\",\"livemode\":false,\"metadata\":{\"attribution\":\"{\\\"params\\\":{\\\"gclip\\\":\\\"g_test_123\\\",\\\"utm_source\\\":\\\"google\\\",\\\"utm_medium\\\":\\\"cpc\\\",\\\"utm_campaign\\\":\\\"summer_sale\\\"},\\\"expiry\\\":1772658274258}\",\"external_session_id\":\"7fa7d807-bc0a-4865-b30e-c53b0be2301b\",\"source\":\"tienda-cliente-test\",\"product_name\":\"Pasha Original Edition\",\"project_id\":\"0ffc36f314f138ebaf60c672f232fd2982bbfa36a949ea9ba16c903c3f8706b1\"},\"next_action\":null,\"on_behalf_of\":null,\"payment_details\":{\"customer_reference\":null,\"order_reference\":\"cs_test_a1Ld73AV1kGNfAimz0eE3viF2aryK9uDal9KShaSf1clPCwZb4v6JzkUt9\"},\"payment_method\":\"pm_1T4pGrHecPYCuthF2KzC3oK0\",\"payment_method_configuration_details\":null,\"payment_method_options\":{\"card\":{\"installments\":null,\"mandate_options\":null,\"network\":null,\"request_three_d_secure\":\"automatic\"}},\"payment_method_types\":[\"card\"],\"processing\":null,\"receipt_email\":null,\"review\":null,\"setup_future_usage\":null,\"shipping\":null,\"source\":null,\"statement_descriptor\":null,\"statement_descriptor_suffix\":null,\"status\":\"succeeded\",\"transfer_data\":null,\"transfer_group\":null}",
+      "visitorId": null,
+      "sessionId": null,
+      "timestamp": 1772053529526,
+      "receivedAt": 1772053529526,
+      "status": "processed",
+      "deduplicationKey": null
+    },
+    {
+      "id": "3c38c64c-4b54-4757-a488-ac9b4f126597",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "eventType": "purchase",
+      "source": "stripe",
+      "payload": "{\"id\":\"cs_test_a1Ld73AV1kGNfAimz0eE3viF2aryK9uDal9KShaSf1clPCwZb4v6JzkUt9\",\"object\":\"checkout.session\",\"adaptive_pricing\":{\"enabled\":true},\"after_expiration\":null,\"allow_promotion_codes\":null,\"amount_subtotal\":599,\"amount_total\":599,\"automatic_tax\":{\"enabled\":false,\"liability\":null,\"provider\":null,\"status\":null},\"billing_address_collection\":null,\"branding_settings\":{\"background_color\":\"#ffffff\",\"border_style\":\"rounded\",\"button_color\":\"#0074d4\",\"display_name\":\"Entorno de prueba de New business\",\"font_family\":\"default\",\"icon\":null,\"logo\":null},\"cancel_url\":\"http://localhost:4242/canceled\",\"client_reference_id\":null,\"client_secret\":null,\"collected_information\":null,\"consent\":null,\"consent_collection\":null,\"created\":1772053476,\"currency\":\"usd\",\"currency_conversion\":null,\"custom_fields\":[],\"custom_text\":{\"after_submit\":null,\"shipping_address\":null,\"submit\":null,\"terms_of_service_acceptance\":null},\"customer\":null,\"customer_account\":null,\"customer_creation\":\"if_required\",\"customer_details\":{\"address\":{\"city\":null,\"country\":\"AR\",\"line1\":null,\"line2\":null,\"postal_code\":null,\"state\":null},\"business_name\":null,\"email\":\"lisa@lmail.com\",\"individual_name\":null,\"name\":\"Lisa S.\",\"phone\":null,\"tax_exempt\":\"none\",\"tax_ids\":[]},\"customer_email\":null,\"discounts\":[],\"expires_at\":1772139876,\"invoice\":null,\"invoice_creation\":{\"enabled\":false,\"invoice_data\":{\"account_tax_ids\":null,\"custom_fields\":null,\"description\":null,\"footer\":null,\"issuer\":null,\"metadata\":{},\"rendering_options\":null}},\"livemode\":false,\"locale\":null,\"metadata\":{\"attribution\":\"{\\\"params\\\":{\\\"gclip\\\":\\\"g_test_123\\\",\\\"utm_source\\\":\\\"google\\\",\\\"utm_medium\\\":\\\"cpc\\\",\\\"utm_campaign\\\":\\\"summer_sale\\\"},\\\"expiry\\\":1772658274258}\",\"external_session_id\":\"7fa7d807-bc0a-4865-b30e-c53b0be2301b\",\"source\":\"tienda-cliente-test\",\"product_name\":\"Pasha Original Edition\",\"project_id\":\"0ffc36f314f138ebaf60c672f232fd2982bbfa36a949ea9ba16c903c3f8706b1\"},\"mode\":\"payment\",\"origin_context\":null,\"payment_intent\":\"pi_3T4pGsHecPYCuthF0TMv5TdH\",\"payment_link\":null,\"payment_method_collection\":\"if_required\",\"payment_method_configuration_details\":{\"id\":\"pmc_1SwuMcHecPYCuthFDkLY6xMV\",\"parent\":null},\"payment_method_options\":{\"card\":{\"request_three_d_secure\":\"automatic\"}},\"payment_method_types\":[\"card\",\"link\",\"cashapp\",\"amazon_pay\",\"crypto\"],\"payment_status\":\"paid\",\"permissions\":null,\"phone_number_collection\":{\"enabled\":false},\"recovered_from\":null,\"saved_payment_method_options\":null,\"setup_intent\":null,\"shipping_address_collection\":null,\"shipping_cost\":null,\"shipping_options\":[],\"status\":\"complete\",\"submit_type\":null,\"subscription\":null,\"success_url\":\"http://localhost:4242/success?session_id={CHECKOUT_SESSION_ID}\",\"total_details\":{\"amount_discount\":0,\"amount_shipping\":0,\"amount_tax\":0},\"ui_mode\":\"hosted\",\"url\":null,\"wallet_options\":null}",
+      "visitorId": null,
+      "sessionId": null,
+      "timestamp": 1772053531211,
+      "receivedAt": 1772053531212,
+      "status": "processed",
+      "deduplicationKey": null
+    },
+    {
+      "id": "cf11b448-bfa5-417a-8183-658fdfad2987",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "eventType": "page_view",
+      "source": "pixel",
+      "payload": {
+        "data": {
+          "title": "Stripe Checkout Sample",
+          "path": "/success"
+        },
+        "url": "http://localhost:4242/success?session_id=cs_test_a1Ld73AV1kGNfAimz0eE3viF2aryK9uDal9KShaSf1clPCwZb4v6JzkUt9"
+      },
+      "visitorId": "7fa7d807-bc0a-4865-b30e-c53b0be2301b",
+      "sessionId": "8d8ecb50-d7cd-44ab-9aff-e04817331b1d",
+      "timestamp": 1772053532129,
+      "receivedAt": 1772053532713,
+      "status": "received",
+      "deduplicationKey": "71daaeaab61cbf7fb8c60863a29720022f3979cb75ce93d4cf38582851811166"
+    }
+  ],
+  "eventValidations": [],
+  "rolePermissions": [
+    {
+      "id": "7a7f336c-748a-4303-9122-e322d66e2b76",
+      "roleId": "bc89160d-ec6a-4edb-95cb-ea5297e3267d",
+      "permissionId": "283e222b-8fdd-4490-8563-0c231cc39f1f"
+    },
+    {
+      "id": "148ed30e-a386-42b1-8090-8ddee79ac8aa",
+      "roleId": "bc89160d-ec6a-4edb-95cb-ea5297e3267d",
+      "permissionId": "44224c75-c6a3-4c23-94fd-d6b057bb03da"
+    },
+    {
+      "id": "5397f299-772b-4500-b2c5-65f74ed6efc1",
+      "roleId": "bc89160d-ec6a-4edb-95cb-ea5297e3267d",
+      "permissionId": "d2512e54-a301-4e31-821d-bd226f355db6"
+    },
+    {
+      "id": "1adac892-aa85-4369-b800-3b1f537eaf39",
+      "roleId": "bc89160d-ec6a-4edb-95cb-ea5297e3267d",
+      "permissionId": "68f9e23b-34bd-4694-84fc-dcdeb61ecefe"
+    },
+    {
+      "id": "c47e41a2-2734-477e-a607-11ee07e871f1",
+      "roleId": "bc89160d-ec6a-4edb-95cb-ea5297e3267d",
+      "permissionId": "dc9dbe05-ffc1-473f-a9fb-1bb119acfe81"
+    },
+    {
+      "id": "21bb08b4-62af-449d-9474-83ded9102b9f",
+      "roleId": "bc89160d-ec6a-4edb-95cb-ea5297e3267d",
+      "permissionId": "0653edc7-9cc2-4946-933f-65cb350e8fee"
+    },
+    {
+      "id": "60e2a40b-2ca6-454e-9549-88a0b43c396f",
+      "roleId": "bc89160d-ec6a-4edb-95cb-ea5297e3267d",
+      "permissionId": "26352229-b092-44b3-8a56-b300eeeef09b"
+    },
+    {
+      "id": "78c58365-1db1-4fbd-bca8-b17115670f17",
+      "roleId": "7a112499-f6ae-4df4-954e-33839833a1b2",
+      "permissionId": "283e222b-8fdd-4490-8563-0c231cc39f1f"
+    },
+    {
+      "id": "f46a6b9f-3f17-4991-8fb7-e202bbddbcfc",
+      "roleId": "7a112499-f6ae-4df4-954e-33839833a1b2",
+      "permissionId": "44224c75-c6a3-4c23-94fd-d6b057bb03da"
+    },
+    {
+      "id": "9226eb1c-c203-44a9-8802-50f47a497d1b",
+      "roleId": "7a112499-f6ae-4df4-954e-33839833a1b2",
+      "permissionId": "d2512e54-a301-4e31-821d-bd226f355db6"
+    },
+    {
+      "id": "b97e88b8-bf18-4679-bdf6-268d73a16369",
+      "roleId": "7a112499-f6ae-4df4-954e-33839833a1b2",
+      "permissionId": "68f9e23b-34bd-4694-84fc-dcdeb61ecefe"
+    },
+    {
+      "id": "77882765-3229-4dc2-818a-58e3f3d1cf84",
+      "roleId": "7a112499-f6ae-4df4-954e-33839833a1b2",
+      "permissionId": "dc9dbe05-ffc1-473f-a9fb-1bb119acfe81"
+    },
+    {
+      "id": "c8cabb91-00c5-4f26-9a84-c201db12eb38",
+      "roleId": "7a112499-f6ae-4df4-954e-33839833a1b2",
+      "permissionId": "0653edc7-9cc2-4946-933f-65cb350e8fee"
+    },
+    {
+      "id": "d362af03-0af1-4fcd-903a-b5dd07f83937",
+      "roleId": "7a112499-f6ae-4df4-954e-33839833a1b2",
+      "permissionId": "26352229-b092-44b3-8a56-b300eeeef09b"
+    },
+    {
+      "id": "1fe8ec6f-a336-4306-9fa3-8e8d7844e596",
+      "roleId": "c025d3e2-d47f-4523-b9cd-a6ccfc41fc3c",
+      "permissionId": "283e222b-8fdd-4490-8563-0c231cc39f1f"
+    },
+    {
+      "id": "a8a01ae6-6c7b-43ac-b9dd-937dc50d5810",
+      "roleId": "c025d3e2-d47f-4523-b9cd-a6ccfc41fc3c",
+      "permissionId": "44224c75-c6a3-4c23-94fd-d6b057bb03da"
+    },
+    {
+      "id": "f387e056-dfb0-4e15-bb97-b7c424c750b9",
+      "roleId": "c025d3e2-d47f-4523-b9cd-a6ccfc41fc3c",
+      "permissionId": "d2512e54-a301-4e31-821d-bd226f355db6"
+    },
+    {
+      "id": "fc991db7-b9e6-408c-8255-cb0303c561e9",
+      "roleId": "c025d3e2-d47f-4523-b9cd-a6ccfc41fc3c",
+      "permissionId": "68f9e23b-34bd-4694-84fc-dcdeb61ecefe"
+    },
+    {
+      "id": "6fe66ce3-ca9a-4921-8fb9-a6404df3d30a",
+      "roleId": "c025d3e2-d47f-4523-b9cd-a6ccfc41fc3c",
+      "permissionId": "dc9dbe05-ffc1-473f-a9fb-1bb119acfe81"
+    },
+    {
+      "id": "1560f573-fdfc-42c0-b9c1-891c68c0100f",
+      "roleId": "c025d3e2-d47f-4523-b9cd-a6ccfc41fc3c",
+      "permissionId": "0653edc7-9cc2-4946-933f-65cb350e8fee"
+    },
+    {
+      "id": "fcedecf1-5c32-4324-b41f-5be5ff9cd92b",
+      "roleId": "c025d3e2-d47f-4523-b9cd-a6ccfc41fc3c",
+      "permissionId": "26352229-b092-44b3-8a56-b300eeeef09b"
+    },
+    {
+      "id": "12f70990-3c8e-4087-a5b4-e06d143082d1",
+      "roleId": "75f07a6c-b2d6-4258-9d2f-72b776f73c9a",
+      "permissionId": "283e222b-8fdd-4490-8563-0c231cc39f1f"
+    },
+    {
+      "id": "ba99cdb9-59d7-4131-b64e-17618fa41907",
+      "roleId": "75f07a6c-b2d6-4258-9d2f-72b776f73c9a",
+      "permissionId": "44224c75-c6a3-4c23-94fd-d6b057bb03da"
+    },
+    {
+      "id": "56722bb4-0089-403a-8780-e8589561c655",
+      "roleId": "75f07a6c-b2d6-4258-9d2f-72b776f73c9a",
+      "permissionId": "d2512e54-a301-4e31-821d-bd226f355db6"
+    },
+    {
+      "id": "f52c34ea-8796-4440-8dc5-fc4131102e27",
+      "roleId": "75f07a6c-b2d6-4258-9d2f-72b776f73c9a",
+      "permissionId": "68f9e23b-34bd-4694-84fc-dcdeb61ecefe"
+    },
+    {
+      "id": "75fd300f-0a4a-4735-be0a-75048ee2b68f",
+      "roleId": "75f07a6c-b2d6-4258-9d2f-72b776f73c9a",
+      "permissionId": "dc9dbe05-ffc1-473f-a9fb-1bb119acfe81"
+    },
+    {
+      "id": "f8e4a27e-3570-4526-930f-482b43ac5b16",
+      "roleId": "75f07a6c-b2d6-4258-9d2f-72b776f73c9a",
+      "permissionId": "0653edc7-9cc2-4946-933f-65cb350e8fee"
+    },
+    {
+      "id": "570ca81a-9802-4e73-9509-fd1019ce1373",
+      "roleId": "75f07a6c-b2d6-4258-9d2f-72b776f73c9a",
+      "permissionId": "26352229-b092-44b3-8a56-b300eeeef09b"
+    },
+    {
+      "id": "3a5955c9-f86a-4451-a99e-393203123b1a",
+      "roleId": "92850b85-4cbc-488b-8860-624a50f48c84",
+      "permissionId": "283e222b-8fdd-4490-8563-0c231cc39f1f"
+    },
+    {
+      "id": "1b322f1d-c304-4aec-8d55-0b221af3f107",
+      "roleId": "92850b85-4cbc-488b-8860-624a50f48c84",
+      "permissionId": "44224c75-c6a3-4c23-94fd-d6b057bb03da"
+    },
+    {
+      "id": "a78ea4cc-5c9e-417e-9ea9-750c0fbc4018",
+      "roleId": "92850b85-4cbc-488b-8860-624a50f48c84",
+      "permissionId": "d2512e54-a301-4e31-821d-bd226f355db6"
+    },
+    {
+      "id": "bf242916-9938-4a99-af5a-3e6e524fa83c",
+      "roleId": "92850b85-4cbc-488b-8860-624a50f48c84",
+      "permissionId": "68f9e23b-34bd-4694-84fc-dcdeb61ecefe"
+    },
+    {
+      "id": "20297485-9e9e-42b1-b42b-3ad6de7ebb10",
+      "roleId": "92850b85-4cbc-488b-8860-624a50f48c84",
+      "permissionId": "dc9dbe05-ffc1-473f-a9fb-1bb119acfe81"
+    },
+    {
+      "id": "234315c6-404a-415b-b768-25b6e2d1a4ec",
+      "roleId": "92850b85-4cbc-488b-8860-624a50f48c84",
+      "permissionId": "0653edc7-9cc2-4946-933f-65cb350e8fee"
+    },
+    {
+      "id": "28b43f7c-c737-465c-b31f-c6dc814b5fa9",
+      "roleId": "92850b85-4cbc-488b-8860-624a50f48c84",
+      "permissionId": "26352229-b092-44b3-8a56-b300eeeef09b"
+    },
+    {
+      "id": "3eaf5d8c-d396-47db-b2f6-bb3ca94cb81f",
+      "roleId": "b1adcb12-7cf0-4f76-aa9e-f32b2466db44",
+      "permissionId": "283e222b-8fdd-4490-8563-0c231cc39f1f"
+    },
+    {
+      "id": "dba58069-4f0e-405d-bca9-e1ab7ce787ea",
+      "roleId": "b1adcb12-7cf0-4f76-aa9e-f32b2466db44",
+      "permissionId": "44224c75-c6a3-4c23-94fd-d6b057bb03da"
+    },
+    {
+      "id": "f7cfc00f-3167-4c77-9fdc-4bdf30ba0bbd",
+      "roleId": "b1adcb12-7cf0-4f76-aa9e-f32b2466db44",
+      "permissionId": "d2512e54-a301-4e31-821d-bd226f355db6"
+    },
+    {
+      "id": "f4c08522-e645-4253-aea7-2887efe0013a",
+      "roleId": "b1adcb12-7cf0-4f76-aa9e-f32b2466db44",
+      "permissionId": "68f9e23b-34bd-4694-84fc-dcdeb61ecefe"
+    },
+    {
+      "id": "a09d5e23-3931-4b9a-a523-a9b19eb95226",
+      "roleId": "b1adcb12-7cf0-4f76-aa9e-f32b2466db44",
+      "permissionId": "dc9dbe05-ffc1-473f-a9fb-1bb119acfe81"
+    },
+    {
+      "id": "c6b74402-8e53-4e6a-8b2c-2bfd04d7bf81",
+      "roleId": "b1adcb12-7cf0-4f76-aa9e-f32b2466db44",
+      "permissionId": "0653edc7-9cc2-4946-933f-65cb350e8fee"
+    },
+    {
+      "id": "4843ed44-e767-4ab0-a467-7f5b63404a52",
+      "roleId": "b1adcb12-7cf0-4f76-aa9e-f32b2466db44",
+      "permissionId": "26352229-b092-44b3-8a56-b300eeeef09b"
+    },
+    {
+      "id": "17de528d-0c7c-4373-988c-ed556296cb6f",
+      "roleId": "d41bea16-fe6a-462f-918d-3096fbd7958a",
+      "permissionId": "283e222b-8fdd-4490-8563-0c231cc39f1f"
+    },
+    {
+      "id": "cc2a6ffa-fc36-4aa8-865a-e3da747f57ac",
+      "roleId": "d41bea16-fe6a-462f-918d-3096fbd7958a",
+      "permissionId": "44224c75-c6a3-4c23-94fd-d6b057bb03da"
+    },
+    {
+      "id": "da2c2c07-89cd-4f54-87ce-551a2b28df18",
+      "roleId": "d41bea16-fe6a-462f-918d-3096fbd7958a",
+      "permissionId": "d2512e54-a301-4e31-821d-bd226f355db6"
+    },
+    {
+      "id": "3fa8ac4a-bd3e-4134-bcf6-9dae2e25c03f",
+      "roleId": "d41bea16-fe6a-462f-918d-3096fbd7958a",
+      "permissionId": "68f9e23b-34bd-4694-84fc-dcdeb61ecefe"
+    },
+    {
+      "id": "16fcb8eb-8b76-464c-819f-10cfc7f97a55",
+      "roleId": "d41bea16-fe6a-462f-918d-3096fbd7958a",
+      "permissionId": "dc9dbe05-ffc1-473f-a9fb-1bb119acfe81"
+    },
+    {
+      "id": "5d1d0101-3fe1-4013-a526-32db8613d35b",
+      "roleId": "d41bea16-fe6a-462f-918d-3096fbd7958a",
+      "permissionId": "0653edc7-9cc2-4946-933f-65cb350e8fee"
+    },
+    {
+      "id": "ea2fda3f-ae25-4d78-876d-d96bcd747c19",
+      "roleId": "d41bea16-fe6a-462f-918d-3096fbd7958a",
+      "permissionId": "26352229-b092-44b3-8a56-b300eeeef09b"
+    },
+    {
+      "id": "bc700f53-10c1-4ebd-a849-42d58a400cc0",
+      "roleId": "8d11d702-5998-4411-a828-2e939aea60fc",
+      "permissionId": "283e222b-8fdd-4490-8563-0c231cc39f1f"
+    },
+    {
+      "id": "10e6d120-c940-4095-ac6f-3a5af86fcda9",
+      "roleId": "8d11d702-5998-4411-a828-2e939aea60fc",
+      "permissionId": "44224c75-c6a3-4c23-94fd-d6b057bb03da"
+    },
+    {
+      "id": "038f25a7-8166-4dfa-b2b1-519cd5b9bdf0",
+      "roleId": "8d11d702-5998-4411-a828-2e939aea60fc",
+      "permissionId": "d2512e54-a301-4e31-821d-bd226f355db6"
+    },
+    {
+      "id": "dafe4201-1f06-46c0-87c3-de07bf3038e1",
+      "roleId": "8d11d702-5998-4411-a828-2e939aea60fc",
+      "permissionId": "68f9e23b-34bd-4694-84fc-dcdeb61ecefe"
+    },
+    {
+      "id": "bfa6316a-e875-469c-8e2d-09583075bff4",
+      "roleId": "8d11d702-5998-4411-a828-2e939aea60fc",
+      "permissionId": "dc9dbe05-ffc1-473f-a9fb-1bb119acfe81"
+    },
+    {
+      "id": "e8d83388-8c8f-45eb-89bb-f2c061648628",
+      "roleId": "8d11d702-5998-4411-a828-2e939aea60fc",
+      "permissionId": "0653edc7-9cc2-4946-933f-65cb350e8fee"
+    },
+    {
+      "id": "735b83aa-e1d1-46a8-a81c-ca1a7fe298b1",
+      "roleId": "8d11d702-5998-4411-a828-2e939aea60fc",
+      "permissionId": "26352229-b092-44b3-8a56-b300eeeef09b"
+    },
+    {
+      "id": "66bd81fb-6da7-4f5d-8d76-68318d85706a",
+      "roleId": "433d0aeb-c83a-4d68-983e-3702392b02ca",
+      "permissionId": "283e222b-8fdd-4490-8563-0c231cc39f1f"
+    },
+    {
+      "id": "b4d1f265-8f0f-46aa-ad09-10d1875c713e",
+      "roleId": "433d0aeb-c83a-4d68-983e-3702392b02ca",
+      "permissionId": "44224c75-c6a3-4c23-94fd-d6b057bb03da"
+    },
+    {
+      "id": "1667c16e-0111-4fe1-8314-add73b2d0dd9",
+      "roleId": "433d0aeb-c83a-4d68-983e-3702392b02ca",
+      "permissionId": "d2512e54-a301-4e31-821d-bd226f355db6"
+    },
+    {
+      "id": "b5db71b9-3b8d-4b29-81d1-5781e273760d",
+      "roleId": "433d0aeb-c83a-4d68-983e-3702392b02ca",
+      "permissionId": "68f9e23b-34bd-4694-84fc-dcdeb61ecefe"
+    },
+    {
+      "id": "1872ede9-3820-4308-8400-e9f3ff83573a",
+      "roleId": "433d0aeb-c83a-4d68-983e-3702392b02ca",
+      "permissionId": "dc9dbe05-ffc1-473f-a9fb-1bb119acfe81"
+    },
+    {
+      "id": "1dd58088-2cce-472e-b91c-dafa45c13cc9",
+      "roleId": "433d0aeb-c83a-4d68-983e-3702392b02ca",
+      "permissionId": "0653edc7-9cc2-4946-933f-65cb350e8fee"
+    },
+    {
+      "id": "a68525cd-ce84-408a-b999-601a8df8a8cf",
+      "roleId": "433d0aeb-c83a-4d68-983e-3702392b02ca",
+      "permissionId": "26352229-b092-44b3-8a56-b300eeeef09b"
+    },
+    {
+      "id": "b3498459-b60a-40e1-8e12-72ae01525b81",
+      "roleId": "c2c39489-10f9-4a25-8e76-9cefec651d72",
+      "permissionId": "0653edc7-9cc2-4946-933f-65cb350e8fee"
+    },
+    {
+      "id": "0049d53d-cecf-48e9-a1bc-9bcc5837d7f9",
+      "roleId": "c2c39489-10f9-4a25-8e76-9cefec651d72",
+      "permissionId": "26352229-b092-44b3-8a56-b300eeeef09b"
+    },
+    {
+      "id": "22217591-7453-4907-a336-5a9edffb38cf",
+      "roleId": "c2c39489-10f9-4a25-8e76-9cefec651d72",
+      "permissionId": "283e222b-8fdd-4490-8563-0c231cc39f1f"
+    },
+    {
+      "id": "b1df656b-28a5-4894-9324-62962ac52231",
+      "roleId": "c2c39489-10f9-4a25-8e76-9cefec651d72",
+      "permissionId": "44224c75-c6a3-4c23-94fd-d6b057bb03da"
+    },
+    {
+      "id": "0a9068b7-94f7-4a51-a110-0c4fcd93433f",
+      "roleId": "c2c39489-10f9-4a25-8e76-9cefec651d72",
+      "permissionId": "68f9e23b-34bd-4694-84fc-dcdeb61ecefe"
+    },
+    {
+      "id": "0937c4e9-55bc-4dec-ad13-236779ff0c52",
+      "roleId": "c2c39489-10f9-4a25-8e76-9cefec651d72",
+      "permissionId": "d2512e54-a301-4e31-821d-bd226f355db6"
+    },
+    {
+      "id": "56f07e19-3a12-4df3-95ed-31077fa4c203",
+      "roleId": "c2c39489-10f9-4a25-8e76-9cefec651d72",
+      "permissionId": "dc9dbe05-ffc1-473f-a9fb-1bb119acfe81"
+    },
+    {
+      "id": "b252cc61-88fa-42dc-8fe2-bb06940ae90f",
+      "roleId": "a52c5d2c-f58f-4aa7-9674-705b3b16c28b",
+      "permissionId": "0653edc7-9cc2-4946-933f-65cb350e8fee"
+    },
+    {
+      "id": "4f953fb7-bf1e-4c97-a2c5-5f8a6badbeb0",
+      "roleId": "a52c5d2c-f58f-4aa7-9674-705b3b16c28b",
+      "permissionId": "26352229-b092-44b3-8a56-b300eeeef09b"
+    },
+    {
+      "id": "75084c8b-67c6-4e8e-8e2b-0e16e99ae012",
+      "roleId": "a52c5d2c-f58f-4aa7-9674-705b3b16c28b",
+      "permissionId": "283e222b-8fdd-4490-8563-0c231cc39f1f"
+    },
+    {
+      "id": "fc3ecfe3-d4f9-4fa5-b943-36b6ca151599",
+      "roleId": "a52c5d2c-f58f-4aa7-9674-705b3b16c28b",
+      "permissionId": "44224c75-c6a3-4c23-94fd-d6b057bb03da"
+    },
+    {
+      "id": "c0a3f4c0-adeb-49e0-8d94-ae662c05b7a8",
+      "roleId": "a52c5d2c-f58f-4aa7-9674-705b3b16c28b",
+      "permissionId": "68f9e23b-34bd-4694-84fc-dcdeb61ecefe"
+    },
+    {
+      "id": "4fd73b72-0c39-46e2-9b64-c66885ad3527",
+      "roleId": "a52c5d2c-f58f-4aa7-9674-705b3b16c28b",
+      "permissionId": "d2512e54-a301-4e31-821d-bd226f355db6"
+    },
+    {
+      "id": "90ff19e6-c065-4978-8cda-ef75cfa8c84b",
+      "roleId": "a52c5d2c-f58f-4aa7-9674-705b3b16c28b",
+      "permissionId": "dc9dbe05-ffc1-473f-a9fb-1bb119acfe81"
+    },
+    {
+      "id": "142ede83-80e5-4f0e-a268-acd6bccd725d",
+      "roleId": "b45ac87c-10f8-4adb-b579-0333f7160313",
+      "permissionId": "0653edc7-9cc2-4946-933f-65cb350e8fee"
+    },
+    {
+      "id": "2c62a478-98fa-41d1-aba1-826a45ce9486",
+      "roleId": "b45ac87c-10f8-4adb-b579-0333f7160313",
+      "permissionId": "26352229-b092-44b3-8a56-b300eeeef09b"
+    },
+    {
+      "id": "d41d9cc0-35c0-43bd-8fbb-c4e931c91889",
+      "roleId": "b45ac87c-10f8-4adb-b579-0333f7160313",
+      "permissionId": "283e222b-8fdd-4490-8563-0c231cc39f1f"
+    },
+    {
+      "id": "84a50dbd-20d3-427d-a5c5-f3ad446a882e",
+      "roleId": "b45ac87c-10f8-4adb-b579-0333f7160313",
+      "permissionId": "44224c75-c6a3-4c23-94fd-d6b057bb03da"
+    },
+    {
+      "id": "55fb500a-37eb-4dc5-a3bd-95b16e6214df",
+      "roleId": "b45ac87c-10f8-4adb-b579-0333f7160313",
+      "permissionId": "68f9e23b-34bd-4694-84fc-dcdeb61ecefe"
+    },
+    {
+      "id": "0ea1cab3-3a3c-4dcc-b937-2786252ddaf2",
+      "roleId": "b45ac87c-10f8-4adb-b579-0333f7160313",
+      "permissionId": "d2512e54-a301-4e31-821d-bd226f355db6"
+    },
+    {
+      "id": "7a9620a5-044b-47fd-9b60-3635babf0de1",
+      "roleId": "b45ac87c-10f8-4adb-b579-0333f7160313",
+      "permissionId": "dc9dbe05-ffc1-473f-a9fb-1bb119acfe81"
+    },
+    {
+      "id": "1a9ad4ea-96ee-4c01-b278-dfd978735996",
+      "roleId": "12c6bd45-93d1-4155-bf0a-2dc76f7cdacd",
+      "permissionId": "0653edc7-9cc2-4946-933f-65cb350e8fee"
+    },
+    {
+      "id": "9c0bc24d-a34a-4c64-b54c-4bc8ab22596b",
+      "roleId": "12c6bd45-93d1-4155-bf0a-2dc76f7cdacd",
+      "permissionId": "26352229-b092-44b3-8a56-b300eeeef09b"
+    },
+    {
+      "id": "2f57d5f2-b2a9-41e1-805f-66ac18da3c4d",
+      "roleId": "12c6bd45-93d1-4155-bf0a-2dc76f7cdacd",
+      "permissionId": "283e222b-8fdd-4490-8563-0c231cc39f1f"
+    },
+    {
+      "id": "b0448873-e24f-4ebd-a0c8-8f3938d6ba26",
+      "roleId": "12c6bd45-93d1-4155-bf0a-2dc76f7cdacd",
+      "permissionId": "44224c75-c6a3-4c23-94fd-d6b057bb03da"
+    },
+    {
+      "id": "5e5e3c2a-cab4-4f71-a4cb-8a2e915130c2",
+      "roleId": "12c6bd45-93d1-4155-bf0a-2dc76f7cdacd",
+      "permissionId": "68f9e23b-34bd-4694-84fc-dcdeb61ecefe"
+    },
+    {
+      "id": "428f634a-149a-42da-9a58-2e120dea9b33",
+      "roleId": "12c6bd45-93d1-4155-bf0a-2dc76f7cdacd",
+      "permissionId": "d2512e54-a301-4e31-821d-bd226f355db6"
+    },
+    {
+      "id": "c034ae26-9e66-4cbe-bf5e-ab13d552a158",
+      "roleId": "12c6bd45-93d1-4155-bf0a-2dc76f7cdacd",
+      "permissionId": "dc9dbe05-ffc1-473f-a9fb-1bb119acfe81"
+    }
+  ],
+  "projectApiKeys": [
+    {
+      "id": "fb5d2722-8009-4f61-9360-309057059524",
+      "projectId": "db25b1f6-ca2b-42a7-bfb7-49cedcf81e76",
+      "keyHash": "4cb077212e0532ca872d3576a1991669d5141b410f17f24d704308bb9105309e",
+      "createdAt": 1771944515439,
+      "revokedAt": null
+    },
+    {
+      "id": "aa7dda40-9b98-497b-a8ce-7fac9f9b9f04",
+      "projectId": "17a6690f-adfb-45af-ab48-090bf1543f34",
+      "keyHash": "171e9411ce5e66f7469984e74bdab69cbc995268e1cb16bb2dcf332ec5de6e65",
+      "createdAt": 1771944601398,
+      "revokedAt": null
+    },
+    {
+      "id": "9cb297b0-8015-46d5-820a-c931a8e08440",
+      "projectId": "0a81f079-b110-421e-99b5-83c81eee4e8c",
+      "keyHash": "477d975dfdc80decea719ee3d7516accc73db781fb0b44646c2f0adff319a595",
+      "createdAt": 1771944717984,
+      "revokedAt": null
+    },
+    {
+      "id": "59f549b1-6e23-4bd7-abe2-277330fb811f",
+      "projectId": "5acc484f-b9e6-486b-8e71-9c17515ff6d6",
+      "keyHash": "99d502f6383825a1f1568a518aac3b60b45733545e75e7f6f5ce20936ea988fc",
+      "createdAt": 1771957021328,
+      "revokedAt": null
+    },
+    {
+      "id": "3f0f8009-2531-46d7-ae9f-f5295bd3b3a5",
+      "projectId": "a34d160a-0621-45f5-aca2-c58de3783eb3",
+      "keyHash": "c55e380b1e13551ef22f79e6d6954b2179fc33a95567027e8aeaaac48238e5b5",
+      "createdAt": 1771967871068,
+      "revokedAt": null
+    },
+    {
+      "id": "a65f4f68-5309-441b-bbff-3469173b71b5",
+      "projectId": "7ea434ab-f027-477d-b3a9-e56427d24ec6",
+      "keyHash": "253dad9e144f601fe7eaf3d601e220812d4a2eec959f6218700117ad5075a3ad",
+      "createdAt": 1771968062985,
+      "revokedAt": null
+    },
+    {
+      "id": "227af057-3349-4f5f-9954-ebc0ea135d14",
+      "projectId": "906ca1ef-2fe1-4a21-a85b-a4003ef53af1",
+      "keyHash": "859837c082e62c1b27fc4312c64773cc91024ed29b985dee3ef0cc297770c99e",
+      "createdAt": 1771969819020,
+      "revokedAt": null
+    },
+    {
+      "id": "fa405667-b67e-4926-b92c-8ffb38f008f3",
+      "projectId": "3df3ab96-14d9-40d5-ab9f-050fe8ed8bbe",
+      "keyHash": "de6058eec031e645afd5c4958d1928209d04fe18ad0cb9bcb24fa0df78da99dd",
+      "createdAt": 1771978352341,
+      "revokedAt": null
+    },
+    {
+      "id": "e4d58b9c-e765-4e9b-a8d5-5297fe6651e7",
+      "projectId": "ebd0bad9-36a1-471e-943b-ace801d382f3",
+      "keyHash": "cf1552a8f46c4f88c9735cd3cc6652e0ee6f524319f701633dc574c8de0ba11c",
+      "createdAt": 1771983173212,
+      "revokedAt": null
+    },
+    {
+      "id": "0d659429-e757-4779-bab9-f443515a7c80",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "keyHash": "ca1a3388357ce0c014878a889fba3e68be9a3e18420bb58e1d1f77bd972ab8b7",
+      "createdAt": 1771985852966,
+      "revokedAt": null
+    },
+    {
+      "id": "7f21593b-a0db-4037-8611-f0ee19187ced",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "keyHash": "ef27f4d7fb4af5c678b4861149ed75e7610f30520ebf7c027499c5f58465dd0d",
+      "createdAt": 1771988370819,
+      "revokedAt": null
+    },
+    {
+      "id": "6093c4f6-ada1-412a-91c4-37d13ef5b0ee",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "keyHash": "2ed6de1fafc592504d0953c68ba6e5b7a714b78569e0fbbd0684aab95bcaef11",
+      "createdAt": 1772031083523,
+      "revokedAt": null
+    },
+    {
+      "id": "c99834d3-1f15-4141-abe6-3ac6172b768e",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "keyHash": "e9bd9e0ea4cb6cd03fb97312a1cbc51cb9d1fdca874f8e1be2c666204788fa7f",
+      "createdAt": 1772047371792,
+      "revokedAt": null
+    }
+  ],
+  "projectMembers": [
+    {
+      "id": "1bd38e06-8576-4f98-a523-16079d0d915a",
+      "projectId": "db25b1f6-ca2b-42a7-bfb7-49cedcf81e76",
+      "userId": "iQyGTjO6JfGOGhdV5L4YUoG4E859Ed4d",
+      "roleId": "c025d3e2-d47f-4523-b9cd-a6ccfc41fc3c",
+      "joinedAt": 1771944515632
+    },
+    {
+      "id": "5b2877dc-1e70-4515-a11a-73bb27ee2fa7",
+      "projectId": "17a6690f-adfb-45af-ab48-090bf1543f34",
+      "userId": "DpR33NGVKCqRzGpbbeg7WdtfZzflhWBB",
+      "roleId": "75f07a6c-b2d6-4258-9d2f-72b776f73c9a",
+      "joinedAt": 1771944601599
+    },
+    {
+      "id": "dfb5f48f-f013-42db-92b8-349e86432016",
+      "projectId": "0a81f079-b110-421e-99b5-83c81eee4e8c",
+      "userId": "WvboyQp2bTmdijKa3DocqSZeI8Z5Wnax",
+      "roleId": "92850b85-4cbc-488b-8860-624a50f48c84",
+      "joinedAt": 1771944718182
+    },
+    {
+      "id": "b1f1f9fa-bfec-42dd-92db-8fc6138e10ee",
+      "projectId": "5acc484f-b9e6-486b-8e71-9c17515ff6d6",
+      "userId": "404lxxQkxEm0SXIiVEiV0aB0VH304NUJ",
+      "roleId": "b1adcb12-7cf0-4f76-aa9e-f32b2466db44",
+      "joinedAt": 1771957020862
+    },
+    {
+      "id": "2582c2d7-dff1-4048-b2ea-28662f26ea25",
+      "projectId": "a34d160a-0621-45f5-aca2-c58de3783eb3",
+      "userId": "pnA29EXS1tCA3qYYwCnqPVRi3Pi768C8",
+      "roleId": "d41bea16-fe6a-462f-918d-3096fbd7958a",
+      "joinedAt": 1771967870836
+    },
+    {
+      "id": "f20f17f8-e68b-43b7-b977-208c03afd060",
+      "projectId": "7ea434ab-f027-477d-b3a9-e56427d24ec6",
+      "userId": "pnA29EXS1tCA3qYYwCnqPVRi3Pi768C8",
+      "roleId": "bc89160d-ec6a-4edb-95cb-ea5297e3267d",
+      "joinedAt": 1771968062861
+    },
+    {
+      "id": "17573f54-0b0b-4bae-a608-be1bc52319b4",
+      "projectId": "906ca1ef-2fe1-4a21-a85b-a4003ef53af1",
+      "userId": "WbBomeKPV6UaE8i2cPv0pBrVUJX1swhV",
+      "roleId": "7a112499-f6ae-4df4-954e-33839833a1b2",
+      "joinedAt": 1771969818729
+    },
+    {
+      "id": "473bbd3f-b8c1-465c-a5c9-c2038a2d3e08",
+      "projectId": "ebd0bad9-36a1-471e-943b-ace801d382f3",
+      "userId": "Jj20v7IDUXqWPNMzxeShtjHGfRIyjUsB",
+      "roleId": "433d0aeb-c83a-4d68-983e-3702392b02ca",
+      "joinedAt": 1771983173781
+    },
+    {
+      "id": "578e543a-74e5-4ad3-8d41-b30e634fccba",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "userId": "HJy5jFueZxnSGg78P3wfbEA1XpFkUOXg",
+      "roleId": "c2c39489-10f9-4a25-8e76-9cefec651d72",
+      "joinedAt": 1771985852659
+    },
+    {
+      "id": "5f2ee7a3-ae70-4587-a786-3845e916111c",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "userId": "tKlAD0ij6pHULTALSYMRYmp3zDdQC5sm",
+      "roleId": "a52c5d2c-f58f-4aa7-9674-705b3b16c28b",
+      "joinedAt": 1771988370619
+    },
+    {
+      "id": "e03eec96-e670-4e20-aeb9-5b5a92a09636",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "userId": "ERrm4iiEl8xansotwFjHLW8vdem1m8Am",
+      "roleId": "b45ac87c-10f8-4adb-b579-0333f7160313",
+      "joinedAt": 1772031083344
+    },
+    {
+      "id": "4d641e95-3710-477b-af00-5c191ca149d1",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "userId": "XiPEiPLyqyPg16TzQb0bdkTRHCG7IuZT",
+      "roleId": "12c6bd45-93d1-4155-bf0a-2dc76f7cdacd",
+      "joinedAt": 1772047371609
+    }
+  ],
+  "transactions": [
+    {
+      "id": "2b71aa85-c9a5-414f-87fb-72870fac1369",
+      "projectId": "ebd0bad9-36a1-471e-943b-ace801d382f3",
+      "paymentIntegrationId": "6b693113-306b-4d66-acb1-2b82f5090765",
+      "externalId": "pi_3T4WzgHecPYCuthF17CT8lmN",
+      "amount": 5.99,
+      "currency": "USD",
+      "status": "completed",
+      "transactionDate": 1771983270934,
+      "metadata": "{\"attribution\":\"{\\\"params\\\":{\\\"gclip\\\":\\\"g_test_123\\\",\\\"utm_source\\\":\\\"google\\\",\\\"utm_medium\\\":\\\"cpc\\\",\\\"utm_campaign\\\":\\\"summer_sale\\\"},\\\"expiry\\\":1772588021743}\",\"external_session_id\":\"7fa7d807-bc0a-4865-b30e-c53b0be2301b\",\"source\":\"tienda-cliente-test\",\"product_name\":\"Pasha Original Edition\",\"project_id\":\"pk_live_93274cb2eaf9407d96d73805bd3aea55\"}"
+    },
+    {
+      "id": "96dad1f2-75c7-464b-b3dd-ba52afeed3a4",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "paymentIntegrationId": "d0da6377-50f6-4439-9af3-dffb5fe40274",
+      "externalId": "pi_3T4XjZHecPYCuthF0PozwSvg",
+      "amount": 5.99,
+      "currency": "USD",
+      "status": "completed",
+      "transactionDate": 1771986116009,
+      "metadata": "{\"attribution\":\"{\\\"params\\\":{\\\"fclip\\\":\\\"f_test_456\\\",\\\"utm_source\\\":\\\"facebook\\\",\\\"utm_medium\\\":\\\"social\\\",\\\"utm_campaign\\\":\\\"black_friday\\\",\\\"utm_content\\\":\\\"video_ad\\\"},\\\"expiry\\\":1772590873941}\",\"external_session_id\":\"7fa7d807-bc0a-4865-b30e-c53b0be2301b\",\"source\":\"tienda-cliente-test\",\"product_name\":\"Pasha Original Edition\",\"project_id\":\"882d581e14f65712a9c6d2ea606bc24550f280ae88bbb9bed4d93e8f2da3a978\"}"
+    },
+    {
+      "id": "6a7f416b-973b-4344-a1d8-84bbdd5d5539",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "paymentIntegrationId": "ecccdc12-e191-4cec-8b09-ea88a7ce2ad8",
+      "externalId": "pi_3T4YNTHecPYCuthF18svbdZO",
+      "amount": 5.99,
+      "currency": "USD",
+      "status": "completed",
+      "transactionDate": 1771988589291,
+      "metadata": "{\"attribution\":\"{\\\"params\\\":{\\\"gclip\\\":\\\"g_test_123\\\",\\\"utm_source\\\":\\\"google\\\",\\\"utm_medium\\\":\\\"cpc\\\",\\\"utm_campaign\\\":\\\"summer_sale\\\"},\\\"expiry\\\":1772593342640}\",\"external_session_id\":\"7fa7d807-bc0a-4865-b30e-c53b0be2301b\",\"source\":\"tienda-cliente-test\",\"product_name\":\"Pasha Original Edition\",\"project_id\":\"348629b9ac21e6a60fd712b7ba0032a52ea7d0ec51610ff7d4fe313fdc2215d9\"}"
+    },
+    {
+      "id": "a7ee1630-643c-4507-9b73-1d2f64aaf102",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "paymentIntegrationId": "fd3c80b4-b376-495b-ac7a-42bd818d5896",
+      "externalId": "pi_3T4nlyHecPYCuthF1QBqzfMm",
+      "amount": 5.99,
+      "currency": "USD",
+      "status": "completed",
+      "transactionDate": 1772047769149,
+      "metadata": "{\"attribution\":\"{\\\"params\\\":{\\\"fclip\\\":\\\"f_test_456\\\",\\\"utm_source\\\":\\\"facebook\\\",\\\"utm_medium\\\":\\\"social\\\",\\\"utm_campaign\\\":\\\"black_friday\\\",\\\"utm_content\\\":\\\"video_ad\\\"},\\\"expiry\\\":1772652531736}\",\"external_session_id\":\"7fa7d807-bc0a-4865-b30e-c53b0be2301b\",\"source\":\"tienda-cliente-test\",\"product_name\":\"Pasha Original Edition\",\"project_id\":\"0ffc36f314f138ebaf60c672f232fd2982bbfa36a949ea9ba16c903c3f8706b1\"}"
+    },
+    {
+      "id": "3a272899-c02b-4b78-bde9-d498b1cd257e",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "paymentIntegrationId": "fd3c80b4-b376-495b-ac7a-42bd818d5896",
+      "externalId": "pi_3T4pGsHecPYCuthF0TMv5TdH",
+      "amount": 5.99,
+      "currency": "USD",
+      "status": "completed",
+      "transactionDate": 1772053528703,
+      "metadata": "{\"attribution\":\"{\\\"params\\\":{\\\"gclip\\\":\\\"g_test_123\\\",\\\"utm_source\\\":\\\"google\\\",\\\"utm_medium\\\":\\\"cpc\\\",\\\"utm_campaign\\\":\\\"summer_sale\\\"},\\\"expiry\\\":1772658274258}\",\"external_session_id\":\"7fa7d807-bc0a-4865-b30e-c53b0be2301b\",\"source\":\"tienda-cliente-test\",\"product_name\":\"Pasha Original Edition\",\"project_id\":\"0ffc36f314f138ebaf60c672f232fd2982bbfa36a949ea9ba16c903c3f8706b1\"}"
+    }
+  ],
+  "orders": [
+    {
+      "id": "25a3c26d-d4a5-4412-a386-6d21e1f38ded",
+      "projectId": "ebd0bad9-36a1-471e-943b-ace801d382f3",
+      "ecommerceIntegrationId": null,
+      "transactionId": "2b71aa85-c9a5-414f-87fb-72870fac1369",
+      "externalOrderId": "cs_test_a15ZNRLnag9XUfN42lb1vOIpsvwIpf138Ul5JIMoigTCDqJGjjRGmhfHcO",
+      "totalAmount": 5.99,
+      "currency": "USD",
+      "status": "confirmed",
+      "orderDate": 1771983271311,
+      "customerName": "Guido 22",
+      "customerEmail": "guido@gmail.com",
+      "productName": "Pasha Original Edition"
+    },
+    {
+      "id": "36eabeb8-e885-402d-bac2-1dac0a9fa0b8",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "ecommerceIntegrationId": null,
+      "transactionId": "96dad1f2-75c7-464b-b3dd-ba52afeed3a4",
+      "externalOrderId": "cs_test_a1OLqVYQVWAmadMBwrmd7OupXunECgE7Rf7Vs1ZJtsP65tQYkTZFGpbYR4",
+      "totalAmount": 5.99,
+      "currency": "USD",
+      "status": "confirmed",
+      "orderDate": 1771986116402,
+      "customerName": "Gustavo",
+      "customerEmail": "gustavo@gmail.com",
+      "productName": "Pasha Original Edition"
+    },
+    {
+      "id": "4cee4390-17d0-4b28-9528-b4aff5a9b3d7",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "ecommerceIntegrationId": null,
+      "transactionId": "6a7f416b-973b-4344-a1d8-84bbdd5d5539",
+      "externalOrderId": "cs_test_a11WTEFKRyhmu1zP0aScTMohEXPLPbgfK66b3BBkkDPxg2HRmhO9WEB6cm",
+      "totalAmount": 5.99,
+      "currency": "USD",
+      "status": "confirmed",
+      "orderDate": 1771988589681,
+      "customerName": "Emir Ka",
+      "customerEmail": "emir@mail.com",
+      "productName": "Pasha Original Edition"
+    },
+    {
+      "id": "afde3b37-a15d-4d3d-b01a-1dbbad817042",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "ecommerceIntegrationId": null,
+      "transactionId": "a7ee1630-643c-4507-9b73-1d2f64aaf102",
+      "externalOrderId": "cs_test_a18s088SOJGTM1JLhGaBmvt0oY7tx2nedx9d3CxOIeFhNXNQz6xGZW0o0f",
+      "totalAmount": 5.99,
+      "currency": "USD",
+      "status": "confirmed",
+      "orderDate": 1772047769516,
+      "customerName": "Roma Emir",
+      "customerEmail": "roma@mail.com",
+      "productName": "Pasha Original Edition"
+    },
+    {
+      "id": "90da3ba6-28e9-455c-beab-f9a0ea0b36af",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "ecommerceIntegrationId": null,
+      "transactionId": "3a272899-c02b-4b78-bde9-d498b1cd257e",
+      "externalOrderId": "cs_test_a1Ld73AV1kGNfAimz0eE3viF2aryK9uDal9KShaSf1clPCwZb4v6JzkUt9",
+      "totalAmount": 5.99,
+      "currency": "USD",
+      "status": "confirmed",
+      "orderDate": 1772053529257,
+      "customerName": "Lisa S.",
+      "customerEmail": "lisa@lmail.com",
+      "productName": "Pasha Original Edition"
+    }
+  ],
+  "analytics": [
+    {
+      "id": "36271b69-c8b4-4380-a6ac-dbf9efcee4e9",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "campaignId": "c0d553ad-f84d-4f9a-a14d-5bb0303ab4b2",
+      "periodStart": 1771902000000,
+      "periodEnd": 1771988399999,
+      "impressions": 5581,
+      "clicks": 295,
+      "conversions": 8,
+      "revenue": 248,
+      "adSpend": 113,
+      "roi": 1.1946902654867255,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "981451e7-cce5-4f31-9b30-a38730abce65",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "campaignId": "c0d553ad-f84d-4f9a-a14d-5bb0303ab4b2",
+      "periodStart": 1771815600000,
+      "periodEnd": 1771901999999,
+      "impressions": 5126,
+      "clicks": 170,
+      "conversions": 3,
+      "revenue": 69,
+      "adSpend": 85,
+      "roi": -0.18823529411764703,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "c7f8bc72-3f72-43f6-a451-2470f03fe0fc",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "campaignId": "c0d553ad-f84d-4f9a-a14d-5bb0303ab4b2",
+      "periodStart": 1771729200000,
+      "periodEnd": 1771815599999,
+      "impressions": 8679,
+      "clicks": 243,
+      "conversions": 9,
+      "revenue": 576,
+      "adSpend": 141,
+      "roi": 3.0851063829787235,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "b8970bbf-5e9b-4da2-9a09-58357d6ecb65",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "campaignId": "c0d553ad-f84d-4f9a-a14d-5bb0303ab4b2",
+      "periodStart": 1771642800000,
+      "periodEnd": 1771729199999,
+      "impressions": 7937,
+      "clicks": 197,
+      "conversions": 3,
+      "revenue": 120,
+      "adSpend": 149,
+      "roi": -0.19463087248322147,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "eb6dae33-79ce-47b4-a239-4cd28d43830a",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "campaignId": "c0d553ad-f84d-4f9a-a14d-5bb0303ab4b2",
+      "periodStart": 1771556400000,
+      "periodEnd": 1771642799999,
+      "impressions": 5384,
+      "clicks": 117,
+      "conversions": 2,
+      "revenue": 126,
+      "adSpend": 86,
+      "roi": 0.46511627906976744,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "3daca7ca-761c-4949-a9f9-daceb831e629",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "campaignId": "c0d553ad-f84d-4f9a-a14d-5bb0303ab4b2",
+      "periodStart": 1771470000000,
+      "periodEnd": 1771556399999,
+      "impressions": 9165,
+      "clicks": 263,
+      "conversions": 9,
+      "revenue": 405,
+      "adSpend": 118,
+      "roi": 2.4322033898305087,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "95172bde-c77d-40e4-9954-8c230aab21c2",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "campaignId": "c0d553ad-f84d-4f9a-a14d-5bb0303ab4b2",
+      "periodStart": 1771383600000,
+      "periodEnd": 1771469999999,
+      "impressions": 9221,
+      "clicks": 529,
+      "conversions": 10,
+      "revenue": 640,
+      "adSpend": 123,
+      "roi": 4.203252032520325,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "c2a20dd3-752e-4fa3-b7d0-3c95d0df3419",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "campaignId": "c313d198-c33c-4e1a-9424-7eb607feb1c2",
+      "periodStart": 1771902000000,
+      "periodEnd": 1771988399999,
+      "impressions": 5226,
+      "clicks": 196,
+      "conversions": 5,
+      "revenue": 335,
+      "adSpend": 101,
+      "roi": 2.3168316831683167,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "cd05d15d-bd32-4d72-8b95-ee2165dd99c4",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "campaignId": "c313d198-c33c-4e1a-9424-7eb607feb1c2",
+      "periodStart": 1771815600000,
+      "periodEnd": 1771901999999,
+      "impressions": 8092,
+      "clicks": 365,
+      "conversions": 9,
+      "revenue": 495,
+      "adSpend": 96,
+      "roi": 4.15625,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "53dcf69e-712e-48f1-8f83-8b009fa51e53",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "campaignId": "c313d198-c33c-4e1a-9424-7eb607feb1c2",
+      "periodStart": 1771729200000,
+      "periodEnd": 1771815599999,
+      "impressions": 8331,
+      "clicks": 514,
+      "conversions": 19,
+      "revenue": 969,
+      "adSpend": 80,
+      "roi": 11.1125,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "9f606ea9-6d2f-4d72-b97a-3ff15291d213",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "campaignId": "c313d198-c33c-4e1a-9424-7eb607feb1c2",
+      "periodStart": 1771642800000,
+      "periodEnd": 1771729199999,
+      "impressions": 8637,
+      "clicks": 218,
+      "conversions": 5,
+      "revenue": 315,
+      "adSpend": 125,
+      "roi": 1.52,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "92f96039-8aca-4ff3-b64f-9cf16397ff14",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "campaignId": "c313d198-c33c-4e1a-9424-7eb607feb1c2",
+      "periodStart": 1771556400000,
+      "periodEnd": 1771642799999,
+      "impressions": 8260,
+      "clicks": 284,
+      "conversions": 7,
+      "revenue": 476,
+      "adSpend": 79,
+      "roi": 5.025316455696203,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "10f8f17d-2ec8-44db-a85b-781ebb5637e0",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "campaignId": "c313d198-c33c-4e1a-9424-7eb607feb1c2",
+      "periodStart": 1771470000000,
+      "periodEnd": 1771556399999,
+      "impressions": 8961,
+      "clicks": 421,
+      "conversions": 5,
+      "revenue": 315,
+      "adSpend": 68,
+      "roi": 3.6323529411764706,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "4084cd8f-bb7c-4d4e-8fdb-7de927eff936",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "campaignId": "c313d198-c33c-4e1a-9424-7eb607feb1c2",
+      "periodStart": 1771383600000,
+      "periodEnd": 1771469999999,
+      "impressions": 7906,
+      "clicks": 298,
+      "conversions": 5,
+      "revenue": 150,
+      "adSpend": 120,
+      "roi": 0.25,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "a3671c2f-9d32-45bc-88b8-d71dccdb2ca1",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "campaignId": "cbd3cd15-e177-4be0-a117-36d50877c8d5",
+      "periodStart": 1771902000000,
+      "periodEnd": 1771988399999,
+      "impressions": 8177,
+      "clicks": 263,
+      "conversions": 10,
+      "revenue": 460,
+      "adSpend": 122,
+      "roi": 2.7704918032786887,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "059b7d16-3fc2-4546-b1c5-da2d7816f019",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "campaignId": "cbd3cd15-e177-4be0-a117-36d50877c8d5",
+      "periodStart": 1771815600000,
+      "periodEnd": 1771901999999,
+      "impressions": 8205,
+      "clicks": 377,
+      "conversions": 9,
+      "revenue": 198,
+      "adSpend": 130,
+      "roi": 0.5230769230769231,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "86998559-8b51-41bb-9e40-029cb47f6975",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "campaignId": "cbd3cd15-e177-4be0-a117-36d50877c8d5",
+      "periodStart": 1771729200000,
+      "periodEnd": 1771815599999,
+      "impressions": 9044,
+      "clicks": 213,
+      "conversions": 3,
+      "revenue": 78,
+      "adSpend": 84,
+      "roi": -0.07142857142857142,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "d1083435-e63c-47a9-b8c2-296f9993b5ad",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "campaignId": "cbd3cd15-e177-4be0-a117-36d50877c8d5",
+      "periodStart": 1771642800000,
+      "periodEnd": 1771729199999,
+      "impressions": 7939,
+      "clicks": 253,
+      "conversions": 10,
+      "revenue": 450,
+      "adSpend": 117,
+      "roi": 2.8461538461538463,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "f5debaea-c0f2-4617-8117-b9dd9d32dd22",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "campaignId": "cbd3cd15-e177-4be0-a117-36d50877c8d5",
+      "periodStart": 1771556400000,
+      "periodEnd": 1771642799999,
+      "impressions": 7562,
+      "clicks": 473,
+      "conversions": 18,
+      "revenue": 936,
+      "adSpend": 65,
+      "roi": 13.4,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "a2ce10db-c63a-4ecd-b6ab-cfe50086a6df",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "campaignId": "cbd3cd15-e177-4be0-a117-36d50877c8d5",
+      "periodStart": 1771470000000,
+      "periodEnd": 1771556399999,
+      "impressions": 9539,
+      "clicks": 502,
+      "conversions": 11,
+      "revenue": 396,
+      "adSpend": 90,
+      "roi": 3.4,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "0220c4e4-20eb-4ffc-b2ba-4265c6ecbeeb",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "campaignId": "cbd3cd15-e177-4be0-a117-36d50877c8d5",
+      "periodStart": 1771383600000,
+      "periodEnd": 1771469999999,
+      "impressions": 9432,
+      "clicks": 512,
+      "conversions": 17,
+      "revenue": 629,
+      "adSpend": 55,
+      "roi": 10.436363636363636,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "c78bb1eb-e0b6-4ee2-b93f-56b4879b2407",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "campaignId": "bb23de83-72de-41bb-ac94-954f5f9478fc",
+      "periodStart": 1771902000000,
+      "periodEnd": 1771988399999,
+      "impressions": 5975,
+      "clicks": 202,
+      "conversions": 5,
+      "revenue": 225,
+      "adSpend": 97,
+      "roi": 1.3195876288659794,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "a2c8e4c9-042e-4b2e-b009-f2c68aba72e8",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "campaignId": "bb23de83-72de-41bb-ac94-954f5f9478fc",
+      "periodStart": 1771815600000,
+      "periodEnd": 1771901999999,
+      "impressions": 5868,
+      "clicks": 389,
+      "conversions": 15,
+      "revenue": 720,
+      "adSpend": 125,
+      "roi": 4.76,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "a569f70a-8892-4c3e-9b91-ab11be8d2242",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "campaignId": "bb23de83-72de-41bb-ac94-954f5f9478fc",
+      "periodStart": 1771729200000,
+      "periodEnd": 1771815599999,
+      "impressions": 7820,
+      "clicks": 309,
+      "conversions": 6,
+      "revenue": 294,
+      "adSpend": 61,
+      "roi": 3.819672131147541,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "aaf8077a-a150-49b3-aef1-692da3734923",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "campaignId": "bb23de83-72de-41bb-ac94-954f5f9478fc",
+      "periodStart": 1771642800000,
+      "periodEnd": 1771729199999,
+      "impressions": 6018,
+      "clicks": 194,
+      "conversions": 3,
+      "revenue": 150,
+      "adSpend": 100,
+      "roi": 0.5,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "824767f2-12e1-4e94-9667-065e12848db2",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "campaignId": "bb23de83-72de-41bb-ac94-954f5f9478fc",
+      "periodStart": 1771556400000,
+      "periodEnd": 1771642799999,
+      "impressions": 7466,
+      "clicks": 352,
+      "conversions": 6,
+      "revenue": 222,
+      "adSpend": 63,
+      "roi": 2.5238095238095237,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "8c20fed1-4755-4505-bb0f-822491f5dd1c",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "campaignId": "bb23de83-72de-41bb-ac94-954f5f9478fc",
+      "periodStart": 1771470000000,
+      "periodEnd": 1771556399999,
+      "impressions": 5511,
+      "clicks": 313,
+      "conversions": 11,
+      "revenue": 275,
+      "adSpend": 99,
+      "roi": 1.7777777777777777,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "c75f3675-3bcd-4243-9b1e-6d1e219b2293",
+      "projectId": "2572ab44-95fb-41cb-b3ec-804652c51c3e",
+      "campaignId": "bb23de83-72de-41bb-ac94-954f5f9478fc",
+      "periodStart": 1771383600000,
+      "periodEnd": 1771469999999,
+      "impressions": 9580,
+      "clicks": 443,
+      "conversions": 16,
+      "revenue": 1024,
+      "adSpend": 116,
+      "roi": 7.827586206896552,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "1a523b2a-efdb-423f-831c-5d554d15d634",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "campaignId": "120203ee-c322-43a5-83ab-00b67686f14e",
+      "periodStart": 1771902000000,
+      "periodEnd": 1771988399999,
+      "impressions": 7383,
+      "clicks": 318,
+      "conversions": 11,
+      "revenue": 594,
+      "adSpend": 69,
+      "roi": 7.608695652173913,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "d3b7b9e9-1acb-41a9-950b-3def726a1586",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "campaignId": "120203ee-c322-43a5-83ab-00b67686f14e",
+      "periodStart": 1771815600000,
+      "periodEnd": 1771901999999,
+      "impressions": 5033,
+      "clicks": 203,
+      "conversions": 4,
+      "revenue": 228,
+      "adSpend": 144,
+      "roi": 0.5833333333333334,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "eef520c9-2d57-4ff8-b3fb-5d6ee6d237c4",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "campaignId": "120203ee-c322-43a5-83ab-00b67686f14e",
+      "periodStart": 1771729200000,
+      "periodEnd": 1771815599999,
+      "impressions": 6675,
+      "clicks": 252,
+      "conversions": 2,
+      "revenue": 54,
+      "adSpend": 123,
+      "roi": -0.5609756097560976,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "79ec2a47-45c7-42d7-8784-0cb899d8660e",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "campaignId": "120203ee-c322-43a5-83ab-00b67686f14e",
+      "periodStart": 1771642800000,
+      "periodEnd": 1771729199999,
+      "impressions": 8098,
+      "clicks": 386,
+      "conversions": 9,
+      "revenue": 198,
+      "adSpend": 138,
+      "roi": 0.43478260869565216,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "7f5b7b7a-56ad-4df4-b074-e057a8e9d07a",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "campaignId": "120203ee-c322-43a5-83ab-00b67686f14e",
+      "periodStart": 1771556400000,
+      "periodEnd": 1771642799999,
+      "impressions": 7985,
+      "clicks": 184,
+      "conversions": 4,
+      "revenue": 144,
+      "adSpend": 109,
+      "roi": 0.3211009174311927,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "f78fb0e3-98c8-4d7b-8956-69f26206879d",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "campaignId": "120203ee-c322-43a5-83ab-00b67686f14e",
+      "periodStart": 1771470000000,
+      "periodEnd": 1771556399999,
+      "impressions": 6150,
+      "clicks": 337,
+      "conversions": 9,
+      "revenue": 594,
+      "adSpend": 55,
+      "roi": 9.8,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "bbbecfc4-eca2-483f-8a92-852ef7aad6ec",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "campaignId": "120203ee-c322-43a5-83ab-00b67686f14e",
+      "periodStart": 1771383600000,
+      "periodEnd": 1771469999999,
+      "impressions": 9996,
+      "clicks": 592,
+      "conversions": 15,
+      "revenue": 810,
+      "adSpend": 71,
+      "roi": 10.408450704225352,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "8c7e8e0b-c177-4655-b0f5-f946dfd0fc66",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "campaignId": "7b5a792e-0940-4cc6-b812-dea3c2f0559c",
+      "periodStart": 1771902000000,
+      "periodEnd": 1771988399999,
+      "impressions": 8941,
+      "clicks": 553,
+      "conversions": 7,
+      "revenue": 399,
+      "adSpend": 92,
+      "roi": 3.3369565217391304,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "5cfcb995-b449-43ac-9c2f-2e17205feb32",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "campaignId": "7b5a792e-0940-4cc6-b812-dea3c2f0559c",
+      "periodStart": 1771815600000,
+      "periodEnd": 1771901999999,
+      "impressions": 9960,
+      "clicks": 204,
+      "conversions": 5,
+      "revenue": 320,
+      "adSpend": 111,
+      "roi": 1.882882882882883,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "ec3caf7d-29cf-41da-9216-dc1ccec4f5b4",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "campaignId": "7b5a792e-0940-4cc6-b812-dea3c2f0559c",
+      "periodStart": 1771729200000,
+      "periodEnd": 1771815599999,
+      "impressions": 8042,
+      "clicks": 534,
+      "conversions": 14,
+      "revenue": 490,
+      "adSpend": 92,
+      "roi": 4.326086956521739,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "5ad2c042-f6e7-4783-8d76-16172e4c6ccb",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "campaignId": "7b5a792e-0940-4cc6-b812-dea3c2f0559c",
+      "periodStart": 1771642800000,
+      "periodEnd": 1771729199999,
+      "impressions": 7434,
+      "clicks": 324,
+      "conversions": 9,
+      "revenue": 585,
+      "adSpend": 64,
+      "roi": 8.140625,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "98997ab9-e998-43d1-ab26-1a52e6706ef2",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "campaignId": "7b5a792e-0940-4cc6-b812-dea3c2f0559c",
+      "periodStart": 1771556400000,
+      "periodEnd": 1771642799999,
+      "impressions": 7737,
+      "clicks": 189,
+      "conversions": 5,
+      "revenue": 190,
+      "adSpend": 127,
+      "roi": 0.49606299212598426,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "5af88375-689f-4ddc-81be-ab1e639bf4c0",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "campaignId": "7b5a792e-0940-4cc6-b812-dea3c2f0559c",
+      "periodStart": 1771470000000,
+      "periodEnd": 1771556399999,
+      "impressions": 6923,
+      "clicks": 429,
+      "conversions": 11,
+      "revenue": 539,
+      "adSpend": 139,
+      "roi": 2.8776978417266186,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "feef24ac-ffb9-420d-81d6-4700e989d266",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "campaignId": "7b5a792e-0940-4cc6-b812-dea3c2f0559c",
+      "periodStart": 1771383600000,
+      "periodEnd": 1771469999999,
+      "impressions": 5214,
+      "clicks": 132,
+      "conversions": 1,
+      "revenue": 26,
+      "adSpend": 67,
+      "roi": -0.6119402985074627,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "90a15686-6161-467a-862e-bb2ebb176072",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "campaignId": "32885a7a-ce90-43c1-8327-5c4c1d443b81",
+      "periodStart": 1771902000000,
+      "periodEnd": 1771988399999,
+      "impressions": 9486,
+      "clicks": 628,
+      "conversions": 14,
+      "revenue": 448,
+      "adSpend": 140,
+      "roi": 2.2,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "4935baa7-0b50-4a30-81a0-ade75f184a5a",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "campaignId": "32885a7a-ce90-43c1-8327-5c4c1d443b81",
+      "periodStart": 1771815600000,
+      "periodEnd": 1771901999999,
+      "impressions": 5402,
+      "clicks": 321,
+      "conversions": 9,
+      "revenue": 360,
+      "adSpend": 126,
+      "roi": 1.8571428571428572,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "dfec2dba-3dbe-4361-ab85-36eb496ab78b",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "campaignId": "32885a7a-ce90-43c1-8327-5c4c1d443b81",
+      "periodStart": 1771729200000,
+      "periodEnd": 1771815599999,
+      "impressions": 7705,
+      "clicks": 177,
+      "conversions": 4,
+      "revenue": 136,
+      "adSpend": 59,
+      "roi": 1.305084745762712,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "19fb2843-76e6-44a6-b75d-b1a5ce7a49e4",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "campaignId": "32885a7a-ce90-43c1-8327-5c4c1d443b81",
+      "periodStart": 1771642800000,
+      "periodEnd": 1771729199999,
+      "impressions": 7984,
+      "clicks": 535,
+      "conversions": 9,
+      "revenue": 477,
+      "adSpend": 97,
+      "roi": 3.917525773195876,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "c7e18693-269f-4cd5-aac6-1898714386f6",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "campaignId": "32885a7a-ce90-43c1-8327-5c4c1d443b81",
+      "periodStart": 1771556400000,
+      "periodEnd": 1771642799999,
+      "impressions": 6518,
+      "clicks": 375,
+      "conversions": 6,
+      "revenue": 156,
+      "adSpend": 53,
+      "roi": 1.9433962264150944,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "b07a03f8-2792-49a6-b1fb-f41b20747fef",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "campaignId": "32885a7a-ce90-43c1-8327-5c4c1d443b81",
+      "periodStart": 1771470000000,
+      "periodEnd": 1771556399999,
+      "impressions": 7759,
+      "clicks": 511,
+      "conversions": 9,
+      "revenue": 270,
+      "adSpend": 127,
+      "roi": 1.125984251968504,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "696ad38f-cae9-4744-ad66-293d7b4a6da9",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "campaignId": "32885a7a-ce90-43c1-8327-5c4c1d443b81",
+      "periodStart": 1771383600000,
+      "periodEnd": 1771469999999,
+      "impressions": 5841,
+      "clicks": 392,
+      "conversions": 9,
+      "revenue": 378,
+      "adSpend": 84,
+      "roi": 3.5,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "11971a62-9512-4146-b872-1a93e0913129",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "campaignId": "58956c07-d0d3-4d3f-8df4-8d467f8735ae",
+      "periodStart": 1771902000000,
+      "periodEnd": 1771988399999,
+      "impressions": 6153,
+      "clicks": 263,
+      "conversions": 10,
+      "revenue": 620,
+      "adSpend": 144,
+      "roi": 3.3055555555555554,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "970e1ae2-e227-4358-92b6-c9bdb21bdb28",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "campaignId": "58956c07-d0d3-4d3f-8df4-8d467f8735ae",
+      "periodStart": 1771815600000,
+      "periodEnd": 1771901999999,
+      "impressions": 8436,
+      "clicks": 489,
+      "conversions": 14,
+      "revenue": 364,
+      "adSpend": 81,
+      "roi": 3.493827160493827,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "a4ed4567-28f9-43e7-a75d-1cd201c91f24",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "campaignId": "58956c07-d0d3-4d3f-8df4-8d467f8735ae",
+      "periodStart": 1771729200000,
+      "periodEnd": 1771815599999,
+      "impressions": 6026,
+      "clicks": 239,
+      "conversions": 5,
+      "revenue": 170,
+      "adSpend": 102,
+      "roi": 0.6666666666666666,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "170547b0-d648-4d2c-848f-37eaceda3447",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "campaignId": "58956c07-d0d3-4d3f-8df4-8d467f8735ae",
+      "periodStart": 1771642800000,
+      "periodEnd": 1771729199999,
+      "impressions": 9220,
+      "clicks": 356,
+      "conversions": 13,
+      "revenue": 325,
+      "adSpend": 123,
+      "roi": 1.6422764227642277,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "eeb04fd4-3ae0-4076-bb3c-cf80a852a08e",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "campaignId": "58956c07-d0d3-4d3f-8df4-8d467f8735ae",
+      "periodStart": 1771556400000,
+      "periodEnd": 1771642799999,
+      "impressions": 6706,
+      "clicks": 455,
+      "conversions": 4,
+      "revenue": 220,
+      "adSpend": 145,
+      "roi": 0.5172413793103449,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "10ce7b6d-0c5a-4326-92a0-6aa46f370d5d",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "campaignId": "58956c07-d0d3-4d3f-8df4-8d467f8735ae",
+      "periodStart": 1771470000000,
+      "periodEnd": 1771556399999,
+      "impressions": 9119,
+      "clicks": 499,
+      "conversions": 14,
+      "revenue": 308,
+      "adSpend": 85,
+      "roi": 2.623529411764706,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "530c30fc-2988-4023-88e3-6be710514a63",
+      "projectId": "92dcd2b4-8a7d-4097-b0cf-ccb9e83f0f90",
+      "campaignId": "58956c07-d0d3-4d3f-8df4-8d467f8735ae",
+      "periodStart": 1771383600000,
+      "periodEnd": 1771469999999,
+      "impressions": 8152,
+      "clicks": 434,
+      "conversions": 9,
+      "revenue": 612,
+      "adSpend": 131,
+      "roi": 3.671755725190839,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "d47c95b0-99b6-4aab-9c70-62add03a64f4",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "campaignId": "17972dad-1023-4a5f-8803-7bf03de25194",
+      "periodStart": 1771988400000,
+      "periodEnd": 1772074799999,
+      "impressions": 5010,
+      "clicks": 118,
+      "conversions": 1,
+      "revenue": 48,
+      "adSpend": 68,
+      "roi": -0.29411764705882354,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "7bdf5102-fc8d-4174-bad2-39d20df1bb47",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "campaignId": "17972dad-1023-4a5f-8803-7bf03de25194",
+      "periodStart": 1771902000000,
+      "periodEnd": 1771988399999,
+      "impressions": 5162,
+      "clicks": 136,
+      "conversions": 1,
+      "revenue": 30,
+      "adSpend": 143,
+      "roi": -0.7902097902097902,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "37a4f9fa-500d-4ea4-aff8-d4d9e9723cf1",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "campaignId": "17972dad-1023-4a5f-8803-7bf03de25194",
+      "periodStart": 1771815600000,
+      "periodEnd": 1771901999999,
+      "impressions": 8741,
+      "clicks": 395,
+      "conversions": 12,
+      "revenue": 672,
+      "adSpend": 131,
+      "roi": 4.129770992366412,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "ac4486d0-052a-4953-b3ba-6e16e109aa9d",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "campaignId": "17972dad-1023-4a5f-8803-7bf03de25194",
+      "periodStart": 1771729200000,
+      "periodEnd": 1771815599999,
+      "impressions": 9345,
+      "clicks": 335,
+      "conversions": 4,
+      "revenue": 272,
+      "adSpend": 144,
+      "roi": 0.8888888888888888,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "67c374b1-5767-4078-b6c0-a1da5e5dc788",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "campaignId": "17972dad-1023-4a5f-8803-7bf03de25194",
+      "periodStart": 1771642800000,
+      "periodEnd": 1771729199999,
+      "impressions": 5898,
+      "clicks": 410,
+      "conversions": 15,
+      "revenue": 900,
+      "adSpend": 79,
+      "roi": 10.39240506329114,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "76aedbdb-27f6-4e21-b05f-eb6cf3396584",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "campaignId": "17972dad-1023-4a5f-8803-7bf03de25194",
+      "periodStart": 1771556400000,
+      "periodEnd": 1771642799999,
+      "impressions": 5605,
+      "clicks": 271,
+      "conversions": 8,
+      "revenue": 520,
+      "adSpend": 82,
+      "roi": 5.341463414634147,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "682960e0-3daf-488a-b3a6-419fc2dacab6",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "campaignId": "17972dad-1023-4a5f-8803-7bf03de25194",
+      "periodStart": 1771470000000,
+      "periodEnd": 1771556399999,
+      "impressions": 9060,
+      "clicks": 415,
+      "conversions": 12,
+      "revenue": 792,
+      "adSpend": 102,
+      "roi": 6.764705882352941,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "908baf12-cc24-4965-ab71-1dade195273e",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "campaignId": "03fe5e5a-2fe3-438f-bf61-92ad4ee7f080",
+      "periodStart": 1771988400000,
+      "periodEnd": 1772074799999,
+      "impressions": 7813,
+      "clicks": 299,
+      "conversions": 7,
+      "revenue": 441,
+      "adSpend": 147,
+      "roi": 2,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "62768192-3dbd-4823-9368-e1e80f683bbd",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "campaignId": "03fe5e5a-2fe3-438f-bf61-92ad4ee7f080",
+      "periodStart": 1771902000000,
+      "periodEnd": 1771988399999,
+      "impressions": 9779,
+      "clicks": 595,
+      "conversions": 11,
+      "revenue": 264,
+      "adSpend": 71,
+      "roi": 2.7183098591549295,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "ec86e818-bd13-4c9a-bf12-ab838d9abe92",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "campaignId": "03fe5e5a-2fe3-438f-bf61-92ad4ee7f080",
+      "periodStart": 1771815600000,
+      "periodEnd": 1771901999999,
+      "impressions": 7006,
+      "clicks": 224,
+      "conversions": 4,
+      "revenue": 100,
+      "adSpend": 76,
+      "roi": 0.3157894736842105,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "b661c3ac-e99f-43ef-8291-6843588119b3",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "campaignId": "03fe5e5a-2fe3-438f-bf61-92ad4ee7f080",
+      "periodStart": 1771729200000,
+      "periodEnd": 1771815599999,
+      "impressions": 7599,
+      "clicks": 377,
+      "conversions": 13,
+      "revenue": 351,
+      "adSpend": 53,
+      "roi": 5.622641509433962,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "fc63b325-cb20-435f-8734-a0d69da851c7",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "campaignId": "03fe5e5a-2fe3-438f-bf61-92ad4ee7f080",
+      "periodStart": 1771642800000,
+      "periodEnd": 1771729199999,
+      "impressions": 6231,
+      "clicks": 187,
+      "conversions": 4,
+      "revenue": 108,
+      "adSpend": 89,
+      "roi": 0.21348314606741572,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "a548a17c-37e8-4232-91da-5556e753b8fe",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "campaignId": "03fe5e5a-2fe3-438f-bf61-92ad4ee7f080",
+      "periodStart": 1771556400000,
+      "periodEnd": 1771642799999,
+      "impressions": 7997,
+      "clicks": 406,
+      "conversions": 11,
+      "revenue": 737,
+      "adSpend": 78,
+      "roi": 8.448717948717949,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "7b255947-d3dd-4313-861f-e6099129a09b",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "campaignId": "03fe5e5a-2fe3-438f-bf61-92ad4ee7f080",
+      "periodStart": 1771470000000,
+      "periodEnd": 1771556399999,
+      "impressions": 7514,
+      "clicks": 246,
+      "conversions": 4,
+      "revenue": 104,
+      "adSpend": 72,
+      "roi": 0.4444444444444444,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "4659bbb7-e1b0-449b-9256-241a1e3b40b6",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "campaignId": "579c6430-492c-48dc-bd9a-1b03612f5c97",
+      "periodStart": 1771988400000,
+      "periodEnd": 1772074799999,
+      "impressions": 9029,
+      "clicks": 461,
+      "conversions": 7,
+      "revenue": 455,
+      "adSpend": 90,
+      "roi": 4.055555555555555,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "940678eb-8d30-43d3-aab8-1bc15c225cd0",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "campaignId": "579c6430-492c-48dc-bd9a-1b03612f5c97",
+      "periodStart": 1771902000000,
+      "periodEnd": 1771988399999,
+      "impressions": 5435,
+      "clicks": 243,
+      "conversions": 7,
+      "revenue": 224,
+      "adSpend": 70,
+      "roi": 2.2,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "de1a7dc3-889c-46ac-8450-1dc774e339a8",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "campaignId": "579c6430-492c-48dc-bd9a-1b03612f5c97",
+      "periodStart": 1771815600000,
+      "periodEnd": 1771901999999,
+      "impressions": 9451,
+      "clicks": 333,
+      "conversions": 3,
+      "revenue": 69,
+      "adSpend": 65,
+      "roi": 0.06153846153846154,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "3a2256f7-9c23-4349-aa72-807dc796be92",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "campaignId": "579c6430-492c-48dc-bd9a-1b03612f5c97",
+      "periodStart": 1771729200000,
+      "periodEnd": 1771815599999,
+      "impressions": 7877,
+      "clicks": 498,
+      "conversions": 10,
+      "revenue": 590,
+      "adSpend": 89,
+      "roi": 5.629213483146067,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "690cc38d-564f-41a1-b9d0-eb7f410cd1e1",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "campaignId": "579c6430-492c-48dc-bd9a-1b03612f5c97",
+      "periodStart": 1771642800000,
+      "periodEnd": 1771729199999,
+      "impressions": 5164,
+      "clicks": 126,
+      "conversions": 3,
+      "revenue": 78,
+      "adSpend": 61,
+      "roi": 0.2786885245901639,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "b040886c-628d-462e-a13e-37b2e7e2eb43",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "campaignId": "579c6430-492c-48dc-bd9a-1b03612f5c97",
+      "periodStart": 1771556400000,
+      "periodEnd": 1771642799999,
+      "impressions": 6306,
+      "clicks": 212,
+      "conversions": 6,
+      "revenue": 174,
+      "adSpend": 58,
+      "roi": 2,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "728a1911-5488-405e-82b6-17468e52d9f4",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "campaignId": "579c6430-492c-48dc-bd9a-1b03612f5c97",
+      "periodStart": 1771470000000,
+      "periodEnd": 1771556399999,
+      "impressions": 5283,
+      "clicks": 129,
+      "conversions": 4,
+      "revenue": 200,
+      "adSpend": 91,
+      "roi": 1.1978021978021978,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "e298f00d-d9e4-4033-b73d-41096585fd66",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "campaignId": "4e995804-8ea9-461c-abb0-a6ff94b934f4",
+      "periodStart": 1771988400000,
+      "periodEnd": 1772074799999,
+      "impressions": 9815,
+      "clicks": 273,
+      "conversions": 4,
+      "revenue": 104,
+      "adSpend": 93,
+      "roi": 0.11827956989247312,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "88646408-b9a7-4b7d-b4f7-9b03348263d9",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "campaignId": "4e995804-8ea9-461c-abb0-a6ff94b934f4",
+      "periodStart": 1771902000000,
+      "periodEnd": 1771988399999,
+      "impressions": 6158,
+      "clicks": 230,
+      "conversions": 6,
+      "revenue": 372,
+      "adSpend": 126,
+      "roi": 1.9523809523809523,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "a6e211c7-4ef7-4a50-bf73-6d33cac8c185",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "campaignId": "4e995804-8ea9-461c-abb0-a6ff94b934f4",
+      "periodStart": 1771815600000,
+      "periodEnd": 1771901999999,
+      "impressions": 5731,
+      "clicks": 266,
+      "conversions": 7,
+      "revenue": 469,
+      "adSpend": 78,
+      "roi": 5.012820512820513,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "b47b58df-50bd-4375-a8e9-237870904d1a",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "campaignId": "4e995804-8ea9-461c-abb0-a6ff94b934f4",
+      "periodStart": 1771729200000,
+      "periodEnd": 1771815599999,
+      "impressions": 6989,
+      "clicks": 351,
+      "conversions": 7,
+      "revenue": 336,
+      "adSpend": 126,
+      "roi": 1.6666666666666667,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "c59e90da-b333-4ba1-bcdb-c0db9242650f",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "campaignId": "4e995804-8ea9-461c-abb0-a6ff94b934f4",
+      "periodStart": 1771642800000,
+      "periodEnd": 1771729199999,
+      "impressions": 8359,
+      "clicks": 359,
+      "conversions": 9,
+      "revenue": 180,
+      "adSpend": 64,
+      "roi": 1.8125,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "67c018cd-1f7e-458f-8179-af36676a4794",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "campaignId": "4e995804-8ea9-461c-abb0-a6ff94b934f4",
+      "periodStart": 1771556400000,
+      "periodEnd": 1771642799999,
+      "impressions": 8015,
+      "clicks": 341,
+      "conversions": 8,
+      "revenue": 328,
+      "adSpend": 55,
+      "roi": 4.963636363636364,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "4bed270f-aafb-4009-98c8-f5f6270ee41b",
+      "projectId": "bcd8a89c-76ef-4db4-b87a-b1671a71b9f4",
+      "campaignId": "4e995804-8ea9-461c-abb0-a6ff94b934f4",
+      "periodStart": 1771470000000,
+      "periodEnd": 1771556399999,
+      "impressions": 6826,
+      "clicks": 197,
+      "conversions": 7,
+      "revenue": 483,
+      "adSpend": 128,
+      "roi": 2.7734375,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "c8fefe70-6027-4996-ba02-ba381f15def5",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "campaignId": "c341016d-f3d0-4a7a-a2da-a0680e343737",
+      "periodStart": 1771988400000,
+      "periodEnd": 1772074799999,
+      "impressions": 7805,
+      "clicks": 343,
+      "conversions": 11,
+      "revenue": 583,
+      "adSpend": 148,
+      "roi": 2.939189189189189,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "d8e349ad-c9ad-44a7-966d-71e6f10c1b7b",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "campaignId": "c341016d-f3d0-4a7a-a2da-a0680e343737",
+      "periodStart": 1771902000000,
+      "periodEnd": 1771988399999,
+      "impressions": 7008,
+      "clicks": 478,
+      "conversions": 15,
+      "revenue": 450,
+      "adSpend": 115,
+      "roi": 2.9130434782608696,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "b49750cb-4328-4883-929b-f64625f1e680",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "campaignId": "c341016d-f3d0-4a7a-a2da-a0680e343737",
+      "periodStart": 1771815600000,
+      "periodEnd": 1771901999999,
+      "impressions": 6303,
+      "clicks": 191,
+      "conversions": 6,
+      "revenue": 174,
+      "adSpend": 71,
+      "roi": 1.4507042253521127,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "40b7c6e6-c5cd-4dd5-819e-d06df4c20238",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "campaignId": "c341016d-f3d0-4a7a-a2da-a0680e343737",
+      "periodStart": 1771729200000,
+      "periodEnd": 1771815599999,
+      "impressions": 8672,
+      "clicks": 482,
+      "conversions": 10,
+      "revenue": 480,
+      "adSpend": 81,
+      "roi": 4.925925925925926,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "13274690-3cea-4a1e-a255-29287a3071ab",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "campaignId": "c341016d-f3d0-4a7a-a2da-a0680e343737",
+      "periodStart": 1771642800000,
+      "periodEnd": 1771729199999,
+      "impressions": 9505,
+      "clicks": 459,
+      "conversions": 15,
+      "revenue": 465,
+      "adSpend": 72,
+      "roi": 5.458333333333333,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "694ce88e-15c1-4291-9211-c615c94bb17d",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "campaignId": "c341016d-f3d0-4a7a-a2da-a0680e343737",
+      "periodStart": 1771556400000,
+      "periodEnd": 1771642799999,
+      "impressions": 6787,
+      "clicks": 311,
+      "conversions": 7,
+      "revenue": 287,
+      "adSpend": 92,
+      "roi": 2.119565217391304,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "1835b2e1-7c5f-45d8-aa08-222fafeef1b9",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "campaignId": "c341016d-f3d0-4a7a-a2da-a0680e343737",
+      "periodStart": 1771470000000,
+      "periodEnd": 1771556399999,
+      "impressions": 8607,
+      "clicks": 579,
+      "conversions": 6,
+      "revenue": 246,
+      "adSpend": 66,
+      "roi": 2.727272727272727,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "685a5743-8570-435e-8729-99a625dd9462",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "campaignId": "251872f4-1d6f-4b01-8dfc-e4a2961a855c",
+      "periodStart": 1771988400000,
+      "periodEnd": 1772074799999,
+      "impressions": 9903,
+      "clicks": 567,
+      "conversions": 20,
+      "revenue": 1120,
+      "adSpend": 141,
+      "roi": 6.943262411347518,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "cfcc5b3f-f4c5-45fd-9426-e9495ab7039f",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "campaignId": "251872f4-1d6f-4b01-8dfc-e4a2961a855c",
+      "periodStart": 1771902000000,
+      "periodEnd": 1771988399999,
+      "impressions": 6611,
+      "clicks": 409,
+      "conversions": 8,
+      "revenue": 504,
+      "adSpend": 97,
+      "roi": 4.195876288659794,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "3073c073-a941-40db-bd62-42e1ad269096",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "campaignId": "251872f4-1d6f-4b01-8dfc-e4a2961a855c",
+      "periodStart": 1771815600000,
+      "periodEnd": 1771901999999,
+      "impressions": 5775,
+      "clicks": 137,
+      "conversions": 3,
+      "revenue": 189,
+      "adSpend": 127,
+      "roi": 0.4881889763779528,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "3f720a51-a238-4b23-82c0-3d2b92f0f28b",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "campaignId": "251872f4-1d6f-4b01-8dfc-e4a2961a855c",
+      "periodStart": 1771729200000,
+      "periodEnd": 1771815599999,
+      "impressions": 7514,
+      "clicks": 393,
+      "conversions": 6,
+      "revenue": 390,
+      "adSpend": 132,
+      "roi": 1.9545454545454544,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "d65ef940-df29-4367-a214-26383d85ca45",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "campaignId": "251872f4-1d6f-4b01-8dfc-e4a2961a855c",
+      "periodStart": 1771642800000,
+      "periodEnd": 1771729199999,
+      "impressions": 6135,
+      "clicks": 280,
+      "conversions": 9,
+      "revenue": 450,
+      "adSpend": 145,
+      "roi": 2.103448275862069,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "1197d46f-08e4-4ac5-a6e3-5479571c1bbd",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "campaignId": "251872f4-1d6f-4b01-8dfc-e4a2961a855c",
+      "periodStart": 1771556400000,
+      "periodEnd": 1771642799999,
+      "impressions": 5228,
+      "clicks": 210,
+      "conversions": 4,
+      "revenue": 196,
+      "adSpend": 104,
+      "roi": 0.8846153846153846,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "463160e5-3fc3-4a2d-b097-618c6fd24826",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "campaignId": "251872f4-1d6f-4b01-8dfc-e4a2961a855c",
+      "periodStart": 1771470000000,
+      "periodEnd": 1771556399999,
+      "impressions": 6282,
+      "clicks": 163,
+      "conversions": 2,
+      "revenue": 46,
+      "adSpend": 61,
+      "roi": -0.2459016393442623,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "70d71666-05b3-4eb3-8c3f-8be2176f3d6d",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "campaignId": "c5a174a6-0384-496f-8cad-32471ea541e1",
+      "periodStart": 1771988400000,
+      "periodEnd": 1772074799999,
+      "impressions": 8654,
+      "clicks": 304,
+      "conversions": 4,
+      "revenue": 88,
+      "adSpend": 59,
+      "roi": 0.4915254237288136,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "768493db-39d4-485d-9a6b-905506fbc443",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "campaignId": "c5a174a6-0384-496f-8cad-32471ea541e1",
+      "periodStart": 1771902000000,
+      "periodEnd": 1771988399999,
+      "impressions": 9711,
+      "clicks": 311,
+      "conversions": 9,
+      "revenue": 432,
+      "adSpend": 143,
+      "roi": 2.020979020979021,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "73468434-4816-4b82-9aec-93e6f40e019a",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "campaignId": "c5a174a6-0384-496f-8cad-32471ea541e1",
+      "periodStart": 1771815600000,
+      "periodEnd": 1771901999999,
+      "impressions": 7867,
+      "clicks": 402,
+      "conversions": 7,
+      "revenue": 434,
+      "adSpend": 57,
+      "roi": 6.614035087719298,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "9aa7d4b1-1389-41d4-a6d2-7c27431c4f49",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "campaignId": "c5a174a6-0384-496f-8cad-32471ea541e1",
+      "periodStart": 1771729200000,
+      "periodEnd": 1771815599999,
+      "impressions": 8279,
+      "clicks": 334,
+      "conversions": 5,
+      "revenue": 320,
+      "adSpend": 100,
+      "roi": 2.2,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "51670199-b1cf-475f-9189-59022ca5c8cb",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "campaignId": "c5a174a6-0384-496f-8cad-32471ea541e1",
+      "periodStart": 1771642800000,
+      "periodEnd": 1771729199999,
+      "impressions": 7313,
+      "clicks": 160,
+      "conversions": 5,
+      "revenue": 345,
+      "adSpend": 54,
+      "roi": 5.388888888888889,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "5cd17c4b-b7a4-4e3a-a52d-6f07f987f972",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "campaignId": "c5a174a6-0384-496f-8cad-32471ea541e1",
+      "periodStart": 1771556400000,
+      "periodEnd": 1771642799999,
+      "impressions": 7787,
+      "clicks": 497,
+      "conversions": 9,
+      "revenue": 243,
+      "adSpend": 51,
+      "roi": 3.764705882352941,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "9109d4fa-4c0b-4d17-800c-e86a9d1f3a57",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "campaignId": "c5a174a6-0384-496f-8cad-32471ea541e1",
+      "periodStart": 1771470000000,
+      "periodEnd": 1771556399999,
+      "impressions": 6057,
+      "clicks": 177,
+      "conversions": 3,
+      "revenue": 192,
+      "adSpend": 143,
+      "roi": 0.34265734265734266,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "562b5251-5339-4da1-b91a-74b222bc54d7",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "campaignId": "d942c141-9e1a-4912-916d-6c8368863cc0",
+      "periodStart": 1771988400000,
+      "periodEnd": 1772074799999,
+      "impressions": 6484,
+      "clicks": 273,
+      "conversions": 5,
+      "revenue": 135,
+      "adSpend": 117,
+      "roi": 0.15384615384615383,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "14ca664e-6955-4ad0-96dd-ff611ec1d342",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "campaignId": "d942c141-9e1a-4912-916d-6c8368863cc0",
+      "periodStart": 1771902000000,
+      "periodEnd": 1771988399999,
+      "impressions": 8566,
+      "clicks": 202,
+      "conversions": 2,
+      "revenue": 58,
+      "adSpend": 113,
+      "roi": -0.48672566371681414,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "ae0450db-21b3-46d1-9a38-c5fe0e9543d6",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "campaignId": "d942c141-9e1a-4912-916d-6c8368863cc0",
+      "periodStart": 1771815600000,
+      "periodEnd": 1771901999999,
+      "impressions": 9781,
+      "clicks": 298,
+      "conversions": 3,
+      "revenue": 117,
+      "adSpend": 60,
+      "roi": 0.95,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "bbc5d747-e29c-41a7-ba15-06287609117e",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "campaignId": "d942c141-9e1a-4912-916d-6c8368863cc0",
+      "periodStart": 1771729200000,
+      "periodEnd": 1771815599999,
+      "impressions": 7922,
+      "clicks": 353,
+      "conversions": 8,
+      "revenue": 472,
+      "adSpend": 82,
+      "roi": 4.7560975609756095,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "06094c85-bf6f-4bdf-bb21-8578b1a49a22",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "campaignId": "d942c141-9e1a-4912-916d-6c8368863cc0",
+      "periodStart": 1771642800000,
+      "periodEnd": 1771729199999,
+      "impressions": 7884,
+      "clicks": 335,
+      "conversions": 11,
+      "revenue": 451,
+      "adSpend": 68,
+      "roi": 5.632352941176471,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "98e0d445-7e98-43b0-ad80-93c9695eac2b",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "campaignId": "d942c141-9e1a-4912-916d-6c8368863cc0",
+      "periodStart": 1771556400000,
+      "periodEnd": 1771642799999,
+      "impressions": 6592,
+      "clicks": 148,
+      "conversions": 4,
+      "revenue": 172,
+      "adSpend": 131,
+      "roi": 0.31297709923664124,
+      "cpa": null,
+      "roas": null
+    },
+    {
+      "id": "688069b8-3a87-47d9-bb93-4153bf24b3d6",
+      "projectId": "cd38f1ee-da6b-43d8-8d9b-763b142e3dc0",
+      "campaignId": "d942c141-9e1a-4912-916d-6c8368863cc0",
+      "periodStart": 1771470000000,
+      "periodEnd": 1771556399999,
+      "impressions": 8131,
+      "clicks": 355,
+      "conversions": 4,
+      "revenue": 240,
+      "adSpend": 118,
+      "roi": 1.0338983050847457,
+      "cpa": null,
+      "roas": null
+    }
+  ],
+  "analyticsSnapshots": [],
+  "attributions": [
+    {
+      "id": "4bb4ec79-d0fd-4361-9fb2-c627428ee174",
+      "eventId": "d3326c2f-b1ac-4033-ada3-a0abef73cf77",
+      "campaignId": "c0d553ad-f84d-4f9a-a14d-5bb0303ab4b2",
+      "model": "last_click",
+      "weight": 1,
+      "attributedAt": 1771986116988
+    },
+    {
+      "id": "05ae4d37-d871-400e-ae12-98051096df3d",
+      "eventId": "c4f9f909-ffaa-4449-a77f-a064069e08ed",
+      "campaignId": "c0d553ad-f84d-4f9a-a14d-5bb0303ab4b2",
+      "model": "last_click",
+      "weight": 1,
+      "attributedAt": 1771986118406
+    },
+    {
+      "id": "d126bf2e-938c-4a5d-9e3f-d8c2fad1f6f6",
+      "eventId": "cc746bfa-a54d-4849-8759-986a600efe2e",
+      "campaignId": "c341016d-f3d0-4a7a-a2da-a0680e343737",
+      "model": "last_click",
+      "weight": 1,
+      "attributedAt": 1772047770065
+    },
+    {
+      "id": "61384d7c-2ae1-4ea0-a168-83fb32e5541d",
+      "eventId": "4bc3214f-615a-4820-afed-d62033174e99",
+      "campaignId": "c341016d-f3d0-4a7a-a2da-a0680e343737",
+      "model": "last_click",
+      "weight": 1,
+      "attributedAt": 1772047771371
+    }
+  ],
+  "trackingHealth": [],
+  "alerts": [],
+  "healthHistory": [],
+  "usageCosts": [],
+  "privacySettings": [],
+  "consentRecords": []
+}
