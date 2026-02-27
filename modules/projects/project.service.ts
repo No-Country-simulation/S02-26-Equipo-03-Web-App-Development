@@ -41,36 +41,27 @@ export class ProjectService {
 
   static async createProject(userId: string, name: string, description?: string) {
     const result = await db.transaction(async (tx) => {
-      // Create project
+      // 1. Create project
       const project = await ProjectRepository.create({ name, description }, tx);
 
-      // Create owner role for the project
-      const ownerRole = await ProjectRoleRepository.createRole(
-        project.id,
-        "owner",
-        "Project owner",
-        tx
-      );
+      // 2. Create default roles except owner role
+      const createdRoles = await ProjectRoleRepository.createDefaultRoles(project.id, tx);
 
-      // Assign all permissions to owner role
-      await ProjectRoleRepository.assignAllPermissions(ownerRole.id, tx);
+      const ownerRoleId = createdRoles.owner;
 
-      // Create relation between project, owner role and user
-      await ProjectMemberRepository.addMember(project.id, userId, ownerRole.id, tx);
+      // 3. Create relation between project, owner role and user
+      await ProjectMemberRepository.addMember(project.id, userId, ownerRoleId, tx);
 
-      // Create API key
+      // 4. Create API key
       const apiKey = crypto.randomBytes(32).toString("hex");
       const hash = crypto.createHash("sha256").update(apiKey).digest("hex");
 
       await ProjectApiKeyRepository.create(project.id, hash, tx);
 
-      return {
-        project,
-        apiKey,
-      };
+      return { project, apiKey };
     });
 
-    // Auto-Simulate Ads data for development (Outside transaction)
+    // 5. Auto-Simulate Ads data for development (Outside transaction)
     try {
       await AdsSimulatorService.simulateProjectAds(result.project.id);
       console.log(`[Auto-Simulate] Mock data generated for project: ${result.project.id}`);
