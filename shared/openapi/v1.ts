@@ -791,6 +791,63 @@
       },
     },
 
+    "/v1/projects/{id}/roles": {
+      get: {
+        summary: "List all roles from the project",
+        tags: ["Roles"],
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            schema: { type: "string", format: "uuid" },
+          },
+        ],
+        responses: {
+          "200": {
+            description: "All project roles listed successfully",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "array",
+                  items: {
+                    type: "object",
+                    properties: {
+                      roleId: { type: "string", format: "uuid" },
+                      name: { type: "string" },
+                      description: { type: "string" },
+                    },
+                  },
+                },
+                example: [
+                  {
+                    roleId: "9a8abc34-2859-4bb3-967f-a40d5430c0c4",
+                    name: "admin",
+                    description: "admin default role",
+                  },
+                  {
+                    roleId: "9a8abc34-2859-4bb3-967f-a40d5430c0c4",
+                    name: "editor",
+                    description: "editor default role",
+                  },
+                  {
+                    roleId: "9a8abc34-2859-4bb3-967f-a40d5430c0c4",
+                    name: "owner",
+                    description: "owner default role",
+                  },
+                  {
+                    roleId: "9a8abc34-2859-4bb3-967f-a40d5430c0c4",
+                    name: "viewer",
+                    description: "viewer default role",
+                  },
+                ],
+              },
+            },
+          },
+        },
+      },
+    },
+
     "/v1/projects/{id}/api-keys": {
       get: {
         summary: "List all API keys for a project",

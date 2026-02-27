@@ -127,27 +127,6 @@ export class ProjectRoleRepository {
     return permissions;
   }
 
-  static async assignAllPermissions(roleId: string, database: DBConnection) {
-    let permissions = await database.select({ id: permissionsTable.id }).from(permissionsTable);
-
-    if (permissions.length === 0) {
-      permissions = await this.ensureStandardPermissions(database);
-    }
-
-    if (permissions.length === 0) return;
-
-    await database
-      .insert(rolePermissionsTable)
-      .values(
-        permissions.map((permission) => ({
-          id: randomUUID(),
-          roleId,
-          permissionId: permission.id,
-        }))
-      )
-      .onConflictDoNothing();
-  }
-
   static async findByIdAndProject(roleId: string, projectId: string, database: DBConnection) {
     const result = await database
       .select()
