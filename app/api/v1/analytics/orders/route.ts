@@ -5,10 +5,9 @@ import { getOrdersAnalytics } from "@/modules/orders.controller";
 export const dynamic = "force-dynamic";
 
 /**
- * @swagger
-   *  "/v1/analytics/orders": {
+ *  "/v1/analytics/orders": {
  *     get: {
- *        
+ *
  *       tags: ["Analytics Reports"],
  *       parameters: [
  *         {
