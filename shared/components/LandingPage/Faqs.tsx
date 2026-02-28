@@ -1,59 +1,69 @@
+"use client"
+
+
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/shared/components/ui/accordion";
+} from "@/shared/components/ui/accordion"
 
-const faqItems = [
+const FAQ_ITEMS = [
   {
-    question: "¿Por qué Meta no coincide con Stripe?",
-    answer:
-      "Meta atribuye conversiones con su propia ventana y modelo de atribución, mientras que Stripe reporta pagos confirmados. Es normal ver diferencias entre ambas plataformas.",
+    question: "¿Cómo se conecta Stripe?",
+    answer: "La conexión se realiza a través de OAuth seguro en menos de 2 minutos. Solo necesitas permisos de lectura para que GardenAds pueda cruzar los datos de ventas reales con tus campañas de marketing."
   },
   {
-    question: "¿Necesito instalar código?",
-    answer:
-      "No necesariamente. Puedes conectar tus herramientas y empezar sin implementar código adicional en la mayoría de casos.",
+    question: "¿Qué pasa si el tracking falla?",
+    answer: "Nuestro sistema de 'Tracking Health' monitorea tus eventos 24/7. Si detectamos una caída en la recepción de datos de Meta o Google, recibirás una alerta inmediata vía email o Slack."
   },
   {
-    question: "¿Funciona con Webflow o Shopify?",
-    answer:
-      "Sí. Puedes usarlo con Webflow, Shopify y otras plataformas populares mediante integraciones o configuración básica.",
+    question: "¿Cuánto tarda el setup completo?",
+    answer: "El setup base toma menos de 10 minutos. Una vez conectado Stripe y tus cuentas de Ads, el sistema comienza a procesar datos históricos para darte visibilidad inmediata."
   },
   {
-    question: "¿Qué eventos trackean?",
-    answer:
-      "Se suelen trackear eventos clave como visitas, inicios de checkout, compras y conversiones personalizadas según tu embudo.",
+    question: "¿Necesito ingenieros para implementar?",
+    answer: "No. GardenAds está diseñado para ser 'no-code'. Si ya tienes instalados los píxeles básicos de Meta o Google, nuestro sistema se encarga del resto mediante integraciones directas por API."
   },
   {
-    question: "¿Es seguro conectar Stripe?",
-    answer:
-      "Sí. La conexión utiliza canales seguros y permisos acotados para acceder únicamente a la información necesaria.",
+    question: "¿Puedo exportar todos los datos?",
+    answer: "Absolutamente. Puedes descargar reportes en PDF para presentaciones o CSV con toda la data cruda para realizar tus propios análisis internos en Excel o BI."
   },
-];
+  {
+    question: "¿Hay límite de usuarios o revenue?",
+    answer: "El plan profesional incluye hasta 5 usuarios. No limitamos la cantidad de revenue trackeado, ya que nuestro objetivo es ayudarte a escalar sin penalizar tu crecimiento."
+  }
+]
 
-export default function Faqs() {
+export default function FAQSection() {
   return (
-    <section className="bg-[#F7F9FA] px-6 py-24 md:px-10">
-      <div className="mx-auto w-full max-w-4xl">
-        <h2 className="mb-14 text-center text-4xl font-semibold tracking-tight text-black">
+    <section className="w-full bg-white py-24 px-6">
+      <div className="p-10 mx-auto">
+        
+        {/* Título Principal */}
+        <h2 className="text-3xl  font-bold text-center text-[#0f172a] mb-16">
           Preguntas Frecuentes
         </h2>
 
-        <Accordion type="single" collapsible className="w-full">
-          {faqItems.map((item, index) => (
-            <AccordionItem key={`faq-${index}`} value={`faq-${index}`}>
-              <AccordionTrigger className="py-6 text-base font-semibold text-black hover:no-underline">
+        {/* Acordeón de Preguntas */}
+        <Accordion type="single" collapsible className="w-full space-y-4">
+          {FAQ_ITEMS.map((item, index) => (
+            <AccordionItem 
+              key={index} 
+              value={`item-${index}`}
+              className="border w-full border-slate-100 rounded-2xl px-6 bg-white shadow-sm overflow-hidden data-[state=open]:shadow-md transition-all"
+            >
+              <AccordionTrigger className="hover:no-underline py-6 text-left text-slate-800 font-semibold text-lg">
                 {item.question}
               </AccordionTrigger>
-              <AccordionContent className="pb-6 pr-8 text-sm leading-7 text-muted-foreground">
+              <AccordionContent className="text-slate-600 text-base pb-6 leading-relaxed">
                 {item.answer}
               </AccordionContent>
             </AccordionItem>
           ))}
         </Accordion>
+
       </div>
     </section>
-  );
+  )
 }
