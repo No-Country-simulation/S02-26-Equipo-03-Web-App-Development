@@ -403,19 +403,37 @@
     "/v1/analytics/orders": {
       get: {
         summary: "List of payments with order details.",
-        /*  description: "Author: Favian",*/
         tags: ["Analytics Reports"],
         parameters: [
           {
-            name: "idUser",
+            name: "projectId",
             in: "query",
             required: true,
             schema: { type: "string" },
+            description: "Target project ID for analytics",
           },
         ],
         responses: {
-          "200": { description: "Project members retrieved successfully" },
+          "200": {
+            description: "Orders analytics retrieved successfully",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    count: { type: "integer" },
+                    data: {
+                      type: "array",
+                      items: { type: "object" },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          "400": { description: "Missing projectId parameter" },
           "401": { description: "Unauthorized" },
+          "403": { description: "Forbidden - user not member of project" },
           "500": { description: "Internal server error" },
         },
       },
@@ -914,20 +932,60 @@
 
     "/v1/reports": {
       get: {
-        summary: "List reports for a project",
+        summary: "List reports for the authenticated user",
         tags: ["Reports"],
         parameters: [
-          { name: "projectId", in: "query", required: true, schema: { type: "string" }, description: "ID del proyecto", example: "REEMPLAZA_CON_ID_REAL" },
-          { name: "name", in: "query", required: false, schema: { type: "string" }, description: "Búsqueda parcial por nombre", example: "Reporte" },
-          { name: "format", in: "query", required: false, schema: { type: "string", enum: ["pdf", "csv"] }, example: "pdf" },
-          { name: "createdFrom", in: "query", required: false, schema: { type: "string", format: "date-time" }, example: "2026-02-01T00:00:00.000Z", description: "Fecha mínima de creación (ISO 8601)" },
-          { name: "createdTo", in: "query", required: false, schema: { type: "string", format: "date-time" }, example: "2026-02-28T23:59:59.000Z", description: "Fecha máxima de creación (ISO 8601)" },
-          { name: "periodStart", in: "query", required: false, schema: { type: "string", format: "date-time" }, example: "2026-01-01T00:00:00.000Z", description: "Inicio mínimo del período del reporte" },
-          { name: "periodEnd", in: "query", required: false, schema: { type: "string", format: "date-time" }, example: "2026-01-31T23:59:59.000Z", description: "Fin máximo del período del reporte" },
+          {
+            name: "projectId",
+            in: "query",
+            required: true,
+            schema: { type: "string" },
+            description: "ID del proyecto cuyos reportes se listan",
+          },
+          {
+            name: "name",
+            in: "query",
+            required: false,
+            schema: { type: "string" },
+            description: "Búsqueda parcial por nombre",
+          },
+          {
+            name: "format",
+            in: "query",
+            required: false,
+            schema: { type: "string", enum: ["pdf", "csv"] },
+          },
+          {
+            name: "createdFrom",
+            in: "query",
+            required: false,
+            schema: { type: "string", format: "date-time" },
+            description: "Fecha mínima de creación (ISO 8601)",
+          },
+          {
+            name: "createdTo",
+            in: "query",
+            required: false,
+            schema: { type: "string", format: "date-time" },
+            description: "Fecha máxima de creación (ISO 8601)",
+          },
+          {
+            name: "periodStart",
+            in: "query",
+            required: false,
+            schema: { type: "string", format: "date-time" },
+          },
+          {
+            name: "periodEnd",
+            in: "query",
+            required: false,
+            schema: { type: "string", format: "date-time" },
+          },
         ],
         responses: {
-          "200": { description: "Lista de reportes" },
-          "400": { description: "projectId requerido o filtros inválidos" },
+          "200": { description: "Reports retrieved successfully" },
+          "400": { description: "Invalid filter parameters" },
+          "401": { description: "Unauthorized" },
           "500": { description: "Internal Server Error" },
         },
       },
@@ -972,41 +1030,59 @@
 
     "/v1/reports/stats": {
       get: {
-        summary: "Get report stats for header cards",
+        summary: "Get report statistics for the authenticated user",
         tags: ["Reports"],
         parameters: [
-          { name: "projectId", in: "query", required: true, schema: { type: "string" } },
+          {
+            name: "projectId",
+            in: "query",
+            required: true,
+            schema: { type: "string" },
+            description: "Project ID",
+          },
         ],
         responses: {
-          "200": { description: "Stats del proyecto (exportaciones del mes, último reporte, conteo por formato)" },
-          "400": { description: "projectId requerido" },
+          "200": {
+            description: "Report stats retrieved successfully",
+            content: {
+              "application/json": {
+                example: {
+                  status: "success",
+                  data: {
+                    exportsThisMonth: 8,
+                    lastReportDate: "2026-02-24T10:30:00.000Z",
+                    pdfCount: 5,
+                    csvCount: 3,
+                  },
+                },
+              },
+            },
+          },
+          "401": { description: "Unauthorized" },
           "500": { description: "Internal Server Error" },
         },
       },
     },
-
     "/v1/reports/{id}": {
       get: {
-        summary: "Get a report by ID",
+        summary: "Get a specific report by ID",
         tags: ["Reports"],
-        parameters: [
-          { name: "id", in: "path", required: true, schema: { type: "string" } },
-        ],
+        parameters: [{ name: "id", in: "path", required: true, schema: { type: "string" } }],
         responses: {
-          "200": { description: "Reporte encontrado" },
-          "404": { description: "Reporte no encontrado" },
+          "200": { description: "Report retrieved successfully" },
+          "401": { description: "Unauthorized" },
+          "404": { description: "Report not found" },
           "500": { description: "Internal Server Error" },
         },
       },
       delete: {
         summary: "Delete a report by ID",
         tags: ["Reports"],
-        parameters: [
-          { name: "id", in: "path", required: true, schema: { type: "string" } },
-        ],
+        parameters: [{ name: "id", in: "path", required: true, schema: { type: "string" } }],
         responses: {
-          "200": { description: "Reporte eliminado" },
-          "404": { description: "Reporte no encontrado" },
+          "200": { description: "Report deleted successfully" },
+          "401": { description: "Unauthorized" },
+          "404": { description: "Report not found" },
           "500": { description: "Internal Server Error" },
         },
       },

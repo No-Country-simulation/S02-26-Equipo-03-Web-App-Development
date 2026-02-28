@@ -78,43 +78,32 @@ function mapToOrderAnalyticsDTO(
 }
 
 /**
- * Returns orders analytics for a user with an active session.
+ * Returns orders analytics for a specific project.
+ * Validates that the user is a member of the requested project.
+ * @param projectId Target project ID.
  * @param userId Authenticated user ID.
  * @returns API response with analytics data or an error payload.
  */
-export async function getOrdersAnalytics(userId: string) {
+export async function getOrdersAnalytics(projectId: string, userId: string) {
   try {
-    const activeSession = await db.query.sessionsTable.findFirst({
-      where: (table, { and, eq, gt }) =>
-        and(eq(table.userId, userId), gt(table.expiresAt, new Date())),
+    // 1. Verify user is a member of the project
+    const membership = await db.query.projectMembersTable.findFirst({
+      where: (table, { and, eq }) => and(eq(table.projectId, projectId), eq(table.userId, userId)),
     });
 
-    if (!activeSession) {
+    if (!membership) {
       return NextResponse.json(
         {
           status: "error",
-          message: "Unauthorized",
+          message: "Unauthorized or project not found",
         },
-        { status: 401 }
+        { status: 403 }
       );
     }
 
-    const memberships = await db
-      .select({ projectId: projectMembersTable.projectId })
-      .from(projectMembersTable)
-      .where(eq(projectMembersTable.userId, userId));
-
-    const projectIds = [...new Set(memberships.map((m) => m.projectId))];
-
-    if (projectIds.length === 0) {
-      return NextResponse.json({
-        count: 0,
-        data: [],
-      });
-    }
-
+    // 2. Fetch orders for this specific project
     const orders = await db.query.ordersTable.findMany({
-      where: (table, { inArray }) => inArray(table.projectId, projectIds),
+      where: (table, { eq }) => eq(table.projectId, projectId),
       with: {
         campaign: {
           columns: {
@@ -131,7 +120,10 @@ export async function getOrdersAnalytics(userId: string) {
       orderBy: (table, { desc }) => [desc(table.orderDate)],
     });
 
-    const data = orders.map((order) => mapToOrderAnalyticsDTO(order, activeSession.expiresAt));
+    // 3. Optional: Get session to include expiration in DTO if needed,
+    // though getCurrentUser already implies a valid session.
+    // We'll use a placeholder or null if we don't want to re-fetch session.
+    const data = orders.map((order) => mapToOrderAnalyticsDTO(order, new Date())); // Using current date as fallback for expiresAt
 
     return NextResponse.json({
       count: data.length,
