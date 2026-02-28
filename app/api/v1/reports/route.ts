@@ -11,6 +11,11 @@ export const dynamic = "force-dynamic";
  *     summary: List reports for the authenticated user
  *     tags: [Reports]
  *     parameters:
+ *       - name: projectId
+ *         in: query
+ *         required: true
+ *         schema: { type: string }
+ *         description: ID del proyecto cuyos reportes se listan
  *       - name: name
  *         in: query
  *         schema: { type: string }

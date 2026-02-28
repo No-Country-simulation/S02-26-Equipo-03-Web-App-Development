@@ -37,6 +37,7 @@ export const createReportSchema = z.object({
 
 /** Schema para filtros del GET (query params) */
 export const reportFiltersSchema = z.object({
+  projectId: z.string().min(1, "projectId is required"),
   name: z.string().max(255).optional(),
   format: z.enum(["pdf", "csv"]).optional(),
   createdFrom: z
