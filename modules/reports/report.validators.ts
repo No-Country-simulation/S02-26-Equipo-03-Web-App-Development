@@ -60,6 +60,9 @@ export const reportFiltersSchema = z.object({
     .datetime()
     .transform((val) => new Date(val))
     .optional(),
+  campaignId: z.string().optional(),
+  sourcePlatform: z.string().optional(),
+  paymentType: z.string().optional(),
 });
 
 export type CreateReportDTO = z.input<typeof createReportSchema>;

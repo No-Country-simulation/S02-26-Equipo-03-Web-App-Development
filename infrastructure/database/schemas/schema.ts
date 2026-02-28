@@ -119,12 +119,14 @@ export const rolesTable = sqliteTable(
 /* ========================= 
     PERMISSIONS
 ==========================*/
-export const permissionsTable = sqliteTable("permissions", {
-  id: text("id").primaryKey(),
-  name: text("name").notNull(),
-  resource: text("resource").notNull(),
-  action: text("action").notNull(),
-},
+export const permissionsTable = sqliteTable(
+  "permissions",
+  {
+    id: text("id").primaryKey(),
+    name: text("name").notNull(),
+    resource: text("resource").notNull(),
+    action: text("action").notNull(),
+  },
   (table) => [uniqueIndex("permissions_resource_action_unique").on(table.resource, table.action)]
 );
 
@@ -345,6 +347,10 @@ export const ordersTable = sqliteTable("orders", {
   customerName: text("customer_name"),
   customerEmail: text("customer_email"),
   productName: text("product_name"),
+  paymentType: text("payment_type").default("PAGO ÚNICO"),
+  stripeId: text("stripe_id"),
+  campaignId: text("campaign_id").references(() => campaignsTable.id),
+  sourcePlatform: text("source_platform"),
 });
 
 /* ========================= 
@@ -683,6 +689,10 @@ export const ordersRelations = relations(ordersTable, ({ one }) => ({
   transaction: one(transactionsTable, {
     fields: [ordersTable.transactionId],
     references: [transactionsTable.id],
+  }),
+  campaign: one(campaignsTable, {
+    fields: [ordersTable.campaignId],
+    references: [campaignsTable.id],
   }),
 }));
 
