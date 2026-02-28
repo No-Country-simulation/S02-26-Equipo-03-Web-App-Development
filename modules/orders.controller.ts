@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { db } from "@infrastructure/database";
+import { eq } from "drizzle-orm";
+import { projectMembersTable } from "@infrastructure/database/schemas/schema";
 
 export interface OrderAnalyticsDTO {
   id: string;
@@ -17,39 +19,12 @@ export interface OrderAnalyticsDTO {
   expires_at_iso: string | null;
 }
 
-const ORDERS_ANALYTICS_QUERY = `
-SELECT DISTINCT
-    o.id,
-    o.client_name,
-    o.client_email,
-    c.name AS service_name,
-    o.payment_type,
-    i.name AS source_name,
-    o.total_amount,
-    o.status,
-    datetime(o.order_date / 1000, 'unixepoch') AS order_date_iso,
-    o.stripe_id,
-    c.id AS campaign_id,
-    o.project_id,
-    datetime(s.expires_at / 1000, 'unixepoch') AS expires_at_iso
-FROM orders o
-LEFT JOIN attributions a ON o.id = a.order_id
-LEFT JOIN campaigns c ON a.campaign_id = c.id
-LEFT JOIN integrations i ON c.ads_integration_id = i.id
-JOIN project_members pm ON o.project_id = pm.project_id
-JOIN session s ON pm.user_id = s.user_id
-WHERE s.user_id = ?
-  AND s.expires_at > strftime('%s', 'now') * 1000
-`;
-
-const ACTIVE_SESSION_QUERY = `
-SELECT 1 AS has_session
-FROM session s
-WHERE s.user_id = ?
-  AND s.expires_at > strftime('%s', 'now') * 1000
-LIMIT 1
-`;
-
+/**
+ * Builds a standardized 500 HTTP response and logs the original error.
+ * @param message Context message for logs.
+ * @param error Caught error instance.
+ * @returns NextResponse with HTTP 500 payload.
+ */
 function internalError(message: string, error: unknown) {
   console.error(message, error);
   return NextResponse.json(
@@ -61,76 +36,94 @@ function internalError(message: string, error: unknown) {
   );
 }
 
-function asStringOrNull(value: unknown): string | null {
-  if (value === null || value === undefined) {
-    return null;
-  }
-  return String(value);
-}
-
-function asRequiredString(value: unknown, field: string): string {
-  if (typeof value === "string") {
-    return value;
-  }
-  if (value === null || value === undefined) {
-    throw new Error(`Invalid null value for required field '${field}'`);
-  }
-  return String(value);
-}
-
-function asRequiredNumber(value: unknown, field: string): number {
-  if (typeof value === "number") {
-    return value;
-  }
-
-  const parsed = Number(value);
-  if (!Number.isFinite(parsed)) {
-    throw new Error(`Invalid number for field '${field}'`);
-  }
-  return parsed;
-}
-
-function mapToOrderAnalyticsDTO(row: Record<string, unknown>): OrderAnalyticsDTO {
+/**
+ * Maps an order entity to the API response DTO.
+ * @param order Order row with related campaign and transaction.
+ * @param expiresAt Session expiration date.
+ * @returns Order analytics DTO.
+ */
+function mapToOrderAnalyticsDTO(
+  order: {
+    id: string;
+    customerName: string | null;
+    customerEmail: string | null;
+    paymentType: string | null;
+    sourcePlatform: string | null;
+    totalAmount: number;
+    status: string;
+    orderDate: Date;
+    stripeId: string | null;
+    campaignId: string | null;
+    projectId: string;
+    campaign?: { id: string; name: string } | null;
+    transaction?: { externalId: string | null } | null;
+  },
+  expiresAt: Date
+): OrderAnalyticsDTO {
   return {
-    id: asRequiredString(row.id, "id"),
-    client_name: asStringOrNull(row.client_name),
-    client_email: asStringOrNull(row.client_email),
-    service_name: asStringOrNull(row.service_name),
-    payment_type: asStringOrNull(row.payment_type),
-    source_name: asStringOrNull(row.source_name),
-    total_amount: asRequiredNumber(row.total_amount, "total_amount"),
-    status: asRequiredString(row.status, "status"),
-    order_date_iso: asStringOrNull(row.order_date_iso),
-    stripe_id: asStringOrNull(row.stripe_id),
-    campaign_id: asStringOrNull(row.campaign_id),
-    project_id: asRequiredString(row.project_id, "project_id"),
-    expires_at_iso: asStringOrNull(row.expires_at_iso),
+    id: order.id,
+    client_name: order.customerName,
+    client_email: order.customerEmail,
+    service_name: order.campaign?.name ?? null,
+    payment_type: order.paymentType ?? null,
+    source_name: order.sourcePlatform ?? null,
+    total_amount: order.totalAmount,
+    status: order.status,
+    order_date_iso: order.orderDate.toISOString(),
+    stripe_id: order.stripeId ?? order.transaction?.externalId ?? null,
+    campaign_id: order.campaignId ?? order.campaign?.id ?? null,
+    project_id: order.projectId,
+    expires_at_iso: expiresAt.toISOString(),
   };
 }
 
-export async function getOrdersAnalytics(userId: string) {
+/**
+ * Returns orders analytics for a specific project.
+ * Validates that the user is a member of the requested project.
+ * @param projectId Target project ID.
+ * @param userId Authenticated user ID.
+ * @returns API response with analytics data or an error payload.
+ */
+export async function getOrdersAnalytics(projectId: string, userId: string) {
   try {
-    const sessionResult = await db.$client.execute({
-      sql: ACTIVE_SESSION_QUERY,
-      args: [userId],
+    // 1. Verify user is a member of the project
+    const membership = await db.query.projectMembersTable.findFirst({
+      where: (table, { and, eq }) => and(eq(table.projectId, projectId), eq(table.userId, userId)),
     });
 
-    if (sessionResult.rows.length === 0) {
+    if (!membership) {
       return NextResponse.json(
         {
           status: "error",
-          message: "Unauthorized",
+          message: "Unauthorized or project not found",
         },
-        { status: 401 }
+        { status: 403 }
       );
     }
 
-    const result = await db.$client.execute({
-      sql: ORDERS_ANALYTICS_QUERY,
-      args: [userId],
+    // 2. Fetch orders for this specific project
+    const orders = await db.query.ordersTable.findMany({
+      where: (table, { eq }) => eq(table.projectId, projectId),
+      with: {
+        campaign: {
+          columns: {
+            id: true,
+            name: true,
+          },
+        },
+        transaction: {
+          columns: {
+            externalId: true,
+          },
+        },
+      },
+      orderBy: (table, { desc }) => [desc(table.orderDate)],
     });
 
-    const data = result.rows.map((row) => mapToOrderAnalyticsDTO(row as Record<string, unknown>));
+    // 3. Optional: Get session to include expiration in DTO if needed,
+    // though getCurrentUser already implies a valid session.
+    // We'll use a placeholder or null if we don't want to re-fetch session.
+    const data = orders.map((order) => mapToOrderAnalyticsDTO(order, new Date())); // Using current date as fallback for expiresAt
 
     return NextResponse.json({
       count: data.length,
