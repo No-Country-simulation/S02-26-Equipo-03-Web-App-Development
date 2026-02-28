@@ -16,7 +16,7 @@ export const createReportSchema = z.object({
     .min(1, "name is required")
     .max(255, "name is too long"),
   format: z.enum(["pdf", "csv"], {
-    error: "format must be 'pdf' or 'csv'",
+    message: "format must be 'pdf' or 'csv'",
   }),
   fileUrl: z
     .string()

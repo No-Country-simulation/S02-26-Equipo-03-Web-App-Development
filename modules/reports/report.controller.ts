@@ -67,6 +67,7 @@ export async function listReports(searchParams: URLSearchParams) {
     }
 
     const rawFilters = {
+      projectId,
       name: searchParams.get("name") ?? undefined,
       format: searchParams.get("format") ?? undefined,
       createdFrom: searchParams.get("createdFrom") ?? undefined,
@@ -93,7 +94,7 @@ export async function listReports(searchParams: URLSearchParams) {
       );
     }
 
-    const filters: ReportFilters = { projectId, ...parsed.data };
+    const filters: ReportFilters = parsed.data;
     const reports = await ReportRepository.findAll(filters, db);
 
     return NextResponse.json({
