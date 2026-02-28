@@ -340,8 +340,19 @@
                   name: { type: "string" },
                   budget: { type: "number" },
                   status: { type: "string", enum: ["active", "paused", "completed", "draft"] },
+                  externalId: { type: 'string' },
+                  startDate: { type: 'string', format: 'date' },
+                  endDate: { type: 'string', format: 'date' }
                 },
               },
+              example: {
+                projectId: "proj_123",
+                name: "black_friday_2026",
+                budget: 2500,
+                status: "active",
+                externalId: "mock_fb_001",
+                startDate: "2026-11-20"
+              }
             },
           },
         },
@@ -352,6 +363,27 @@
           "403": { description: "Forbidden" },
         },
       },
+
+      get: {
+        summary: "List all campaigns in a project",
+        tags: ["Campaigns"],
+        parameters: [
+          {
+            name: "projectId",
+            in: "query",
+            required: true,
+            schema: { type: "string" },
+            description: "The ID of the project to fetch campaigns from",
+          },
+        ],
+        responses: {
+          "200": { description: "A list of campaigns" },
+          "400": { description: "Missing projectId" },
+          "401": { description: "Unauthorized" },
+          "403": { description: "Forbidden" },
+          "500": { description: "Internal Server Error" },
+        },
+      }
     },
 
     "/v1/simulate/ads": {
