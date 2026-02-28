@@ -911,5 +911,105 @@
         },
       },
     },
+
+    "/v1/reports": {
+      get: {
+        summary: "List reports for a project",
+        tags: ["Reports"],
+        parameters: [
+          { name: "projectId", in: "query", required: true, schema: { type: "string" }, description: "ID del proyecto", example: "REEMPLAZA_CON_ID_REAL" },
+          { name: "name", in: "query", required: false, schema: { type: "string" }, description: "Búsqueda parcial por nombre", example: "Reporte" },
+          { name: "format", in: "query", required: false, schema: { type: "string", enum: ["pdf", "csv"] }, example: "pdf" },
+          { name: "createdFrom", in: "query", required: false, schema: { type: "string", format: "date-time" }, example: "2026-02-01T00:00:00.000Z", description: "Fecha mínima de creación (ISO 8601)" },
+          { name: "createdTo", in: "query", required: false, schema: { type: "string", format: "date-time" }, example: "2026-02-28T23:59:59.000Z", description: "Fecha máxima de creación (ISO 8601)" },
+          { name: "periodStart", in: "query", required: false, schema: { type: "string", format: "date-time" }, example: "2026-01-01T00:00:00.000Z", description: "Inicio mínimo del período del reporte" },
+          { name: "periodEnd", in: "query", required: false, schema: { type: "string", format: "date-time" }, example: "2026-01-31T23:59:59.000Z", description: "Fin máximo del período del reporte" },
+        ],
+        responses: {
+          "200": { description: "Lista de reportes" },
+          "400": { description: "projectId requerido o filtros inválidos" },
+          "500": { description: "Internal Server Error" },
+        },
+      },
+      post: {
+        summary: "Create a new report",
+        tags: ["Reports"],
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                required: ["projectId", "name", "format", "fileUrl", "periodStart", "periodEnd"],
+                properties: {
+                  projectId: { type: "string" },
+                  name: { type: "string" },
+                  format: { type: "string", enum: ["pdf", "csv"] },
+                  fileUrl: { type: "string", format: "uri" },
+                  periodStart: { type: "string", format: "date-time" },
+                  periodEnd: { type: "string", format: "date-time" },
+                },
+              },
+              example: {
+                projectId: "REEMPLAZA_CON_ID_REAL",
+                name: "Reporte de prueba",
+                format: "pdf",
+                fileUrl: "https://storage.example.com/test.pdf",
+                periodStart: "2026-01-01T00:00:00.000Z",
+                periodEnd: "2026-01-31T23:59:59.000Z",
+              },
+            },
+          },
+        },
+        responses: {
+          "201": { description: "Reporte creado exitosamente" },
+          "400": { description: "Validación fallida" },
+          "401": { description: "No autenticado" },
+          "500": { description: "Internal Server Error" },
+        },
+      },
+    },
+
+    "/v1/reports/stats": {
+      get: {
+        summary: "Get report stats for header cards",
+        tags: ["Reports"],
+        parameters: [
+          { name: "projectId", in: "query", required: true, schema: { type: "string" } },
+        ],
+        responses: {
+          "200": { description: "Stats del proyecto (exportaciones del mes, último reporte, conteo por formato)" },
+          "400": { description: "projectId requerido" },
+          "500": { description: "Internal Server Error" },
+        },
+      },
+    },
+
+    "/v1/reports/{id}": {
+      get: {
+        summary: "Get a report by ID",
+        tags: ["Reports"],
+        parameters: [
+          { name: "id", in: "path", required: true, schema: { type: "string" } },
+        ],
+        responses: {
+          "200": { description: "Reporte encontrado" },
+          "404": { description: "Reporte no encontrado" },
+          "500": { description: "Internal Server Error" },
+        },
+      },
+      delete: {
+        summary: "Delete a report by ID",
+        tags: ["Reports"],
+        parameters: [
+          { name: "id", in: "path", required: true, schema: { type: "string" } },
+        ],
+        responses: {
+          "200": { description: "Reporte eliminado" },
+          "404": { description: "Reporte no encontrado" },
+          "500": { description: "Internal Server Error" },
+        },
+      },
+    },
   },
 } as const;
