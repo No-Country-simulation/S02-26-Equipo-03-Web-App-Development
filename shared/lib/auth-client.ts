@@ -63,3 +63,17 @@ export function getSession() {
     method: "GET",
   });
 }
+
+export function forgotPassword(payload: { email: string; redirectTo: string }) {
+  return authFetch("/forget-password", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+}
+
+export function resetPassword(payload: { token: string; newPassword: string }) {
+  return authFetch("/reset-password", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+}
