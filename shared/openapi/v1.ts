@@ -522,6 +522,34 @@
       }
     },
 
+    "/v1/campaigns/{id}": {
+      get: {
+        summary: "Get a campaign by id",
+        tags: ["Campaigns"],
+        parameters: [
+          {
+            name: "id",
+            in: "query",
+            required: true,
+            schema: { type: "string" },
+            description: "The ID of the campaign to fetch",
+          },
+          {
+            name: "projectId",
+            in: "query",
+            required: true,
+            schema: { type: "string" },
+            description: "The ID of the project to fetch",
+          },
+        ],
+        responses: {
+          "200": { description: "A campaign" },
+          "404": { description: "Campaign not found" },
+          "500": { description: "Internal Server Error" },
+        },
+      }
+    },
+
     "/v1/simulate/ads": {
       get: {
         summary: "Simulates Meta and Google Ads data for a project",

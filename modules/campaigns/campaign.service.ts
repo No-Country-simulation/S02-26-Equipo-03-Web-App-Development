@@ -1,5 +1,5 @@
 import { db } from "@/infrastructure/database";
-import { CampaignRepository, type PagCampaignResponse } from "./campaign.repository";
+import { CampaignRepository, type PagCampaignResponse } from "@/modules/campaigns/campaign.repository";
 import { ProjectService } from "@/modules/projects/project.service";
 
 export class CampaignService {

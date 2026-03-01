@@ -35,25 +35,10 @@ export async function POST(req: NextRequest) {
       startDate: start,
       endDate: end,
       status,
-    }, db);
+    });
 
     return NextResponse.json(campaign, { status: 201 });
   } catch (error: any) {
-    console.error("POST_CAMPAIGN_ERROR:", error);
-
-    const errorMap: Record<string, { status: number; msg: string }> = {
-      "Forbidden": { status: 403, msg: "No tienes permisos." },
-      "CampaignNameAlreadyExistsInThisPeriod": { status: 400, msg: "Ya existe una campaña activa con ese nombre este mes." },
-      "Invalid startDate": { status: 400, msg: "La fecha de inicio no es válida." }
-    };
-    
-    if (errorMap[error.message]) {
-      return NextResponse.json(
-        { message: errorMap[error.message].msg },
-        { status: errorMap[error.message].status }
-      );
-    }
-
     return NextResponse.json(
       { message: error.message || "Internal Server Error" },
       { status: 500 }
@@ -76,7 +61,7 @@ export async function getCampaign(req: NextRequest){
     const projectId = searchParams.get("projectId");
     let page = parseInt((searchParams.get("page") || "1"), 10);
     if(!projectId){
-      return NextResponse.json({ error: "Missing projectId" },{ status: 400 });
+      return NextResponse.json({ message: "Missing projectId" },{ status: 400 });
     }
     if(isNaN(page) || page <= 0){
       page = 1;

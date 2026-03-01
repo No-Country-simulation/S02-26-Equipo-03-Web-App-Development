@@ -2,27 +2,7 @@ import { db, DBConnection } from "@/infrastructure/database";
 import { campaignsTable, Campaign, InsertCampaign, analyticsTable, integrationsTable, ordersTable } from "@/infrastructure/database/schemas/schema";
 import { eq, and, sql, SQL, desc } from "drizzle-orm";
 import crypto from "crypto";
-
-export interface CampaignReportDTO {
-  id: string;
-  name: string;
-  platform: string | null;
-  status: string;
-  adSpend: number;
-  revenue: number;
-  roas: number;
-  cpa: number;
-  startDate: Date | null;
-  endDate: Date | null;
-};
-
-export interface PagCampaignResponse {
-  data: CampaignReportDTO[];
-  totalCampaigns: number;
-  totalPages: number;
-  currentPage: number;
-  limit: number;
-};
+import { CampaignById, OrdersDTO, PagCampaignResponse } from "@/modules/campaigns/campaign.types";
 
 export class CampaignRepository {
   private static readonly ROWS_PER_PAGE = 5;
@@ -43,7 +23,7 @@ export class CampaignRepository {
     const nameFilter = sql`LOWER(${campaignsTable.name}) LIKE LOWER(${`%${name}%`})`;
     const [data, totalCampaigns] = await Promise.all([
       this.campaignBase(projectId, db, page, nameFilter),
-      this.countCampaigns(projectId, db, nameFilter)
+      this.countRecords(projectId, campaignsTable, db, nameFilter)
     ]);
     const totalPages = Math.ceil(totalCampaigns / this.ROWS_PER_PAGE);
     
@@ -53,7 +33,7 @@ export class CampaignRepository {
   static async allByProjectId(projectId: string, db: DBConnection, page: number = 1): Promise<PagCampaignResponse> {
     const [data, totalCampaigns] = await Promise.all ([
       this.campaignBase(projectId, db, page),
-      this.countCampaigns(projectId, db)
+      this.countRecords(projectId, campaignsTable, db)
     ]);
 
     const totalPages = Math.ceil(totalCampaigns / this.ROWS_PER_PAGE);
@@ -61,11 +41,12 @@ export class CampaignRepository {
     return { data, totalCampaigns, totalPages, currentPage: page, limit: this.ROWS_PER_PAGE };
   }
 
-  private static async campaignBase(projectId: string, db: DBConnection, page: number = 1, filters?: SQL){
+  private static async campaignBase(projectId: string, db: DBConnection, page: number = 1, filters?: SQL, limit?: number){
     const conditions = [eq(campaignsTable.projectId, projectId)];
     if (filters) {
       conditions.push(filters);
     }
+    const finalLimit = limit || this.ROWS_PER_PAGE;
 
     // 1. Subconsulta para Métricas de Ads (Gasto y Conversiones)
     const adsMetrics = db
@@ -121,24 +102,74 @@ export class CampaignRepository {
         sql`stripeMetrics.totalRevenue`
       )
       .orderBy(desc(campaignsTable.startDate), desc(campaignsTable.id) )
-      .limit(this.ROWS_PER_PAGE)
-      .offset((page - 1) * this.ROWS_PER_PAGE);
+      .limit(finalLimit)
+      .offset((page - 1) * finalLimit);
   }
 
-  private static async countCampaigns(projectId: string, db: DBConnection, filters?: SQL): Promise<number> {
-    const conditions = [eq(campaignsTable.projectId, projectId)];
+  private static async countRecords(projectId: string, table: any, db: DBConnection, filters?: SQL): Promise<number> {
+    const conditions = [eq(table.projectId, projectId)];
     if (filters) {
       conditions.push(filters);
     }
 
     const result = await db
-      .select({ count: sql<number>`CAST(COUNT(${campaignsTable.id}) AS INTEGER)` })
-      .from(campaignsTable)
+      .select({ count: sql<number>`CAST(COUNT(${table.id}) AS INTEGER)` })
+      .from(table)
       .where(and(...conditions));
 
     return result[0]?.count ?? 0;
   }
+
+  static async findById(projectId: string, campaignId: string, db: DBConnection, page: number = 1): Promise<CampaignById> {
+    const campaignFilter = and(eq(campaignsTable.id, campaignId), eq(campaignsTable.projectId, projectId));
+    const ordenCondition = eq(ordersTable.campaignId, campaignId);
+    
+    // Desestructuramos data para obtener solo el primer elemento: [campaign]
+    const [[campaign], ordersCampaign, totalOrders] = await Promise.all([
+      this.campaignBase(projectId, db, page, campaignFilter, 1),
+      this.allOrdersByCampaignId(campaignId, db, page),
+      this.countRecords(projectId, ordersTable, db, ordenCondition)
+    ]);
+    const totalPages = Math.ceil(totalOrders / this.ROWS_PER_PAGE);
+    
+    return { 
+      campaign: campaign || null, 
+      ordersCampaign, 
+      totalOrders, 
+      totalPages, 
+      currentPage: page, 
+      limit: this.ROWS_PER_PAGE };
+  }
+  
+  static async allOrdersByCampaignId(campaignId: string, db: DBConnection, page: number = 1): Promise<OrdersDTO[]> {
+    const orders = await db
+      .select({
+        id: ordersTable.id,
+        idOrden: ordersTable.stripeId,      
+        clientName: ordersTable.customerName,   
+        clientEmail: ordersTable.customerEmail,   
+        serviceName: campaignsTable.name,       
+        paymentType: ordersTable.paymentType,      
+        sourceName: ordersTable.sourcePlatform,          
+        totalAmount: ordersTable.totalAmount,         
+        status: ordersTable.status,
+        orderDate: ordersTable.orderDate,
+        campaignId: ordersTable.campaignId,
+        projectId: ordersTable.projectId,
+      })
+      .from(ordersTable)
+      .leftJoin(campaignsTable, eq(ordersTable.campaignId, campaignsTable.id))
+      .where(eq(ordersTable.campaignId, campaignId))
+      .orderBy(desc(ordersTable.orderDate), desc(ordersTable.id))
+      .limit(this.ROWS_PER_PAGE)
+      .offset((page - 1) * this.ROWS_PER_PAGE);
+
+    return orders.map(order => ({
+      ...order,
+      orderDate: order.orderDate ? order.orderDate.toISOString() : null
+    }));
+  }
 }
 
-
+export type { PagCampaignResponse, OrdersDTO };
 
