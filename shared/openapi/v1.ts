@@ -303,6 +303,93 @@
       },
     },
 
+    "/auth/request-password-reset": {
+      post: {
+        summary: "Request a password reset email",
+        tags: ["Auth"],
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                required: ["email", "redirectTo"],
+                properties: {
+                  email: { type: "string", format: "email" },
+                  redirectTo: { type: "string", format: "uri" },
+                },
+                example: {
+                  email: "johndoe@gmail.com",
+                  redirectTo: "http://localhost:3000/reset-password",
+                },
+              },
+            },
+          },
+        },
+        responses: {
+          "200": { description: "Reset email sent successfully" },
+          "400": { description: "Invalid input or user not found" },
+        },
+      },
+    },
+
+    "/auth/reset-password": {
+      post: {
+        summary: "Reset password using a token",
+        tags: ["Auth"],
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                required: ["token", "newPassword"],
+                properties: {
+                  token: { type: "string" },
+                  newPassword: { type: "string", minLength: 8 },
+                },
+                example: {
+                  token: "eyJhbGciOiJIUzI1NiJ9...",
+                  newPassword: "newSecurePassword123",
+                },
+              },
+            },
+          },
+        },
+        responses: {
+          "200": { description: "Password reset successfully" },
+          "400": { description: "Invalid or expired token" },
+        },
+      },
+    },
+
+    "/auth/verify-email": {
+      get: {
+        summary: "Verify user email address",
+        tags: ["Auth"],
+        parameters: [
+          {
+            name: "token",
+            in: "query",
+            required: true,
+            schema: { type: "string" },
+            description: "Verification token sent via email",
+          },
+          {
+            name: "callbackURL",
+            in: "query",
+            required: false,
+            schema: { type: "string", format: "uri" },
+            description: "URL to redirect to after verification",
+          },
+        ],
+        responses: {
+          "302": { description: "Redirect to callbackURL on success" },
+          "400": { description: "Invalid or expired verification token" },
+        },
+      },
+    },
+
     "/v1/track": {
       post: {
         summary: "Track an event (JSON)",
