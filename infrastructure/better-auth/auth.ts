@@ -3,6 +3,7 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import * as schema from "@infrastructure/database/schemas/schema";
 import { db } from "@infrastructure/database";
 import { ProjectService } from "@/modules/projects/project.service";
+import { MailService } from "@infrastructure/services/mail.service";
 import "dotenv/config";
 import crypto from "crypto";
 
@@ -28,8 +29,20 @@ export const auth = betterAuth({
 
   baseURL: process.env.BETTER_AUTH_BASE_URL,
 
+  emailVerification: {
+    sendOnSignUp: true,
+    autoSignInAfterVerification: true,
+    sendVerificationEmail: async ({ user, url }) => {
+      await MailService.sendVerificationEmail(user.email, url);
+    },
+  },
+
   emailAndPassword: {
     enabled: true,
+    requireEmailVerification: true, // Esto es clave: obliga a verificar para poder entrar
+    sendResetPassword: async ({ user, url }) => {
+      await MailService.sendPasswordResetEmail(user.email, url);
+    },
   },
 
   trustedOrigins: process.env.NODE_ENV === "development" ? ["http://localhost:3000"] : [],

@@ -65,7 +65,7 @@ export function getSession() {
 }
 
 export function forgotPassword(payload: { email: string; redirectTo: string }) {
-  return authFetch("/forget-password", {
+  return authFetch("/request-password-reset", {
     method: "POST",
     body: JSON.stringify(payload),
   });

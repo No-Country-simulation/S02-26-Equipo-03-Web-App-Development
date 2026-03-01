@@ -34,7 +34,12 @@ export default function LoginForm() {
     const result = await signInWithEmail(data);
 
     if (result.error) {
-      setStatus(result.error.message ?? "No se pudo iniciar sesión.");
+      // Capturamos el error 403 o el código específico de Better Auth
+      if (result.error.status === 403 || result.error.message?.includes("403")) {
+        setStatus("--> Revisá tus datos o la verificación de tu email.");
+      } else {
+        setStatus(result.error.message ?? "No se pudo iniciar sesión.");
+      }
       setIsBusy(false);
       return;
     }
