@@ -1,5 +1,5 @@
 import { db, DBConnection } from "@/infrastructure/database";
-import { campaignsTable, Campaign, InsertCampaign, analyticsTable, integrationsTable } from "@/infrastructure/database/schemas/schema";
+import { campaignsTable, Campaign, InsertCampaign, analyticsTable, integrationsTable, ordersTable } from "@/infrastructure/database/schemas/schema";
 import { eq, and, sql, SQL, desc } from "drizzle-orm";
 import crypto from "crypto";
 
@@ -27,7 +27,7 @@ export interface PagCampaignResponse {
 export class CampaignRepository {
   private static readonly ROWS_PER_PAGE = 5;
 
-  static async create(data: Omit<InsertCampaign, "id">, db: DBConnection): Promise<Campaign> {
+  static async create(data: Omit<InsertCampaign, "id">): Promise<Campaign> {
     const id = crypto.randomUUID();
     const [result] = await db
       .insert(campaignsTable)
@@ -36,8 +36,6 @@ export class CampaignRepository {
         id,
       } as InsertCampaign)
       .returning();
-
-    if (!result) throw new Error("Failed to create campaign");
     return result;
   }
 
@@ -49,7 +47,6 @@ export class CampaignRepository {
     ]);
     const totalPages = Math.ceil(totalCampaigns / this.ROWS_PER_PAGE);
     
-    console.log(`currentPage: ${page}`)
     return { data, totalCampaigns, totalPages, currentPage: page, limit: this.ROWS_PER_PAGE };
   }
 
@@ -70,6 +67,27 @@ export class CampaignRepository {
       conditions.push(filters);
     }
 
+    // 1. Subconsulta para Métricas de Ads (Gasto y Conversiones)
+    const adsMetrics = db
+      .select({
+        campaignId: analyticsTable.campaignId,
+        totalSpend: sql<number>`CAST(SUM(${analyticsTable.adSpend}) AS NUMERIC)`.mapWith(Number).as("totalSpend"),
+        totalConversions: sql<number>`CAST(SUM(${analyticsTable.conversions}) AS NUMERIC)`.mapWith(Number).as("totalConversions"),
+      })
+      .from(analyticsTable)
+      .groupBy(analyticsTable.campaignId)
+      .as("adsMetrics");
+
+    // 2. Subconsulta para Métricas de Stripe (Ingresos Reales)
+    const stripeMetrics = db
+      .select({
+        campaignId: ordersTable.campaignId,
+        totalRevenue: sql<number>`CAST(SUM(${ordersTable.totalAmount}) AS NUMERIC)`.mapWith(Number).as("totalRevenue"),
+      })
+      .from(ordersTable)
+      .groupBy(ordersTable.campaignId)
+      .as("stripeMetrics");
+
     return await db
       .select({
         id: campaignsTable.id,
@@ -77,32 +95,30 @@ export class CampaignRepository {
         externalId: campaignsTable.externalId,
         platform: sql<string>`MAX(${integrationsTable.platform})`,
         projectId: campaignsTable.projectId,
-        /**calculas el total "al vuelo" sumando los registros de la tabla analytics.
-         * Siempre es el dato real y exacto de lo que ha pasado día por día.*/
-        adSpend: sql<number>`CAST(COALESCE(SUM(${analyticsTable.adSpend}), 0) AS REAL)`,
-        revenue: sql<number>`CAST(COALESCE(SUM(${analyticsTable.revenue}), 0) AS REAL)`,
+        adSpend: sql<number>`CAST(COALESCE(${adsMetrics.totalSpend}, 0) AS REAL)`.mapWith(Number),
+        revenue: sql<number>`CAST(COALESCE(${stripeMetrics.totalRevenue}, 0) AS REAL)`.mapWith(Number),
         // ROAS = Revenue de stripe / ad spend (meta/google)
-        roas: sql<number>`CASE WHEN SUM(${analyticsTable.adSpend}) > 0 
-                       THEN ROUND(SUM(${analyticsTable.revenue}) / SUM(${analyticsTable.adSpend}), 2) 
-                       ELSE 0 END`,
+        roas: sql<number>`CASE WHEN (${adsMetrics.totalSpend}) > 0 
+                       THEN ROUND(CAST(COALESCE(${stripeMetrics.totalRevenue}, 0) AS NUMERIC)/ CAST(COALESCE(${adsMetrics.totalSpend}, 0) AS NUMERIC), 2) 
+                       ELSE 0 END`.mapWith(Number),
         // Calculamos el CPA (Gasto / Conversiones)
-        cpa: sql<number>`CASE WHEN SUM(${analyticsTable.conversions}) > 0 
-                         THEN ROUND(SUM(${analyticsTable.adSpend}) / SUM(${analyticsTable.conversions}), 2) 
-                         ELSE 0 END`,
+        cpa: sql<number>`CASE WHEN (${adsMetrics.totalConversions}) > 0 
+                         THEN ROUND(CAST(COALESCE(${adsMetrics.totalSpend}, 0) AS NUMERIC)/ CAST(COALESCE(${adsMetrics.totalConversions}, 0) AS NUMERIC), 2) 
+                         ELSE 0 END`.mapWith(Number),
         startDate: campaignsTable.startDate,
         endDate: campaignsTable.endDate,
         status: campaignsTable.status,
       })
       .from(campaignsTable)
-      .leftJoin(analyticsTable, eq(campaignsTable.id, analyticsTable.campaignId))
+      .leftJoin(stripeMetrics, eq(campaignsTable.id, stripeMetrics.campaignId))
+      .leftJoin(adsMetrics, eq(campaignsTable.id, adsMetrics.campaignId))
       .leftJoin(integrationsTable, eq(campaignsTable.adsIntegrationId, integrationsTable.id)) 
       .where(and(...conditions))
       .groupBy(
-        campaignsTable.id, 
-        campaignsTable.name, 
-        campaignsTable.status, 
-        campaignsTable.startDate, 
-        campaignsTable.endDate
+        campaignsTable.id,
+        sql`adsMetrics.totalSpend`,
+        sql`adsMetrics.totalConversions`,
+        sql`stripeMetrics.totalRevenue`
       )
       .orderBy(desc(campaignsTable.startDate), desc(campaignsTable.id) )
       .limit(this.ROWS_PER_PAGE)
