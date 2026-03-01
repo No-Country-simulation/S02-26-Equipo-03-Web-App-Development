@@ -39,7 +39,7 @@ export const auth = betterAuth({
 
   emailAndPassword: {
     enabled: true,
-    requireEmailVerification: true, // Esto es clave: obliga a verificar para poder entrar
+    requireEmailVerification: true, // Esto obliga a verificar para poder entrar
     sendResetPassword: async ({ user, url }) => {
       await MailService.sendPasswordResetEmail(user.email, url);
     },
