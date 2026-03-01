@@ -377,7 +377,143 @@
           },
         ],
         responses: {
-          "200": { description: "A list of campaigns" },
+          "200": { description: "A list of campaigns",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    success: { type: "boolean" },
+                    data: {
+                      type: "array",
+                      items: {
+                        type: "object",
+                        properties: {
+                          id: { type: "string" },
+                          name: { type: "string" },
+                          budget: { type: "number" },
+                          status: { type: "string" },
+                          externalId: { type: "string" },
+                          startDate: { type: "string", format: "date" },
+                          endDate: { type: "string", format: "date" },
+                        },
+                      },
+                    },
+                  },
+                },
+                example: {
+                  success: true,
+                  data: [
+                    {
+                      id: "campaign_1",
+                      name: "campaign_1",
+                      budget: 100,
+                      status: "active",
+                      externalId: "external_id_1",
+                      startDate: "2022-01-01",
+                      endDate: "2022-12-31",
+                    },
+                    {
+                      id: "campaign_2",
+                      name: "campaign_2",
+                      budget: 200,
+                      status: "paused",
+                      externalId: "external_id_2",
+                      startDate: "2022-01-01",
+                      endDate: "2022-12-31",
+                    },
+                  ],
+                  totalCampaigns: 2,
+                  totalPages: 1,
+                  currentPage: 1,
+                  limit: 5,
+                },
+              },
+            },
+           },
+          "400": { description: "Missing projectId" },
+          "401": { description: "Unauthorized" },
+          "403": { description: "Forbidden" },
+          "500": { description: "Internal Server Error" },
+        },
+      }
+    },
+
+    "/v1/campaigns/search?projectId={id}&name={name}": {
+      get: {
+        summary: "Search campaigns by name",
+        tags: ["Campaigns"],
+        parameters: [
+          {
+            name: "projectId",
+            in: "query",
+            required: true,
+            schema: { type: "string" },
+            description: "The ID of the project to fetch campaigns from",
+          },
+          {
+            name: "name",
+            in: "query",
+            required: true,
+            schema: { type: "string" },
+            description: "The name of the campaign to search for",
+          },
+        ],
+        responses: {
+          "200": { description: "A list of campaigns",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    success: { type: "boolean" },
+                    data: {
+                      type: "array",
+                      items: {
+                        type: "object",
+                        properties: {
+                          id: { type: "string" },
+                          name: { type: "string" },
+                          budget: { type: "number" },
+                          status: { type: "string" },
+                          externalId: { type: "string" },
+                          startDate: { type: "string", format: "date" },
+                          endDate: { type: "string", format: "date" },
+                        },
+                      },
+                    },
+                  },
+                },
+                example: {
+                  success: true,
+                  data: [
+                    {
+                      id: "campaign_1",
+                      name: "campaign_1",
+                      budget: 100,
+                      status: "active",
+                      externalId: "external_id_1",
+                      startDate: "2022-01-01",
+                      endDate: "2022-12-31",
+                    },
+                    {
+                      id: "campaign_2",
+                      name: "campaign_2",
+                      budget: 200,
+                      status: "paused",
+                      externalId: "external_id_2",
+                      startDate: "2022-01-01",
+                      endDate: "2022-12-31",
+                    },
+                  ],
+                  totalCampaigns: 2,
+                  totalPages: 1,
+                  currentPage: 1,
+                  limit: 5,
+                },
+              },
+            },
+           },
           "400": { description: "Missing projectId" },
           "401": { description: "Unauthorized" },
           "403": { description: "Forbidden" },

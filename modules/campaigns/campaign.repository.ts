@@ -1,6 +1,6 @@
 import { db, DBConnection } from "@/infrastructure/database";
 import { campaignsTable, Campaign, InsertCampaign, analyticsTable, integrationsTable } from "@/infrastructure/database/schemas/schema";
-import { eq, and, sql } from "drizzle-orm";
+import { eq, and, sql, SQL, desc } from "drizzle-orm";
 import crypto from "crypto";
 
 export interface CampaignReportDTO {
@@ -14,9 +14,19 @@ export interface CampaignReportDTO {
   cpa: number;
   startDate: Date | null;
   endDate: Date | null;
-}
+};
+
+export interface PagCampaignResponse {
+  data: CampaignReportDTO[];
+  totalCampaigns: number;
+  totalPages: number;
+  currentPage: number;
+  limit: number;
+};
 
 export class CampaignRepository {
+  private static readonly ROWS_PER_PAGE = 5;
+
   static async create(data: Omit<InsertCampaign, "id">, db: DBConnection): Promise<Campaign> {
     const id = crypto.randomUUID();
     const [result] = await db
@@ -31,18 +41,36 @@ export class CampaignRepository {
     return result;
   }
 
-  static async findByName(projectId: string, name: string, db: DBConnection): Promise<Campaign | null> {
-    const result = await db
-      .select()
-      .from(campaignsTable)
-      .where(and(eq(campaignsTable.projectId, projectId), eq(campaignsTable.name, name)))
-      .limit(1);
-
-    return result[0] ?? null;
+  static async findByName(projectId: string, name: string, db: DBConnection, page: number = 1): Promise<PagCampaignResponse> {
+    const nameFilter = sql`LOWER(${campaignsTable.name}) LIKE LOWER(${`%${name}%`})`;
+    const [data, totalCampaigns] = await Promise.all([
+      this.campaignBase(projectId, db, page, nameFilter),
+      this.countCampaigns(projectId, db, nameFilter)
+    ]);
+    const totalPages = Math.ceil(totalCampaigns / this.ROWS_PER_PAGE);
+    
+    console.log(`currentPage: ${page}`)
+    return { data, totalCampaigns, totalPages, currentPage: page, limit: this.ROWS_PER_PAGE };
   }
 
-  static async getAllByProjectId(projectId: string, db: DBConnection): Promise<CampaignReportDTO[]> {
-    const result = await db
+  static async allByProjectId(projectId: string, db: DBConnection, page: number = 1): Promise<PagCampaignResponse> {
+    const [data, totalCampaigns] = await Promise.all ([
+      this.campaignBase(projectId, db, page),
+      this.countCampaigns(projectId, db)
+    ]);
+
+    const totalPages = Math.ceil(totalCampaigns / this.ROWS_PER_PAGE);
+    
+    return { data, totalCampaigns, totalPages, currentPage: page, limit: this.ROWS_PER_PAGE };
+  }
+
+  private static async campaignBase(projectId: string, db: DBConnection, page: number = 1, filters?: SQL){
+    const conditions = [eq(campaignsTable.projectId, projectId)];
+    if (filters) {
+      conditions.push(filters);
+    }
+
+    return await db
       .select({
         id: campaignsTable.id,
         name: campaignsTable.name,
@@ -68,7 +96,7 @@ export class CampaignRepository {
       .from(campaignsTable)
       .leftJoin(analyticsTable, eq(campaignsTable.id, analyticsTable.campaignId))
       .leftJoin(integrationsTable, eq(campaignsTable.adsIntegrationId, integrationsTable.id)) 
-      .where(eq(campaignsTable.projectId, projectId))
+      .where(and(...conditions))
       .groupBy(
         campaignsTable.id, 
         campaignsTable.name, 
@@ -76,8 +104,23 @@ export class CampaignRepository {
         campaignsTable.startDate, 
         campaignsTable.endDate
       )
-      .orderBy(sql`${campaignsTable.startDate} DESC`); // Ordenar por fecha de inicio
-    return result as CampaignReportDTO[];
+      .orderBy(desc(campaignsTable.startDate), desc(campaignsTable.id) )
+      .limit(this.ROWS_PER_PAGE)
+      .offset((page - 1) * this.ROWS_PER_PAGE);
+  }
+
+  private static async countCampaigns(projectId: string, db: DBConnection, filters?: SQL): Promise<number> {
+    const conditions = [eq(campaignsTable.projectId, projectId)];
+    if (filters) {
+      conditions.push(filters);
+    }
+
+    const result = await db
+      .select({ count: sql<number>`CAST(COUNT(${campaignsTable.id}) AS INTEGER)` })
+      .from(campaignsTable)
+      .where(and(...conditions));
+
+    return result[0]?.count ?? 0;
   }
 }
 

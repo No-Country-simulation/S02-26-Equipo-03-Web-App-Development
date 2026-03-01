@@ -13,15 +13,9 @@ export class CampaignService {
     return db.transaction(async (tx) => {
       await ProjectService.assertPermission(userId, projectId, "campaign", "read", tx);
 
-      const campaigns = await CampaignRepository.getAllByProjectId(projectId, tx);
+      const campaigns = await CampaignRepository.allByProjectId(projectId, tx);
 
-      return campaigns.map(c => ({
-        ...c,
-        adSpend: Number(c.adSpend.toFixed(2)),
-        revenue: Number(c.revenue.toFixed(2)),
-        roas: Number(c.roas.toFixed(2)),
-        cpa: Number(c.cpa.toFixed(2))
-      }));
+      return campaigns.data;
     });
   }
 
@@ -44,34 +38,35 @@ export class CampaignService {
         // 1. Iniciamos transacción
         return db.transaction(async (tx) => {
         
-        // 2. Autorización (Seguridad centralizada)
+        // 2. Autorización
         await ProjectService.assertPermission(userId, projectId, "campaign", "create", tx);
 
         // 3. Validación de Negocio: Evitar solapamiento de nombres
-        const existing = await CampaignRepository.findByName(projectId, payload.name, tx);
+        const matchingCampaigns = await CampaignRepository.findByName(projectId, payload.name, tx);
+        const existing = matchingCampaigns.data.find(c => c.name.toLowerCase() === payload.name.toLowerCase());
 
         if (existing) {
-        const newStart = new Date(payload.startDate || Date.now()).getTime();
-        const existingStart = existing.startDate ? new Date(existing.startDate).getTime() : null;
+          const newStart = new Date(payload.startDate || Date.now()).getTime();
+          const existingStart = existing.startDate ? new Date(existing.startDate).getTime() : null;
 
-        // Si el nombre es igual pero la fecha de inicio es la misma (o muy cercana),
-        // asumimos que es un error de duplicado.
-        const isSamePeriod = existingStart && Math.abs(newStart - existingStart) < 30 * 24 * 60 * 60 * 1000; // 30 días
+          // Si el nombre es igual pero la fecha de inicio es la misma (o muy cercana),
+          // asumimos que es un error de duplicado.
+          const isSamePeriod = existingStart && Math.abs(newStart - existingStart) < 30 * 24 * 60 * 60 * 1000; // 30 días
 
-        if (isSamePeriod) {
+          if (isSamePeriod) {
             throw new Error("CampaignNameAlreadyExistsInThisPeriod");
-        }
+          }
 
-        // Si no es el mismo periodo, permitimos la creación pero forzamos un sufijo para que el Dashboard sea legible.
-        const dateSuffix = new Date(newStart).toLocaleDateString('es-ES', { month: 'short', year: '2-digit' });
-        payload.name = `${payload.name} [${dateSuffix}]`;
+          // Si no es el mismo periodo, permitimos la creación pero forzamos un sufijo para que el Dashboard sea legible.
+          const dateSuffix = new Date(newStart).toLocaleDateString('es-ES', { month: 'short', year: '2-digit' });
+          payload.name = `${payload.name} [${dateSuffix}]`;
         }
 
         // 4. Inserción
         const startDate = payload.startDate ? new Date(payload.startDate) : new Date(Date.now() - 30*24*60*60*1000);
         if (isNaN(startDate.getTime())) throw new Error("Invalid startDate");
 
-        const campaign = await CampaignRepository.create({
+        await CampaignRepository.create({
             projectId,
             name: payload.name,
             adsIntegrationId: payload.adsIntegrationId, 
