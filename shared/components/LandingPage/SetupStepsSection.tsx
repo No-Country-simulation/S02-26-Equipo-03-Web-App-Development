@@ -85,7 +85,7 @@ const steps = [
 // Components
 function StepCard({ step, title, features, duration }: StepCardProps) {
   return (
-    <Card className="h-full max-w-77 min-w-70 rounded-lg border-slate-200 p-6 shadow-sm">
+    <Card className="h-full w-77 max-w-77 min-w-70 rounded-lg border-slate-200 p-6 shadow-sm">
       <CardContent className="space-y-4 p-0">
         <div className="text-5xl font-bold text-slate-600">{step}</div>
         <h3 className="text-xl/7 font-semibold text-slate-950">{title}</h3>
@@ -105,8 +105,7 @@ function StepCard({ step, title, features, duration }: StepCardProps) {
     </Card>
   );
 }
-// jjjjj
-// jjj
+
 function StepArrow() {
   return (
     <Image
@@ -127,7 +126,7 @@ export function SetupStepsSection() {
         {/* Heading */}
         <SectionHeader>
           <SectionTitle>Como funciona — Setup en 5 minutos</SectionTitle>
-          <SectionDescription className="text-24/8">
+          <SectionDescription className="text-24/8 font-semibold text-slate-600">
             Tres pasos simples para empezar a monitorear tu renueve real.
           </SectionDescription>
         </SectionHeader>

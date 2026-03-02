@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Menu } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/shared/components/ui/sheet";
-import { Logo } from "@/shared/components/logo";
+import { GardenAdsLogo } from "@/shared/components/Logo/Logo";
 
 const NAV_ITEMS = [
   { label: "Producto", href: "/" },
@@ -85,10 +85,12 @@ const MobileMenu = () => (
 */
 export function Navbar() {
   return (
-    <header className="w-full bg-white shadow-sm">
+    <header className="w-full bg-white">
       <div className="container mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
         {/* Logo */}
-        <Logo />
+        <Link href="/">
+          <GardenAdsLogo width={248} height={48} />
+        </Link>
 
         {/* Desktop Navigation */}
         <NavLinks className="hidden md:flex" />
