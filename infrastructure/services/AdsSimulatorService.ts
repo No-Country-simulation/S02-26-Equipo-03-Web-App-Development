@@ -62,9 +62,9 @@ export class AdsSimulatorService {
 
     // 2. Create Campaigns
     const campaignTemplates = [
-      { name: "black_friday", platform: "meta", budget: 2500, status: "active" },
-      { name: "meta_retargeting_v1", platform: "meta", budget: 1500, status: "active" },
-      { name: "summer_sale", platform: "google", budget: 3000, status: "active" },
+      { name: "black_friday", platform: "meta", budget: 2500, status: "active", externalId: "cmp_meta_bf_001" },
+      { name: "meta_retargeting_v1", platform: "meta", budget: 1500, status: "active", externalId: "cmp_meta_ret_2026" },
+      { name: "summer_sale", platform: "google", budget: 3000, status: "active", externalId: "cmp_goog_sum_001" },
     ];
 
     for (const temp of campaignTemplates) { 
@@ -88,6 +88,7 @@ export class AdsSimulatorService {
             spent: Math.floor(Math.random() * temp.budget),
             status: temp.status as any,
             startDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), // 30 days ago
+            externalId: temp.externalId,
           })
           .returning();
         campaignId = newCampaign.id;
