@@ -50,7 +50,7 @@ function IntegrationCard({
 export function IntegrationsSection() {
   return (
     <Section>
-      <SectionContent>
+      <SectionContent className="space-y-12">
         <SectionHeader>
           <SectionTitle>Integraciones simples</SectionTitle>
           <SectionDescription className="text-2xl/8">
