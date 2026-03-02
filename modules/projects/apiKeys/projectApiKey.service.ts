@@ -1,6 +1,6 @@
 import { db, DBConnection } from "@/infrastructure/database";
-import { ProjectMemberRepository } from "../members/projectMember.repository";
 import { ProjectApiKeyRepository } from "./projectApiKey.repository";
+import { ProjectRoleRepository } from "../roles/projectRole.repository";
 import crypto from "crypto";
 
 export class ProjectApiKeyService {
@@ -44,7 +44,7 @@ export class ProjectApiKeyService {
   }
 
   private static async assertCanManage(userId: string, projectId: string, tx: DBConnection) {
-    const permissions = await ProjectMemberRepository.getUserPermissions(projectId, userId, tx);
+    const permissions = await ProjectRoleRepository.getUserPermissions(projectId, userId, tx);
 
     const canManage = permissions.some((p) => p.resource === "api_key" && p.action === "manage");
 

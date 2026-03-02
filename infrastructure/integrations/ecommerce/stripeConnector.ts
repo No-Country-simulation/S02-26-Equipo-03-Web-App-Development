@@ -188,7 +188,62 @@ export class StripeConnector extends IntegrationConnector {
             console.log("ℹ️ Transacción ya existía (omitido):", transactionId);
           }
 
-          // B. Verificar/Crear o Actualizar la Orden
+          // C. Registrar Evento de Compra para Atribución
+          const purchaseEventId = crypto.randomUUID();
+          await tx.insert(schema.eventsTable).values({
+            id: purchaseEventId,
+            projectId: projectId,
+            eventType: "purchase",
+            source: "stripe",
+            payload: JSON.stringify(session),
+            timestamp: new Date(),
+            status: "processed",
+          });
+
+          // D. Atribución Automática (Detección de Campaña y Fuente)
+          let utmCampaign = metadata.utm_campaign || metadata.campaign || "";
+          let utmSource = metadata.utm_source || "";
+
+          // Si no está en el top level, buscamos en el objeto 'attribution' que viene de tienda-cliente
+          if (metadata.attribution) {
+            try {
+              const attrData =
+                typeof metadata.attribution === "string"
+                  ? JSON.parse(metadata.attribution)
+                  : metadata.attribution;
+
+              if (!utmCampaign) utmCampaign = attrData.params?.utm_campaign || "";
+              if (!utmSource) utmSource = attrData.params?.utm_source || "";
+            } catch (e) {
+              console.log("No se pudo parsear el metadato de atribución:", e);
+            }
+          }
+
+          // Prioridad: utm_source (ej: google) > metadata.source (ej: tienda-cliente-test) > fallbacks
+          const finalSource = utmSource || metadata.source || (utmCampaign ? "ADS" : "ORGANIC");
+
+          let campaign = null;
+          if (utmCampaign) {
+            campaign = await tx.query.campaignsTable.findFirst({
+              where: (table: any, { and, eq }: any) =>
+                and(eq(table.projectId, projectId), eq(table.name, utmCampaign)),
+            });
+
+            if (campaign) {
+              await tx.insert(schema.attributionsTable).values({
+                id: crypto.randomUUID(),
+                eventId: purchaseEventId,
+                campaignId: campaign.id,
+                model: "last_click",
+                weight: 1.0,
+              });
+              console.log(` Atribución lograda: Venta vinculada a campaña "${utmCampaign}"`);
+            } else {
+              console.log(` No se encontró campaña en DB con nombre: "${utmCampaign}"`);
+            }
+          }
+
+          // B. Verificar/Crear o Actualizar la Orden (Ahora con datos de campaña y fuente detectados con precisión)
           const existingOrder = await tx.query.ordersTable.findFirst({
             where: (table: any, { eq }: any) => eq(table.transactionId, transactionId),
           });
@@ -206,11 +261,13 @@ export class StripeConnector extends IntegrationConnector {
               customerName: customerName,
               customerEmail: customerEmail,
               productName: productName,
+              stripeId: externalId,
+              campaignId: campaign?.id || null,
+              sourcePlatform: finalSource,
+              paymentType: "PAGO ÚNICO",
             });
             console.log("✅ Orden enriquecida creada para:", customerName);
           } else if (isSession || customerName !== "Cliente Desconocido") {
-            // Si la orden ya existía (creada por payment_intent) pero ahora tenemos
-            // mejores datos (del session), la actualizamos.
             await tx
               .update(schema.ordersTable)
               .set({
@@ -218,56 +275,13 @@ export class StripeConnector extends IntegrationConnector {
                 customerEmail: customerEmail,
                 productName: productName,
                 externalOrderId: isSession ? session.id : externalId,
+                stripeId: externalId,
+                campaignId: campaign?.id || null,
+                sourcePlatform: finalSource,
+                paymentType: "PAGO ÚNICO",
               })
               .where(eq(schema.ordersTable.id, existingOrder.id));
             console.log("🔄 Orden actualizada con datos de cliente:", customerName);
-          } else {
-            console.log("ℹ️ Orden ya existía y no hay datos nuevos para actualizar.");
-          }
-
-          // C. Registrar Evento de Compra para Atribución
-          const purchaseEventId = crypto.randomUUID();
-          await tx.insert(schema.eventsTable).values({
-            id: purchaseEventId,
-            projectId: projectId,
-            eventType: "purchase",
-            source: "stripe",
-            payload: JSON.stringify(session),
-            timestamp: new Date(),
-            status: "processed",
-          });
-
-          // D. Atribución Automática (Top level o Atribución estructurada)
-          let utmCampaign = metadata.utm_campaign || metadata.campaign || "";
-
-          // Si no está en el top level, buscamos en el objeto 'attribution' que viene de tienda-cliente
-          if (!utmCampaign && metadata.attribution) {
-            try {
-              const attrData = JSON.parse(metadata.attribution);
-              utmCampaign = attrData.params?.utm_campaign || "";
-            } catch (e) {
-              console.log("No se pudo parsear el metadato de atribución:", e);
-            }
-          }
-
-          if (utmCampaign) {
-            const campaign = await tx.query.campaignsTable.findFirst({
-              where: (table: any, { and, eq }: any) =>
-                and(eq(table.projectId, projectId), eq(table.name, utmCampaign)),
-            });
-
-            if (campaign) {
-              await tx.insert(schema.attributionsTable).values({
-                id: crypto.randomUUID(),
-                eventId: purchaseEventId,
-                campaignId: campaign.id,
-                model: "last_click",
-                weight: 1.0,
-              });
-              console.log(` Atribución lograda: Venta vinculada a campaña "${utmCampaign}"`);
-            } else {
-              console.log(` No se encontró campaña en DB con nombre: "${utmCampaign}"`);
-            }
           }
 
           // E. Actualizar estado de integración

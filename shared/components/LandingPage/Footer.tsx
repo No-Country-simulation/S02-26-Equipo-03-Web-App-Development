@@ -1,75 +1,81 @@
-import { FaLinkedinIn, FaTwitter } from "react-icons/fa";
+import Link from 'next/link';
 
-const footerLinks = {
-  PRODUCT: ["Features", "Tracking Health", "Integrations", "API"],
-  COMPANY: ["About", "Security", "Pricing", "Support"],
+const FOOTER_LINKS = {
+  PRODUCTO: [
+    { name: 'Cómo funciona', href: '#' },
+    { name: 'Integraciones', href: '#' },
+    { name: 'Tracking Health', href: '#' },
+    { name: 'Precios', href: '#' },
+    { name: 'Changelog', href: '#' },
+    { name: 'Status', href: '#' },
+  ],
+  RECURSOS: [
+    { name: 'Documentación', href: '#' },
+    { name: 'API Docs', href: '#' },
+    { name: 'Blog', href: '#' },
+    { name: 'Guías', href: '#' },
+    { name: 'Help Center', href: '#' },
+  ],
+  EMPRESA: [
+    { name: 'About', href: '#' },
+    { name: 'Careers', href: '#' },
+    { name: 'Contact', href: '#' },
+    { name: 'Partners', href: '#' },
+  ],
+  LEGAL: [
+    { name: 'Privacy Policy', href: '#' },
+    { name: 'Terms of Service', href: '#' },
+    { name: 'Seguridad', href: '#' },
+    { name: 'GDPR', href: '#' },
+    { name: 'Cookies', href: '#' },
+  ],
 };
 
-export function Footer() {
+export default function Footer() {
   return (
-    <footer className="bg-white border-t border-gray-200 px-6 py-20">
-      <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
-        {/* Brand */}
-        <div className="col-span-1">
-          <div className="flex items-center gap-2 mb-3">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">
-              G
-            </div>
-            <span className="font-black text-gray-900 text-xl">GardenAds</span>
+    <footer className="w-full bg-[#020617] text-white py-20 px-6">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8">
+        
+       
+        <div className="lg:col-span-1 space-y-6">
+          <div className="flex items-center gap-2">
+       
+            <span className="text-3xl font-bold tracking-tight">
+              Garden<span className="text-[#10b981]">Ads</span>
+            </span>
           </div>
-          <p className="text-gray-400 text-sm leading-relaxed mb-5 max-w-[200px]">
-            La capa de verdad definitiva para ecommerce que escalan con revenue
-            real.
+          <p className="text-slate-400 text-sm leading-relaxed max-w-xs">
+            Lorem ipsum dolor sit amet consectetur. Sagittis lacinia lorem ipsum viverra massa non turpis interdum ut mi nunc est mi cras donec tortor condimentum.
           </p>
-          <div className="flex items-center gap-3">
-            <a
-              href="#"
-              className="w-8 h-8 rounded-lg bg-gray-200 hover:bg-blue-100 flex items-center justify-center text-gray-500 hover:text-blue-600 transition-colors duration-150"
-              aria-label="LinkedIn"
-            >
-              <FaLinkedinIn size={14} />
-            </a>
-            <a
-              href="#"
-              className="w-8 h-8 rounded-lg bg-gray-200 hover:bg-blue-100 flex items-center justify-center text-gray-500 hover:text-blue-600 transition-colors duration-150"
-              aria-label="Twitter"
-            >
-              <FaTwitter size={14} />
-            </a>
-          </div>
         </div>
 
-        {/* Product & Company links */}
-        {Object.entries(footerLinks).map(([category, links]) => (
-          <div key={category}>
-            <h4 className="text-[11px] font-bold tracking-widest uppercase text-black mb-4">
+   
+        {Object.entries(FOOTER_LINKS).map(([category, links]) => (
+          <div key={category} className="space-y-6">
+            <h4 className="text-xs font-bold tracking-widest text-slate-200 uppercase">
               {category}
             </h4>
-            <ul className="space-y-2.5">
+            <ul className="space-y-4">
               {links.map((link) => (
-                <li key={link}>
-                  <a
-                    href="#"
-                    className="text-sm text-gray-500 hover:text-gray-900 transition-colors duration-150"
+                <li key={link.name}>
+                  <Link 
+                    href={link.href} 
+                    className="text-[#10b981] hover:text-emerald-400 text-sm font-medium transition-colors"
                   >
-                    {link}
-                  </a>
+                    {link.name}
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
         ))}
 
-        {/* Contact */}
-        <div>
-          <h4 className="text-[11px] font-bold tracking-widest uppercase text-black mb-4">
-            CONTACT
-          </h4>
-          <p className="text-sm text-gray-500 mb-1">support@gardenads.com</p>
-          <p className="text-sm font-semibold text-gray-800">
-            Sales: +1 (555) 000-0000
-          </p>
-        </div>
+      </div>
+
+
+      <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500 text-xs">
+        <p>© 2026 GardenAds Inc. Todos los derechos reservados.</p>
+    
       </div>
     </footer>
   );

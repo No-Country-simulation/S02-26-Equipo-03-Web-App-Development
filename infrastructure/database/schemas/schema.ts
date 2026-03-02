@@ -119,12 +119,16 @@ export const rolesTable = sqliteTable(
 /* ========================= 
     PERMISSIONS
 ==========================*/
-export const permissionsTable = sqliteTable("permissions", {
-  id: text("id").primaryKey(),
-  name: text("name").notNull(),
-  resource: text("resource").notNull(),
-  action: text("action").notNull(),
-});
+export const permissionsTable = sqliteTable(
+  "permissions",
+  {
+    id: text("id").primaryKey(),
+    name: text("name").notNull(),
+    resource: text("resource").notNull(),
+    action: text("action").notNull(),
+  },
+  (table) => [uniqueIndex("permissions_resource_action_unique").on(table.resource, table.action)]
+);
 
 /* ========================= 
     ROLE PERMISSIONS
@@ -343,6 +347,10 @@ export const ordersTable = sqliteTable("orders", {
   customerName: text("customer_name"),
   customerEmail: text("customer_email"),
   productName: text("product_name"),
+  paymentType: text("payment_type").default("PAGO ÚNICO"),
+  stripeId: text("stripe_id"),
+  campaignId: text("campaign_id").references(() => campaignsTable.id),
+  sourcePlatform: text("source_platform"),
 });
 
 /* ========================= 
@@ -483,6 +491,34 @@ export const consentRecordsTable = sqliteTable("consent_records", {
   revokedAt: integer("revoked_at", { mode: "timestamp_ms" }),
 });
 
+/* ========================= 
+    REPORTS
+==========================*/
+export const reportsTable = sqliteTable(
+  "reports",
+  {
+    id: text("id").primaryKey(),
+    projectId: text("project_id")
+      .notNull()
+      .references(() => projectsTable.id, { onDelete: "cascade" }),
+    userId: text("user_id")
+      .notNull()
+      .references(() => usersTable.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    format: text("format", { enum: ["pdf", "csv"] }).notNull(),
+    fileUrl: text("file_url").notNull(),
+    periodStart: integer("period_start", { mode: "timestamp_ms" }).notNull(),
+    periodEnd: integer("period_end", { mode: "timestamp_ms" }).notNull(),
+    createdAt: integer("created_at", { mode: "timestamp_ms" })
+      .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
+      .notNull(),
+  },
+  (table) => [
+    index("reports_projectId_idx").on(table.projectId),
+    index("reports_userId_idx").on(table.userId),
+  ]
+);
+
 // ==================== RELATIONS ====================
 export const userRelations = relations(usersTable, ({ many }) => ({
   sessions: many(sessionsTable),
@@ -543,6 +579,7 @@ export const projectsRelations = relations(projectsTable, ({ one, many }) => ({
   healthHistory: many(healthHistoryTable),
   usageCosts: many(usageCostsTable),
   consentRecords: many(consentRecordsTable),
+  reports: many(reportsTable),
   privacySettings: one(privacySettingsTable, {
     fields: [projectsTable.id],
     references: [privacySettingsTable.projectId],
@@ -653,6 +690,10 @@ export const ordersRelations = relations(ordersTable, ({ one }) => ({
     fields: [ordersTable.transactionId],
     references: [transactionsTable.id],
   }),
+  campaign: one(campaignsTable, {
+    fields: [ordersTable.campaignId],
+    references: [campaignsTable.id],
+  }),
 }));
 
 export const analyticsRelations = relations(analyticsTable, ({ one, many }) => ({
@@ -720,6 +761,17 @@ export const consentRecordsRelations = relations(consentRecordsTable, ({ one }) 
   }),
 }));
 
+export const reportsRelations = relations(reportsTable, ({ one }) => ({
+  project: one(projectsTable, {
+    fields: [reportsTable.projectId],
+    references: [projectsTable.id],
+  }),
+  user: one(usersTable, {
+    fields: [reportsTable.userId],
+    references: [usersTable.id],
+  }),
+}));
+
 // ==================== TYPES ====================
 export type User = typeof usersTable.$inferSelect;
 export type InsertUser = typeof usersTable.$inferInsert;
@@ -738,3 +790,6 @@ export type InsertTransaction = typeof transactionsTable.$inferInsert;
 
 export type Analytics = typeof analyticsTable.$inferSelect;
 export type InsertAnalytics = typeof analyticsTable.$inferInsert;
+
+export type Report = typeof reportsTable.$inferSelect;
+export type InsertReport = typeof reportsTable.$inferInsert;

@@ -1,4 +1,4 @@
-﻿export const openApiSpec = {
+﻿﻿export const openApiSpec = {
   openapi: "3.0.3",
   info: {
     title: "Project Text API",
@@ -10,6 +10,8 @@
     "/health": {
       get: {
         summary: "Health Check Endpoint",
+        description:
+          "Author: Favian - Checks  connectivity and returns server status with timestamp",
         tags: ["Health"],
         responses: {
           "200": {
@@ -138,6 +140,10 @@
                   email: "johndoe@gmail.com",
                   password: "password",
                 },
+              },
+              example: {
+                email: "test@example.com",
+                password: "password123",
               },
             },
           },
@@ -297,6 +303,93 @@
       },
     },
 
+    "/auth/request-password-reset": {
+      post: {
+        summary: "Request a password reset email",
+        tags: ["Auth"],
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                required: ["email", "redirectTo"],
+                properties: {
+                  email: { type: "string", format: "email" },
+                  redirectTo: { type: "string", format: "uri" },
+                },
+                example: {
+                  email: "johndoe@gmail.com",
+                  redirectTo: "http://localhost:3000/reset-password",
+                },
+              },
+            },
+          },
+        },
+        responses: {
+          "200": { description: "Reset email sent successfully" },
+          "400": { description: "Invalid input or user not found" },
+        },
+      },
+    },
+
+    "/auth/reset-password": {
+      post: {
+        summary: "Reset password using a token",
+        tags: ["Auth"],
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                required: ["token", "newPassword"],
+                properties: {
+                  token: { type: "string" },
+                  newPassword: { type: "string", minLength: 8 },
+                },
+                example: {
+                  token: "eyJhbGciOiJIUzI1NiJ9...",
+                  newPassword: "newSecurePassword123",
+                },
+              },
+            },
+          },
+        },
+        responses: {
+          "200": { description: "Password reset successfully" },
+          "400": { description: "Invalid or expired token" },
+        },
+      },
+    },
+
+    "/auth/verify-email": {
+      get: {
+        summary: "Verify user email address",
+        tags: ["Auth"],
+        parameters: [
+          {
+            name: "token",
+            in: "query",
+            required: true,
+            schema: { type: "string" },
+            description: "Verification token sent via email",
+          },
+          {
+            name: "callbackURL",
+            in: "query",
+            required: false,
+            schema: { type: "string", format: "uri" },
+            description: "URL to redirect to after verification",
+          },
+        ],
+        responses: {
+          "302": { description: "Redirect to callbackURL on success" },
+          "400": { description: "Invalid or expired verification token" },
+        },
+      },
+    },
+
     "/v1/track": {
       post: {
         summary: "Track an event (JSON)",
@@ -310,49 +403,10 @@
             description: "Project API Key",
           },
         ],
-        requestBody: {
-          required: true,
-          content: {
-            "application/json": {
-              schema: {
-                type: "object",
-                properties: {
-                  event: { type: "string" },
-                  properties: { type: "object" },
-                },
-              },
-            },
-          },
-        },
         responses: {
-          "202": { description: "Event received" },
-          "401": { description: "Missing x-api-key header" },
-        },
-      },
-      get: {
-        summary: "Track an event (Pixel)",
-        tags: ["Tracking"],
-        parameters: [
-          {
-            name: "k",
-            in: "query",
-            required: true,
-            schema: { type: "string" },
-            description: "Project API Key",
-          },
-          {
-            name: "d",
-            in: "query",
-            required: true,
-            schema: { type: "string" },
-            description: "Base64 encoded tracking payload",
-          },
-        ],
-        responses: {
-          "200": {
-            description: "Transparent GIF pixel",
-            content: { "image/gif": { schema: { type: "string", format: "binary" } } },
-          },
+          "200": { description: "Event tracked successfully" },
+          "401": { description: "Unauthorized" },
+          "500": { description: "Internal Server Error" },
         },
       },
     },
@@ -373,8 +427,19 @@
                   name: { type: "string" },
                   budget: { type: "number" },
                   status: { type: "string", enum: ["active", "paused", "completed", "draft"] },
+                  externalId: { type: 'string' },
+                  startDate: { type: 'string', format: 'date' },
+                  endDate: { type: 'string', format: 'date' }
                 },
               },
+              example: {
+                projectId: "proj_123",
+                name: "black_friday_2026",
+                budget: 2500,
+                status: "active",
+                externalId: "mock_fb_001",
+                startDate: "2026-11-20"
+              }
             },
           },
         },
@@ -385,6 +450,191 @@
           "403": { description: "Forbidden" },
         },
       },
+
+      get: {
+        summary: "List all campaigns in a project",
+        tags: ["Campaigns"],
+        parameters: [
+          {
+            name: "projectId",
+            in: "query",
+            required: true,
+            schema: { type: "string" },
+            description: "The ID of the project to fetch campaigns from",
+          },
+        ],
+        responses: {
+          "200": { description: "A list of campaigns",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    success: { type: "boolean" },
+                    data: {
+                      type: "array",
+                      items: {
+                        type: "object",
+                        properties: {
+                          id: { type: "string" },
+                          name: { type: "string" },
+                          budget: { type: "number" },
+                          status: { type: "string" },
+                          externalId: { type: "string" },
+                          startDate: { type: "string", format: "date" },
+                          endDate: { type: "string", format: "date" },
+                        },
+                      },
+                    },
+                  },
+                },
+                example: {
+                  success: true,
+                  data: [
+                    {
+                      id: "campaign_1",
+                      name: "campaign_1",
+                      budget: 100,
+                      status: "active",
+                      externalId: "external_id_1",
+                      startDate: "2022-01-01",
+                      endDate: "2022-12-31",
+                    },
+                    {
+                      id: "campaign_2",
+                      name: "campaign_2",
+                      budget: 200,
+                      status: "paused",
+                      externalId: "external_id_2",
+                      startDate: "2022-01-01",
+                      endDate: "2022-12-31",
+                    },
+                  ],
+                  totalCampaigns: 2,
+                  totalPages: 1,
+                  currentPage: 1,
+                  limit: 5,
+                },
+              },
+            },
+           },
+          "400": { description: "Missing projectId" },
+          "401": { description: "Unauthorized" },
+          "403": { description: "Forbidden" },
+          "500": { description: "Internal Server Error" },
+        },
+      }
+    },
+
+    "/v1/campaigns/search?projectId={id}&name={name}": {
+      get: {
+        summary: "Search campaigns by name",
+        tags: ["Campaigns"],
+        parameters: [
+          {
+            name: "projectId",
+            in: "query",
+            required: true,
+            schema: { type: "string" },
+            description: "The ID of the project to fetch campaigns from",
+          },
+          {
+            name: "name",
+            in: "query",
+            required: true,
+            schema: { type: "string" },
+            description: "The name of the campaign to search for",
+          },
+        ],
+        responses: {
+          "200": { description: "A list of campaigns",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    success: { type: "boolean" },
+                    data: {
+                      type: "array",
+                      items: {
+                        type: "object",
+                        properties: {
+                          id: { type: "string" },
+                          name: { type: "string" },
+                          budget: { type: "number" },
+                          status: { type: "string" },
+                          externalId: { type: "string" },
+                          startDate: { type: "string", format: "date" },
+                          endDate: { type: "string", format: "date" },
+                        },
+                      },
+                    },
+                  },
+                },
+                example: {
+                  success: true,
+                  data: [
+                    {
+                      id: "campaign_1",
+                      name: "campaign_1",
+                      budget: 100,
+                      status: "active",
+                      externalId: "external_id_1",
+                      startDate: "2022-01-01",
+                      endDate: "2022-12-31",
+                    },
+                    {
+                      id: "campaign_2",
+                      name: "campaign_2",
+                      budget: 200,
+                      status: "paused",
+                      externalId: "external_id_2",
+                      startDate: "2022-01-01",
+                      endDate: "2022-12-31",
+                    },
+                  ],
+                  totalCampaigns: 2,
+                  totalPages: 1,
+                  currentPage: 1,
+                  limit: 5,
+                },
+              },
+            },
+           },
+          "400": { description: "Missing projectId" },
+          "401": { description: "Unauthorized" },
+          "403": { description: "Forbidden" },
+          "500": { description: "Internal Server Error" },
+        },
+      }
+    },
+
+    "/v1/campaigns/{id}": {
+      get: {
+        summary: "Get a campaign by id",
+        tags: ["Campaigns"],
+        parameters: [
+          {
+            name: "id",
+            in: "query",
+            required: true,
+            schema: { type: "string" },
+            description: "The ID of the campaign to fetch",
+          },
+          {
+            name: "projectId",
+            in: "query",
+            required: true,
+            schema: { type: "string" },
+            description: "The ID of the project to fetch",
+          },
+        ],
+        responses: {
+          "200": { description: "A campaign" },
+          "404": { description: "Campaign not found" },
+          "500": { description: "Internal Server Error" },
+        },
+      }
     },
 
     "/v1/simulate/ads": {
@@ -412,7 +662,7 @@
 
     "/v1/orders": {
       get: {
-        summary: "List all orders",
+        summary: "List all orders for a project",
         tags: ["Orders"],
         parameters: [
           {
@@ -424,169 +674,50 @@
           },
         ],
         responses: {
+          "200": { description: "A list of orders" },
+          "400": { description: "Missing projectId" },
+          "401": { description: "Unauthorized" },
+          "403": { description: "Forbidden" },
+          "500": { description: "Internal Server Error" },
+        },
+      },
+    },
+
+    "/v1/analytics/orders": {
+      get: {
+        summary: "List of payments with order details.",
+        tags: ["Analytics Reports"],
+        parameters: [
+          {
+            name: "projectId",
+            in: "query",
+            required: true,
+            schema: { type: "string" },
+            description: "Target project ID for analytics",
+          },
+        ],
+        responses: {
           "200": {
-            description: "List of orders",
+            description: "Orders analytics retrieved successfully",
             content: {
               "application/json": {
                 schema: {
                   type: "object",
                   properties: {
-                    success: { type: "boolean" },
                     count: { type: "integer" },
-                    data: { type: "array" },
+                    data: {
+                      type: "array",
+                      items: { type: "object" },
+                    },
                   },
                 },
               },
             },
           },
-          "400": { description: "Missing projectId" },
+          "400": { description: "Missing projectId parameter" },
           "401": { description: "Unauthorized" },
-          "403": { description: "Forbidden" },
-        },
-      },
-    },
-
-    "/v1/analytics": {
-      get: {
-        summary: "Get analytics records",
-        tags: ["Analytics"],
-        parameters: [
-          {
-            name: "limit",
-            in: "query",
-            required: false,
-            schema: { type: "integer", minimum: 1, default: 50 },
-          },
-        ],
-        responses: {
-          "200": { description: "Analytics records retrieved" },
-          "400": { description: "Invalid query parameter" },
-          "401": { description: "Unauthorized" },
-          "404": { description: "Route not found" },
-          "500": { description: "Internal Server Error" },
-        },
-      },
-    },
-
-    "/v1/analytics/by-conversions": {
-      get: {
-        summary: "Get analytics records filtered by conversions",
-        tags: ["Analytics"],
-        parameters: [
-          {
-            name: "conversions",
-            in: "query",
-            required: true,
-            schema: { type: "integer" },
-            description: "Exact conversions value",
-          },
-          {
-            name: "limit",
-            in: "query",
-            required: false,
-            schema: { type: "integer", minimum: 1, default: 50 },
-          },
-        ],
-        responses: {
-          "200": { description: "Filtered analytics records retrieved" },
-          "400": { description: "Invalid query parameter" },
-          "401": { description: "Unauthorized" },
-          "404": { description: "Route not found" },
-          "500": { description: "Internal Server Error" },
-        },
-      },
-    },
-
-    "/v1/analytics/metrics": {
-      get: {
-        summary: "Get aggregated analytics metrics",
-        tags: ["Analytics"],
-        parameters: [
-          {
-            name: "limit",
-            in: "query",
-            required: false,
-            schema: { type: "integer", minimum: 1, default: 200 },
-          },
-        ],
-        responses: {
-          "200": { description: "Aggregated metrics retrieved" },
-          "400": { description: "Invalid query parameter" },
-          "401": { description: "Unauthorized" },
-          "404": { description: "Route not found" },
-          "500": { description: "Internal Server Error" },
-        },
-      },
-    },
-
-    "/v1/analytics/alerts": {
-      get: {
-        summary: "Get unresolved alerts",
-        tags: ["Analytics"],
-        parameters: [
-          {
-            name: "severity",
-            in: "query",
-            required: false,
-            schema: { type: "string", enum: ["low", "medium", "high", "critical"] },
-          },
-          {
-            name: "limit",
-            in: "query",
-            required: false,
-            schema: { type: "integer", minimum: 1, default: 50 },
-          },
-        ],
-        responses: {
-          "200": { description: "Alerts retrieved" },
-          "400": { description: "Invalid query parameter" },
-          "401": { description: "Unauthorized" },
-          "404": { description: "Route not found" },
-          "500": { description: "Internal Server Error" },
-        },
-      },
-    },
-
-    "/v1/analytics/timeline": {
-      get: {
-        summary: "Get analytics timeline snapshots",
-        tags: ["Analytics"],
-        parameters: [
-          {
-            name: "limit",
-            in: "query",
-            required: false,
-            schema: { type: "integer", minimum: 1, default: 100 },
-          },
-        ],
-        responses: {
-          "200": { description: "Timeline retrieved" },
-          "400": { description: "Invalid query parameter" },
-          "401": { description: "Unauthorized" },
-          "404": { description: "Route not found" },
-          "500": { description: "Internal Server Error" },
-        },
-      },
-    },
-
-    "/v1/analytics/anomalies": {
-      get: {
-        summary: "Get anomaly alerts",
-        tags: ["Analytics"],
-        parameters: [
-          {
-            name: "limit",
-            in: "query",
-            required: false,
-            schema: { type: "integer", minimum: 1, default: 50 },
-          },
-        ],
-        responses: {
-          "200": { description: "Anomalies retrieved" },
-          "400": { description: "Invalid query parameter" },
-          "401": { description: "Unauthorized" },
-          "404": { description: "Route not found" },
-          "500": { description: "Internal Server Error" },
+          "403": { description: "Forbidden - user not member of project" },
+          "500": { description: "Internal server error" },
         },
       },
     },
@@ -961,6 +1092,63 @@
       },
     },
 
+    "/v1/projects/{id}/roles": {
+      get: {
+        summary: "List all roles from the project",
+        tags: ["Roles"],
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            schema: { type: "string", format: "uuid" },
+          },
+        ],
+        responses: {
+          "200": {
+            description: "All project roles listed successfully",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "array",
+                  items: {
+                    type: "object",
+                    properties: {
+                      roleId: { type: "string", format: "uuid" },
+                      name: { type: "string" },
+                      description: { type: "string" },
+                    },
+                  },
+                },
+                example: [
+                  {
+                    roleId: "9a8abc34-2859-4bb3-967f-a40d5430c0c4",
+                    name: "admin",
+                    description: "admin default role",
+                  },
+                  {
+                    roleId: "9a8abc34-2859-4bb3-967f-a40d5430c0c4",
+                    name: "editor",
+                    description: "editor default role",
+                  },
+                  {
+                    roleId: "9a8abc34-2859-4bb3-967f-a40d5430c0c4",
+                    name: "owner",
+                    description: "owner default role",
+                  },
+                  {
+                    roleId: "9a8abc34-2859-4bb3-967f-a40d5430c0c4",
+                    name: "viewer",
+                    description: "viewer default role",
+                  },
+                ],
+              },
+            },
+          },
+        },
+      },
+    },
+
     "/v1/projects/{id}/api-keys": {
       get: {
         summary: "List all API keys for a project",
@@ -1021,6 +1209,164 @@
             "401": { description: "Unauthorized" },
             "500": { description: "Internal server error" },
           },
+        },
+      },
+    },
+
+    "/v1/reports": {
+      get: {
+        summary: "List reports for the authenticated user",
+        tags: ["Reports"],
+        parameters: [
+          {
+            name: "projectId",
+            in: "query",
+            required: true,
+            schema: { type: "string" },
+            description: "ID del proyecto cuyos reportes se listan",
+          },
+          {
+            name: "name",
+            in: "query",
+            required: false,
+            schema: { type: "string" },
+            description: "Búsqueda parcial por nombre",
+          },
+          {
+            name: "format",
+            in: "query",
+            required: false,
+            schema: { type: "string", enum: ["pdf", "csv"] },
+          },
+          {
+            name: "createdFrom",
+            in: "query",
+            required: false,
+            schema: { type: "string", format: "date-time" },
+            description: "Fecha mínima de creación (ISO 8601)",
+          },
+          {
+            name: "createdTo",
+            in: "query",
+            required: false,
+            schema: { type: "string", format: "date-time" },
+            description: "Fecha máxima de creación (ISO 8601)",
+          },
+          {
+            name: "periodStart",
+            in: "query",
+            required: false,
+            schema: { type: "string", format: "date-time" },
+          },
+          {
+            name: "periodEnd",
+            in: "query",
+            required: false,
+            schema: { type: "string", format: "date-time" },
+          },
+        ],
+        responses: {
+          "200": { description: "Reports retrieved successfully" },
+          "400": { description: "Invalid filter parameters" },
+          "401": { description: "Unauthorized" },
+          "500": { description: "Internal Server Error" },
+        },
+      },
+      post: {
+        summary: "Create a new report",
+        tags: ["Reports"],
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                required: ["projectId", "name", "format", "fileUrl", "periodStart", "periodEnd"],
+                properties: {
+                  projectId: { type: "string" },
+                  name: { type: "string" },
+                  format: { type: "string", enum: ["pdf", "csv"] },
+                  fileUrl: { type: "string", format: "uri" },
+                  periodStart: { type: "string", format: "date-time" },
+                  periodEnd: { type: "string", format: "date-time" },
+                },
+              },
+              example: {
+                projectId: "REEMPLAZA_CON_ID_REAL",
+                name: "Reporte de prueba",
+                format: "pdf",
+                fileUrl: "https://storage.example.com/test.pdf",
+                periodStart: "2026-01-01T00:00:00.000Z",
+                periodEnd: "2026-01-31T23:59:59.000Z",
+              },
+            },
+          },
+        },
+        responses: {
+          "201": { description: "Reporte creado exitosamente" },
+          "400": { description: "Validación fallida" },
+          "401": { description: "No autenticado" },
+          "500": { description: "Internal Server Error" },
+        },
+      },
+    },
+
+    "/v1/reports/stats": {
+      get: {
+        summary: "Get report statistics for the authenticated user",
+        tags: ["Reports"],
+        parameters: [
+          {
+            name: "projectId",
+            in: "query",
+            required: true,
+            schema: { type: "string" },
+            description: "Project ID",
+          },
+        ],
+        responses: {
+          "200": {
+            description: "Report stats retrieved successfully",
+            content: {
+              "application/json": {
+                example: {
+                  status: "success",
+                  data: {
+                    exportsThisMonth: 8,
+                    lastReportDate: "2026-02-24T10:30:00.000Z",
+                    pdfCount: 5,
+                    csvCount: 3,
+                  },
+                },
+              },
+            },
+          },
+          "401": { description: "Unauthorized" },
+          "500": { description: "Internal Server Error" },
+        },
+      },
+    },
+    "/v1/reports/{id}": {
+      get: {
+        summary: "Get a specific report by ID",
+        tags: ["Reports"],
+        parameters: [{ name: "id", in: "path", required: true, schema: { type: "string" } }],
+        responses: {
+          "200": { description: "Report retrieved successfully" },
+          "401": { description: "Unauthorized" },
+          "404": { description: "Report not found" },
+          "500": { description: "Internal Server Error" },
+        },
+      },
+      delete: {
+        summary: "Delete a report by ID",
+        tags: ["Reports"],
+        parameters: [{ name: "id", in: "path", required: true, schema: { type: "string" } }],
+        responses: {
+          "200": { description: "Report deleted successfully" },
+          "401": { description: "Unauthorized" },
+          "404": { description: "Report not found" },
+          "500": { description: "Internal Server Error" },
         },
       },
     },
