@@ -45,7 +45,11 @@ export const auth = betterAuth({
     },
   },
 
-  trustedOrigins: process.env.NODE_ENV === "development" ? ["http://localhost:3000"] : [],
+  trustedOrigins: [
+    "http://localhost:3000",
+    process.env.BETTER_AUTH_BASE_URL,
+    process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined,
+  ].filter(Boolean) as string[],
   databaseHooks: {
     user: {
       create: {
