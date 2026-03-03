@@ -722,6 +722,46 @@
       },
     },
 
+    "/v1/analytics/orders_detail": {
+      get: {
+        summary: "Information of order details.",
+        tags: ["Analytics Reports"],
+        parameters: [
+          {
+            name: "orderId",
+            in: "query",
+            required: true,
+            schema: { type: "string" },
+            description: "Target order ID for analytics",
+          },
+        ],
+        responses: {
+          "200": {
+            description: "Orders analytics retrieved successfully",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    count: { type: "integer" },
+                    data: {
+                      type: "array",
+                      items: { type: "object" },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          "400": { description: "Missing projectId parameter" },
+          "401": { description: "Unauthorized" },
+          "403": { description: "Forbidden - user not member of project" },
+          "500": { description: "Internal server error" },
+        },
+      },
+    },   
+ 
+
     "/v1/projects": {
       get: {
         summary: "List active and inactive projects",
