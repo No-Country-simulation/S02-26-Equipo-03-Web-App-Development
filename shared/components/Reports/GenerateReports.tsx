@@ -16,25 +16,9 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Checkbox } from "../ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import { useSelectedProjectStore } from "@/shared/hooks/use-selected-project-store";
 
-type Canal = "Google Ads" | "Meta Ads" | "Stripe";
-
-type MetricaDiaria = {
-  fecha: string;
-  canal: Canal;
-  impresiones: number;
-  clicks: number;
-  conversiones: number;
-  gasto: number;
-  ingresos: number;
-  revenueAtribuido: number;
-  ordenes: number;
-  campanas: number;
-  eventosTrackeados: number;
-  eventosEsperados: number;
-};
-
-type OrdenBackend = {
+type OrderApiRecord = {
   id: string;
   projectId: string;
   ecommerceIntegrationId: string | null;
@@ -53,23 +37,7 @@ type OrdenBackend = {
   sourcePlatform: string;
 };
 
-type Orden = {
-  fecha: string;
-  idOrden: string;
-  cliente: string;
-  servicio: string;
-  tipoPago: string;
-  fuente: string;
-  monto: number;
-  estado: "Pagado" | "Pendiente" | "Fallido";
-  campaignId: string;
-  projectId: string;
-  stripeId: string;
-  clientEmail: string;
-  orderDateIso: string;
-};
-
-type CampanaBackend = {
+type CampaignApiRecord = {
   id: string;
   name: string;
   externalId: string | null;
@@ -84,204 +52,154 @@ type CampanaBackend = {
   status: string;
 };
 
-type ProyectoBackend = {
-  id: string;
-};
-
-type RespuestaOrdenes = {
+type OrdersApiResponse = {
   success: boolean;
-  data: OrdenBackend[];
+  data: OrderApiRecord[];
 };
 
-type RespuestaCampanas = {
+type CampaignsApiResponse = {
   success: boolean;
-  data: CampanaBackend[];
+  data: CampaignApiRecord[];
 };
 
-type Campana = {
-  fecha: string;
-  campana: string;
-  plataforma: "Meta Ads" | "Google Ads";
-  gasto: number;
-  revenueStripe: number;
+type OrderExportRow = {
+  date: string;
+  orderId: string;
+  customer: string;
+  service: string;
+  paymentType: string;
+  source: string;
+  amount: number;
+  status: "Paid" | "Pending" | "Failed";
+};
+
+type CampaignExportRow = {
+  date: string;
+  campaign: string;
+  platform: "Meta Ads" | "Google Ads";
+  spend: number;
+  stripeRevenue: number;
   roas: number;
   cpa: number;
 };
 
-type ProblemaTracking = {
-  fecha: string;
-  tipoProblema: string;
-  impactoEstimado: number;
-  plataforma: string;
-  severidad: "Crítico" | "Alerta" | "Estable";
-  hace: string;
+type ExportReportData = {
+  period: string;
+  currency: string;
+  company: string;
+  orders: OrderExportRow[];
+  campaigns: CampaignExportRow[];
 };
 
-type ReporteExportable = {
-  periodo: string;
-  moneda: string;
-  empresa: string;
-  metricas: MetricaDiaria[];
-  panelEjecutivo: {
-    revenueTotalStripe: number;
-    pagosConfirmados: number;
-    roasGlobal: number;
-    healthScore: number;
-    accionRequerida: number;
-  };
-  ordenes: Orden[];
-  campanas: Campana[];
-  trackingHealth: {
-    estadoGeneral: string;
-    healthScore: number;
-    resumen: string;
-    problemas: ProblemaTracking[];
-    ingresosRiesgo: number;
-  };
-};
-
-function calcularSaludTracking(eventosTrackeados: number, eventosEsperados: number) {
-  return eventosEsperados > 0 ? (eventosTrackeados / eventosEsperados) * 100 : 0;
-}
-
-function estadoTracking(salud: number) {
-  if (salud >= 95) {
-    return "Alta";
-  }
-
-  if (salud >= 90) {
-    return "Media";
-  }
-
-  return "Baja";
-}
-
-function isoAFecha(iso: string | number | Date | null | undefined) {
-  if (!iso) {
+function toISODate(value: string | number | Date | null | undefined) {
+  if (!value) {
     return "";
   }
 
-  if (typeof iso === "string") {
-    return iso.slice(0, 10);
+  if (typeof value === "string") {
+    return value.slice(0, 10);
   }
 
-  const fecha = new Date(iso);
-  return Number.isNaN(fecha.getTime()) ? "" : fecha.toISOString().slice(0, 10);
+  const parsedDate = new Date(value);
+  return Number.isNaN(parsedDate.getTime()) ? "" : parsedDate.toISOString().slice(0, 10);
 }
 
-function normalizarEstadoOrden(estado: string): "Pagado" | "Pendiente" | "Fallido" {
-  if (estado.toLowerCase() === "confirmed") {
-    return "Pagado";
+function normalizeOrderStatus(status: string): "Paid" | "Pending" | "Failed" {
+  if (status.toLowerCase() === "confirmed") {
+    return "Paid";
   }
 
-  if (estado.toLowerCase() === "pending") {
-    return "Pendiente";
+  if (status.toLowerCase() === "pending") {
+    return "Pending";
   }
 
-  return "Fallido";
+  return "Failed";
 }
 
-function formatearTextoDesdeSlug(valor: string) {
-  return valor
+function formatSlugToTitle(value: string) {
+  return value
     .replace(/[_-]+/g, " ")
     .trim()
-    .replace(/\b\w/g, (letra) => letra.toUpperCase());
+    .replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
-function mapearOrdenBackend(orden: OrdenBackend): Orden {
+function mapOrderRecord(record: OrderApiRecord): OrderExportRow {
   return {
-    fecha: isoAFecha(orden.orderDate),
-    idOrden: orden.id,
-    cliente: orden.customerName || "Sin cliente",
-    servicio: orden.productName || "Sin servicio",
-    tipoPago: orden.paymentType || "Sin tipo",
-    fuente: formatearTextoDesdeSlug(orden.sourcePlatform),
-    monto: orden.totalAmount,
-    estado: normalizarEstadoOrden(orden.status),
-    campaignId: orden.campaignId,
-    projectId: orden.projectId,
-    stripeId: orden.stripeId,
-    clientEmail: orden.customerEmail,
-    orderDateIso: orden.orderDate,
+    date: toISODate(record.orderDate),
+    orderId: record.id,
+    customer: record.customerName || "Sin cliente",
+    service: record.productName || "Sin servicio",
+    paymentType: record.paymentType || "Sin tipo",
+    source: formatSlugToTitle(record.sourcePlatform),
+    amount: record.totalAmount,
+    status: normalizeOrderStatus(record.status),
   };
 }
 
-function normalizarPlataformaCampana(
-  plataforma: CampanaBackend["platform"]
-): Campana["plataforma"] {
-  const valor = (plataforma || "").toLowerCase();
+function normalizeCampaignPlatform(
+  platform: CampaignApiRecord["platform"]
+): CampaignExportRow["platform"] {
+  const normalized = (platform || "").toLowerCase();
 
-  if (valor.includes("google")) {
+  if (normalized.includes("google")) {
     return "Google Ads";
   }
 
-  if (valor.includes("meta") || valor.includes("facebook")) {
+  if (normalized.includes("meta") || normalized.includes("facebook")) {
     return "Meta Ads";
   }
 
   return "Meta Ads";
 }
 
-function mapearCampanaBackend(campana: CampanaBackend): Campana {
+function mapCampaignRecord(record: CampaignApiRecord): CampaignExportRow {
   return {
-    fecha: isoAFecha(campana.startDate),
-    campana: formatearTextoDesdeSlug(campana.name),
-    plataforma: normalizarPlataformaCampana(campana.platform),
-    gasto: campana.adSpend,
-    revenueStripe: campana.revenue,
-    roas: campana.roas,
-    cpa: campana.cpa,
+    date: toISODate(record.startDate),
+    campaign: formatSlugToTitle(record.name),
+    platform: normalizeCampaignPlatform(record.platform),
+    spend: record.adSpend,
+    stripeRevenue: record.revenue,
+    roas: record.roas,
+    cpa: record.cpa,
   };
 }
 
-const REPORTE_CONFIG = {
-  moneda: "USD",
-  empresa: "Garder Ads",
+const REPORT_CONFIG = {
+  currency: "USD",
+  company: "Garder Ads",
 } as const;
 
-async function obtenerOrdersDesdeApi(projectId: string): Promise<OrdenBackend[]> {
-  const respuesta = await fetch(`/api/v1/orders?projectId=${encodeURIComponent(projectId)}`, {
+async function fetchOrdersByProject(projectId: string): Promise<OrderApiRecord[]> {
+  const response = await fetch(`/api/v1/orders?projectId=${encodeURIComponent(projectId)}`, {
     credentials: "include",
   });
 
-  if (!respuesta.ok) {
-    throw new Error(`No se pudo obtener órdenes`);
+  if (!response.ok) {
+    throw new Error("No se pudo obtener órdenes");
   }
 
-  const json = (await respuesta.json()) as RespuestaOrdenes;
+  const json = (await response.json()) as OrdersApiResponse;
   return Array.isArray(json.data) ? json.data : [];
 }
-async function obtenerCampanasDesdeApi(projectId: string): Promise<CampanaBackend[]> {
-  const respuesta = await fetch(`/api/v1/campaigns?projectId=${encodeURIComponent(projectId)}`, {
+
+async function fetchCampaignsByProject(projectId: string): Promise<CampaignApiRecord[]> {
+  const response = await fetch(`/api/v1/campaigns?projectId=${encodeURIComponent(projectId)}`, {
     credentials: "include",
   });
 
-  if (!respuesta.ok) {
-    throw new Error(`No se pudo obtener campañas`);
+  if (!response.ok) {
+    throw new Error("No se pudo obtener campañas");
   }
 
-  const json = (await respuesta.json()) as RespuestaCampanas;
+  const json = (await response.json()) as CampaignsApiResponse;
   return Array.isArray(json.data) ? json.data : [];
 }
 
-const estilosPdf = StyleSheet.create({
+const pdfStyles = StyleSheet.create({
   page: { padding: 24, fontSize: 11 },
   title: { fontSize: 16, marginBottom: 10 },
   subtitle: { marginBottom: 14 },
   sectionTitle: { fontSize: 13, marginBottom: 8, fontWeight: 700 },
-  summaryGrid: { flexDirection: "row", flexWrap: "wrap", marginBottom: 12 },
-  summaryCard: {
-    width: "48%",
-    borderWidth: 0.5,
-    borderColor: "#ccc",
-    padding: 8,
-    marginRight: "2%",
-    marginBottom: 8,
-  },
-  summaryLabel: { fontSize: 9, color: "#666", marginBottom: 4 },
-  summaryValue: { fontSize: 12, fontWeight: 700 },
-  lineItem: { marginBottom: 4 },
-  sectionSpacing: { marginTop: 10 },
   tableHeader: {
     flexDirection: "row",
     borderBottomWidth: 1,
@@ -306,219 +224,71 @@ const estilosPdf = StyleSheet.create({
   c8: { width: "12%", textAlign: "right" },
 });
 
-function ReportePdf({ data }: { data: ReporteExportable }) {
-  const tieneMetricas = data.metricas.length > 0;
-  const tieneOrdenes = data.ordenes.length > 0;
-  const tieneCampanas = data.campanas.length > 0;
-  const tieneTracking = data.trackingHealth.problemas.length > 0;
-
-  const totalGasto = data.metricas.reduce((acc, fila) => acc + fila.gasto, 0);
-  const totalIngresos = data.metricas.reduce((acc, fila) => acc + fila.ingresos, 0);
-  const totalRevenueAtribuido = data.metricas.reduce((acc, fila) => acc + fila.revenueAtribuido, 0);
-  const totalOrdenes = data.metricas.reduce((acc, fila) => acc + fila.ordenes, 0);
-  const totalCampanas = data.metricas.reduce((acc, fila) => acc + fila.campanas, 0);
-  const totalEventosTrackeados = data.metricas.reduce(
-    (acc, fila) => acc + fila.eventosTrackeados,
-    0
-  );
-  const totalEventosEsperados = data.metricas.reduce((acc, fila) => acc + fila.eventosEsperados, 0);
-  const saludTracking = calcularSaludTracking(totalEventosTrackeados, totalEventosEsperados);
-  const roas = totalGasto > 0 ? totalIngresos / totalGasto : 0;
-  const ticketPromedio = totalOrdenes > 0 ? totalRevenueAtribuido / totalOrdenes : 0;
-
-  const resumenPorCanal = (
-    Object.entries(
-      data.metricas.reduce<
-        Record<Canal, { revenueAtribuido: number; gasto: number; ordenes: number }>
-      >(
-        (acc, fila) => {
-          if (!acc[fila.canal]) {
-            acc[fila.canal] = { revenueAtribuido: 0, gasto: 0, ordenes: 0 };
-          }
-          acc[fila.canal].revenueAtribuido += fila.revenueAtribuido;
-          acc[fila.canal].gasto += fila.gasto;
-          acc[fila.canal].ordenes += fila.ordenes;
-          return acc;
-        },
-        {} as Record<Canal, { revenueAtribuido: number; gasto: number; ordenes: number }>
-      )
-    ) as [Canal, { revenueAtribuido: number; gasto: number; ordenes: number }][]
-  )
-    .map(([canal, valores]) => ({
-      canal,
-      ...valores,
-      roas: valores.gasto > 0 ? valores.revenueAtribuido / valores.gasto : 0,
-      share:
-        totalRevenueAtribuido > 0 ? (valores.revenueAtribuido / totalRevenueAtribuido) * 100 : 0,
-    }))
-    .sort((a, b) => b.revenueAtribuido - a.revenueAtribuido);
-
-  const canalPrincipal = resumenPorCanal[0]?.canal ?? "Sin datos";
-
-  const totalOrdenesExport = data.ordenes.length;
-  const totalCampanasExport = data.campanas.length;
-  const totalProblemasTracking = data.trackingHealth.problemas.length;
+function ReportPdf({ data }: { data: ExportReportData }) {
+  const hasOrders = data.orders.length > 0;
+  const hasCampaigns = data.campaigns.length > 0;
 
   return (
     <Document>
-      {tieneMetricas && (
-        <Page size="A4" style={estilosPdf.page}>
-          <Text style={estilosPdf.title}>Panel Ejecutivo - {data.empresa}</Text>
-          <Text style={estilosPdf.subtitle}>
-            Período: {data.periodo} | Moneda: {data.moneda}
-          </Text>
+      {hasOrders && (
+        <Page size="A4" style={pdfStyles.page}>
+          <Text style={pdfStyles.title}>Órdenes - {data.company}</Text>
+          <Text style={pdfStyles.subtitle}>Período: {data.period}</Text>
 
-          <Text style={estilosPdf.sectionTitle}>Resumen ejecutivo</Text>
+          <View style={pdfStyles.tableHeader}>
+            <Text style={pdfStyles.c1}>Fecha</Text>
+            <Text style={pdfStyles.c2}>Orden</Text>
+            <Text style={pdfStyles.c3}>Cliente</Text>
+            <Text style={pdfStyles.c4}>Fuente</Text>
+            <Text style={pdfStyles.c5}>Estado</Text>
+            <Text style={pdfStyles.c6}>Tipo pago</Text>
+            <Text style={pdfStyles.c7}>Servicio</Text>
+            <Text style={pdfStyles.c8}>Monto</Text>
+          </View>
 
-          <View style={estilosPdf.summaryGrid}>
-            <View style={estilosPdf.summaryCard}>
-              <Text style={estilosPdf.summaryLabel}>Revenue atribuido</Text>
-              <Text style={estilosPdf.summaryValue}>{totalRevenueAtribuido.toFixed(2)}</Text>
-            </View>
-            <View style={estilosPdf.summaryCard}>
-              <Text style={estilosPdf.summaryLabel}>Órdenes</Text>
-              <Text style={estilosPdf.summaryValue}>{totalOrdenes}</Text>
-            </View>
-            <View style={estilosPdf.summaryCard}>
-              <Text style={estilosPdf.summaryLabel}>Ticket promedio</Text>
-              <Text style={estilosPdf.summaryValue}>{ticketPromedio.toFixed(2)}</Text>
-            </View>
-            <View style={estilosPdf.summaryCard}>
-              <Text style={estilosPdf.summaryLabel}>ROAS</Text>
-              <Text style={estilosPdf.summaryValue}>{roas.toFixed(2)}x</Text>
-            </View>
-            <View style={estilosPdf.summaryCard}>
-              <Text style={estilosPdf.summaryLabel}>Campañas</Text>
-              <Text style={estilosPdf.summaryValue}>{totalCampanas}</Text>
-            </View>
-            <View style={estilosPdf.summaryCard}>
-              <Text style={estilosPdf.summaryLabel}>Salud tracking</Text>
-              <Text style={estilosPdf.summaryValue}>
-                {saludTracking.toFixed(2)}% ({estadoTracking(saludTracking)})
+          {data.orders.map((row) => (
+            <View key={row.orderId} style={pdfStyles.row}>
+              <Text style={pdfStyles.c1}>{row.date}</Text>
+              <Text style={pdfStyles.c2}>
+                {row.orderId.slice(0, 4) + "..." + row.orderId.slice(-4)}
               </Text>
-            </View>
-          </View>
-
-          <Text style={estilosPdf.lineItem}>
-            Revenue total Stripe: {data.panelEjecutivo.revenueTotalStripe.toFixed(2)}
-          </Text>
-          <Text style={estilosPdf.lineItem}>
-            Pagos confirmados: {data.panelEjecutivo.pagosConfirmados}
-          </Text>
-          <Text style={estilosPdf.lineItem}>Health score: {data.panelEjecutivo.healthScore}</Text>
-          <Text style={estilosPdf.lineItem}>
-            Acción requerida: {data.panelEjecutivo.accionRequerida.toFixed(2)}
-          </Text>
-
-          <Text style={estilosPdf.sectionTitle}>Atribución por canal</Text>
-          {resumenPorCanal.map((fila) => (
-            <Text key={fila.canal} style={{ marginBottom: 4 }}>
-              {fila.canal}: revenue {fila.revenueAtribuido.toFixed(2)} | share{" "}
-              {fila.share.toFixed(2)}% | órdenes {fila.ordenes} | roas {fila.roas.toFixed(2)}x
-            </Text>
-          ))}
-
-          <Text style={{ marginTop: 10 }}>
-            Canal principal por revenue atribuido: {canalPrincipal}
-          </Text>
-        </Page>
-      )}
-
-      {tieneOrdenes && (
-        <Page size="A4" style={estilosPdf.page}>
-          <Text style={estilosPdf.title}>Órdenes - {data.empresa}</Text>
-          <Text style={estilosPdf.subtitle}>Total órdenes exportadas: {totalOrdenesExport}</Text>
-
-          <View style={estilosPdf.tableHeader}>
-            <Text style={estilosPdf.c1}>Fecha</Text>
-            <Text style={estilosPdf.c2}>Orden</Text>
-            <Text style={estilosPdf.c3}>Cliente</Text>
-            <Text style={estilosPdf.c4}>Fuente</Text>
-            <Text style={estilosPdf.c5}>Estado</Text>
-            <Text style={estilosPdf.c6}>Tipo pago</Text>
-            <Text style={estilosPdf.c7}>Servicio</Text>
-            <Text style={estilosPdf.c8}>Monto</Text>
-          </View>
-
-          {data.ordenes.map((fila) => (
-            <View key={fila.idOrden} style={estilosPdf.row}>
-              <Text style={estilosPdf.c1}>{fila.fecha}</Text>
-              <Text style={estilosPdf.c2}>
-                {fila.idOrden.slice(0, 4) + "..." + fila.idOrden.slice(-4)}
-              </Text>
-              <Text style={estilosPdf.c3}>{fila.cliente}</Text>
-              <Text style={estilosPdf.c4}>{fila.fuente}</Text>
-              <Text style={estilosPdf.c5}>{fila.estado}</Text>
-              <Text style={estilosPdf.c6}>{fila.tipoPago}</Text>
-              <Text style={estilosPdf.c7}>{fila.servicio}</Text>
-              <Text style={estilosPdf.c8}>{fila.monto.toFixed(2)}</Text>
+              <Text style={pdfStyles.c3}>{row.customer}</Text>
+              <Text style={pdfStyles.c4}>{row.source}</Text>
+              <Text style={pdfStyles.c5}>{row.status}</Text>
+              <Text style={pdfStyles.c6}>{row.paymentType}</Text>
+              <Text style={pdfStyles.c7}>{row.service}</Text>
+              <Text style={pdfStyles.c8}>{row.amount.toFixed(2)}</Text>
             </View>
           ))}
         </Page>
       )}
 
-      {tieneCampanas && (
-        <Page size="A4" style={estilosPdf.page}>
-          <Text style={estilosPdf.title}>Campañas - {data.empresa}</Text>
-          <Text style={estilosPdf.subtitle}>Total campañas exportadas: {totalCampanasExport}</Text>
-          <View style={estilosPdf.tableHeader}>
-            <Text style={estilosPdf.c1}>Fecha</Text>
-            <Text style={estilosPdf.c2}>Campaña</Text>
-            <Text style={estilosPdf.c3}>Plataforma</Text>
-            <Text style={estilosPdf.c4}>Gasto</Text>
-            <Text style={estilosPdf.c5}>Revenue</Text>
-            <Text style={estilosPdf.c6}>ROAS</Text>
-            <Text style={estilosPdf.c7}>CPA</Text>
-            <Text style={estilosPdf.c8}></Text>
-          </View>
-          {data.campanas.map((fila) => (
-            <View key={`${fila.fecha}-${fila.campana}`} style={estilosPdf.row}>
-              <Text style={estilosPdf.c1}>{fila.fecha}</Text>
-              <Text style={estilosPdf.c2}>{fila.campana}</Text>
-              <Text style={estilosPdf.c3}>{fila.plataforma}</Text>
-              <Text style={estilosPdf.c4}>{fila.gasto.toFixed(2)}</Text>
-              <Text style={estilosPdf.c5}>{fila.revenueStripe.toFixed(2)}</Text>
-              <Text style={estilosPdf.c6}>{fila.roas.toFixed(2)}x</Text>
-              <Text style={estilosPdf.c7}>{fila.cpa.toFixed(2)}</Text>
-              <Text style={estilosPdf.c8}></Text>
-            </View>
-          ))}
-        </Page>
-      )}
+      {hasCampaigns && (
+        <Page size="A4" style={pdfStyles.page}>
+          <Text style={pdfStyles.title}>Campañas - {data.company}</Text>
+          <Text style={pdfStyles.subtitle}>Período: {data.period}</Text>
 
-      {tieneTracking && (
-        <Page size="A4" style={estilosPdf.page}>
-          <Text style={estilosPdf.title}>Tracking Health - {data.empresa}</Text>
-          <Text style={estilosPdf.subtitle}>
-            Score: {data.trackingHealth.healthScore} | Estado: {data.trackingHealth.estadoGeneral}
-          </Text>
-          <Text style={estilosPdf.lineItem}>{data.trackingHealth.resumen}</Text>
-          <Text style={estilosPdf.lineItem}>Problemas detectados: {totalProblemasTracking}</Text>
-          <Text style={estilosPdf.lineItem}>
-            Ingresos estimados en riesgo: {data.trackingHealth.ingresosRiesgo.toFixed(2)}
-          </Text>
-
-          <Text style={[estilosPdf.sectionTitle, estilosPdf.sectionSpacing]}>Incidencias</Text>
-          <View style={estilosPdf.tableHeader}>
-            <Text style={estilosPdf.c1}>Fecha</Text>
-            <Text style={estilosPdf.c2}>Problema</Text>
-            <Text style={estilosPdf.c3}>Plataforma</Text>
-            <Text style={estilosPdf.c4}>Severidad</Text>
-            <Text style={estilosPdf.c5}>Impacto</Text>
-            <Text style={estilosPdf.c6}>Detectado</Text>
-            <Text style={estilosPdf.c7}></Text>
-            <Text style={estilosPdf.c8}></Text>
+          <View style={pdfStyles.tableHeader}>
+            <Text style={pdfStyles.c1}>Fecha</Text>
+            <Text style={pdfStyles.c2}>Campaña</Text>
+            <Text style={pdfStyles.c3}>Plataforma</Text>
+            <Text style={pdfStyles.c4}>Gasto</Text>
+            <Text style={pdfStyles.c5}>Revenue</Text>
+            <Text style={pdfStyles.c6}>ROAS</Text>
+            <Text style={pdfStyles.c7}>CPA</Text>
+            <Text style={pdfStyles.c8}></Text>
           </View>
-          {data.trackingHealth.problemas.map((fila, index) => (
-            <View key={`${fila.fecha}-${fila.tipoProblema}-${index}`} style={estilosPdf.row}>
-              <Text style={estilosPdf.c1}>{fila.fecha}</Text>
-              <Text style={estilosPdf.c2}>{fila.tipoProblema}</Text>
-              <Text style={estilosPdf.c3}>{fila.plataforma}</Text>
-              <Text style={estilosPdf.c4}>{fila.severidad}</Text>
-              <Text style={estilosPdf.c5}>{fila.impactoEstimado.toFixed(2)}</Text>
-              <Text style={estilosPdf.c6}>{fila.hace}</Text>
-              <Text style={estilosPdf.c7}></Text>
-              <Text style={estilosPdf.c8}></Text>
+
+          {data.campaigns.map((row) => (
+            <View key={`${row.date}-${row.campaign}`} style={pdfStyles.row}>
+              <Text style={pdfStyles.c1}>{row.date}</Text>
+              <Text style={pdfStyles.c2}>{row.campaign}</Text>
+              <Text style={pdfStyles.c3}>{row.platform}</Text>
+              <Text style={pdfStyles.c4}>{row.spend.toFixed(2)}</Text>
+              <Text style={pdfStyles.c5}>{row.stripeRevenue.toFixed(2)}</Text>
+              <Text style={pdfStyles.c6}>{row.roas.toFixed(2)}x</Text>
+              <Text style={pdfStyles.c7}>{row.cpa.toFixed(2)}</Text>
+              <Text style={pdfStyles.c8}></Text>
             </View>
           ))}
         </Page>
@@ -528,175 +298,153 @@ function ReportePdf({ data }: { data: ReporteExportable }) {
 }
 
 export default function GenerateReports() {
-  const hoy = useMemo(() => new Date().toISOString().slice(0, 10), []);
-  const [ordenesBackend, setOrdenesBackend] = useState<OrdenBackend[]>([]);
-  const [campanasBackend, setCampanasBackend] = useState<CampanaBackend[]>([]);
-  const [cargandoDatos, setCargandoDatos] = useState(false);
-  const [errorCarga, setErrorCarga] = useState<string | null>(null);
+  const today = useMemo(() => new Date().toISOString().slice(0, 10), []);
+  const selectedProjectId = useSelectedProjectStore((state) => state.selectedProjectId);
 
-  const fechasDisponibles = useMemo(
+  const [orderRecords, setOrderRecords] = useState<OrderApiRecord[]>([]);
+  const [campaignRecords, setCampaignRecords] = useState<CampaignApiRecord[]>([]);
+  const [isLoadingData, setIsLoadingData] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
+
+  const availableDates = useMemo(
     () =>
       [
-        ...ordenesBackend.map((fila) => isoAFecha(fila.orderDate)),
-        ...campanasBackend.map((fila) => isoAFecha(fila.startDate)),
+        ...orderRecords.map((row) => toISODate(row.orderDate)),
+        ...campaignRecords.map((row) => toISODate(row.startDate)),
       ]
         .filter(Boolean)
-        .filter((fecha, indice, arr) => arr.indexOf(fecha) === indice)
+        .filter((date, index, list) => list.indexOf(date) === index)
         .sort(),
-    [campanasBackend, ordenesBackend]
+    [campaignRecords, orderRecords]
   );
 
-  const fechaMinima = fechasDisponibles[0] ?? hoy;
-  const fechaMaxima = fechasDisponibles[fechasDisponibles.length - 1] ?? hoy;
+  const minDate = availableDates[0] ?? today;
+  const maxDate = availableDates[availableDates.length - 1] ?? today;
 
-  const [modalExportacionAbierto, setModalExportacionAbierto] = useState(false);
-  const [exportarOrdenesSeleccionado, setExportarOrdenesSeleccionado] = useState(true);
-  const [exportarCampanasSeleccionado, setExportarCampanasSeleccionado] = useState(true);
-  const [fechaDesdeExportacion, setFechaDesdeExportacion] = useState(hoy);
-  const [fechaHastaExportacion, setFechaHastaExportacion] = useState(hoy);
-  const [formatoExportacion, setFormatoExportacion] = useState<"excel" | "pdf">("excel");
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+  const [includeOrders, setIncludeOrders] = useState(true);
+  const [includeCampaigns, setIncludeCampaigns] = useState(true);
+  const [fromDate, setFromDate] = useState(today);
+  const [toDate, setToDate] = useState(today);
+  const [exportFormat, setExportFormat] = useState<"excel" | "pdf">("excel");
 
   useEffect(() => {
-    let activo = true;
+    let isActive = true;
 
-    const cargarDatos = async () => {
-      setCargandoDatos(true);
-      setErrorCarga(null);
+    const loadData = async () => {
+      if (!selectedProjectId) {
+        return;
+      }
+
+      setIsLoadingData(true);
+      setLoadError(null);
 
       try {
-        const respuestaProyectos = await fetch("/api/v1/projects", {
-          credentials: "include",
-        });
-
-        if (!respuestaProyectos.ok) {
-          throw new Error("No se pudieron obtener proyectos.");
-        }
-
-        const proyectos = (await respuestaProyectos.json()) as ProyectoBackend[];
-        const projectId = proyectos[0]?.id;
-
-        if (!projectId) {
-          throw new Error("No hay proyectos disponibles.");
-        }
-
-        const [ordenes, campanas] = await Promise.all([
-          obtenerOrdersDesdeApi(projectId),
-          obtenerCampanasDesdeApi(projectId),
+        const [orders, campaigns] = await Promise.all([
+          fetchOrdersByProject(selectedProjectId),
+          fetchCampaignsByProject(selectedProjectId),
         ]);
 
-        if (!ordenes) {
-          throw new Error("No se pudieron obtener órdenes.");
-        }
-
-        if (!activo) {
+        if (!isActive) {
           return;
         }
 
-        setOrdenesBackend(ordenes);
-        setCampanasBackend(campanas);
+        setOrderRecords(orders);
+        setCampaignRecords(campaigns);
       } catch (error) {
-        if (!activo) {
+        if (!isActive) {
           return;
         }
 
-        setErrorCarga(error instanceof Error ? error.message : "Error al cargar reportes.");
+        setLoadError(error instanceof Error ? error.message : "Error al cargar reportes.");
       } finally {
-        if (activo) {
-          setCargandoDatos(false);
+        if (isActive) {
+          setIsLoadingData(false);
         }
       }
     };
 
-    void cargarDatos();
+    void loadData();
 
     return () => {
-      activo = false;
+      isActive = false;
     };
-  }, []);
+  }, [selectedProjectId]);
 
   useEffect(() => {
-    setFechaDesdeExportacion((actual) => {
-      if (!actual || actual < fechaMinima || actual > fechaMaxima) {
-        return fechaMinima;
+    setFromDate((current) => {
+      if (!current || current < minDate || current > maxDate) {
+        return minDate;
       }
 
-      return actual;
+      return current;
     });
 
-    setFechaHastaExportacion((actual) => {
-      if (!actual || actual < fechaMinima || actual > fechaMaxima) {
-        return fechaMaxima;
+    setToDate((current) => {
+      if (!current || current < minDate || current > maxDate) {
+        return maxDate;
       }
 
-      return actual;
+      return current;
     });
-  }, [fechaMaxima, fechaMinima]);
+  }, [maxDate, minDate]);
 
-  const rangoExportacionValido = Boolean(
-    fechaDesdeExportacion && fechaHastaExportacion && fechaDesdeExportacion <= fechaHastaExportacion
-  );
+  const isDateRangeValid = Boolean(fromDate && toDate && fromDate <= toDate);
+  const hasAtLeastOneModule = includeOrders || includeCampaigns;
 
-  const tieneModuloSeleccionado = exportarOrdenesSeleccionado || exportarCampanasSeleccionado;
-
-  const abrirModalExportacion = () => {
-    // setFechaDesdeExportacion(fechaDesde);
-    // setFechaHastaExportacion(fechaHasta);
-    setFormatoExportacion("excel");
-    setModalExportacionAbierto(true);
+  const openExportModal = () => {
+    setExportFormat("excel");
+    setIsExportModalOpen(true);
   };
 
-  const obtenerDatosExportables = () => {
-    const ordenesExportables = exportarOrdenesSeleccionado
-      ? ordenesBackend
-          .map(mapearOrdenBackend)
-          .filter(
-            (fila) => fila.fecha >= fechaDesdeExportacion && fila.fecha <= fechaHastaExportacion
-          )
+  const getExportData = () => {
+    const exportableOrders = includeOrders
+      ? orderRecords.map(mapOrderRecord).filter((row) => row.date >= fromDate && row.date <= toDate)
       : [];
 
-    const campanasExportables = exportarCampanasSeleccionado
-      ? campanasBackend
-          .filter((fila) => {
-            const fecha = isoAFecha(fila.startDate);
-            return fecha >= fechaDesdeExportacion && fecha <= fechaHastaExportacion;
+    const exportableCampaigns = includeCampaigns
+      ? campaignRecords
+          .filter((row) => {
+            const date = toISODate(row.startDate);
+            return date >= fromDate && date <= toDate;
           })
-          .map(mapearCampanaBackend)
+          .map(mapCampaignRecord)
       : [];
 
-    return { ordenesExportables, campanasExportables };
+    return { exportableOrders, exportableCampaigns };
   };
 
-  const exportarExcelEstilizado = async () => {
-    if (!rangoExportacionValido || !tieneModuloSeleccionado) {
+  const exportStyledExcel = async () => {
+    if (!isDateRangeValid || !hasAtLeastOneModule) {
       return;
     }
 
-    const { ordenesExportables, campanasExportables } = obtenerDatosExportables();
+    const { exportableOrders, exportableCampaigns } = getExportData();
 
     const ExcelJS = await import("exceljs");
     const workbook = new ExcelJS.Workbook();
-    const moneda = new Intl.NumberFormat("es-AR", {
+    const currencyFormatter = new Intl.NumberFormat("es-AR", {
       style: "currency",
       signDisplay: "never",
-      currency: REPORTE_CONFIG.moneda,
+      currency: REPORT_CONFIG.currency,
       maximumFractionDigits: 2,
     });
 
-    const agregarTabla = (
-      hoja: string,
-      columnas: string[],
-      filas: Array<Record<string, string | number>>
+    const addTable = (
+      sheetName: string,
+      columns: string[],
+      rows: Array<Record<string, string | number>>
     ) => {
-      const ws = workbook.addWorksheet(hoja);
-      ws.columns = columnas.map((columna) => ({
-        header: columna,
-        key: columna,
-        width: Math.max(14, Math.min(36, columna.length + 6)),
+      const worksheet = workbook.addWorksheet(sheetName);
+      worksheet.columns = columns.map((column) => ({
+        header: column,
+        key: column,
+        width: Math.max(14, Math.min(36, column.length + 6)),
       }));
 
-      ws.views = [{ state: "frozen", ySplit: 1 }];
+      worksheet.views = [{ state: "frozen", ySplit: 1 }];
 
-      const headerRow = ws.getRow(1);
+      const headerRow = worksheet.getRow(1);
       headerRow.font = { bold: true, color: { argb: "FFFFFFFF" } };
       headerRow.fill = {
         type: "pattern",
@@ -705,17 +453,17 @@ export default function GenerateReports() {
       };
       headerRow.alignment = { vertical: "middle", horizontal: "left" };
 
-      filas.forEach((fila, index) => {
-        ws.addRow(fila);
-        const row = ws.getRow(index + 2);
-        row.fill = {
+      rows.forEach((row, index) => {
+        worksheet.addRow(row);
+        const currentRow = worksheet.getRow(index + 2);
+        currentRow.fill = {
           type: "pattern",
           pattern: "solid",
           fgColor: { argb: index % 2 === 0 ? "FFF9FAFB" : "FFFFFFFF" },
         };
       });
 
-      ws.eachRow((row) => {
+      worksheet.eachRow((row) => {
         row.eachCell((cell) => {
           cell.border = {
             top: { style: "thin", color: { argb: "FFE5E7EB" } },
@@ -728,110 +476,88 @@ export default function GenerateReports() {
       });
     };
 
-    if (exportarOrdenesSeleccionado) {
-      agregarTabla(
+    if (includeOrders) {
+      addTable(
         "Órdenes",
         ["Fecha", "ID Orden", "Cliente", "Servicio", "Tipo pago", "Fuente", "Monto", "Estado"],
-        ordenesExportables.map((fila) => ({
-          Fecha: fila.fecha,
-          "ID Orden": fila.idOrden,
-          Cliente: fila.cliente,
-          Servicio: fila.servicio,
-          "Tipo pago": fila.tipoPago,
-          Fuente: fila.fuente,
-          Monto: moneda.format(fila.monto),
-          Estado: fila.estado,
+        exportableOrders.map((row) => ({
+          Fecha: row.date,
+          "ID Orden": row.orderId,
+          Cliente: row.customer,
+          Servicio: row.service,
+          "Tipo pago": row.paymentType,
+          Fuente: row.source,
+          Monto: currencyFormatter.format(row.amount),
+          Estado: row.status,
         }))
       );
     }
 
-    if (exportarCampanasSeleccionado) {
-      agregarTabla(
+    if (includeCampaigns) {
+      addTable(
         "Campañas",
         ["Fecha", "Campaña", "Plataforma", "Gasto", "Revenue Stripe", "ROAS", "CPA"],
-        campanasExportables.map((fila) => ({
-          Fecha: fila.fecha,
-          Campaña: fila.campana,
-          Plataforma: fila.plataforma,
-          Gasto: moneda.format(fila.gasto),
-          "Revenue Stripe": moneda.format(fila.revenueStripe),
-          ROAS: `${fila.roas.toFixed(2)}x`,
-          CPA: moneda.format(fila.cpa),
+        exportableCampaigns.map((row) => ({
+          Fecha: row.date,
+          Campaña: row.campaign,
+          Plataforma: row.platform,
+          Gasto: currencyFormatter.format(row.spend),
+          "Revenue Stripe": currencyFormatter.format(row.stripeRevenue),
+          ROAS: `${row.roas.toFixed(2)}x`,
+          CPA: currencyFormatter.format(row.cpa),
         }))
       );
     }
 
-    const buffer = await workbook.xlsx.writeBuffer();
-    const blob = new Blob([buffer], {
+    const fileBuffer = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([fileBuffer], {
       type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     });
 
-    const url = URL.createObjectURL(blob);
+    const downloadUrl = URL.createObjectURL(blob);
     const link = document.createElement("a");
-    link.href = url;
-    link.download = `reporte-exportacion-${fechaDesdeExportacion}_a_${fechaHastaExportacion}.xlsx`;
+    link.href = downloadUrl;
+    link.download = `reporte-exportacion-${fromDate}_a_${toDate}.xlsx`;
     link.click();
-    URL.revokeObjectURL(url);
+    URL.revokeObjectURL(downloadUrl);
 
-    setModalExportacionAbierto(false);
+    setIsExportModalOpen(false);
   };
 
-  const exportarPdfSeleccionado = async () => {
-    if (!rangoExportacionValido || !tieneModuloSeleccionado) {
+  const exportSelectedPdf = async () => {
+    if (!isDateRangeValid || !hasAtLeastOneModule) {
       return;
     }
 
-    const { ordenesExportables, campanasExportables } = obtenerDatosExportables();
+    const { exportableOrders, exportableCampaigns } = getExportData();
 
-    const totalRevenueStripe = ordenesExportables
-      .filter((fila) => fila.estado === "Pagado")
-      .reduce((acc, fila) => acc + fila.monto, 0);
-    const pagosConfirmados = ordenesExportables.filter((fila) => fila.estado === "Pagado").length;
-    const totalGastoCampanas = campanasExportables.reduce((acc, fila) => acc + fila.gasto, 0);
-    const roasGlobal = totalGastoCampanas > 0 ? totalRevenueStripe / totalGastoCampanas : 0;
-
-    const reporteParaPdf: ReporteExportable = {
-      periodo: `${fechaDesdeExportacion} a ${fechaHastaExportacion}`,
-      moneda: REPORTE_CONFIG.moneda,
-      empresa: REPORTE_CONFIG.empresa,
-      metricas: [],
-      panelEjecutivo: {
-        revenueTotalStripe: totalRevenueStripe,
-        pagosConfirmados,
-        roasGlobal,
-        healthScore: 100,
-        accionRequerida: 0,
-      },
-      ordenes: ordenesExportables,
-      campanas: campanasExportables,
-      trackingHealth: {
-        estadoGeneral: "Sin datos",
-        healthScore: 0,
-        resumen: "",
-        problemas: [],
-        ingresosRiesgo: 0,
-      },
+    const reportData: ExportReportData = {
+      period: `${fromDate} a ${toDate}`,
+      currency: REPORT_CONFIG.currency,
+      company: REPORT_CONFIG.company,
+      orders: exportableOrders,
+      campaigns: exportableCampaigns,
     };
 
-    const blob = await pdf(<ReportePdf data={reporteParaPdf} />).toBlob();
-    const url = URL.createObjectURL(blob);
+    const blob = await pdf(<ReportPdf data={reportData} />).toBlob();
+    const downloadUrl = URL.createObjectURL(blob);
     const link = document.createElement("a");
-    link.href = url;
-    link.download = `reporte-exportacion-${fechaDesdeExportacion}_a_${fechaHastaExportacion}.pdf`;
+    link.href = downloadUrl;
+    link.download = `reporte-exportacion-${fromDate}_a_${toDate}.pdf`;
     link.click();
-    URL.revokeObjectURL(url);
+    URL.revokeObjectURL(downloadUrl);
 
-    setModalExportacionAbierto(false);
+    setIsExportModalOpen(false);
   };
 
   return (
     <>
-      <Button variant={"ghost"} onClick={abrirModalExportacion} disabled={cargandoDatos}>
+      <Button variant={"ghost"} onClick={openExportModal} disabled={isLoadingData}>
         <Download className="h-4 w-4" />
-        {cargandoDatos ? "Cargando..." : "Exportar"}
+        {isLoadingData ? "Cargando..." : "Exportar"}
       </Button>
 
-      <Dialog open={modalExportacionAbierto} onOpenChange={setModalExportacionAbierto}>
+      <Dialog open={isExportModalOpen} onOpenChange={setIsExportModalOpen}>
         <DialogContent className="max-w-2xl gap-0 divide-y bg-white p-0 text-black">
           <DialogHeader className="p-4 px-6">
             <DialogTitle>Exportar reporte</DialogTitle>
@@ -845,29 +571,29 @@ export default function GenerateReports() {
               <p className="text-xs font-semibold tracking-wide uppercase opacity-60">Período</p>
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="flex flex-col gap-1 text-sm">
-                  <Label htmlFor="fecha-desde" className="opacity-75">
+                  <Label htmlFor="from-date" className="opacity-75">
                     Fecha desde
                   </Label>
                   <Input
-                    id="fecha-desde"
+                    id="from-date"
                     type="date"
-                    value={fechaDesdeExportacion}
-                    min={fechaMinima}
-                    max={fechaMaxima}
-                    onChange={(event) => setFechaDesdeExportacion(event.target.value)}
+                    value={fromDate}
+                    min={minDate}
+                    max={maxDate}
+                    onChange={(event) => setFromDate(event.target.value)}
                   />
                 </div>
                 <div className="flex flex-col gap-1 text-sm">
-                  <Label htmlFor="fecha-hasta" className="opacity-75">
+                  <Label htmlFor="to-date" className="opacity-75">
                     Fecha hasta
                   </Label>
                   <Input
-                    id="fecha-hasta"
+                    id="to-date"
                     type="date"
-                    value={fechaHastaExportacion}
-                    min={fechaMinima}
-                    max={fechaMaxima}
-                    onChange={(event) => setFechaHastaExportacion(event.target.value)}
+                    value={toDate}
+                    min={minDate}
+                    max={maxDate}
+                    onChange={(event) => setToDate(event.target.value)}
                   />
                 </div>
               </div>
@@ -876,17 +602,17 @@ export default function GenerateReports() {
             <section className="space-y-2">
               <p className="text-xs font-semibold tracking-wide uppercase opacity-60">Formato</p>
               <RadioGroup
-                value={formatoExportacion}
-                onValueChange={(value) => setFormatoExportacion(value as "excel" | "pdf")}
+                value={exportFormat}
+                onValueChange={(value) => setExportFormat(value as "excel" | "pdf")}
                 className="grid gap-2"
               >
                 <div className="flex items-center gap-2">
-                  <RadioGroupItem value="excel" id="formato-excel" />
-                  <Label htmlFor="formato-excel">Excel (.xlsx)</Label>
+                  <RadioGroupItem value="excel" id="format-excel" />
+                  <Label htmlFor="format-excel">Excel (.xlsx)</Label>
                 </div>
                 <div className="flex items-center gap-2">
-                  <RadioGroupItem value="pdf" id="formato-pdf" />
-                  <Label htmlFor="formato-pdf">PDF (.pdf)</Label>
+                  <RadioGroupItem value="pdf" id="format-pdf" />
+                  <Label htmlFor="format-pdf">PDF (.pdf)</Label>
                 </div>
               </RadioGroup>
             </section>
@@ -898,59 +624,59 @@ export default function GenerateReports() {
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
                   <Checkbox
-                    id="exportar-ordenes"
-                    checked={exportarOrdenesSeleccionado}
-                    onCheckedChange={(checked) => setExportarOrdenesSeleccionado(checked === true)}
+                    id="include-orders"
+                    checked={includeOrders}
+                    onCheckedChange={(checked) => setIncludeOrders(checked === true)}
                   />
-                  <Label htmlFor="exportar-ordenes">Órdenes</Label>
+                  <Label htmlFor="include-orders">Órdenes</Label>
                 </div>
                 <div className="flex items-center gap-2">
                   <Checkbox
-                    id="exportar-campanas"
-                    checked={exportarCampanasSeleccionado}
-                    onCheckedChange={(checked) => setExportarCampanasSeleccionado(checked === true)}
+                    id="include-campaigns"
+                    checked={includeCampaigns}
+                    onCheckedChange={(checked) => setIncludeCampaigns(checked === true)}
                   />
-                  <Label htmlFor="exportar-campanas">Campañas</Label>
+                  <Label htmlFor="include-campaigns">Campañas</Label>
                 </div>
               </div>
             </section>
 
-            {!tieneModuloSeleccionado && (
+            {!hasAtLeastOneModule && (
               <p className="text-sm text-red-600 dark:text-red-400">
                 Seleccioná al menos un tipo de dato.
               </p>
             )}
 
-            {!rangoExportacionValido && (
+            {!isDateRangeValid && (
               <p className="text-sm text-red-600 dark:text-red-400">
                 El rango de fechas es inválido.
               </p>
             )}
 
-            {errorCarga && <p className="text-sm text-red-600 dark:text-red-400">{errorCarga}</p>}
+            {loadError && <p className="text-sm text-red-600 dark:text-red-400">{loadError}</p>}
           </div>
 
           <DialogFooter className="gap-2 px-6 py-2 py-4 sm:justify-end">
             <Button
               variant="outline"
               className="bg-white"
-              onClick={() => setModalExportacionAbierto(false)}
+              onClick={() => setIsExportModalOpen(false)}
             >
               Cancelar
             </Button>
             <Button
               onClick={() => {
-                if (formatoExportacion === "pdf") {
-                  void exportarPdfSeleccionado();
+                if (exportFormat === "pdf") {
+                  void exportSelectedPdf();
                   return;
                 }
 
-                void exportarExcelEstilizado();
+                void exportStyledExcel();
               }}
-              disabled={!rangoExportacionValido || !tieneModuloSeleccionado}
+              disabled={!isDateRangeValid || !hasAtLeastOneModule}
               className="w-full sm:w-auto"
             >
-              {formatoExportacion === "pdf" ? "Exportar PDF" : "Exportar Excel"}
+              {exportFormat === "pdf" ? "Exportar PDF" : "Exportar Excel"}
             </Button>
           </DialogFooter>
         </DialogContent>

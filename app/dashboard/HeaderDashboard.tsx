@@ -1,4 +1,5 @@
 "use client";
+import GenerateReports from "@/shared/components/Reports/GenerateReports";
 import { Badge } from "@/shared/components/ui/badge";
 import {
   Select,
@@ -9,7 +10,6 @@ import {
 } from "@/shared/components/ui/select";
 
 import { Calendar, Bell, X } from "lucide-react";
-import GenerateReports from "@/shared/components/Reports/GenerateReports";
 
 export default function HeaderDashboard() {
   return (
