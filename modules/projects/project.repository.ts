@@ -1,5 +1,5 @@
 import { projectsTable, Project } from "@/infrastructure/database/schemas/schema";
-import { and, eq } from "drizzle-orm";
+import { and, eq, ne, inArray } from "drizzle-orm";
 import { randomUUID } from "crypto";
 import { projectMembersTable } from "@/infrastructure/database/schemas/schema";
 import { DBConnection } from "@/infrastructure/database";
@@ -27,7 +27,12 @@ export class ProjectRepository {
       })
       .from(projectsTable)
       .innerJoin(projectMembersTable, eq(projectMembersTable.projectId, projectsTable.id))
-      .where(eq(projectMembersTable.userId, userId));
+      .where(
+        and(
+          eq(projectMembersTable.userId, userId),
+          inArray(projectsTable.status, ["active", "inactive"])
+        )
+      );
 
     return result;
   }
@@ -69,10 +74,9 @@ export class ProjectRepository {
     const result = await database
       .update(projectsTable)
       .set(data)
-      .where(eq(projectsTable.id, projectId))
+      .where(and(eq(projectsTable.id, projectId), ne(projectsTable.status, "archived")))
       .returning();
 
-    // If nothing was updated → it doesn't exist
     if (result.length === 0) {
       return null;
     }
@@ -81,13 +85,16 @@ export class ProjectRepository {
   }
 
   static async archive(projectId: string, database: DBConnection) {
-    await database
+    const result = await database
       .update(projectsTable)
       .set({
         status: "archived",
         updatedAt: new Date(),
       })
-      .where(eq(projectsTable.id, projectId));
+      .where(and(eq(projectsTable.id, projectId), ne(projectsTable.status, "archived")))
+      .returning();
+
+    return result[0] ?? null;
   }
 
   static async assertCanManageMembers(
@@ -106,7 +113,6 @@ export class ProjectRepository {
       )
       .limit(1);
 
-      return result.length > 0;
+    return result.length > 0;
   }
-
 }

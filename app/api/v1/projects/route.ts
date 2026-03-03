@@ -5,8 +5,8 @@ import { z } from "zod";
 import { createProjectSchema } from "@/modules/projects/project.validators";
 
 /**
- * GET /api/projects
- * Returns all projects for the authenticated user
+ * GET /api/v1/projects
+ * Returns a list of all projects belonging to the authenticated user.
  */
 export async function getProjectsFromUser() {
   try {
@@ -27,8 +27,8 @@ export async function getProjectsFromUser() {
 }
 
 /**
- * POST /api/projects
- * Creates a new project
+ * POST /api/v1/projects:
+ * Creates a new project for the authenticated user.
  */
 export async function createProject(req: NextRequest) {
   try {

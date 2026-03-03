@@ -1,11 +1,28 @@
-import { db } from "@/infrastructure/database";
+import { DBConnection, db } from "@/infrastructure/database";
 import { ProjectRepository } from "./project.repository";
 import { ProjectMemberRepository } from "@/modules/projects/members/projectMember.repository";
 import { ProjectRoleRepository } from "@/modules/projects/roles/projectRole.repository";
 import { ProjectApiKeyRepository } from "@/modules/projects/apiKeys/projectApiKey.repository";
+import { AdsSimulatorService } from "@/infrastructure/services/AdsSimulatorService";
 import crypto from "crypto";
 
 export class ProjectService {
+  static async assertPermission(
+    userId: string,
+    projectId: string,
+    resource: string,
+    action: string,
+    db: DBConnection
+  ) {
+    const permissions = await ProjectRoleRepository.getUserPermissions(projectId, userId, db);
+
+    const allowed = permissions.some((p) => p.resource === resource && p.action === action);
+
+    if (!allowed) {
+      throw new Error("Forbidden");
+    }
+  }
+
   static async getUserProjects(userId: string) {
     return ProjectRepository.findByUser(userId, db);
   }
@@ -23,35 +40,36 @@ export class ProjectService {
   }
 
   static async createProject(userId: string, name: string, description?: string) {
-    return db.transaction(async (tx) => {
-      // Create project
+    const result = await db.transaction(async (tx) => {
+      // 1. Create project
       const project = await ProjectRepository.create({ name, description }, tx);
 
-      // Create owner role for the project
-      const ownerRole = await ProjectRoleRepository.createRole(
-        project.id,
-        "owner",
-        "Project owner",
-        tx
-      );
+      // 2. Create default roles except owner role
+      const createdRoles = await ProjectRoleRepository.createDefaultRoles(project.id, tx);
 
-      // Assign all permissions to owner role
-      await ProjectRoleRepository.assignAllPermissions(ownerRole.id, tx);
+      const ownerRoleId = createdRoles.owner;
 
-      // Create relation between project, owner role and user
-      await ProjectMemberRepository.addMember(project.id, userId, ownerRole.id, tx);
+      // 3. Create relation between project, owner role and user
+      await ProjectMemberRepository.addMember(project.id, userId, ownerRoleId, tx);
 
-      // Create API key
+      // 4. Create API key
       const apiKey = crypto.randomBytes(32).toString("hex");
       const hash = crypto.createHash("sha256").update(apiKey).digest("hex");
 
       await ProjectApiKeyRepository.create(project.id, hash, tx);
 
-      return {
-        project,
-        apiKey,
-      };
+      return { project, apiKey };
     });
+
+    // 5. Auto-Simulate Ads data for development (Outside transaction)
+    try {
+      await AdsSimulatorService.simulateProjectAds(result.project.id);
+      console.log(`[Auto-Simulate] Mock data generated for project: ${result.project.id}`);
+    } catch (e) {
+      console.error(`[Auto-Simulate] Failed for project ${result.project.id}:`, e);
+    }
+
+    return result;
   }
 
   static async updateProject(
@@ -60,13 +78,8 @@ export class ProjectService {
     data: { name?: string; description?: string }
   ) {
     return db.transaction(async (tx) => {
-      const permissions = await ProjectMemberRepository.getUserPermissions(projectId, userId, tx);
-
-      const canUpdate = permissions.some((p) => p.resource === "project" && p.action === "update");
-
-      if (!canUpdate) {
-        throw new Error("Forbidden");
-      }
+      // 1. Authorization
+      await ProjectService.assertPermission(userId, projectId, "project", "update", tx);
 
       const updated = await ProjectRepository.update(projectId, data, tx);
 
@@ -80,7 +93,9 @@ export class ProjectService {
 
   static async archiveProject(userId: string, projectId: string) {
     return db.transaction(async (tx) => {
-      const permissions = await ProjectMemberRepository.getUserPermissions(projectId, userId, tx);
+      // 1. Authorization
+      await ProjectService.assertPermission(userId, projectId, "project", "delete", tx);
+      const permissions = await ProjectRoleRepository.getUserPermissions(projectId, userId, tx);
 
       const canDelete = permissions.some((p) => p.resource === "project" && p.action === "delete");
 
@@ -88,7 +103,13 @@ export class ProjectService {
         throw new Error("Forbidden");
       }
 
-      await ProjectRepository.archive(projectId, tx);
+      const archivedProject = await ProjectRepository.archive(projectId, tx);
+
+      if (!archivedProject) {
+        throw new Error("AlreadyArchivedOrNotFound");
+      }
+
+      return archivedProject;
     });
   }
 }

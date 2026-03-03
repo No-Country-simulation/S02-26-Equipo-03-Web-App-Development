@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { useState } from "react";
 import { Home, ShoppingBag, BarChart3, Activity, FileText, Settings, LogOut } from "lucide-react";
+import { signOut } from "@/shared/lib/auth-client";
 
 import {
   Sidebar,
@@ -31,6 +33,22 @@ const items = [
 
 export default function SidebarDashboard() {
   const pathname = usePathname();
+  const router = useRouter();
+  const [isSigningOut, setIsSigningOut] = useState(false);
+
+  const handleSignOut = async () => {
+    if (isSigningOut) return;
+
+    setIsSigningOut(true);
+    const result = await signOut();
+
+    if (result.error) {
+      setIsSigningOut(false);
+      return;
+    }
+
+    router.push("/login");
+  };
 
   return (
     <Sidebar className="border-r" collapsible="none">
@@ -167,9 +185,13 @@ export default function SidebarDashboard() {
           </div>
         </div>
 
-        <button className="text-muted-foreground hover:text-foreground flex w-full items-center gap-2 text-sm transition-colors">
+        <button
+          onClick={handleSignOut}
+          disabled={isSigningOut}
+          className="text-muted-foreground hover:text-foreground disabled:text-muted-foreground/60 flex w-full items-center gap-2 text-sm transition-colors disabled:cursor-not-allowed"
+        >
           <LogOut className="h-4 w-4" />
-          CERRAR SESIÓN
+          {isSigningOut ? "CERRANDO..." : "CERRAR SESIÓN"}
         </button>
       </SidebarFooter>
     </Sidebar>

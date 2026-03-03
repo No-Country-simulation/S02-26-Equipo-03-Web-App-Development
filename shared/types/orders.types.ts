@@ -12,4 +12,7 @@ export interface Order {
   amount: number;
   status: OrderStatus;
   date: string;
+  stripeId?: string;
+  campaignId?: string;
+  sourcePlatform?: string;
 }

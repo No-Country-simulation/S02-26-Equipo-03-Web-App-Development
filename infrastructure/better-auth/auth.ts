@@ -2,7 +2,10 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import * as schema from "@infrastructure/database/schemas/schema";
 import { db } from "@infrastructure/database";
+import { ProjectService } from "@/modules/projects/project.service";
+import { MailService } from "@infrastructure/services/mail.service";
 import "dotenv/config";
+import crypto from "crypto";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -26,9 +29,45 @@ export const auth = betterAuth({
 
   baseURL: process.env.BETTER_AUTH_BASE_URL,
 
-  emailAndPassword: {
-    enabled: true,
+  emailVerification: {
+    sendOnSignUp: true,
+    autoSignInAfterVerification: true,
+    sendVerificationEmail: async ({ user, url }) => {
+      await MailService.sendVerificationEmail(user.email, url);
+    },
   },
 
-  trustedOrigins: process.env.NODE_ENV === "development" ? ["http://localhost:3000"] : [],
+  emailAndPassword: {
+    enabled: true,
+    requireEmailVerification: true, // Esto obliga a verificar para poder entrar
+    sendResetPassword: async ({ user, url }) => {
+      await MailService.sendPasswordResetEmail(user.email, url);
+    },
+  },
+
+  trustedOrigins: [
+    "http://localhost:3000",
+    process.env.BETTER_AUTH_BASE_URL,
+    process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined,
+  ].filter(Boolean) as string[],
+  databaseHooks: {
+    user: {
+      create: {
+        after: async (user) => {
+          try {
+            const { project, apiKey } = await ProjectService.createProject(
+              user.id,
+              "Mi Primer Proyecto",
+              "Proyecto inicial creado automáticamente"
+            );
+
+            console.log(`✅ Proyecto inicial creado para el usuario: ${user.email}`);
+            console.log(`🔑 API Key inicial: ${apiKey}`);
+          } catch (error) {
+            console.error(`❌ Error creando proyecto inicial para ${user.email}:`, error);
+          }
+        },
+      },
+    },
+  },
 });
