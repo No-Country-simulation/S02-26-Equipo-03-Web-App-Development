@@ -1,6 +1,5 @@
 "use client";
-
-import { Button } from "@/shared/components/ui/button";
+import GenerateReports from "@/shared/components/Reports/GenerateReports";
 import { Badge } from "@/shared/components/ui/badge";
 import {
   Select,
@@ -10,7 +9,7 @@ import {
   SelectValue,
 } from "@/shared/components/ui/select";
 
-import { Calendar, Download, Bell, X } from "lucide-react";
+import { Calendar, Bell, X } from "lucide-react";
 
 export default function HeaderDashboard() {
   return (
@@ -40,10 +39,7 @@ export default function HeaderDashboard() {
           </Select>
 
           {/* Exportar */}
-          <Button className="gap-2 rounded-xl bg-black text-white hover:bg-black/90">
-            <Download className="h-4 w-4" />
-            Exportar
-          </Button>
+          <GenerateReports />
 
           {/* Notificaciones */}
           <div className="relative">

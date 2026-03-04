@@ -22,6 +22,7 @@ import {
 import { Badge } from "@shared/components/ui/badge";
 import { Separator } from "@shared/components/ui/separator";
 import { Avatar, AvatarFallback } from "@shared/components/ui/avatar";
+import { useSelectedProjectStore } from "@/shared/hooks/use-selected-project-store";
 
 const items = [
   { title: "Inicio", icon: Home, url: "/dashboard" },
@@ -35,7 +36,7 @@ export default function SidebarDashboard() {
   const pathname = usePathname();
   const router = useRouter();
   const [isSigningOut, setIsSigningOut] = useState(false);
-
+  const { setSelectedProjectId } = useSelectedProjectStore();
   const handleSignOut = async () => {
     if (isSigningOut) return;
 
@@ -46,7 +47,7 @@ export default function SidebarDashboard() {
       setIsSigningOut(false);
       return;
     }
-
+    setSelectedProjectId(null);
     router.push("/login");
   };
 
