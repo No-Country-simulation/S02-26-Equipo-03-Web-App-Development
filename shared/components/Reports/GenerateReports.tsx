@@ -215,15 +215,21 @@ const pdfStyles = StyleSheet.create({
     paddingVertical: 4,
   },
   c1: { width: "16%" },
-  c2: { width: "16%" },
+  c2: { width: "12%" },
   c3: { width: "18%", textAlign: "right" },
   c4: { width: "12%", textAlign: "right" },
   c5: { width: "12%", textAlign: "right" },
-  c6: { width: "14%", textAlign: "right" },
-  c7: { width: "14%", textAlign: "right" },
+  c6: { width: "16%", textAlign: "right" },
+  c7: { width: "16%", textAlign: "right" },
   c8: { width: "12%", textAlign: "right" },
 });
-
+function formatCurrency(value: number) {
+  return Intl.NumberFormat("es-AR", {
+    style: "currency",
+    currency: "USD",
+    currencyDisplay: "narrowSymbol",
+  }).format(value);
+}
 function ReportPdf({ data }: { data: ExportReportData }) {
   const hasOrders = data.orders.length > 0;
   const hasCampaigns = data.campaigns.length > 0;
@@ -248,7 +254,7 @@ function ReportPdf({ data }: { data: ExportReportData }) {
 
           {data.orders.map((row) => (
             <View key={row.orderId} style={pdfStyles.row}>
-              <Text style={pdfStyles.c1}>{row.date}</Text>
+              <Text style={pdfStyles.c1}>{toISODate(row.date)}</Text>
               <Text style={pdfStyles.c2}>
                 {row.orderId.slice(0, 4) + "..." + row.orderId.slice(-4)}
               </Text>
@@ -257,7 +263,7 @@ function ReportPdf({ data }: { data: ExportReportData }) {
               <Text style={pdfStyles.c5}>{row.status}</Text>
               <Text style={pdfStyles.c6}>{row.paymentType}</Text>
               <Text style={pdfStyles.c7}>{row.service}</Text>
-              <Text style={pdfStyles.c8}>{row.amount.toFixed(2)}</Text>
+              <Text style={pdfStyles.c8}>{formatCurrency(row.amount)}</Text>
             </View>
           ))}
         </Page>
@@ -281,13 +287,25 @@ function ReportPdf({ data }: { data: ExportReportData }) {
 
           {data.campaigns.map((row) => (
             <View key={`${row.date}-${row.campaign}`} style={pdfStyles.row}>
-              <Text style={pdfStyles.c1}>{row.date}</Text>
+              <Text style={pdfStyles.c1}>{toISODate(row.date)}</Text>
               <Text style={pdfStyles.c2}>{row.campaign}</Text>
               <Text style={pdfStyles.c3}>{row.platform}</Text>
-              <Text style={pdfStyles.c4}>{row.spend.toFixed(2)}</Text>
-              <Text style={pdfStyles.c5}>{row.stripeRevenue.toFixed(2)}</Text>
+              <Text style={pdfStyles.c4}>
+                {Intl.NumberFormat("es-AR", {
+                  style: "currency",
+                  currency: "USD",
+                  currencyDisplay: "narrowSymbol",
+                }).format(row.spend)}
+              </Text>
+              <Text style={pdfStyles.c5}>
+                {Intl.NumberFormat("es-AR", {
+                  style: "currency",
+                  currency: "USD",
+                  currencyDisplay: "narrowSymbol",
+                }).format(row.stripeRevenue)}
+              </Text>
               <Text style={pdfStyles.c6}>{row.roas.toFixed(2)}x</Text>
-              <Text style={pdfStyles.c7}>{row.cpa.toFixed(2)}</Text>
+              <Text style={pdfStyles.c7}>{formatCurrency(row.cpa)}</Text>
               <Text style={pdfStyles.c8}></Text>
             </View>
           ))}
@@ -304,6 +322,8 @@ export default function GenerateReports() {
   const [orderRecords, setOrderRecords] = useState<OrderApiRecord[]>([]);
   const [campaignRecords, setCampaignRecords] = useState<CampaignApiRecord[]>([]);
   const [isLoadingData, setIsLoadingData] = useState(false);
+  const [isGeneratingReport, setIsGeneratingReport] = useState(false);
+
   const [loadError, setLoadError] = useState<string | null>(null);
 
   const availableDates = useMemo(
@@ -329,49 +349,6 @@ export default function GenerateReports() {
   const [exportFormat, setExportFormat] = useState<"excel" | "pdf">("excel");
 
   useEffect(() => {
-    let isActive = true;
-
-    const loadData = async () => {
-      if (!selectedProjectId) {
-        return;
-      }
-
-      setIsLoadingData(true);
-      setLoadError(null);
-
-      try {
-        const [orders, campaigns] = await Promise.all([
-          fetchOrdersByProject(selectedProjectId),
-          fetchCampaignsByProject(selectedProjectId),
-        ]);
-
-        if (!isActive) {
-          return;
-        }
-
-        setOrderRecords(orders);
-        setCampaignRecords(campaigns);
-      } catch (error) {
-        if (!isActive) {
-          return;
-        }
-
-        setLoadError(error instanceof Error ? error.message : "Error al cargar reportes.");
-      } finally {
-        if (isActive) {
-          setIsLoadingData(false);
-        }
-      }
-    };
-
-    void loadData();
-
-    return () => {
-      isActive = false;
-    };
-  }, [selectedProjectId]);
-
-  useEffect(() => {
     setFromDate((current) => {
       if (!current || current < minDate || current > maxDate) {
         return minDate;
@@ -391,8 +368,30 @@ export default function GenerateReports() {
 
   const isDateRangeValid = Boolean(fromDate && toDate && fromDate <= toDate);
   const hasAtLeastOneModule = includeOrders || includeCampaigns;
+  const loadData = async () => {
+    if (!selectedProjectId) {
+      return;
+    }
 
+    setIsLoadingData(true);
+    setLoadError(null);
+
+    try {
+      const [orders, campaigns] = await Promise.all([
+        fetchOrdersByProject(selectedProjectId),
+        fetchCampaignsByProject(selectedProjectId),
+      ]);
+
+      setOrderRecords(orders);
+      setCampaignRecords(campaigns);
+    } catch (error) {
+      setLoadError(error instanceof Error ? error.message : "Error al cargar reportes.");
+    } finally {
+      setIsLoadingData(false);
+    }
+  };
   const openExportModal = () => {
+    loadData();
     setExportFormat("excel");
     setIsExportModalOpen(true);
   };
@@ -414,7 +413,69 @@ export default function GenerateReports() {
     return { exportableOrders, exportableCampaigns };
   };
 
+  const saveReportInBackend = async (payload: {
+    fileUrl: string;
+    format: "pdf" | "csv" | "xlsx";
+  }) => {
+    if (!selectedProjectId) {
+      throw new Error("No hay proyecto seleccionado para guardar el reporte");
+    }
+
+    const reportName = `Reporte${includeOrders ? "-ordenes" : ""}${includeCampaigns ? "-campañas" : ""}`;
+
+    const response = await fetch("/api/v1/reports", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        projectId: selectedProjectId,
+        name: reportName,
+        format: payload.format,
+        fileUrl: payload.fileUrl,
+        periodStart: new Date(`${fromDate}T00:00:00.000Z`).toISOString(),
+        periodEnd: new Date(`${toDate}T23:59:59.999Z`).toISOString(),
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("No se pudo guardar el reporte en el backend");
+    }
+  };
+
+  const uploadReportToCloudinary = async (blob: Blob, extension: "pdf" | "xlsx") => {
+    if (!selectedProjectId) {
+      throw new Error("No hay proyecto seleccionado para subir el reporte");
+    }
+
+    const formDataFile = new FormData();
+    const fileName = `reporte${includeOrders ? "-ordenes" : ""}${includeCampaigns ? "-campañas" : ""}.${extension}`;
+    formDataFile.append("file", blob);
+    formDataFile.append("upload_preset", "garderads_reports");
+    formDataFile.append("folder", `gardenads/${selectedProjectId}/reports`);
+    formDataFile.append("public_id", fileName.replace(/\.[^/.]+$/, ""));
+    formDataFile.append("filename_override", fileName);
+    const { data } = await fetch(
+      `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/raw/upload`,
+      {
+        method: "POST",
+        body: formDataFile,
+      }
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        if (!json.secure_url) {
+          throw new Error("Error al subir el archivo a Cloudinary");
+        }
+        return { data: json };
+      });
+
+    return data.secure_url as string;
+  };
+
   const exportStyledExcel = async () => {
+    setIsGeneratingReport(true);
     if (!isDateRangeValid || !hasAtLeastOneModule) {
       return;
     }
@@ -423,12 +484,6 @@ export default function GenerateReports() {
 
     const ExcelJS = await import("exceljs");
     const workbook = new ExcelJS.Workbook();
-    const currencyFormatter = new Intl.NumberFormat("es-AR", {
-      style: "currency",
-      signDisplay: "never",
-      currency: REPORT_CONFIG.currency,
-      maximumFractionDigits: 2,
-    });
 
     const addTable = (
       sheetName: string,
@@ -481,13 +536,13 @@ export default function GenerateReports() {
         "Órdenes",
         ["Fecha", "ID Orden", "Cliente", "Servicio", "Tipo pago", "Fuente", "Monto", "Estado"],
         exportableOrders.map((row) => ({
-          Fecha: row.date,
+          Fecha: toISODate(row.date),
           "ID Orden": row.orderId,
           Cliente: row.customer,
           Servicio: row.service,
           "Tipo pago": row.paymentType,
           Fuente: row.source,
-          Monto: currencyFormatter.format(row.amount),
+          Monto: formatCurrency(row.amount),
           Estado: row.status,
         }))
       );
@@ -498,13 +553,13 @@ export default function GenerateReports() {
         "Campañas",
         ["Fecha", "Campaña", "Plataforma", "Gasto", "Revenue Stripe", "ROAS", "CPA"],
         exportableCampaigns.map((row) => ({
-          Fecha: row.date,
+          Fecha: toISODate(row.date),
           Campaña: row.campaign,
           Plataforma: row.platform,
-          Gasto: currencyFormatter.format(row.spend),
-          "Revenue Stripe": currencyFormatter.format(row.stripeRevenue),
+          Gasto: formatCurrency(row.spend),
+          "Revenue Stripe": formatCurrency(row.stripeRevenue),
           ROAS: `${row.roas.toFixed(2)}x`,
-          CPA: currencyFormatter.format(row.cpa),
+          CPA: formatCurrency(row.cpa),
         }))
       );
     }
@@ -514,17 +569,26 @@ export default function GenerateReports() {
       type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     });
 
+    await uploadReportToCloudinary(blob, "xlsx")
+      .then((fileUrl) => saveReportInBackend({ fileUrl, format: "xlsx" }))
+      .catch((error) => {
+        console.error("Error al subir el reporte a Cloudinary:", error);
+        alert("Hubo un error al subir el reporte. Por favor, intentá nuevamente.");
+      });
+
     const downloadUrl = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = downloadUrl;
-    link.download = `reporte-exportacion-${fromDate}_a_${toDate}.xlsx`;
+    link.download = `reporte${includeOrders ? "-ordenes" : ""}${includeCampaigns ? "-campañas" : ""}.xlsx`;
     link.click();
     URL.revokeObjectURL(downloadUrl);
 
+    setIsGeneratingReport(false);
     setIsExportModalOpen(false);
   };
 
   const exportSelectedPdf = async () => {
+    setIsGeneratingReport(true);
     if (!isDateRangeValid || !hasAtLeastOneModule) {
       return;
     }
@@ -540,146 +604,165 @@ export default function GenerateReports() {
     };
 
     const blob = await pdf(<ReportPdf data={reportData} />).toBlob();
+
+    await uploadReportToCloudinary(blob, "pdf")
+      .then((fileUrl) => saveReportInBackend({ fileUrl, format: "pdf" }))
+      .catch((error) => {
+        console.error("Error al subir el reporte a Cloudinary:", error);
+        alert("Hubo un error al subir el reporte. Por favor, intentá nuevamente.");
+      });
+
     const downloadUrl = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = downloadUrl;
-    link.download = `reporte-exportacion-${fromDate}_a_${toDate}.pdf`;
+    link.download = `reporte${includeOrders ? "-ordenes" : ""}${includeCampaigns ? "-campañas" : ""}.pdf`;
     link.click();
     URL.revokeObjectURL(downloadUrl);
 
+    setIsGeneratingReport(false);
     setIsExportModalOpen(false);
   };
 
   return (
     <>
-      <Button variant={"ghost"} onClick={openExportModal} disabled={isLoadingData}>
+      <Button variant={"ghost"} onClick={openExportModal}>
+        Exportar
         <Download className="h-4 w-4" />
-        {isLoadingData ? "Cargando..." : "Exportar"}
       </Button>
 
       <Dialog open={isExportModalOpen} onOpenChange={setIsExportModalOpen}>
-        <DialogContent className="max-w-2xl gap-0 divide-y bg-white p-0 text-black">
-          <DialogHeader className="p-4 px-6">
-            <DialogTitle>Exportar reporte</DialogTitle>
-            <DialogDescription>
-              Seleccioná el período, formato y datos que querés exportar.
-            </DialogDescription>
-          </DialogHeader>
+        {isLoadingData ? (
+          <DialogContent className="max-w-sm bg-white p-6 text-center text-black">
+            <DialogTitle>Cargando datos para exportar...</DialogTitle>
+          </DialogContent>
+        ) : (
+          <DialogContent className="max-w-2xl gap-0 divide-y bg-white p-0 text-black">
+            <DialogHeader className="p-4 px-6">
+              <DialogTitle>Exportar reporte</DialogTitle>
+              <DialogDescription>
+                Seleccioná el período, formato y datos que querés exportar.
+              </DialogDescription>
+            </DialogHeader>
 
-          <div className="space-y-4 px-6 py-4">
-            <section className="space-y-2">
-              <p className="text-xs font-semibold tracking-wide uppercase opacity-60">Período</p>
-              <div className="grid gap-3 sm:grid-cols-2">
-                <div className="flex flex-col gap-1 text-sm">
-                  <Label htmlFor="from-date" className="opacity-75">
-                    Fecha desde
-                  </Label>
-                  <Input
-                    id="from-date"
-                    type="date"
-                    value={fromDate}
-                    min={minDate}
-                    max={maxDate}
-                    onChange={(event) => setFromDate(event.target.value)}
-                  />
+            <div className="space-y-4 px-6 py-4">
+              <section className="space-y-2">
+                <p className="text-xs font-semibold tracking-wide uppercase opacity-60">Período</p>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <div className="flex flex-col gap-1 text-sm">
+                    <Label htmlFor="from-date" className="opacity-75">
+                      Fecha desde
+                    </Label>
+                    <Input
+                      id="from-date"
+                      type="date"
+                      value={fromDate}
+                      min={minDate}
+                      max={maxDate}
+                      onChange={(event) => setFromDate(event.target.value)}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1 text-sm">
+                    <Label htmlFor="to-date" className="opacity-75">
+                      Fecha hasta
+                    </Label>
+                    <Input
+                      id="to-date"
+                      type="date"
+                      value={toDate}
+                      min={minDate}
+                      max={maxDate}
+                      onChange={(event) => setToDate(event.target.value)}
+                    />
+                  </div>
                 </div>
-                <div className="flex flex-col gap-1 text-sm">
-                  <Label htmlFor="to-date" className="opacity-75">
-                    Fecha hasta
-                  </Label>
-                  <Input
-                    id="to-date"
-                    type="date"
-                    value={toDate}
-                    min={minDate}
-                    max={maxDate}
-                    onChange={(event) => setToDate(event.target.value)}
-                  />
-                </div>
-              </div>
-            </section>
+              </section>
 
-            <section className="space-y-2">
-              <p className="text-xs font-semibold tracking-wide uppercase opacity-60">Formato</p>
-              <RadioGroup
-                value={exportFormat}
-                onValueChange={(value) => setExportFormat(value as "excel" | "pdf")}
-                className="grid gap-2"
+              <section className="space-y-2">
+                <p className="text-xs font-semibold tracking-wide uppercase opacity-60">Formato</p>
+                <RadioGroup
+                  value={exportFormat}
+                  onValueChange={(value) => setExportFormat(value as "excel" | "pdf")}
+                  className="grid gap-2"
+                >
+                  <div className="flex items-center gap-2">
+                    <RadioGroupItem value="excel" id="format-excel" />
+                    <Label htmlFor="format-excel">Excel (.xlsx)</Label>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <RadioGroupItem value="pdf" id="format-pdf" />
+                    <Label htmlFor="format-pdf">PDF (.pdf)</Label>
+                  </div>
+                </RadioGroup>
+              </section>
+
+              <section className="space-y-2">
+                <p className="text-xs font-semibold tracking-wide uppercase opacity-60">
+                  Datos a exportar
+                </p>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <Checkbox
+                      id="include-orders"
+                      checked={includeOrders}
+                      onCheckedChange={(checked) => setIncludeOrders(checked === true)}
+                    />
+                    <Label htmlFor="include-orders">Órdenes</Label>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Checkbox
+                      id="include-campaigns"
+                      checked={includeCampaigns}
+                      onCheckedChange={(checked) => setIncludeCampaigns(checked === true)}
+                    />
+                    <Label htmlFor="include-campaigns">Campañas</Label>
+                  </div>
+                </div>
+              </section>
+
+              {!hasAtLeastOneModule && (
+                <p className="text-sm text-red-600 dark:text-red-400">
+                  Seleccioná al menos un tipo de dato.
+                </p>
+              )}
+
+              {!isDateRangeValid && (
+                <p className="text-sm text-red-600 dark:text-red-400">
+                  El rango de fechas es inválido.
+                </p>
+              )}
+
+              {loadError && <p className="text-sm text-red-600 dark:text-red-400">{loadError}</p>}
+            </div>
+
+            <DialogFooter className="gap-2 px-6 py-2 py-4 sm:justify-end">
+              <Button
+                variant="outline"
+                className="bg-white"
+                onClick={() => setIsExportModalOpen(false)}
               >
-                <div className="flex items-center gap-2">
-                  <RadioGroupItem value="excel" id="format-excel" />
-                  <Label htmlFor="format-excel">Excel (.xlsx)</Label>
-                </div>
-                <div className="flex items-center gap-2">
-                  <RadioGroupItem value="pdf" id="format-pdf" />
-                  <Label htmlFor="format-pdf">PDF (.pdf)</Label>
-                </div>
-              </RadioGroup>
-            </section>
+                Cancelar
+              </Button>
+              <Button
+                onClick={() => {
+                  if (exportFormat === "pdf") {
+                    void exportSelectedPdf();
+                    return;
+                  }
 
-            <section className="space-y-2">
-              <p className="text-xs font-semibold tracking-wide uppercase opacity-60">
-                Datos a exportar
-              </p>
-              <div className="space-y-3">
-                <div className="flex items-center gap-2">
-                  <Checkbox
-                    id="include-orders"
-                    checked={includeOrders}
-                    onCheckedChange={(checked) => setIncludeOrders(checked === true)}
-                  />
-                  <Label htmlFor="include-orders">Órdenes</Label>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Checkbox
-                    id="include-campaigns"
-                    checked={includeCampaigns}
-                    onCheckedChange={(checked) => setIncludeCampaigns(checked === true)}
-                  />
-                  <Label htmlFor="include-campaigns">Campañas</Label>
-                </div>
-              </div>
-            </section>
-
-            {!hasAtLeastOneModule && (
-              <p className="text-sm text-red-600 dark:text-red-400">
-                Seleccioná al menos un tipo de dato.
-              </p>
-            )}
-
-            {!isDateRangeValid && (
-              <p className="text-sm text-red-600 dark:text-red-400">
-                El rango de fechas es inválido.
-              </p>
-            )}
-
-            {loadError && <p className="text-sm text-red-600 dark:text-red-400">{loadError}</p>}
-          </div>
-
-          <DialogFooter className="gap-2 px-6 py-2 py-4 sm:justify-end">
-            <Button
-              variant="outline"
-              className="bg-white"
-              onClick={() => setIsExportModalOpen(false)}
-            >
-              Cancelar
-            </Button>
-            <Button
-              onClick={() => {
-                if (exportFormat === "pdf") {
-                  void exportSelectedPdf();
-                  return;
-                }
-
-                void exportStyledExcel();
-              }}
-              disabled={!isDateRangeValid || !hasAtLeastOneModule}
-              className="w-full sm:w-auto"
-            >
-              {exportFormat === "pdf" ? "Exportar PDF" : "Exportar Excel"}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
+                  void exportStyledExcel();
+                }}
+                disabled={!isDateRangeValid || !hasAtLeastOneModule || isGeneratingReport}
+                className="w-full sm:w-auto"
+              >
+                {isGeneratingReport ? (
+                  "Generando..."
+                ) : (
+                  <>{exportFormat === "pdf" ? "Exportar PDF" : "Exportar Excel"}</>
+                )}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        )}
       </Dialog>
     </>
   );
