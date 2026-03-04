@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
-import { OrdersToolbar } from "./OrdersToolbar";
 import { OrdersTable } from "./OrdersTable";
 import { SalesOrder } from "@/shared/interfaces/orders.interface";
 import { RESPONSE_MOCK } from "./mock/order-server.mock";
+import { SearchToolbar } from "../ui/search-toolbar";
 
 const PAGE_SIZE = 4;
 
@@ -76,11 +76,9 @@ export function OrdersSection() {
       </div>
 
       <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
-        <OrdersToolbar
+        <SearchToolbar
           search={search}
           onSearchChange={handleSearch}
-          onFilter={() => console.log("abrir filtros")}
-          onExport={() => console.log("exportar CSV")}
         />
         <OrdersTable
           orders={paginatedOrders}

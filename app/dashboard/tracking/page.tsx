@@ -1,4 +1,3 @@
-import { IssuesTable } from "@/app/dashboard/tracking/IssueTable"
 import { issues } from "@/app/dashboard/tracking/dashboardData"
 import {
   sortIssuesByImpact
@@ -7,6 +6,7 @@ import { TrackingSkeleton } from "@/app/dashboard/tracking/TrackingSkeleton"
 import { SystemHealthCard } from "@/shared/components/Dashboard/Tracking/HealtCard/SystemHealtCard"
 import { Integration } from "@/shared/components/Dashboard/Tracking/HealtCard/healt-card.interface"
 import { IntegrationStatus } from "@/shared/components/Dashboard/Tracking/IntegrationStatus"
+import { TrackingTable } from "@/shared/components/Dashboard/Tracking/TrackingTable"
 
 const integrationes: Integration[] = [
   { name: "Stripe", status: "ok" as const },
@@ -31,7 +31,7 @@ export default function DashboardPage() {
             integrations={integrationes}
           />
           <IntegrationStatus integrations={integrationes} />
-          <IssuesTable issues={sortedIssues} />
+          <TrackingTable issues={sortedIssues} />
         </div>
       ) : (
         <TrackingSkeleton />

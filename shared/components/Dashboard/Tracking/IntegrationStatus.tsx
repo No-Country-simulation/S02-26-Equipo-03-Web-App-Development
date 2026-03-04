@@ -58,7 +58,7 @@ export function IntegrationStatus({ integrations }: Props) {
               </span>
             )}
 
-            <span className="flex items-center gap-1.5 ml-8">
+            <span className="flex items-center text-xs gap-1.5 ml-8">
               <span
                 className={`w-2 h-2 rounded-full ${integrationDotColor[integration.status]}`}
               />
