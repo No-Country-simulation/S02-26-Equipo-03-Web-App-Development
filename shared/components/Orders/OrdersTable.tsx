@@ -66,9 +66,9 @@ function SourceBadge({ source }: { source: string }) {
 
 function StatusBadge({ status }: { status: string }) {
   const styles: Record<string, string> = {
-    confirmed: "border-[#E2E8F0] bg-[#EEFFF4] text-[#049140]",
-    pending: "border-[#E2E8F0] bg-[#FFFFE7] text-[#A67102]",
-    failed: "border-[#E2E8F0] bg-[#FFF0F0] text-[#D70000]",
+    confirmed: "border-[#BBF7D1] bg-[#EEFFF4] text-[#049140]",
+    pending: "border-[#FFFD86] bg-[#FFFFE7] text-[#A67102]",
+    failed: "border-[#FFC0C0] bg-[#FFF0F0] text-[#D70000]",
   };
 
   return (
