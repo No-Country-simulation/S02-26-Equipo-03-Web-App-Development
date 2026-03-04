@@ -505,7 +505,7 @@ export const reportsTable = sqliteTable(
       .notNull()
       .references(() => usersTable.id, { onDelete: "cascade" }),
     name: text("name").notNull(),
-    format: text("format", { enum: ["pdf", "csv"] }).notNull(),
+    format: text("format", { enum: ["pdf", "csv", "xlsx"] }).notNull(),
     fileUrl: text("file_url").notNull(),
     periodStart: integer("period_start", { mode: "timestamp_ms" }).notNull(),
     periodEnd: integer("period_end", { mode: "timestamp_ms" }).notNull(),
