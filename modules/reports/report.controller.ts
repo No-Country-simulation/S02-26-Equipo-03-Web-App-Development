@@ -12,16 +12,13 @@ import type { ReportFilters } from "./report.types";
 
 function internalError(message: string, error: unknown) {
   console.error(message, error);
-  return NextResponse.json(
-    { status: "error", message: "Internal Server Error" },
-    { status: 500 }
-  );
+  return NextResponse.json({ status: "error", message: "Internal Server Error" }, { status: 500 });
 }
 
 /**
  * Crea un nuevo reporte (POST).
  * @param body  - cuerpo del request (sin userId)
- * @param userId - ID del usuario autenticado 
+ * @param userId - ID del usuario autenticado
  */
 export async function createReport(body: unknown, userId: string) {
   try {
@@ -38,15 +35,9 @@ export async function createReport(body: unknown, userId: string) {
       );
     }
 
-    const report = await ReportRepository.create(
-      { ...parsed.data, userId },
-      db
-    );
+    const report = await ReportRepository.create({ ...parsed.data, userId }, db);
 
-    return NextResponse.json(
-      { status: "success", data: report },
-      { status: 201 }
-    );
+    return NextResponse.json({ status: "success", data: report }, { status: 201 });
   } catch (error: unknown) {
     return internalError("Failed to create report:", error);
   }
@@ -54,8 +45,10 @@ export async function createReport(body: unknown, userId: string) {
 
 /**
  * Lista reportes con filtros (GET).
+ * @param searchParams - filtros de búsqueda
+ * @param userId - ID del usuario para verificar acceso al proyecto
  */
-export async function listReports(searchParams: URLSearchParams) {
+export async function listReports(searchParams: URLSearchParams, userId: string) {
   try {
     const projectId = searchParams.get("projectId");
 
@@ -63,6 +56,18 @@ export async function listReports(searchParams: URLSearchParams) {
       return NextResponse.json(
         { status: "error", message: "Query parameter 'projectId' is required" },
         { status: 400 }
+      );
+    }
+
+    // Verificar que el usuario sea miembro del proyecto
+    const membership = await db.query.projectMembersTable.findFirst({
+      where: (table, { and, eq }) => and(eq(table.projectId, projectId), eq(table.userId, userId)),
+    });
+
+    if (!membership) {
+      return NextResponse.json(
+        { status: "error", message: "Unauthorized or project not found" },
+        { status: 403 }
       );
     }
 
@@ -115,10 +120,7 @@ export async function getReportById(reportId: string) {
     const report = await ReportRepository.findById(reportId, db);
 
     if (!report) {
-      return NextResponse.json(
-        { status: "error", message: "Report not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ status: "error", message: "Report not found" }, { status: 404 });
     }
 
     return NextResponse.json({ status: "success", data: report });
@@ -129,9 +131,23 @@ export async function getReportById(reportId: string) {
 
 /**
  * Stats para las cards del header (GET /stats).
+ * @param projectId - ID del proyecto
+ * @param userId - ID del usuario para verificar acceso
  */
-export async function getReportStats(projectId: string) {
+export async function getReportStats(projectId: string, userId: string) {
   try {
+    // Verificar que el usuario sea miembro del proyecto
+    const membership = await db.query.projectMembersTable.findFirst({
+      where: (table, { and, eq }) => and(eq(table.projectId, projectId), eq(table.userId, userId)),
+    });
+
+    if (!membership) {
+      return NextResponse.json(
+        { status: "error", message: "Unauthorized or project not found" },
+        { status: 403 }
+      );
+    }
+
     const stats = await ReportRepository.getStats(projectId, db);
 
     return NextResponse.json({ status: "success", data: stats });
@@ -148,18 +164,12 @@ export async function deleteReport(reportId: string) {
     const report = await ReportRepository.findById(reportId, db);
 
     if (!report) {
-      return NextResponse.json(
-        { status: "error", message: "Report not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ status: "error", message: "Report not found" }, { status: 404 });
     }
 
     await ReportRepository.delete(reportId, db);
 
-    return NextResponse.json(
-      { status: "success", message: "Report deleted" },
-      { status: 200 }
-    );
+    return NextResponse.json({ status: "success", message: "Report deleted" }, { status: 200 });
   } catch (error: unknown) {
     return internalError("Failed to delete report:", error);
   }

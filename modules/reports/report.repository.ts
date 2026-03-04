@@ -4,7 +4,7 @@
  * Acceso a datos para la tabla de reportes.
  */
 
-import { reportsTable } from "@/infrastructure/database/schemas/schema";
+import { reportsTable, usersTable } from "@/infrastructure/database/schemas/schema";
 import { eq, and, gte, lte, like, desc, sql, count } from "drizzle-orm";
 import { randomUUID } from "crypto";
 import type { DBConnection } from "@/infrastructure/database";
@@ -29,21 +29,39 @@ export class ReportRepository {
     });
 
     const [report] = await database
-      .select()
+      .select({
+        id: reportsTable.id,
+        projectId: reportsTable.projectId,
+        userId: reportsTable.userId,
+        userName: usersTable.name,
+        name: reportsTable.name,
+        format: reportsTable.format,
+        fileUrl: reportsTable.fileUrl,
+        periodStart: reportsTable.periodStart,
+        periodEnd: reportsTable.periodEnd,
+        createdAt: reportsTable.createdAt,
+      })
       .from(reportsTable)
+      .leftJoin(usersTable, eq(reportsTable.userId, usersTable.id))
       .where(eq(reportsTable.id, id))
       .limit(1);
 
-    return report;
+    if (!report) return null;
+
+    return {
+      ...report,
+      userName: undefined,
+      user: {
+        name: report.userName,
+      },
+    };
   }
 
   /**
    * Lista reportes con filtros opcionales.
    */
   static async findAll(filters: ReportFilters, database: DBConnection) {
-    const conditions = [
-      eq(reportsTable.projectId, filters.projectId),
-    ];
+    const conditions = [eq(reportsTable.projectId, filters.projectId)];
 
     if (filters.name) {
       conditions.push(like(reportsTable.name, `%${filters.name}%`));
@@ -74,6 +92,7 @@ export class ReportRepository {
         id: reportsTable.id,
         projectId: reportsTable.projectId,
         userId: reportsTable.userId,
+        userName: usersTable.name,
         name: reportsTable.name,
         format: reportsTable.format,
         fileUrl: reportsTable.fileUrl,
@@ -82,10 +101,17 @@ export class ReportRepository {
         createdAt: reportsTable.createdAt,
       })
       .from(reportsTable)
+      .leftJoin(usersTable, eq(reportsTable.userId, usersTable.id))
       .where(and(...conditions))
       .orderBy(desc(reportsTable.createdAt));
 
-    return reports;
+    return reports.map((r) => ({
+      ...r,
+      userName: undefined,
+      user: {
+        name: r.userName,
+      },
+    }));
   }
 
   /**
@@ -97,6 +123,7 @@ export class ReportRepository {
         id: reportsTable.id,
         projectId: reportsTable.projectId,
         userId: reportsTable.userId,
+        userName: usersTable.name,
         name: reportsTable.name,
         format: reportsTable.format,
         fileUrl: reportsTable.fileUrl,
@@ -105,10 +132,19 @@ export class ReportRepository {
         createdAt: reportsTable.createdAt,
       })
       .from(reportsTable)
+      .leftJoin(usersTable, eq(reportsTable.userId, usersTable.id))
       .where(eq(reportsTable.id, id))
       .limit(1);
 
-    return report ?? null;
+    if (!report) return null;
+
+    return {
+      ...report,
+      userName: undefined,
+      user: {
+        name: report.userName,
+      },
+    };
   }
 
   /**
@@ -122,12 +158,7 @@ export class ReportRepository {
     const [monthCount] = await database
       .select({ value: count() })
       .from(reportsTable)
-      .where(
-        and(
-          eq(reportsTable.projectId, projectId),
-          gte(reportsTable.createdAt, startOfMonth)
-        )
-      );
+      .where(and(eq(reportsTable.projectId, projectId), gte(reportsTable.createdAt, startOfMonth)));
 
     // Último reporte
     const [lastReport] = await database
@@ -162,9 +193,7 @@ export class ReportRepository {
    * Elimina un reporte por ID.
    */
   static async delete(id: string, database: DBConnection) {
-    const result = await database
-      .delete(reportsTable)
-      .where(eq(reportsTable.id, id));
+    const result = await database.delete(reportsTable).where(eq(reportsTable.id, id));
 
     return result;
   }

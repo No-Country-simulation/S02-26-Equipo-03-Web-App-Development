@@ -7,12 +7,12 @@
 export type { Report, InsertReport } from "@/infrastructure/database/schemas/schema";
 
 /** Formatos de exportación soportados */
-export type ReportFormat = "pdf" | "csv";
+export type ReportFormat = "pdf" | "csv" | "xlsx";
 
 /** Input para crear un reporte */
 export interface CreateReportInput {
   projectId: string;
-  userId: string;   // viene de la sesión, no del body del cliente
+  userId: string; // viene de la sesión, no del body del cliente
   name: string;
   format: ReportFormat;
   fileUrl: string;
