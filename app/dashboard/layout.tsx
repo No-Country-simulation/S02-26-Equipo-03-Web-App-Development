@@ -39,7 +39,7 @@ export default function DashboardPage({ children }: { children: React.ReactNode 
         <div>
           <Sidebard />
         </div>
-        <div className="flex w-full flex-col overflow-hidden bg-white">
+        <div className="flex w-full flex-col overflow-hidden bg-[#F8FAFC]">
           <HeaderDashboard />
           <div className="flex-1 overflow-y-auto">{children}</div>
         </div>

@@ -39,7 +39,7 @@ export function ScoreRing({ score, variant = "warning" }: ScoreRingProps) {
   // Rotate so gap sits at bottom: gap center = 270° (SVG bottom).
   // Arc starts at 270° + 30° = 300° from 3-o'clock = rotate(210°)
   const trackDash = `${arcLength} ${gapLength}`;
-  const rotateOffset = 210; // degrees
+  const rotateOffset = 270; // degrees
 
   // Progress: score% of the 300° arc
   const progressArc = (score / 100) * arcLength;
@@ -52,11 +52,7 @@ export function ScoreRing({ score, variant = "warning" }: ScoreRingProps) {
       style={{ width: SIZE, height: SIZE, position: "relative", flexShrink: 0 }}
       className="flex items-center justify-center"
     >
-      <svg
-        width={SIZE}
-        height={SIZE}
-        style={{ position: "absolute", top: 0, left: 0 }}
-      >
+      <svg width={SIZE} height={SIZE} style={{ position: "absolute", top: 0, left: 0 }}>
         {/* Track arc: 300° */}
         <circle
           cx={cx}
@@ -87,13 +83,9 @@ export function ScoreRing({ score, variant = "warning" }: ScoreRingProps) {
       </svg>
 
       {/* Center text */}
-      <div className="relative flex flex-col items-center z-10">
-        <span className="text-4xl font-bold text-gray-900 leading-none">
-          {score}
-        </span>
-        <span className="text-xs text-[#475569] mt-1 font-medium tracking-tight">
-          Health Score
-        </span>
+      <div className="relative z-10 flex flex-col items-center">
+        <span className="text-4xl leading-none font-bold text-gray-900">{score}</span>
+        <span className="mt-1 text-xs font-medium tracking-tight text-[#475569]">Health Score</span>
       </div>
     </div>
   );

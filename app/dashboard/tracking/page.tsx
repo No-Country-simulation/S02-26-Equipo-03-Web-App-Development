@@ -1,26 +1,24 @@
-import { issues } from "@/app/dashboard/tracking/dashboardData"
-import {
-  sortIssuesByImpact
-} from "@/app/dashboard/tracking/dashboardLogic"
-import { TrackingSkeleton } from "@/app/dashboard/tracking/TrackingSkeleton"
-import { SystemHealthCard } from "@/shared/components/Dashboard/Tracking/HealtCard/SystemHealtCard"
-import { Integration } from "@/shared/components/Dashboard/Tracking/HealtCard/healt-card.interface"
-import { IntegrationStatus } from "@/shared/components/Dashboard/Tracking/IntegrationStatus"
-import { TrackingTable } from "@/shared/components/Dashboard/Tracking/TrackingTable"
+import { issues } from "@/app/dashboard/tracking/dashboardData";
+import { sortIssuesByImpact } from "@/app/dashboard/tracking/dashboardLogic";
+import { TrackingSkeleton } from "@/app/dashboard/tracking/TrackingSkeleton";
+import { SystemHealthCard } from "@/shared/components/Dashboard/Tracking/HealtCard/SystemHealtCard";
+import { Integration } from "@/shared/components/Dashboard/Tracking/HealtCard/healt-card.interface";
+import { IntegrationStatus } from "@/shared/components/Dashboard/Tracking/IntegrationStatus";
+import { TrackingTable } from "@/shared/components/Dashboard/Tracking/TrackingTable";
 
 const integrationes: Integration[] = [
   { name: "Stripe", status: "ok" as const },
   { name: "Meta", status: "ok" as const },
   { name: "Google", status: "warning" as const },
-]
+];
 
 export default function DashboardPage() {
-  const sortedIssues = sortIssuesByImpact(issues)
+  const sortedIssues = sortIssuesByImpact(issues);
   // cambiar el .lenght por un estado de carga para mostrar el skeleton mientras se cargan los datos reales
   return (
     <div className="min-h-screen bg-[#F8FAFC] p-6">
       {issues.length > 0 ? (
-        <div className="max-w-7xl mx-auto space-y-6">
+        <div className="mx-auto max-w-7xl space-y-6">
           <SystemHealthCard
             variant="warning"
             score={72}
@@ -37,5 +35,5 @@ export default function DashboardPage() {
         <TrackingSkeleton />
       )}
     </div>
-  )
+  );
 }
