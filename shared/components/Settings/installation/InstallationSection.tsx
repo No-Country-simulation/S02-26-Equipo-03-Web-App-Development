@@ -122,7 +122,7 @@ const session = await stripe.checkout.sessions.create({
   };
 
   return (
-    <div className="flex flex-col gap-8 max-w-4xl py-4 pb-12 mx-auto">
+    <div className="flex flex-col gap-8 max-w-7xl py-4 pb-12 mx-auto">
       <div className="flex flex-col gap-2">
         <h2 className="text-xl font-bold text-gray-900 tracking-tight">Guía de Integración: GardenAds + Stripe</h2>
         <p className="text-sm text-gray-500 max-w-2xl leading-relaxed">
