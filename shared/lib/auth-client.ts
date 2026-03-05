@@ -2,6 +2,7 @@ const AUTH_BASE_PATH = "/api/auth";
 
 type AuthResponse<T = unknown> = {
   data?: T | null;
+  user?: T | null;
   error?: {
     message?: string;
     code?: string;
@@ -32,7 +33,7 @@ async function authFetch<T>(path: string, init?: RequestInit): Promise<AuthRespo
   }
 
   return {
-    data: body?.data ?? null,
+    data: body?.data ?? body?.user ?? null,
     error: body?.error ?? null,
   };
 }
