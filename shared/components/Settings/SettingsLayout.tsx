@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const tabs = [
   { label: "Integraciones", href: "/dashboard/settings/integrations" },
+  { label: "Instalación", href: "/dashboard/settings/installation" },
   { label: "Usuarios y Roles", href: "/dashboard/settings/users-roles" },
   { label: "Notificaciones", href: "/dashboard/settings/notifications" },
   { label: "API Keys", href: "/dashboard/settings/api-keys" },
