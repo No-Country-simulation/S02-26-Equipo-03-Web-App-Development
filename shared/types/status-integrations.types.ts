@@ -12,5 +12,6 @@ export interface Integration {
   status: IntegrationStatus;
   lastSync?: string;
   alertField?: AlertField;
+  integrationUrl?: string;
   trackingId?: string;
 }
