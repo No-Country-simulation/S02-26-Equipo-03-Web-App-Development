@@ -22,7 +22,7 @@ export const dynamic = "force-dynamic";
  *         description: Partial match on report name
  *       - name: format
  *         in: query
- *         schema: { type: string, enum: [pdf, csv] }
+ *         schema: { type: string, enum: [pdf, csv, xlsx] }
  *       - name: createdFrom
  *         in: query
  *         schema: { type: string, format: date-time }
@@ -48,8 +48,13 @@ export const dynamic = "force-dynamic";
  *         description: Internal Server Error
  */
 export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.url);
-  return listReports(searchParams);
+  try {
+    const user = await getCurrentUser();
+    const { searchParams } = new URL(req.url);
+    return listReports(searchParams, user.id);
+  } catch {
+    return NextResponse.json({ status: "error", message: "Unauthorized" }, { status: 401 });
+  }
 }
 
 /**
@@ -68,7 +73,7 @@ export async function GET(req: NextRequest) {
  *             properties:
  *               projectId: { type: string }
  *               name: { type: string }
- *               format: { type: string, enum: [pdf, csv] }
+ *               format: { type: string, enum: [pdf, csv, xlsx] }
  *               fileUrl: { type: string, format: uri }
  *               periodStart: { type: string, format: date-time }
  *               periodEnd: { type: string, format: date-time }

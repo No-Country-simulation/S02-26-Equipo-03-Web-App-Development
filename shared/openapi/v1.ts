@@ -427,9 +427,9 @@
                   name: { type: "string" },
                   budget: { type: "number" },
                   status: { type: "string", enum: ["active", "paused", "completed", "draft"] },
-                  externalId: { type: 'string' },
-                  startDate: { type: 'string', format: 'date' },
-                  endDate: { type: 'string', format: 'date' }
+                  externalId: { type: "string" },
+                  startDate: { type: "string", format: "date" },
+                  endDate: { type: "string", format: "date" },
                 },
               },
               example: {
@@ -438,8 +438,8 @@
                 budget: 2500,
                 status: "active",
                 externalId: "mock_fb_001",
-                startDate: "2026-11-20"
-              }
+                startDate: "2026-11-20",
+              },
             },
           },
         },
@@ -464,7 +464,8 @@
           },
         ],
         responses: {
-          "200": { description: "A list of campaigns",
+          "200": {
+            description: "A list of campaigns",
             content: {
               "application/json": {
                 schema: {
@@ -517,13 +518,13 @@
                 },
               },
             },
-           },
+          },
           "400": { description: "Missing projectId" },
           "401": { description: "Unauthorized" },
           "403": { description: "Forbidden" },
           "500": { description: "Internal Server Error" },
         },
-      }
+      },
     },
 
     "/v1/campaigns/search?projectId={id}&name={name}": {
@@ -547,7 +548,8 @@
           },
         ],
         responses: {
-          "200": { description: "A list of campaigns",
+          "200": {
+            description: "A list of campaigns",
             content: {
               "application/json": {
                 schema: {
@@ -600,13 +602,13 @@
                 },
               },
             },
-           },
+          },
           "400": { description: "Missing projectId" },
           "401": { description: "Unauthorized" },
           "403": { description: "Forbidden" },
           "500": { description: "Internal Server Error" },
         },
-      }
+      },
     },
 
     "/v1/campaigns/{id}": {
@@ -634,7 +636,7 @@
           "404": { description: "Campaign not found" },
           "500": { description: "Internal Server Error" },
         },
-      }
+      },
     },
 
     "/v1/simulate/ads": {
@@ -694,6 +696,45 @@
             required: true,
             schema: { type: "string" },
             description: "Target project ID for analytics",
+          },
+        ],
+        responses: {
+          "200": {
+            description: "Orders analytics retrieved successfully",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    count: { type: "integer" },
+                    data: {
+                      type: "array",
+                      items: { type: "object" },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          "400": { description: "Missing projectId parameter" },
+          "401": { description: "Unauthorized" },
+          "403": { description: "Forbidden - user not member of project" },
+          "500": { description: "Internal server error" },
+        },
+      },
+    },
+
+    "/v1/analytics/orders_detail": {
+      get: {
+        summary: "Information of order details.",
+        tags: ["Analytics Reports"],
+        parameters: [
+          {
+            name: "orderId",
+            in: "query",
+            required: true,
+            schema: { type: "string" },
+            description: "Target order ID for analytics",
           },
         ],
         responses: {
@@ -1236,7 +1277,7 @@
             name: "format",
             in: "query",
             required: false,
-            schema: { type: "string", enum: ["pdf", "csv"] },
+            schema: { type: "string", enum: ["pdf", "csv", "xlsx"] },
           },
           {
             name: "createdFrom",
@@ -1266,7 +1307,43 @@
           },
         ],
         responses: {
-          "200": { description: "Reports retrieved successfully" },
+          "200": {
+            description: "Reports retrieved successfully",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    status: { type: "string" },
+                    count: { type: "integer" },
+                    data: {
+                      type: "array",
+                      items: {
+                        type: "object",
+                        properties: {
+                          id: { type: "string", format: "uuid" },
+                          projectId: { type: "string" },
+                          userId: { type: "string" },
+                          name: { type: "string" },
+                          format: { type: "string", enum: ["pdf", "csv", "xlsx"] },
+                          fileUrl: { type: "string", format: "uri" },
+                          periodStart: { type: "string", format: "date-time" },
+                          periodEnd: { type: "string", format: "date-time" },
+                          createdAt: { type: "string", format: "date-time" },
+                          user: {
+                            type: "object",
+                            properties: {
+                              name: { type: "string" },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
           "400": { description: "Invalid filter parameters" },
           "401": { description: "Unauthorized" },
           "500": { description: "Internal Server Error" },
@@ -1285,7 +1362,7 @@
                 properties: {
                   projectId: { type: "string" },
                   name: { type: "string" },
-                  format: { type: "string", enum: ["pdf", "csv"] },
+                  format: { type: "string", enum: ["pdf", "csv", "xlsx"] },
                   fileUrl: { type: "string", format: "uri" },
                   periodStart: { type: "string", format: "date-time" },
                   periodEnd: { type: "string", format: "date-time" },
@@ -1336,6 +1413,7 @@
                     lastReportDate: "2026-02-24T10:30:00.000Z",
                     pdfCount: 5,
                     csvCount: 3,
+                    xlsxCount: 2,
                   },
                 },
               },

@@ -7,75 +7,77 @@ import {
   TableRow,
 } from "@shared/components/ui/table";
 import { Badge } from "@shared/components/ui/badge";
+import { Button } from "@shared/components/ui/button";
+import { Checkbox } from "@shared/components/ui/checkbox";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@shared/components/ui/tooltip";
-import { Button } from "@shared/components/ui/button";
-import { Info, ChevronLeft, ChevronRight } from "lucide-react";
-import { Order, OrderSource, OrderStatus } from "../../types/orders.types";
 import { useRouter } from "next/navigation";
+import { SalesOrder } from "@/shared/interfaces/orders.interface";
 
 // --- Sub-components ---
 
-function ColHeader({ label, tooltip }: { label: string; tooltip?: string }) {
+function ColHeader({ label }: { label: string }) {
+  return <span>{label}</span>;
+}
+
+function formatAmount(amount: number, currency?: string) {
+  const normalizedCurrency = currency?.toUpperCase();
+
+  if (normalizedCurrency === "USD") {
+    return `USD ${amount.toFixed(2)}`;
+  }
+
+  return `$${amount.toFixed(2)}`;
+}
+
+function formatOrderDate(orderDate: string) {
+  const parsedDate = new Date(orderDate);
+
+  if (Number.isNaN(parsedDate.getTime())) {
+    return orderDate;
+  }
+
+  const day = String(parsedDate.getUTCDate()).padStart(2, "0");
+  const month = String(parsedDate.getUTCMonth() + 1).padStart(2, "0");
+  const year = String(parsedDate.getUTCFullYear());
+
+  return `${day}-${month}-${year}`;
+}
+
+function formatOrderId(id: string) {
+  return id.split("-")[0] ?? id;
+}
+
+function SourceBadge({ source }: { source: string }) {
+  
   return (
-    <div className="flex items-center gap-1">
-      <span>{label}</span>
-      {tooltip && (
-        <TooltipProvider delayDuration={200}>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Info className="h-3.5 w-3.5 cursor-pointer text-gray-400 hover:text-gray-600" />
-            </TooltipTrigger>
-            <TooltipContent>
-              <p className="text-xs">{tooltip}</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      )}
-    </div>
+    <Badge
+      variant="outline"
+      className="rounded-sm border-[#E2E8F0] bg-white px-2 text-xs font-semibold text-[#475569]"
+    >
+      {source == "google" ? "Google ADS" : "Meta ADS"}
+    </Badge>
   );
 }
 
-function SourceBadge({ source }: { source: OrderSource }) {
-  const colors: Record<OrderSource, string> = {
-    "META ADS": "bg-blue-600",
-    "GOOGLE ADS": "bg-red-500",
-    "STRIPE": "bg-[#635BFF]",
-  };
-  const initials: Record<OrderSource, string> = {
-    "META ADS": "M",
-    "GOOGLE ADS": "G",
-    "STRIPE": "S",
-  };
-
-  return (
-    <div className="flex items-center gap-2">
-      <span
-        className={`inline-flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold text-white ${colors[source]}`}
-      >
-        {initials[source]}
-      </span>
-      <span className="text-sm text-gray-700">{source}</span>
-    </div>
-  );
-}
-
-function StatusBadge({ status }: { status: OrderStatus }) {
-  const styles: Record<OrderStatus, string> = {
-    PAGADO: "border-emerald-400 bg-emerald-50 text-emerald-700",
-    PENDIENTE: "border-yellow-400 bg-yellow-50 text-yellow-700",
-    FALLIDO: "border-red-400 bg-red-50 text-red-700",
+function StatusBadge({ status }: { status: string }) {
+  const styles: Record<string, string> = {
+    confirmed: "border-[#BBF7D1] bg-[#EEFFF4] text-[#049140]",
+    pending: "border-[#FFFD86] bg-[#FFFFE7] text-[#A67102]",
+    failed: "border-[#FFC0C0] bg-[#FFF0F0] text-[#D70000]",
   };
 
   return (
     <span
-      className={`inline-flex items-center rounded-full border px-3 py-0.5 text-xs font-semibold ${styles[status]}`}
+      className={`inline-flex items-center rounded-sm border px-2 py-0.5 text-xs font-semibold ${styles[status]}`}
     >
-      {status}
+      {status === "confirmed"
+        ? "Pagado"
+        : status === "pending" ? "Pendiente" : "Fallido"}
     </span>
   );
 }
@@ -83,12 +85,33 @@ function StatusBadge({ status }: { status: OrderStatus }) {
 // --- Props ---
 
 interface OrdersTableProps {
-  orders: Order[];
+  orders: SalesOrder[];
   total: number;
   page: number;
   pageSize: number;
   onPageChange: (_page: number) => void;
+  selectedOrderIds: string[];
+  allVisibleSelected: boolean;
+  onToggleOrderSelection: (_orderId: string) => void;
+  onToggleAllVisibleSelection: () => void;
 }
+
+type HeaderColumn = {
+  key: string;
+  label: string;
+  className?: string;
+};
+
+const HEADER_COLUMNS: HeaderColumn[] = [
+  { key: "id", label: "ID de Orden", className: "w-28" },
+  { key: "client", label: "Cliente" },
+  { key: "service", label: "Servicio" },
+  { key: "paymentType", label: "Tipo Pago" },
+  { key: "source", label: "Fuente" },
+  { key: "amount", label: "Monto" },
+  { key: "status", label: "Estado" },
+  { key: "date", label: "Fecha" },
+];
 
 // --- Main Component ---
 
@@ -98,37 +121,37 @@ export function OrdersTable({
   page,
   pageSize,
   onPageChange,
+  selectedOrderIds,
+  allVisibleSelected,
+  onToggleOrderSelection,
+  onToggleAllVisibleSelection,
 }: OrdersTableProps) {
-  const start = (page - 1) * pageSize + 1;
-  const end = Math.min(page * pageSize, total);
-  const totalPages = Math.ceil(total / pageSize);
+  const safeTotalPages = Math.max(1, Math.ceil(total / pageSize));
+  const hasPreviousPage = page > 1;
+  const hasNextPage = page < safeTotalPages;
+  const start = total === 0 ? 0 : (page - 1) * pageSize + 1;
+  const end = total === 0 ? 0 : Math.min(page * pageSize, total);
   const router = useRouter();
 
   return (
     <>
       <Table>
         <TableHeader>
-          <TableRow className="bg-gray-50/80 text-xs uppercase tracking-wide [&_th]:text-[#90A1B9]">
-            <TableHead className="w-28">ID de Orden</TableHead>
-            <TableHead>
-              <ColHeader label="Cliente" />
+          <TableRow className="border-[#E2E8F0] text-xs uppercase tracking-wide [&_th]:text-[#475569]">
+            <TableHead className="w-10">
+              <Checkbox
+                checked={allVisibleSelected}
+                aria-label="Seleccionar órdenes visibles"
+                onClick={(event) => event.stopPropagation()}
+                onCheckedChange={onToggleAllVisibleSelection}
+                className="border-[#E2E8F0]"
+              />
             </TableHead>
-            <TableHead>
-              <ColHeader label="Servicio" tooltip="Producto o servicio adquirido" />
-            </TableHead>
-            <TableHead>
-              <ColHeader label="Tipo Pago" tooltip="Pago único o suscripción recurrente" />
-            </TableHead>
-            <TableHead>
-              <ColHeader label="Fuente" tooltip="Canal de adquisición del cliente" />
-            </TableHead>
-            <TableHead>Monto</TableHead>
-            <TableHead>
-              <ColHeader label="Estado" tooltip="Estado del pago en Stripe" />
-            </TableHead>
-            <TableHead>
-              <ColHeader label="Fecha" tooltip="Fecha de confirmación del pago" />
-            </TableHead>
+            {HEADER_COLUMNS.map((column) => (
+              <TableHead key={column.key} className={column.className}>
+                <ColHeader label={column.label} />
+              </TableHead>
+            ))}
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -136,62 +159,90 @@ export function OrdersTable({
             <TableRow
               key={`${order.id}-${i}`}
               onClick={() => router.push(`/dashboard/order/${order.id}`)}
-              className="cursor-pointer transition-colors hover:bg-gray-50/60"
+              className="cursor-pointer border-[#E2E8F0] transition-colors"
             >
-              <TableCell className="text-sm text-gray-400">{order.id}</TableCell>
+              <TableCell>
+                <Checkbox
+                  checked={selectedOrderIds.includes(order.id)}
+                  aria-label={`Seleccionar orden ${order.id}`}
+                  onClick={(event) => event.stopPropagation()}
+                  onCheckedChange={() => onToggleOrderSelection(order.id)}
+                  className="border-[#E2E8F0]"
+                />
+              </TableCell>
+              <TableCell className="py-5 text-sm font-medium text-[#020617]">
+                <TooltipProvider delayDuration={200}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <span>{formatOrderId(order.id)}</span>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p className="text-xs">{order.id}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </TableCell>
               <TableCell>
                 <div className="flex flex-col">
-                  <span className="font-semibold text-gray-900">{order.clientName}</span>
-                  <span className="text-xs text-gray-400">{order.clientEmail}</span>
+                  <span className="text-[#020617] font-medium">{order.customerName}</span>
+                  <span className="text-xs text-[#475569]">{order.customerEmail}</span>
                 </div>
               </TableCell>
-              <TableCell className="text-sm text-gray-700">{order.service}</TableCell>
+              <TableCell className="text-sm font-medium text-[#020617]">{order.productName}</TableCell>
               <TableCell>
                 <Badge
                   variant="outline"
-                  className="rounded-full border-gray-300 bg-white px-3 text-xs font-semibold text-gray-700"
+                  className="rounded-sm border-[#E2E8F0] bg-white px-2 text-xs font-semibold text-[#475569]"
                 >
                   {order.paymentType}
                 </Badge>
               </TableCell>
               <TableCell>
-                <SourceBadge source={order.source} />
+                <SourceBadge source={order.sourcePlatform} />
               </TableCell>
-              <TableCell className="font-semibold text-gray-900">
-                ${order.amount.toFixed(2)}
+              <TableCell className="font-medium text-[#020617]">
+                {formatAmount(order.totalAmount, order.currency)}
               </TableCell>
               <TableCell>
                 <StatusBadge status={order.status} />
               </TableCell>
-              <TableCell className="text-sm text-gray-600">{order.date}</TableCell>
+              <TableCell className="text-sm font-medium text-[#020617]">
+                {formatOrderDate(order.orderDate)}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
 
       {/* Pagination */}
-      <div className="flex items-center justify-between border-t border-gray-100 px-4 py-3">
-        <span className="text-sm font-medium text-gray-600">
-          MOSTRANDO {start}–{end} DE {total.toLocaleString()}
+      <div className="flex items-center justify-between border-t border-[#E2E8F0] px-4 py-6">
+        <span className="text-sm font-medium text-[#020617]">
+          Mostrando {start}–{end} de {total.toLocaleString()} resultados
         </span>
         <div className="flex items-center gap-1">
           <Button
-            variant="outline"
-            size="icon"
-            className="h-8 w-8"
-            disabled={page === 1}
-            onClick={() => onPageChange(page - 1)}
+            variant="ghost"
+            size="sm"
+            className=" border-[#E2E8F0]" 
+            disabled={!hasPreviousPage}
+            onClick={() => {
+              if (!hasPreviousPage) return;
+              onPageChange(page - 1);
+            }}
           >
-            <ChevronLeft className="h-4 w-4" />
+            Anterior
           </Button>
           <Button
-            variant="outline"
-            size="icon"
-            className="h-8 w-8"
-            disabled={page === totalPages}
-            onClick={() => onPageChange(page + 1)}
+            variant="ghost"
+            size="sm"
+            className="border-[#E2E8F0]"
+            disabled={!hasNextPage}
+            onClick={() => {
+              if (!hasNextPage) return;
+              onPageChange(page + 1);
+            }}
           >
-            <ChevronRight className="h-4 w-4" />
+            Siguiente
           </Button>
         </div>
       </div>

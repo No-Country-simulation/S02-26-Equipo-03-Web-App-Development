@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getReportStats } from "@/modules/reports/report.controller";
+import { getCurrentUser } from "@/shared/lib/getCurrentUser";
 
 export const dynamic = "force-dynamic";
 
@@ -33,15 +34,20 @@ export const dynamic = "force-dynamic";
  *         description: Internal Server Error
  */
 export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.url);
-  const projectId = searchParams.get("projectId");
+  try {
+    const user = await getCurrentUser();
+    const { searchParams } = new URL(req.url);
+    const projectId = searchParams.get("projectId");
 
-  if (!projectId) {
-    return NextResponse.json(
-      { status: "error", message: "Query parameter 'projectId' is required" },
-      { status: 400 }
-    );
+    if (!projectId) {
+      return NextResponse.json(
+        { status: "error", message: "Query parameter 'projectId' is required" },
+        { status: 400 }
+      );
+    }
+
+    return getReportStats(projectId, user.id);
+  } catch {
+    return NextResponse.json({ status: "error", message: "Unauthorized" }, { status: 401 });
   }
-
-  return getReportStats(projectId);
 }

@@ -8,24 +8,24 @@ const statusConfig: Record<
 > = {
   conectado: {
     label: "Conectado",
-    bg: "bg-[#ECFDF5]",
-    text: "text-[#007A55]",
-    border: "border-[#A4F4CF]",
-    dot: "bg-[#007A55]",
+    bg: "bg-[#EEFFF4]",
+    text: "text-[#049140]",
+    border: "border-[#BBF7D1]",
+    dot: "bg-[#33F583]",
   },
   alerta: {
     label: "Alerta",
-    bg: "bg-[#FFFBEB]",
-    text: "text-[#BB4D00]",
-    border: "border-[#FEE685]",
-    dot: "bg-[#BB4D00]",
+    bg: "bg-[#FFFFE7]",
+    text: "text-[#A67102]",
+    border: "border-[#FFFD86]",
+    dot: "bg-[#FFF441]",
   },
   critico: {
     label: "Crítico",
-    bg: "bg-[#FFF1F2]",
-    text: "text-[#C70036]",
-    border: "border-[#FFCCD3]",
-    dot: "bg-[#C70036]",
+    bg: "bg-[#FFF0F0]",
+    text: "text-[#D70000]",
+    border: "border-[#FFC0C0]",
+    dot: "bg-[#FF2323]",
   },
 };
 
@@ -40,7 +40,7 @@ export default function StatusBadge({ status, className }: StatusBadgeProps) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold tracking-wide uppercase",
+        "inline-flex items-center gap-1.5 rounded-sm border px-1.5 py-0.5 text-xs font-medium uppercase",
         config.bg,
         config.text,
         config.border,
