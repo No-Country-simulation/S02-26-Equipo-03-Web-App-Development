@@ -1045,6 +1045,7 @@
                     type: "object",
                     properties: {
                       userId: { type: "string", format: "uuid" },
+                      name: { type: "string" },
                       email: { type: "string", format: "email" },
                       roleId: { type: "string", format: "uuid" },
                       joinedAt: { type: "string", format: "date-time" },
@@ -1054,6 +1055,7 @@
                 example: [
                   {
                     userId: "WbBomeKPV6UaE8i2cPv0pBrVUJX1swhV",
+                    name: "johndoe",
                     email: "johndoe@gmail.com",
                     roleId: "7a112499-f6ae-4df4-954e-33839833a1b2",
                     joinedAt: "2026-02-24T21:50:18.729Z",
