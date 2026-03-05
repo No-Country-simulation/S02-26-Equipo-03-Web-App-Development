@@ -69,6 +69,7 @@ export class ProjectMemberRepository {
     return database
       .select({
         userId: usersTable.id,
+        name: usersTable.name,
         email: usersTable.email,
         roleId: projectMembersTable.roleId,
         joinedAt: projectMembersTable.joinedAt,
