@@ -1,4 +1,4 @@
-import { Integration } from "@/shared/types/integrations.types";
+import { Integration } from "@/shared/types/status-integrations.types";
 
 export const integrationsMock: Integration[] = [
   {
@@ -7,6 +7,7 @@ export const integrationsMock: Integration[] = [
     description: "Procesador de pagos — fuente de verdad del revenue confirmado.",
     status: "conectado",
     lastSync: "hace 4 horas",
+    integrationUrl: "https://dashboard.stripe.com/settings/apps",
     trackingId: "stripe",
   },
   {
@@ -18,6 +19,7 @@ export const integrationsMock: Integration[] = [
       label: "Pixel ID",
       value: "129032103921",
     },
+    integrationUrl: "https://business.facebook.com/events_manager2/list/pixel/",
     trackingId: "meta-ads",
   },
   {
@@ -26,6 +28,7 @@ export const integrationsMock: Integration[] = [
     description: "Conversion tracking con confirmación Stripe.",
     status: "conectado",
     lastSync: "hace 1 hora",
+    integrationUrl: "https://ads.google.com/aw/linkedaccounts",
     trackingId: "google-ads",
   },
 ];
