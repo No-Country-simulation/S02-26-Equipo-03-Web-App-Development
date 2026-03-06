@@ -62,12 +62,12 @@ export default function HeaderDashboard() {
   const initials = getInitials(user?.name);
 
   return (
-    <header className="w-full border-b bg-white px-6">
+    <header className="w-full border-b border-[#E2E8F0] bg-[#F8FAFC] px-6 py-2">
       <div className="flex h-16 items-center justify-between">
         {/* LEFT — estado del motor */}
-        <div className="flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-emerald-500" />
-          <span className="text-xs font-bold tracking-widest text-emerald-600">
+        <div className="flex items-center gap-4">
+          <span className="h-1 w-1 rounded-full bg-[#059669]" />
+          <span className="font-mono text-sm font-semibold tracking-widest text-[#059669]">
             MOTOR DE ATRIBUCIÓN ACTIVO
           </span>
         </div>
@@ -75,10 +75,6 @@ export default function HeaderDashboard() {
         {/* RIGHT — controles */}
         <div className="flex items-center gap-3">
           {/* Rango de fechas */}
-          {/* <button className="flex items-center gap-2 rounded-xl border bg-white px-4 py-2 text-sm font-medium shadow-sm transition hover:bg-gray-50">
-            <Calendar className="h-4 w-4 text-gray-500" />
-            <span>{formatDateRange()}</span>
-          </button> */}
 
           {/* Exportar */}
           <GenerateReports />

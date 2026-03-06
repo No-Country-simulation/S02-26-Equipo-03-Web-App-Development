@@ -29,7 +29,7 @@ export default function SidebarDashboard() {
   const pathname = usePathname();
 
   return (
-    <Sidebar className="border-r" collapsible="none">
+    <Sidebar className="border-r bg-white" collapsible="none">
       <SidebarContent>
         {/* LOGO */}
         <div className="flex items-center px-4 py-6">
@@ -97,7 +97,7 @@ export default function SidebarDashboard() {
                     className="relative flex items-center gap-3 rounded-xl px-4 py-6 transition-all duration-200"
                   >
                     {/* Fondo activo */}
-                    {pathname === "/dashboard/settings" && (
+                    {pathname.startsWith("/dashboard/settings") && (
                       <motion.div
                         layoutId="active-pill"
                         className="absolute inset-0 rounded-xl bg-emerald-500"
@@ -113,14 +113,14 @@ export default function SidebarDashboard() {
                     <div className="relative z-10 flex items-center gap-3">
                       <Settings
                         className={`h-4 w-4 ${
-                          pathname === "/dashboard/settings"
+                          pathname.startsWith("/dashboard/settings")
                             ? "text-white"
                             : "text-muted-foreground"
                         }`}
                       />
                       <span
                         className={`text-sm font-medium ${
-                          pathname === "/dashboard/settings"
+                          pathname.startsWith("/dashboard/settings")
                             ? "text-white"
                             : "text-muted-foreground"
                         }`}
