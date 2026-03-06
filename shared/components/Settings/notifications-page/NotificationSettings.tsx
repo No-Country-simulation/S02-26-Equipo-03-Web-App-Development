@@ -4,6 +4,7 @@ import { useState } from "react";
 import { NotificationKey, NotificationSettings } from "./setting-notification.type";
 import { NotificationSection } from "./NotificationSection";
 import { Button } from "../../ui/button";
+import { showToast } from "@/shared/lib/Toast";
 
 const EMAIL_NOTIFICATIONS: { key: NotificationKey; title: string; description: string }[] = [
   {
@@ -42,8 +43,6 @@ const INAPP_NOTIFICATIONS: { key: NotificationKey; title: string; description: s
 ];
 
 export default function NotificationsSettings() {
-  /* const { toast } = useToast(); */
-
   const [settings, setSettings] = useState<NotificationSettings>({
     trackingHealth: false,
     syncCompleta: false,
@@ -58,10 +57,7 @@ export default function NotificationsSettings() {
   };
 
   const handleSave = () => {
-    alert({
-      title: "Guardado correctamente",
-      description: "Los cambios se aplicaron exitosamente.",
-    });
+    showToast.success("Guardado correctamente", "Los cambios se aplicaron exitosamente.");
   };
 
   return (
