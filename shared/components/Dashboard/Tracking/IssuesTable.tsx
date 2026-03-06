@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { Issue } from "@/shared/interfaces/issue-tracking.interface";
 import { Button } from "../../ui/button";
 import { ArrowRight } from "lucide-react";
+import { HeaderColumn } from "@/shared/types/header-col.types";
 
 // --- Sub-components ---
 
@@ -32,20 +33,12 @@ function StatusBadge({ status }: { status: string }) {
     <span
       className={`inline-flex items-center rounded-sm border px-2 py-0.5 text-xs font-semibold ${styles[status]}`}
     >
-      {status === "CRÍTICO"
-        ? "Crítico"
-        : status === "ALERTA" ? "Alerta" : "Info"}
+      {status === "CRÍTICO" ? "Crítico" : status === "ALERTA" ? "Alerta" : "Info"}
     </span>
   );
 }
 
 // --- Props ---
-
-type HeaderColumn = {
-  key: string;
-  label: string;
-  className?: string;
-};
 
 const HEADER_COLUMNS: HeaderColumn[] = [
   { key: "issue", label: "Tipo de problema" },
@@ -56,7 +49,7 @@ const HEADER_COLUMNS: HeaderColumn[] = [
 ];
 
 interface Props {
-  issues: Issue[]
+  issues: Issue[];
 }
 
 // --- Main Component ---
@@ -68,7 +61,7 @@ export function IssuesTable({ issues }: Props) {
     <>
       <Table>
         <TableHeader>
-          <TableRow className="border-[#E2E8F0] text-xs uppercase tracking-wide [&_th]:text-[#475569]">
+          <TableRow className="border-[#E2E8F0] text-xs tracking-wide uppercase [&_th]:text-[#475569]">
             {HEADER_COLUMNS.map((column, index) => (
               <TableHead
                 key={column.key}
@@ -93,7 +86,7 @@ export function IssuesTable({ issues }: Props) {
               <TableCell>
                 <Badge
                   variant="outline"
-                  className="rounded-sm border-[#E2E8F0] bg-white px-2 text-xs font-semibold uppercase text-[#475569]"
+                  className="rounded-sm border-[#E2E8F0] bg-white px-2 text-xs font-semibold text-[#475569] uppercase"
                 >
                   {issue.platform}
                 </Badge>
@@ -101,10 +94,13 @@ export function IssuesTable({ issues }: Props) {
               <TableCell>
                 <StatusBadge status={issue.severity} />
               </TableCell>
-              <TableCell className="text-right pr-4">
-                <Button variant={'ghost'} className="text-right text-[#475569] font-medium cursor-pointer">
-                    Analizar
-                    <ArrowRight strokeWidth={3} />
+              <TableCell className="pr-4 text-right">
+                <Button
+                  variant={"ghost"}
+                  className="cursor-pointer text-right font-medium text-[#475569]"
+                >
+                  Analizar
+                  <ArrowRight strokeWidth={3} />
                 </Button>
               </TableCell>
             </TableRow>
