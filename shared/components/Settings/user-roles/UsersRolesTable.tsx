@@ -57,7 +57,7 @@ const HEADER_COLUMNS: HeaderColumn[] = [
 ];
 
 type UsersAndRoles = {
-  user?: string;
+  name: string;
   roleId: string;
   email?: string;
 };
@@ -132,11 +132,11 @@ export function UsersRolesTable({ usersroles, loading = false }: Props & { loadi
         <TableBody>
           {normalizedUsers.map((userrole, i) => (
             <TableRow
-              key={`${userrole.user || userrole.email}-${i}`}
+              key={`${userrole.name}-${i}`}
               className="border-[#E2E8F0] transition-colors hover:bg-[#E2E8F0]/20"
             >
               <TableCell className="py-6 pl-6 text-xs font-medium text-[#020617]">
-                {userrole.user || userrole.email}
+                {userrole.name}
               </TableCell>
               <TableCell>
                 <Badge
