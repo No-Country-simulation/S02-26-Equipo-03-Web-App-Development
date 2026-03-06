@@ -17,6 +17,7 @@ import {
 } from "@shared/components/ui/tooltip";
 import { useRouter } from "next/navigation";
 import { SalesOrder } from "@/shared/interfaces/orders.interface";
+import { HeaderColumn } from "@/shared/types/header-col.types";
 
 // --- Sub-components ---
 
@@ -53,7 +54,6 @@ function formatOrderId(id: string) {
 }
 
 function SourceBadge({ source }: { source: string }) {
-  
   return (
     <Badge
       variant="outline"
@@ -75,9 +75,7 @@ function StatusBadge({ status }: { status: string }) {
     <span
       className={`inline-flex items-center rounded-sm border px-2 py-0.5 text-xs font-semibold ${styles[status]}`}
     >
-      {status === "confirmed"
-        ? "Pagado"
-        : status === "pending" ? "Pendiente" : "Fallido"}
+      {status === "confirmed" ? "Pagado" : status === "pending" ? "Pendiente" : "Fallido"}
     </span>
   );
 }
@@ -95,12 +93,6 @@ interface OrdersTableProps {
   onToggleOrderSelection: (_orderId: string) => void;
   onToggleAllVisibleSelection: () => void;
 }
-
-type HeaderColumn = {
-  key: string;
-  label: string;
-  className?: string;
-};
 
 const HEADER_COLUMNS: HeaderColumn[] = [
   { key: "id", label: "ID de Orden", className: "w-28" },
@@ -137,7 +129,7 @@ export function OrdersTable({
     <>
       <Table>
         <TableHeader>
-          <TableRow className="border-[#E2E8F0] text-xs uppercase tracking-wide [&_th]:text-[#475569]">
+          <TableRow className="border-[#E2E8F0] text-xs tracking-wide uppercase [&_th]:text-[#475569]">
             <TableHead className="w-10">
               <Checkbox
                 checked={allVisibleSelected}
@@ -184,11 +176,13 @@ export function OrdersTable({
               </TableCell>
               <TableCell>
                 <div className="flex flex-col">
-                  <span className="text-[#020617] font-medium">{order.customerName}</span>
+                  <span className="font-medium text-[#020617]">{order.customerName}</span>
                   <span className="text-xs text-[#475569]">{order.customerEmail}</span>
                 </div>
               </TableCell>
-              <TableCell className="text-sm font-medium text-[#020617]">{order.productName}</TableCell>
+              <TableCell className="text-sm font-medium text-[#020617]">
+                {order.productName}
+              </TableCell>
               <TableCell>
                 <Badge
                   variant="outline"
@@ -223,7 +217,7 @@ export function OrdersTable({
           <Button
             variant="ghost"
             size="sm"
-            className=" border-[#E2E8F0]" 
+            className="border-[#E2E8F0]"
             disabled={!hasPreviousPage}
             onClick={() => {
               if (!hasPreviousPage) return;

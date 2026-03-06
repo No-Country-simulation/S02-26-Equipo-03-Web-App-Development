@@ -36,7 +36,7 @@ export default function IntegrationCard({ integration }: IntegrationCardProps) {
   const isExternalLink = manageHref.startsWith("http://") || manageHref.startsWith("https://");
   const ctaLabel = !hasAlert ? "Abrir integración" : "Gestionar";
   return (
-    <div className={cn("flex w-60 flex-col rounded-2xl border border-[#E2E8F0]/50 bg-white p-6")}>
+    <div className={cn("flex w-60 flex-col rounded-lg border border-[#E2E8F0]/50 bg-white p-6")}>
       {/* Sección superior */}
       <div className="flex flex-col gap-4 py-1">
         {/* Header */}
