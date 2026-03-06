@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@shared/components/ui/table";
 import { Badge } from "@shared/components/ui/badge";
-import { AlertBadge } from "@shared/components/ui/alertBadge";
+import { AlertBadge } from "@shared/components/ui/alert-badge";
 
 import { useRouter } from "next/navigation";
 import { Issue } from "@/shared/interfaces/issue-tracking.interface";

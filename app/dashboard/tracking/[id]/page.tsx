@@ -6,7 +6,7 @@ import { formatDate, timeAgo } from "@/shared/lib/utils";
 import { Button } from "@/shared/components/ui/button";
 import { MyIcons } from "@/shared/components/MyIcons/MyIcons";
 import StatusBadge from "@/shared/components/ui/StatusBadges/StatusBadge";
-import { AlertBadge } from "@/shared/components/ui/alertBadge";
+import { AlertBadge } from "@/shared/components/ui/alert-badge";
 import { ArrowLeft } from "lucide-react";
 
 interface Props {
