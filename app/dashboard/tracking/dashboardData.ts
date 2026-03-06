@@ -7,7 +7,7 @@ export const issues: Issue[] = [
     impact: 4200,
     platform: "META PIXEL",
     severity: "ALERTA",
-    retrargeting: "US - Retargeting - LAL 1%",
+    retargeting: "US - Retargeting - LAL 1%",
     createdAt: "2026-03-02T12:00:00Z",
     description: "El evento de compra no se dispara para usuarios de Safari móvil.",
     diagnostics: {
@@ -41,7 +41,7 @@ export const issues: Issue[] = [
     impact: 1100,
     platform: "GOOGLE ADS",
     severity: "ALERTA",
-    retrargeting: "US - Retargeting - LAL 3%",
+    retargeting: "US - Retargeting - LAL 3%",
     createdAt: "2026-02-20T12:00:00Z",
     description:
       "El evento de compra se está registrando múltiples veces por sesión en Google Ads.",

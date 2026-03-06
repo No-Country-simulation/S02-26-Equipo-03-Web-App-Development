@@ -37,7 +37,7 @@ export default async function IssueDetailPage({ params }: Props) {
             <Badge className="rounded-sm border-[#E2E8F0] bg-white text-[#475569]">
               {issue.platform}
             </Badge>
-            <p className="text-sm font-medium text-[#020617]">{issue.retrargeting}</p>
+            <p className="text-sm font-medium text-[#020617]">{issue.retargeting}</p>
           </div>
 
           <div className="mt-6">
