@@ -37,9 +37,9 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-  --primary-blue: #0066FF;
+  --primary-blue: #0066ff;
   --cool-gray: #697386;
-  --gradient-cta: linear-gradient(to bottom bottom, #0066FF, #8B5CF6);
+  --gradient-cta: linear-gradient(to bottom bottom, #0066ff, #8b5cf6);
 }
 
 @theme inline {
@@ -133,7 +133,6 @@ body {
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
-
 }
 
 @layer base {
@@ -147,4 +146,69 @@ body {
 
 @utility bg-gradient-cta {
   background-image: var(--background-image-gradient-cta);
+}
+
+/* Sonner — width */
+[data-sonner-toaster] {
+  --width: 412px !important;
+}
+
+/* Sonner — success */
+[data-sonner-toast][data-type="success"] {
+  background-color: #eefff4 !important;
+  border-color: #bbf7d1 !important;
+  color: #049140 !important;
+}
+[data-sonner-toast][data-type="success"] [data-description] {
+  color: #049140 !important;
+}
+[data-sonner-toast][data-type="success"] [data-close-button] {
+  color: #049140 !important;
+  border-color: #bbf7d1 !important;
+  background: #eefff4 !important;
+}
+
+/* Sonner — info */
+[data-sonner-toast][data-type="info"] {
+  background-color: #f3f6fc !important;
+  border-color: #c7d7f0 !important;
+  color: #224782 !important;
+}
+[data-sonner-toast][data-type="info"] [data-description] {
+  color: #224782 !important;
+}
+[data-sonner-toast][data-type="info"] [data-close-button] {
+  color: #224782 !important;
+  border-color: #c7d7f0 !important;
+  background: #f3f6fc !important;
+}
+
+/* Sonner — warning */
+[data-sonner-toast][data-type="warning"] {
+  background-color: #ffffe7 !important;
+  border-color: #fffd86 !important;
+  color: #a67102 !important;
+}
+[data-sonner-toast][data-type="warning"] [data-description] {
+  color: #a67102 !important;
+}
+[data-sonner-toast][data-type="warning"] [data-close-button] {
+  color: #a67102 !important;
+  border-color: #fffd86 !important;
+  background: #ffffe7 !important;
+}
+
+/* Sonner — error */
+[data-sonner-toast][data-type="error"] {
+  background-color: #fff0f0 !important;
+  border-color: #ffc0c0 !important;
+  color: #d70000 !important;
+}
+[data-sonner-toast][data-type="error"] [data-description] {
+  color: #d70000 !important;
+}
+[data-sonner-toast][data-type="error"] [data-close-button] {
+  color: #d70000 !important;
+  border-color: #ffc0c0 !important;
+  background: #fff0f0 !important;
 }
