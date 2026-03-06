@@ -9,6 +9,7 @@ import {
   TableRow,
 } from "@shared/components/ui/table";
 import { Badge } from "@shared/components/ui/badge";
+import { AlertBadge } from "@shared/components/ui/alertBadge";
 
 import { useRouter } from "next/navigation";
 import { Issue } from "@/shared/interfaces/issue-tracking.interface";
@@ -20,22 +21,6 @@ import { HeaderColumn } from "@/shared/types/header-col.types";
 
 function ColHeader({ label }: { label: string }) {
   return <span>{label}</span>;
-}
-
-function StatusBadge({ status }: { status: string }) {
-  const styles: Record<string, string> = {
-    INFO: "border-[#BBF7D1] bg-[#EEFFF4] text-[#049140]",
-    ALERTA: "border-[#FFFD86] bg-[#FFFFE7] text-[#A67102]",
-    CRÍTICO: "border-[#FFC0C0] bg-[#FFF0F0] text-[#D70000]",
-  };
-
-  return (
-    <span
-      className={`inline-flex items-center rounded-sm border px-2 py-0.5 text-xs font-semibold ${styles[status]}`}
-    >
-      {status === "CRÍTICO" ? "Crítico" : status === "ALERTA" ? "Alerta" : "Info"}
-    </span>
-  );
 }
 
 // --- Props ---
@@ -76,7 +61,7 @@ export function IssuesTable({ issues }: Props) {
           {issues.map((issue, i) => (
             <TableRow
               key={`${issue.id}-${i}`}
-              onClick={() => router.push(`/dashboard/issue/${issue.id}`)}
+              onClick={() => router.push(`/dashboard/tracking/${issue.id}`)}
               className="cursor-pointer border-[#E2E8F0] transition-colors"
             >
               <TableCell className="py-6 pl-6 text-xs font-medium text-[#020617]">
@@ -92,11 +77,11 @@ export function IssuesTable({ issues }: Props) {
                 </Badge>
               </TableCell>
               <TableCell>
-                <StatusBadge status={issue.severity} />
+                <AlertBadge status={issue.severity as "INFO" | "ALERTA" | "CRÍTICO"} />
               </TableCell>
               <TableCell className="pr-4 text-right">
                 <Button
-                  variant={"ghost"}
+                  variant={"link"}
                   className="cursor-pointer text-right font-medium text-[#475569]"
                 >
                   Analizar

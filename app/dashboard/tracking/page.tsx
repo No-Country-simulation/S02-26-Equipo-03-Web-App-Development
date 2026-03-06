@@ -8,7 +8,7 @@ import { TrackingTable } from "@/shared/components/Dashboard/Tracking/TrackingTa
 
 const integrationes: Integration[] = [
   { name: "Stripe", status: "ok" as const },
-  { name: "Meta", status: "ok" as const },
+  { name: "Meta", status: "warning" as const },
   { name: "Google", status: "warning" as const },
 ];
 

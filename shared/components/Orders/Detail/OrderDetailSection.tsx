@@ -9,18 +9,18 @@ interface OrderDetailSectionProps {
 }
 
 const statusStyles: Record<string, string> = {
-  PAGADO: "border-emerald-400 bg-emerald-50 text-emerald-700",
-  PENDIENTE: "border-yellow-400 bg-yellow-50 text-yellow-700",
-  FALLIDO: "border-red-400 bg-red-50 text-red-700",
+  PAGADO: "border-[#BBF7D1] bg-[#EEFFF4] text-[#049140]",
+  PENDIENTE: "border-[#FCD34D] bg-[#FFFAEB] text-[#92400E]",
+  FALLIDO: "border-[#FECACA] bg-[#FEF2F2] text-[#991B1B]",
 };
 
 export function OrderDetailSection({ order }: OrderDetailSectionProps) {
   return (
-    <div className="px-6 pb-6 font-sans max-w-5xl mx-auto">
+    <div className="mx-auto max-w-5xl px-6 pb-6 font-sans">
       {/* Header */}
-      <div className="flex items-center gap-3 mb-6">
+      <div className="mb-6 flex items-center gap-3">
         <span
-          className={`inline-flex items-center rounded-full border px-3 py-0.5 text-xs font-semibold ${statusStyles[order.status]}`}
+          className={`inline-flex items-center rounded-sm border px-3 py-0.5 text-xs font-semibold ${statusStyles[order.status]}`}
         >
           {order.status}
         </span>
@@ -37,10 +37,7 @@ export function OrderDetailSection({ order }: OrderDetailSectionProps) {
         </div>
 
         {/* Right column */}
-        <OrderActionsCard
-          status={order.status}
-          stripeId={order.stripeId}
-        />
+        <OrderActionsCard status={order.status} stripeId={order.stripeId} />
       </div>
     </div>
   );

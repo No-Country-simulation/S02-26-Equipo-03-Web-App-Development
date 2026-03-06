@@ -4,12 +4,17 @@ export interface Issue {
   id: string;
   title: string;
   impact: number;
-  platform: "STRIPE" | "META ADS" | "GOOGLE ADS" | "DATA";
+  platform: "STRIPE" | "META ADS" | "GOOGLE ADS" | "DATA" | "META PIXEL";
   severity: IssueSeverity;
+  retrargeting: string;
   createdAt: string;
   description: string;
   diagnostics: {
-    description: string;
+    description: {
+      text: string;
+      blockedParams: string[];
+      footer: string;
+    };
     error: string;
   };
   timeline: {

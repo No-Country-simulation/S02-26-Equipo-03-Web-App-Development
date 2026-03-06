@@ -1,4 +1,5 @@
-import { Issue } from "@/app/dashboard/tracking/dashboardData";
+import { Issue } from "@/shared/interfaces/issue-tracking.interface";
+
 const ALL_PLATFORMS = ["STRIPE", "META ADS", "GOOGLE ADS", "DATA"];
 export function sortIssuesByImpact(issues: Issue[]) {
   return [...issues].sort((a, b) => b.impact - a.impact);

@@ -32,9 +32,10 @@ const statusConfig: Record<
 interface StatusBadgeProps {
   status: BadgeStatus;
   className?: string;
+  title?: string;
 }
 
-export default function StatusBadge({ status, className }: StatusBadgeProps) {
+export default function StatusBadge({ status, className, title }: StatusBadgeProps) {
   const config = statusConfig[status];
 
   return (
@@ -48,7 +49,7 @@ export default function StatusBadge({ status, className }: StatusBadgeProps) {
       )}
     >
       <span className={cn("h-1.5 w-1.5 rounded-full", config.dot)} />
-      {config.label}
+      {title || config.label}
     </span>
   );
 }
