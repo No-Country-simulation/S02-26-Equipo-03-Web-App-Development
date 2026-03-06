@@ -1,6 +1,6 @@
 import { Issue } from "@/shared/interfaces/issue-tracking.interface";
 
-const ALL_PLATFORMS = ["STRIPE", "META ADS", "GOOGLE ADS", "DATA"];
+const ALL_PLATFORMS = ["STRIPE", "META ADS", "META PIXEL", "GOOGLE ADS", "DATA"];
 export function sortIssuesByImpact(issues: Issue[]) {
   return [...issues].sort((a, b) => b.impact - a.impact);
 }
