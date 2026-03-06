@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useRef } from "react";
 import { ApiKeyTable } from "./ApiKeyTable";
 import { ActiveKey, DataKey } from "./api-key.type";
+import ApiKeyGenerator from "./ApiGeneratorKey";
 
 export function ApiKeySetting() {
   const selectedProjectId = useSelectedProjectStore((state) => state.selectedProjectId);
@@ -25,23 +26,6 @@ export function ApiKeySetting() {
       prevProjectIdRef.current = selectedProjectId;
     })();
   }, [selectedProjectId]);
-  /* type ActiveKey = {
-  id: string;
-  name: string;
-  key: string;
-  permissions: Permission;
-  createdAt: string;
-  lastUsedAt: string;
-
-  const responseKey: ActiveKey[] = keys.map((key) => ({
-    id: key.id,
-    name: key.name,
-    key: key.key,
-    permissions: key.permissions,
-    createdAt: key.createdAt,
-    lastUsedAt: key.lastUsedAt,
-  }));
-}; */
   const responseKey: ActiveKey[] =
     !loading && keys.length > 0
       ? [
@@ -65,12 +49,7 @@ export function ApiKeySetting() {
         <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
           <ApiKeyTable activeKeys={responseKey} loading={loading} />
         </div>
-        {/* <NotificationSection
-          title="In-App Notifications"
-          items={INAPP_NOTIFICATIONS}
-          settings={settings}
-          onChange={handleChange}
-        /> */}
+        <ApiKeyGenerator />
       </div>
     </div>
   );
