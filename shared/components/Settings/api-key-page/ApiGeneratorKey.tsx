@@ -42,7 +42,7 @@ export default function ApiKeyGenerator() {
     <>
       <div className="w-full max-w-md space-y-6">
         {/* Generate Form Card */}
-        <div className="overflow-hidden rounded-sm border border-[#E2E8F0] bg-white shadow-sm">
+        <div className="overflow-hidden rounded-lg border border-[#E2E8F0] bg-white">
           <div className="border-b border-[#E2E8F0] px-6 py-4">
             <h3 className="text-base font-semibold text-[#020617]">Generar Nueva API Key</h3>
           </div>

@@ -46,7 +46,7 @@ export function ApiKeySetting() {
         <div className="flex items-center">
           <h2 className="text-xl font-semibold text-[#020617]">API Keys Activas</h2>
         </div>
-        <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
+        <div className="rounded-lg border border-gray-200 bg-white">
           <ApiKeyTable activeKeys={responseKey} loading={loading} />
         </div>
         <ApiKeyGenerator />

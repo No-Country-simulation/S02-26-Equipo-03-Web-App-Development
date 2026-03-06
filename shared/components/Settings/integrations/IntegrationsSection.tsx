@@ -28,7 +28,7 @@ export default function IntegrationsSection({ isLoading = false }: IntegrationsS
         ))}
 
         {/* Añadir integración */}
-        <div className="flex w-60 flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-[#E2E8F0] bg-white p-5 text-sm font-medium text-gray-400">
+        <div className="flex w-60 flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-[#E2E8F0] bg-white p-5 text-sm font-medium text-gray-400">
           <Plus className="h-5 w-5" />
           <span>Añadir integración</span>
         </div>

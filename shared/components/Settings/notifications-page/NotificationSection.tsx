@@ -15,7 +15,7 @@ export function NotificationSection({
   return (
     <div>
       <h2 className="mb-5 text-xl font-semibold text-[#020617]">{title}</h2>
-      <div className="divide-y divide-[#E2E8F0] overflow-hidden rounded-xl border border-[#E2E8F0] bg-white">
+      <div className="divide-y divide-[#E2E8F0] overflow-hidden rounded-lg border border-[#E2E8F0] bg-white">
         {items.map((item) => (
           <NotificationRow
             key={item.key}

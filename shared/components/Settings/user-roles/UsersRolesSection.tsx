@@ -44,7 +44,7 @@ export function UsersRolesSection() {
           Invitar Miembros
         </Button>
       </div>
-      <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
+      <div className="rounded-lg border border-gray-200 bg-white">
         <UsersRolesTable usersroles={members} loading={loading} />
       </div>
     </>
