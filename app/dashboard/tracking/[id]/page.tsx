@@ -2,7 +2,6 @@ import { issues } from "@/app/dashboard/tracking/dashboardData";
 import { notFound } from "next/navigation";
 import { Badge } from "@/shared/components/ui/badge";
 import Link from "next/link";
-/* import { getSeverityStyles } from "../dashboardLogic"; */
 import { formatDate, timeAgo } from "@/shared/lib/utils";
 import { Button } from "@/shared/components/ui/button";
 import { MyIcons } from "@/shared/components/MyIcons/MyIcons";

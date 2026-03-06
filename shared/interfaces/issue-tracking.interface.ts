@@ -6,7 +6,7 @@ export interface Issue {
   impact: number;
   platform: "STRIPE" | "META ADS" | "GOOGLE ADS" | "DATA" | "META PIXEL";
   severity: IssueSeverity;
-  retrargeting: string;
+  retargeting: string;
   createdAt: string;
   description: string;
   diagnostics: {
