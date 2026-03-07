@@ -54,12 +54,27 @@ function formatOrderId(id: string) {
 }
 
 function SourceBadge({ source }: { source: string }) {
+  let label = "Orgánico";
+  const srcLower = source?.toLowerCase() || "";
+
+  if (srcLower.includes("google")) {
+    label = "Google Ads";
+  } else if (
+    srcLower.includes("meta") ||
+    srcLower.includes("facebook") ||
+    srcLower.includes("fb")
+  ) {
+    label = "Meta Ads";
+  } else if (srcLower.includes("stripe")) {
+    label = "Stripe";
+  }
+
   return (
     <Badge
       variant="outline"
       className="rounded-sm border-[#E2E8F0] bg-white px-2 text-xs font-semibold text-[#475569]"
     >
-      {source == "google" ? "Google ADS" : "Meta ADS"}
+      {label}
     </Badge>
   );
 }

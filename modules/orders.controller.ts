@@ -47,6 +47,7 @@ function mapToOrderAnalyticsDTO(
     id: string;
     customerName: string | null;
     customerEmail: string | null;
+    productName: string | null;
     paymentType: string | null;
     sourcePlatform: string | null;
     totalAmount: number;
@@ -64,7 +65,7 @@ function mapToOrderAnalyticsDTO(
     id: order.id,
     client_name: order.customerName,
     client_email: order.customerEmail,
-    service_name: order.campaign?.name ?? null,
+    service_name: order.productName ?? null,
     payment_type: order.paymentType ?? null,
     source_name: order.sourcePlatform ?? null,
     total_amount: order.totalAmount,

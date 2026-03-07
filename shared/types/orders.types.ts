@@ -1,6 +1,6 @@
 export type PaymentType = "PAGO ÚNICO" | "SUSCRIPCIÓN";
 export type OrderStatus = "PAGADO" | "PENDIENTE" | "FALLIDO";
-export type OrderSource = "META ADS" | "GOOGLE ADS" | "STRIPE";
+export type OrderSource = "META ADS" | "GOOGLE ADS" | "STRIPE" | "ORGÁNICO";
 
 export interface Order {
   id: string;
