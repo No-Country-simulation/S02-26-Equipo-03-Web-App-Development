@@ -6,8 +6,8 @@ interface OrderTimelineCardProps {
 
 export function OrderTimelineCard({ timeline }: OrderTimelineCardProps) {
   return (
-    <div className="rounded-xl border border-gray-200 bg-gray-50 p-6">
-      <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">
+    <div className="rounded-lg border border-[#E2E8F0] bg-white p-6">
+      <p className="mb-4 text-xs font-semibold tracking-widest text-gray-400 uppercase">
         Línea de Tiempo
       </p>
 
@@ -22,13 +22,11 @@ export function OrderTimelineCard({ timeline }: OrderTimelineCardProps) {
                     : "border-gray-300 bg-white"
                 }`}
               />
-              {i < timeline.length - 1 && (
-                <span className="mt-1 h-8 w-px bg-gray-200" />
-              )}
+              {i < timeline.length - 1 && <span className="mt-1 h-8 w-px bg-gray-200" />}
             </div>
             <div className="-mt-0.5">
               <p
-                className={`text-xs font-semibold uppercase tracking-wide ${
+                className={`text-xs font-semibold tracking-wide uppercase ${
                   event.isHighlighted ? "text-emerald-600" : "text-gray-400"
                 }`}
               >

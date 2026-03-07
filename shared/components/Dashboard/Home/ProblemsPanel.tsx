@@ -1,9 +1,8 @@
-"use client";
-
-import { useState } from "react";
-import { Card, CardContent } from "@/shared/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/shared/components/ui/card";
 import { Button } from "@/shared/components/ui/button";
-import { ChevronRight, Info } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { Badge } from "../../ui/badge";
+import { Separator } from "../../ui/separator";
 
 const problems = [
   {
@@ -31,85 +30,55 @@ const severityDot: Record<"red" | "yellow", string> = {
   yellow: "bg-yellow-400",
 };
 
-type Tab = "critica" | "tracking";
-
 export function ProblemsPanel() {
-  const [tab, setTab] = useState<Tab>("critica");
-
   return (
-    <Card className="border border-gray-200 shadow-sm h-full flex flex-col bg-[#F3F3F3] rounded-none">
-      {/* Tabs */}
-      <div className="grid grid-cols-2 border-gray-100 justify-evenly px-3 gap-2">
-        <Button
-          variant={tab === "critica" ? "outline" : "ghost"}
-          onClick={() => setTab("critica")}
-          className={`bg-white ${
-            tab === "critica"
-              ? "text-gray-900  border-gray-900"
-              : ""
-          }`}
-        >
-          Acción Crítica
-        </Button>
-        <Button
-          variant={tab === "tracking" ? "outline" : "ghost"}
-          onClick={() => setTab("tracking")}
-          className={`bg-white ${
-            tab === "tracking"
-              ? "text-gray-900  border-gray-900"
-              : ""
-          }`}
-        >
-          Salud de Tracking
-        </Button>
-      </div>
+    <Card className="flex w-80 flex-col rounded-sm border border-[#E2E8F0] bg-white p-6">
+      <CardHeader className="space-y-2 p-0">
+        <div className="flex items-center justify-between">
+          <Badge className="rounded-sm border-[#FFFD86] bg-[#FFFFE7] text-[#A67102]">
+            Acción Crítica
+          </Badge>
+          <p className="font-mono text-sm font-medium tracking-wide uppercase">Salud de Tracking</p>
+        </div>
+        <div>
+          {/* Title */}
+          <h3 className="text-lg leading-tight font-semibold">3 Problemas Detectados</h3>
+          <p className="mt-2 text-xs font-medium">
+            La falta de datos afecta aproximadamente al 12% de tu revenue atribuido.
+          </p>
+        </div>
+      </CardHeader>
 
-      <CardContent className="p-5 flex flex-col flex-1">
-        {/* Title */}
-        <h3 className="text-2xl font-bold text-gray-900 leading-tight">
-          3 Problemas Detectados
-        </h3>
-        <p className="mt-2 text-sm text-gray-500 leading-snug">
-          La falta de datos afecta aproximadamente al{" "}
-          <span className="font-semibold text-gray-700">12%</span> de tu revenue atribuido.
-        </p>
-
+      <CardContent className="flex flex-col p-0">
         {/* CTA button */}
         <Button
-          variant="outline"
-          className='bg-white w-full justify-between'
+          variant="link"
+          className="w-full justify-between bg-[#F1F5F9] px-4 py-6 text-sm font-medium text-[#334155]"
         >
           Ver Problemas (3)
-          <ChevronRight className="h-4 w-4 text-gray-400" />
+          <ArrowRight className="h-5 w-5" />
         </Button>
 
         {/* Problem list */}
-        <div className="mt-4 flex flex-col divide-y divide-gray-100 flex-1">
+        <div className="mt-3 flex flex-1 flex-col">
           {problems.map((p) => (
-            <div key={p.source} className="py-3 flex flex-col gap-1">
+            <div key={p.source} className="flex flex-col gap-1 py-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span
-                    className={`h-2.5 w-2.5 rounded-full flex-shrink-0 ${severityDot[p.severity]}`}
-                  />
-                  <span className="text-sm font-semibold text-gray-900">{p.source}</span>
+                  <span className={`h-1 w-1 shrink-0 rounded-full ${severityDot[p.severity]}`} />
+                  <span className="text-sm font-medium text-[#020617]">{p.source}</span>
                 </div>
-                <span className="text-xs text-gray-400">{p.time}</span>
+                <span className="text-xs text-[#64748B]">{p.time}</span>
               </div>
-              <p className="text-xs text-gray-500 pl-[18px]">{p.description}</p>
+              <p className="text-xs font-medium text-[#475569]">{p.description}</p>
             </div>
           ))}
         </div>
-
+        <Separator className="my-4 bg-gray-100" />
         {/* Footer */}
-        <div className="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between">
-          <div className="flex items-center gap-1.5">
-            <span className="text-[11px] font-semibold uppercase tracking-wide text-gray-500">
-              Estimated Revenue at Risk
-            </span>
-            <Info className="h-3 w-3 text-gray-300" />
-          </div>
-          <span className="text-base font-bold text-gray-900">$7,700</span>
+        <div className="mt-auto flex items-center justify-between">
+          <p className="text-sm font-medium">Ingresos estimados en riesgo</p>
+          <span className="text-sm font-medium text-[#D70000]">$7,700</span>
         </div>
       </CardContent>
     </Card>

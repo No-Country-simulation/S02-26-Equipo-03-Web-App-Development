@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ChevronLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { OrderDetailSection } from "@shared/components/Orders/Detail/OrderDetailSection";
 import { ORDER_DETAIL_MOCK } from "@shared/components/Orders/mock/order-detail.mock";
 // import { OrderDetailSkeleton } from "./OrderDetailSkeleton";
@@ -20,22 +20,16 @@ export default async function OrderDetailPage({ params }: OrderDetailPageProps) 
 
   return (
     <div>
-      {/* Back nav */}
-     
-     
-      <div className="max-w-5xl p-6 mx-auto">
-          {/* <OrderDetailSkeleton /> */}
+      <div className="max-w-5xl px-20 py-6">
         <Link
           href="/dashboard/order"
-          className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-800 transition-colors"
+          className="flex items-center text-sm font-medium text-black hover:text-[#0F172B]"
         >
-          <ChevronLeft className="h-4 w-4" />
-          Volver a Órdenes
+          <ArrowLeft className="mr-2 h-5 w-5" /> Volver a Órdenes
         </Link>
       </div>
 
       <OrderDetailSection order={order} />
-     
     </div>
   );
 }

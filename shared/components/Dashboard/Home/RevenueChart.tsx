@@ -15,7 +15,7 @@ import {
   ChartTooltipContent,
 } from "@/shared/components/ui/chart";
 import { Button } from "@/shared/components/ui/button";
-import { Info } from "lucide-react";
+import { Separator } from "../../ui/separator";
 
 const data = [
   { fecha: "Feb 1", actual: 4000, anterior: 4200 },
@@ -40,27 +40,25 @@ const chartConfig: ChartConfig = {
 
 export function RevenueChart() {
   return (
-    <Card className="h-full border border-gray-200 shadow-sm">
-      <CardHeader className="pb-2">
-        <div className="flex items-start justify-between">
+    <Card className="gap-0 rounded-sm border border-[#E2E8F0]">
+      <CardHeader className="px-6 pb-3">
+        <div className="flex items-center justify-between">
           <div>
-            <div className="flex items-center gap-1.5">
-              <CardTitle className="text-base font-semibold text-gray-900">
-                Atribución de Revenue
-              </CardTitle>
-              <Info className="h-3.5 w-3.5 text-gray-300" />
-            </div>
+            <CardTitle className="text-base font-semibold text-gray-900">
+              Atribución de Revenue
+            </CardTitle>
             <CardDescription className="mt-0.5 text-xs text-gray-400">
               Confirmación financiera vs. período anterior
             </CardDescription>
           </div>
-          <Button variant="outline" size="sm" className="bg-white">
+          <Button variant="ghost" size="sm" className="cursor-pointer">
             Comparación Período
           </Button>
         </div>
       </CardHeader>
-      <CardContent className="pb-4">
-        <ChartContainer config={chartConfig} className="h-[260px] w-full">
+      <Separator className="bg-gray-100 p-0" />
+      <CardContent className="px-4 pt-5">
+        <ChartContainer config={chartConfig} className="h-65 w-full">
           <LineChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
             <XAxis

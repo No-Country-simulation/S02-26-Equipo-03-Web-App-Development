@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { OrderAttribution } from "../../../types/order-detail.types";
 
 interface OrderAttributionCardProps {
@@ -6,19 +7,21 @@ interface OrderAttributionCardProps {
 
 export function OrderAttributionCard({ attribution }: OrderAttributionCardProps) {
   return (
-    <div className="rounded-xl border border-gray-200 bg-gray-50 p-6">
-      <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">
+    <div className="rounded-lg border border-[#E2E8F0] bg-white p-6">
+      <p className="mb-4 text-xs font-semibold tracking-widest text-gray-400 uppercase">
         Atribución
       </p>
 
-      <div className="flex items-start gap-3">
-        <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-blue-600 text-xs font-bold text-white shrink-0">
-          {attribution.initial}
-        </span>
-        <div>
-          <p className="font-semibold text-gray-900">{attribution.source}</p>
-          <p className="text-sm text-gray-500">Campaña: {attribution.campaign}</p>
-        </div>
+      <div className="flex flex-col items-start gap-2">
+        <Image
+          src={"/images/meta.svg"}
+          alt="Meta"
+          width={0}
+          height={36}
+          sizes="100vw"
+          className={`h-9 w-auto max-w-32`}
+        />
+        <p className="text-sm text-gray-500">Campaña: {attribution.campaign}</p>
       </div>
 
       <p className="mt-4 text-sm font-bold text-emerald-600">

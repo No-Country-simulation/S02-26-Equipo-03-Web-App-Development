@@ -625,7 +625,7 @@ export default function GenerateReports() {
 
   return (
     <>
-      <Button variant={"ghost"} onClick={openExportModal}>
+      <Button variant={"ghost"} className="bg-transparent" onClick={openExportModal}>
         Exportar
         <Download className="h-4 w-4" />
       </Button>

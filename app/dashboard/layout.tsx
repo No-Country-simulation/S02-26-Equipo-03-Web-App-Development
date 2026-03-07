@@ -41,7 +41,7 @@ export default function DashboardPage({ children }: { children: React.ReactNode 
         </div>
         <div className="flex w-full flex-col overflow-hidden bg-[#F8FAFC]">
           <HeaderDashboard />
-          <div className="flex-1 overflow-y-auto">{children}</div>
+          <div className="max-w-[1440px] flex-1 overflow-y-auto">{children}</div>
         </div>
       </div>
     </SidebarProvider>
