@@ -20,11 +20,13 @@ function SourceDot({ source }: { source: OrderSource }) {
     "META ADS": "bg-blue-500",
     "GOOGLE ADS": "bg-red-500",
     STRIPE: "bg-[#635BFF]",
+    ORGÁNICO: "bg-gray-400",
   };
   const initials: Record<OrderSource, string> = {
     "META ADS": "M",
     "GOOGLE ADS": "G",
     STRIPE: "S",
+    ORGÁNICO: "O",
   };
   return (
     <span

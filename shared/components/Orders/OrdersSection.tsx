@@ -3,18 +3,59 @@
 import { useState, useMemo, useEffect } from "react";
 import { OrdersTable } from "./OrdersTable";
 import { SalesOrder } from "@/shared/interfaces/orders.interface";
-import { RESPONSE_MOCK } from "./mock/order-server.mock";
 import { SearchToolbar } from "../ui/search-toolbar";
+import { useSelectedProjectStore } from "@/shared/hooks/use-selected-project-store";
 
 const PAGE_SIZE = 4;
 
-// En el futuro reemplazá ORDERS_MOCK por datos reales (fetch, props, etc.)
-const allOrders: SalesOrder[] = RESPONSE_MOCK.data;
-
 export function OrdersSection() {
+  const { selectedProjectId } = useSelectedProjectStore();
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [selectedOrderIds, setSelectedOrderIds] = useState<string[]>([]);
+  const [allOrders, setAllOrders] = useState<SalesOrder[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    async function fetchOrders() {
+      if (!selectedProjectId) {
+        setAllOrders([]);
+        return;
+      }
+      setIsLoading(true);
+      try {
+        const res = await fetch(`/api/v1/analytics/orders?projectId=${selectedProjectId}`);
+        if (!res.ok) throw new Error("Failed to fetch orders");
+        const json = await res.json();
+
+        const mappedOrders: SalesOrder[] = (json.data || []).map((dto: any) => ({
+          id: dto.id,
+          projectId: dto.project_id,
+          ecommerceIntegrationId: null,
+          transactionId: dto.stripe_id || "",
+          externalOrderId: "",
+          totalAmount: dto.total_amount,
+          currency: "USD",
+          status: dto.status,
+          orderDate: dto.order_date_iso || new Date().toISOString(),
+          customerName: dto.client_name || "",
+          customerEmail: dto.client_email || "",
+          productName: dto.service_name || "",
+          paymentType: dto.payment_type || "",
+          stripeId: dto.stripe_id || "",
+          campaignId: dto.campaign_id || "",
+          sourcePlatform: dto.source_name || "",
+        }));
+
+        setAllOrders(mappedOrders);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchOrders();
+  }, [selectedProjectId]);
 
   const filteredOrders = useMemo(() => {
     const query = search.toLowerCase();
@@ -25,7 +66,7 @@ export function OrdersSection() {
         o.customerEmail.toLowerCase().includes(query) ||
         o.id.toLowerCase().includes(query)
     );
-  }, [search]);
+  }, [search, allOrders]);
 
   // Resetear página al buscar
   const handleSearch = (value: string) => {
@@ -33,10 +74,7 @@ export function OrdersSection() {
     setPage(1);
   };
 
-  const paginatedOrders = filteredOrders.slice(
-    (page - 1) * PAGE_SIZE,
-    page * PAGE_SIZE
-  );
+  const paginatedOrders = filteredOrders.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   const total = filteredOrders.length;
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
@@ -76,10 +114,7 @@ export function OrdersSection() {
       </div>
 
       <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
-        <SearchToolbar
-          search={search}
-          onSearchChange={handleSearch}
-        />
+        <SearchToolbar search={search} onSearchChange={handleSearch} />
         <OrdersTable
           orders={paginatedOrders}
           total={total}

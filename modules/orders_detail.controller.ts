@@ -59,6 +59,7 @@ type OrderDetailRecord = {
   totalAmount: number;
   customerName: string | null;
   customerEmail: string | null;
+  productName: string | null;
   paymentType: string | null;
   orderDate: Date;
   stripeId: string | null;
@@ -104,7 +105,7 @@ function mapToOrderDetailDTO(order: OrderDetailRecord, sessionExpiresAt: Date): 
     verified_stripe: verifiedStripe,
     client_name: order.customerName,
     client_email: order.customerEmail,
-    service_name: order.campaign?.name ?? null,
+    service_name: order.productName ?? null,
     payment_type: order.paymentType,
     order_date_iso: order.orderDate.toISOString(),
     stripe_id: stripeId,
