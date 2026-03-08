@@ -33,7 +33,9 @@ export default function SidebarDashboard() {
       <SidebarContent>
         {/* LOGO */}
         <div className="flex items-center px-4 py-6">
-          <GardenAdsLogo width={140} height={50} />
+          <Link href="/">
+            <GardenAdsLogo width={140} height={50} />
+          </Link>
         </div>
 
         {/* CORE DASHBOARD */}
