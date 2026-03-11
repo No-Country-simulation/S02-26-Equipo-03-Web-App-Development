@@ -32,26 +32,48 @@ const NavLinks = ({ className = "" }: { className?: string }) => (
   </nav>
 );
 
+import { useEffect, useState } from "react";
+import { getSession } from "@/shared/lib/auth-client";
+
 /* 
   UserActions Component
-  - Renders login and demo buttons
+  - Renders login/dashboard and demo buttons
   - Adjusts layout for mobile if isMobile is true
 */
-const UserActions = ({ isMobile = false }: { isMobile?: boolean }) => (
-  <div className={`flex ${isMobile ? "flex-col items-center gap-4" : "items-center gap-6"}`}>
-    <Link
-      href="/login"
-      className={`rounded-md bg-white px-4 py-3 text-slate-600 transition-colors hover:bg-slate-100 active:bg-slate-200 disabled:bg-slate-100 ${
-        isMobile ? "w-full text-center" : ""
-      }`}
-    >
-      Iniciar sesión
-    </Link>
-    <Button size="primary" variant="primary" className={isMobile ? "w-full" : ""}>
-      Agendar Demo
-    </Button>
-  </div>
-);
+const UserActions = ({ isMobile = false }: { isMobile?: boolean }) => {
+  const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const sessionResponse = await getSession();
+        setUser(sessionResponse?.data ?? null);
+      } catch (error) {
+        console.error("Error fetching session:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchUser();
+  }, []);
+
+  return (
+    <div className={`flex ${isMobile ? "flex-col items-center gap-4" : "items-center gap-6"}`}>
+      <Link
+        href={user ? "/dashboard" : "/login"}
+        className={`rounded-md bg-white px-4 py-3 text-slate-600 transition-colors hover:bg-slate-100 active:bg-slate-200 disabled:bg-slate-100 ${
+          isMobile ? "w-full text-center" : ""
+        }`}
+      >
+        {loading ? "Cargando..." : user ? "Ir al Dashboard" : "Iniciar sesión"}
+      </Link>
+      <Button size="primary" variant="primary" className={isMobile ? "w-full" : ""}>
+        Agendar Demo
+      </Button>
+    </div>
+  );
+};
 
 /* 
   MobileMenu Component
